@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+  <solid android:color="@color/ism_white" />
+  <stroke
+      android:width="0.5dp"
+      android:color="@color/ism_gif_sticker_seperator_grey" />
+
+  <corners
+      android:bottomLeftRadius="@dimen/ism_dp_5"
+      android:bottomRightRadius="@dimen/ism_dp_5"
+      android:topLeftRadius="@dimen/ism_dp_5"
+      android:topRightRadius="@dimen/ism_dp_5" />
+
+</shape>

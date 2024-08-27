@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+
+  <!--  Users Activity-->
+  <color name="ism_divider">#EFEFEF</color>
+  <color name="ism_white">#ffffff</color>
+  <color name="ism_black">#000000</color>
+  <color name="ism_title_black">#484848</color>
+  <color name="ism_blue">#007AFF</color>
+  <color name="ism_text_black">#222222</color>
+
+<!--  User's item-->
+  <color name="ism_select_text_blue">#00B3FF</color>
+  <color name="ism_identifier_text_grey">#999999</color>
+  <color name="ism_line_gray">#22000000</color>
+  <color name="ism_shimmer_grey">#E0E0E0</color>
+
+  <!--  Attachment icon-->
+  <color name="ism_background_gray">#EEEEEE</color>
+  <color name="ism_attachment_gray">#757575</color>
+
+<!--  Members item-->
+  <color name="ism_online_green">#FF84DE04</color>
+  <color name="ism_offline_yellow">#FDD835</color>
+
+<!--  Create conversation background-->
+  <color name="ism_end_blue">#56C2FA</color>
+  <color name="ism_start_blue">#0389DB</color>
+  <color name="ism_settings_text_grey">#757575</color>
+  <color name="ism_settings_button_blue">#0389DB</color>
+
+  <!--Conversation attachments-->
+  <color name="ism_attachment_type_grey">#757575</color>
+
+<!--  Conversation details-->
+  <color name="ism_leave_red">#E53935</color>
+  <color name="ism_conversation_details_grey">#9E9E9E</color>
+  <color name="ism_created_by_grey">#757575</color>
+  <color name="ism_admin_background_grey">#9E9E9E</color>
+  <color name="ism_admin_text_grey">#757575</color>
+
+<!--  Conversation item-->
+  <color name="ism_last_message_grey">#757575</color>
+  <color name="ism_join_end_green">#81C784</color>
+  <color name="ism_join_start_green">#4CAF50</color>
+  <color name="ism_typing_blue">#1976D2</color>
+
+  <!--  Messages activity-->
+  <color name="ism_send_message_grey">#EEEEEE</color>
+  <color name="ism_hint_grey">#666666</color>
+  <color name="ism_contact_background">#5D76FF</color>
+  <color name="ism_cancel_recording_red">#e12626</color>
+  <color name="ism_record_lock_blue">#03A9F4</color>
+
+
+<!--  Conversations activity-->
+  <color name="ism_tab_selected_blue">#0389DB</color>
+  <color name="ism_tab_unselected_grey">#9E9E9E</color>
+  <color name="ism_icon_gray">#757575</color>
+
+<!--  Message items-->
+  <color name="ism_sent_message_background_blue">#B3E5FC</color>
+  <color name="ism_received_message_background_grey">#E0E0E0</color>
+  <color name="ism_message_time_grey">#9E9E9E</color>
+  <color name="ism_forward_reaction_edited_grey">#9E9E9E</color>
+  <color name="ism_parent_message_time_grey">#616161</color>
+  <color name="ism_action_message_grey">#757575</color>
+  <color name="ism_conversation_title_grey">#757575</color>
+
+<!--  Message delivery/read status-->
+  <color name="ism_seperator_grey">#9E9E9E</color>
+
+<!--  Reaction bottom sheet-->
+  <color name="ism_reaction_name_grey">#9E9E9E</color>
+  <color name="ism_reaction_time_grey">#757575</color>
+
+<!--  Add participants screen-->
+  <color name="ism_select_member_grey">#757575</color>
+  <color name="ism_add_remove_background_blue">#00B3FF</color>
+  <color name="ism_add_remove_text_blue">#0389DB</color>
+
+<!--  Gallery-->
+  <color name="ism_gallery_item_overlay">#77000000</color>
+
+<!--Sticker gif bottomsheet-->
+  <color name="ism_gif_sticker_peek_grey">#9E9E9E</color>
+  <color name="ism_gif_sticker_seperator_grey">#757575</color>
+  <color name="ism_gif_sticker_category_selected_black">#000000</color>
+  <color name="ism_gif_sticker_category_unselected_grey">#9E9E9E</color>
+
+<!--Whiteboard bottomsheet-->
+  <color name="ism_whiteboard_tools_icon_selected_color">#757575</color>
+  <color name="ism_whiteboard_tools_icon_pressed_color">#000000</color>
+  <color name="ism_whiteboard_tools_icon_color">#9E9E9E</color>
+
+  <color name="ism_whiteboard_color_black">#000000</color>
+  <color name="ism_whiteboard_color_red">#FF5252</color>
+  <color name="ism_whiteboard_color_yellow">#FFEB3B</color>
+  <color name="ism_whiteboard_color_brown">#8D6E63</color>
+  <color name="ism_whiteboard_color_green">#00C853</color>
+  <color name="ism_whiteboard_color_pink">#D500F9</color>
+  <color name="ism_whiteboard_color_blue">#00B0FF</color>
+
+  <!--Message action footer-->
+  <color name="ism_message_action_selected_black">#000000</color>
+  <color name="ism_message_action_unselected_grey">#9E9E9E</color>
+
+<!--  Preview image-->
+  <color name="ism_preview_image_background_grey">#EEEEEE</color>
+
+<!--  Message delivery status-->
+  <color name="ism_message_delivered_green">#66BB6A</color>
+  <color name="ism_message_read_blue">#039BE5</color>
+
+<!--  Notification-->
+  <color name="ism_notification_icon">#FF4081</color>
+
+</resources>

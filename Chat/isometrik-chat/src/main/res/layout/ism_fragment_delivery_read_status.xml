@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <RelativeLayout
+        android:background="@color/ism_white"
+        android:id="@+id/rlRead"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/vDummy"
+        >
+
+      <RelativeLayout
+          android:id="@+id/rlReadHeader"
+          android:elevation="@dimen/ism_dp_3"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvRead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/ism_dp_13"
+            android:layout_marginTop="@dimen/ism_dp_13"
+            android:layout_marginEnd="@dimen/ism_dp_8"
+            app:drawableTint="@color/ism_select_text_blue"
+            app:drawableStartCompat="@drawable/ism_ic_done"
+            android:drawablePadding="@dimen/ism_dp_5"
+            android:text="@string/ism_read_by"
+            android:textColor="@color/ism_black"
+            android:textSize="@dimen/ism_sp_16"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textStyle="bold"
+            />
+
+        <View
+            android:id="@+id/vDivider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ism_dp_1"
+            android:layout_below="@+id/tvRead"
+            android:layout_marginTop="@dimen/ism_dp_13"
+            android:background="@color/ism_seperator_grey" />
+
+      </RelativeLayout>
+
+
+      <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/rvRead"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/rlReadHeader"
+      />
+
+      <com.facebook.shimmer.ShimmerFrameLayout
+          android:id="@+id/shimmerFrameLayoutRead"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/rlReadHeader"
+          android:visibility="gone"
+          >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+          <include layout="@layout/ism_message_delivery_read_status_item_shimmer" />
+          <include layout="@layout/ism_message_delivery_read_status_item_shimmer" />
+          <include layout="@layout/ism_message_delivery_read_status_item_shimmer" />
+
+        </LinearLayout>
+      </com.facebook.shimmer.ShimmerFrameLayout>
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tvNoReadUsers"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_centerInParent="true"
+          android:drawablePadding="@dimen/ism_dp_8"
+          app:drawableTopCompat="@drawable/ism_ic_no_users"
+          android:gravity="center"
+          android:text="@string/ism_delivered_to_none"
+          android:textColor="@color/ism_black"
+          android:visibility="gone"
+          android:layout_margin="@dimen/ism_dp_16"
+          />
+
+    </RelativeLayout>
+
+  <View
+      android:id="@+id/vDummy"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/ism_dp_1"
+      android:layout_centerVertical="true"
+      android:background="@color/ism_line_gray"
+      />
+
+  <RelativeLayout
+        android:background="@color/ism_white"
+        android:layout_below="@+id/vDummy"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+      <RelativeLayout
+          android:id="@+id/rlDeliveredHeader"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:elevation="@dimen/ism_dp_3"
+          >
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDelivered"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/ism_dp_13"
+            android:layout_marginTop="@dimen/ism_dp_13"
+            android:layout_marginEnd="@dimen/ism_dp_8"
+            app:drawableTint="@color/ism_online_green"
+            app:drawableStartCompat="@drawable/ism_ic_done"
+            android:drawablePadding="@dimen/ism_dp_5"
+            android:text="@string/ism_delivered_to"
+            android:textColor="@color/ism_black"
+            android:textSize="@dimen/ism_sp_16"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textStyle="bold"
+            />
+
+        <View
+            android:id="@+id/vDeliveredDivider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ism_dp_1"
+            android:layout_below="@+id/tvDelivered"
+            android:layout_marginTop="@dimen/ism_dp_13"
+            android:background="@color/ism_seperator_grey" />
+
+      </RelativeLayout>
+
+      <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/rvDelivered"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/rlDeliveredHeader"/>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerFrameLayoutDelivery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlDeliveredHeader"
+        android:visibility="gone"
+        >
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical">
+
+        <include layout="@layout/ism_message_delivery_read_status_item_shimmer" />
+        <include layout="@layout/ism_message_delivery_read_status_item_shimmer" />
+        <include layout="@layout/ism_message_delivery_read_status_item_shimmer" />
+
+      </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tvNoDeliveryUsers"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_centerInParent="true"
+          android:drawablePadding="@dimen/ism_dp_8"
+          app:drawableTopCompat="@drawable/ism_ic_no_users"
+          android:gravity="center"
+          android:text="@string/ism_read_by_none"
+          android:textColor="@color/ism_black"
+          android:visibility="gone"
+          android:layout_margin="@dimen/ism_dp_16"
+          />
+
+    </RelativeLayout>
+
+</RelativeLayout>

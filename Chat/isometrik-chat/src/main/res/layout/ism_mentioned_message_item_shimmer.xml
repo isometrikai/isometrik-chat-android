@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/ism_white"
+    >
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivConversationImage"
+      android:layout_width="@dimen/ism_dp_64"
+      android:layout_height="@dimen/ism_dp_64"
+      app:srcCompat="@drawable/ism_ic_profile"
+      android:layout_marginEnd="@dimen/ism_dp_8"
+      android:layout_marginStart="@dimen/ism_dp_8"
+      android:layout_marginTop="@dimen/ism_dp_13"
+      android:layout_marginBottom="@dimen/ism_dp_13"
+      app:tint="@color/ism_shimmer_grey"
+      />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivOnlineStatus"
+      android:layout_width="@dimen/ism_dp_17"
+      android:layout_height="@dimen/ism_dp_17"
+      android:layout_alignEnd="@+id/ivConversationImage"
+      android:layout_alignBottom="@+id/ivConversationImage"
+      app:srcCompat="@drawable/ism_user_online_status_circle"
+      app:tint="@color/ism_shimmer_grey"
+      />
+
+  <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tvMentionedBy"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_toEndOf="@+id/ivConversationImage"
+      android:layout_alignTop="@+id/ivConversationImage"
+      android:layout_marginTop="@dimen/ism_dp_2"
+      android:layout_marginEnd="@dimen/ism_dp_13"
+      android:textSize="@dimen/ism_sp_16"
+      android:paddingStart="@dimen/ism_dp_5"
+      android:paddingEnd="@dimen/ism_dp_0"
+      android:background="@color/ism_shimmer_grey"
+      />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivMentionedMessageType"
+      android:layout_width="@dimen/ism_dp_16"
+      android:layout_height="@dimen/ism_dp_16"
+      android:layout_toEndOf="@+id/ivConversationImage"
+      android:layout_below="@+id/tvMentionedBy"
+      android:layout_alignTop="@+id/tvMentionedMessage"
+      android:layout_marginTop="@dimen/ism_dp_2"
+      android:paddingStart="@dimen/ism_dp_5"
+      android:paddingEnd="@dimen/ism_dp_0"
+      android:background="@color/ism_shimmer_grey"
+      />
+
+  <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tvMentionedMessage"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/tvMentionedBy"
+      android:layout_toEndOf="@+id/ivMentionedMessageType"
+      android:layout_marginStart="@dimen/ism_dp_5"
+      android:layout_marginEnd="@dimen/ism_dp_13"
+      android:layout_marginTop="@dimen/ism_dp_2"
+      android:paddingStart="@dimen/ism_dp_5"
+      android:paddingEnd="@dimen/ism_dp_0"
+      android:background="@color/ism_shimmer_grey"
+      />
+
+  <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tvMentionedMessageTime"
+      android:layout_width="@dimen/ism_dp_50"
+      android:layout_height="wrap_content"
+      android:layout_alignParentEnd="true"
+      android:layout_below="@+id/tvMentionedMessage"
+      android:layout_marginTop="@dimen/ism_dp_5"
+      android:layout_marginEnd="@dimen/ism_dp_6"
+      android:background="@color/ism_shimmer_grey"
+      />
+
+  <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tvConversationTitle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/tvMentionedMessage"
+      android:layout_toEndOf="@+id/ivConversationImage"
+      android:layout_toStartOf="@+id/tvMentionedMessageTime"
+      android:layout_marginEnd="@dimen/ism_dp_13"
+      android:layout_marginTop="@dimen/ism_dp_2"
+      android:paddingStart="@dimen/ism_dp_5"
+      android:paddingEnd="@dimen/ism_dp_0"
+      android:background="@color/ism_shimmer_grey"
+      />
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/ism_dp_1"
+      android:layout_alignStart="@+id/tvMentionedBy"
+      android:layout_below="@+id/ivConversationImage"
+      android:background="@color/ism_shimmer_grey"
+      />
+
+</RelativeLayout>

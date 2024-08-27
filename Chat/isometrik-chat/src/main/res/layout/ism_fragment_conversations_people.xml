@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+  <RelativeLayout
+      android:id="@+id/rlSearch"
+      android:layout_width="wrap_content"
+      android:background="@drawable/ism_send_message_background"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/ism_dp_16"
+      android:layout_marginBottom="@dimen/ism_dp_5"
+      android:layout_marginStart="@dimen/ism_dp_16"
+      android:layout_marginEnd="@dimen/ism_dp_16"
+      android:elevation="@dimen/ism_dp_1"
+      >
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/ism_search_people"
+        android:maxLength="100"
+        android:maxLines="3"
+        android:paddingBottom="@dimen/ism_dp_10"
+        android:paddingStart="@dimen/ism_dp_16"
+        android:paddingEnd="@dimen/ism_dp_16"
+        android:paddingTop="@dimen/ism_dp_10"
+        android:textColor="@color/ism_hint_grey"
+        android:textColorHint="@color/ism_hint_grey"
+        android:textSize="@dimen/ism_sp_14"
+        android:background="@drawable/ism_send_message_background"
+        />
+  </RelativeLayout>
+
+  <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tvAddConversationPeople"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/ism_select_conversations"
+      android:textColor="@color/ism_conversation_details_grey"
+      android:layout_margin="@dimen/ism_dp_13"
+      android:layout_below="@+id/rlSearch"
+      android:textStyle="bold"
+      />
+
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/rvConversationPeopleSelected"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/tvAddConversationPeople"
+      android:layout_marginEnd="@dimen/ism_dp_9"
+      />
+
+  <View
+      android:id="@+id/vConversationPeopleDivider"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/ism_dp_1"
+      android:layout_below="@+id/rvConversationPeopleSelected"
+      android:layout_marginEnd="@dimen/ism_dp_13"
+      android:layout_marginStart="@dimen/ism_dp_13"
+      android:background="@color/ism_line_gray"
+      />
+
+  <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+      android:id="@+id/refresh"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@+id/vConversationPeopleDivider"
+      >
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvConversationsPeople"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbarStyle="outsideInset" />
+
+  </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+  <com.facebook.shimmer.ShimmerFrameLayout
+      android:id="@+id/shimmerFrameLayout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/vConversationPeopleDivider"
+      android:visibility="gone"
+      >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+      <include layout="@layout/ism_broadcast_forward_conversation_user_item_shimmer" />
+      <include layout="@layout/ism_broadcast_forward_conversation_user_item_shimmer" />
+      <include layout="@layout/ism_broadcast_forward_conversation_user_item_shimmer" />
+      <include layout="@layout/ism_broadcast_forward_conversation_user_item_shimmer" />
+      <include layout="@layout/ism_broadcast_forward_conversation_user_item_shimmer" />
+      <include layout="@layout/ism_broadcast_forward_conversation_user_item_shimmer" />
+
+    </LinearLayout>
+  </com.facebook.shimmer.ShimmerFrameLayout>
+
+  <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tvNoConversationsPeople"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:drawablePadding="@dimen/ism_dp_8"
+      app:drawableTopCompat="@drawable/ism_ic_no_users"
+      android:gravity="center"
+      android:text="@string/ism_forward_no_conversation"
+      android:textColor="@color/ism_black"
+      android:layout_below="@+id/vConversationPeopleDivider"
+      android:visibility="gone"
+      />
+
+</RelativeLayout>

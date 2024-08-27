@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:id="@+id/broadcast"
+      android:title="@string/ism_broadcast_message" />
+  <item android:id="@+id/blocked"
+      android:title="@string/ism_blocked_users" />
+</menu>

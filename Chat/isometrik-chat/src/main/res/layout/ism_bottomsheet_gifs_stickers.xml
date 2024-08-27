@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+  <View
+      android:id="@+id/vPeek"
+      android:layout_margin="@dimen/ism_dp_20"
+      android:layout_width="@dimen/ism_dp_80"
+      android:layout_height="@dimen/ism_dp_4"
+      android:layout_centerHorizontal="true"
+      android:background="@drawable/ism_peek_rectangle_background"
+      android:layout_marginBottom="@dimen/ism_dp_5"
+      />
+
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/rvGifsStickersCategories"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/ism_dp_5"
+      android:layout_marginStart="@dimen/ism_dp_5"
+      android:focusableInTouchMode="true"
+      android:layout_below="@+id/vPeek"
+      />
+
+  <View
+      android:id="@+id/vSeperator"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/ism_dp_0_5"
+      android:background="@color/ism_gif_sticker_seperator_grey"
+      android:layout_below="@+id/rvGifsStickersCategories"
+      />
+
+  <RelativeLayout
+      android:id="@+id/rlSearch"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/ism_dp_40"
+      android:layout_below="@+id/vSeperator"
+      android:layout_margin="@dimen/ism_dp_16"
+      android:background="@drawable/ism_gif_sticker_search_background"
+      android:elevation="@dimen/ism_dp_0_5"
+      android:visibility="gone"
+      >
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etSearch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/ism_dp_5"
+        android:layout_marginStart="@dimen/ism_dp_8"
+        android:layout_toStartOf="@+id/btSearch"
+        android:background="@android:color/transparent"
+        android:inputType="text"
+        android:textColor="@color/ism_black"
+        android:hint="@string/ism_search_stickers"
+        android:padding="@dimen/ism_dp_8"
+        android:maxLines="1" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btSearch"
+        android:layout_width="@dimen/ism_dp_80"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/ism_create_conversation_rectangle"
+        android:clickable="true"
+        android:text="@string/ism_search"
+        android:textColor="@color/ism_white"
+        android:focusable="true"
+        />
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/rlSearch"
+      android:minHeight="@dimen/ism_dp_200"
+      >
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvGifsStickers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
+        />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        >
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/vDummy"
+            android:layout_centerHorizontal="true"
+            android:layout_width="@dimen/ism_dp_0"
+            android:layout_height="@dimen/ism_dp_0"/>
+
+        <include
+            android:id="@+id/v1"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_toStartOf="@+id/vDummy"
+            layout="@layout/ism_gif_sticker_item_shimmer" />
+        <include
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_toEndOf="@+id/vDummy"
+            layout="@layout/ism_gif_sticker_item_shimmer" />
+        <include
+            android:layout_below="@+id/v1"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_toStartOf="@+id/vDummy"
+            layout="@layout/ism_gif_sticker_item_shimmer" />
+        <include
+            android:layout_toEndOf="@+id/vDummy"
+            android:layout_below="@+id/v1"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            layout="@layout/ism_gif_sticker_item_shimmer" />
+
+      </RelativeLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+    <TextView
+        android:id="@+id/tvNoGifsStickers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/ism_no_gifs_stickers_category"
+        android:textColor="@color/ism_black"
+        android:textSize="@dimen/ism_sp_14"
+        android:visibility="gone"
+        />
+
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        app:indicatorColor="@color/ism_black"
+        app:trackThickness="@dimen/ism_dp_2"
+        app:trackColor="@color/ism_seperator_grey"
+        android:id="@+id/pbLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:indeterminate="true"
+        app:indicatorSize="@dimen/ism_dp_24"
+        />
+  </RelativeLayout>
+
+  </RelativeLayout>

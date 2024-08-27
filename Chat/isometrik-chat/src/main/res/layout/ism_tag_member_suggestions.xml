@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/ism_white"
+    >
+
+  <View
+      android:id="@+id/vSeperator"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/ism_dp_1"
+      android:background="@color/ism_line_gray"
+      />
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/rvUsers"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:scrollbarStyle="outsideInset"
+      android:layout_below="@+id/vSeperator"
+      />
+
+</RelativeLayout>

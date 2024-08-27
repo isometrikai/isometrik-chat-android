@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/ism_dp_56"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:id="@+id/llColorPalette"
+    >
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivColorBlack"
+      android:layout_width="@dimen/ism_dp_48"
+      android:layout_height="match_parent"
+      app:srcCompat="@drawable/ism_whiteboard_black_circle"
+      android:paddingTop="@dimen/ism_dp_16"
+      android:paddingBottom="@dimen/ism_dp_16"
+      android:paddingStart="@dimen/ism_dp_12"
+      android:paddingEnd="@dimen/ism_dp_12"
+      android:scaleY="1.5"
+      android:scaleX="1.5"/>
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivColorRed"
+      android:layout_width="@dimen/ism_dp_48"
+      android:layout_height="match_parent"
+      app:srcCompat="@drawable/ism_whiteboard_red_circle"
+      android:paddingTop="@dimen/ism_dp_16"
+      android:paddingBottom="@dimen/ism_dp_16"
+      android:paddingStart="@dimen/ism_dp_12"
+      android:paddingEnd="@dimen/ism_dp_12" />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivColorYellow"
+      android:layout_width="@dimen/ism_dp_48"
+      android:layout_height="match_parent"
+      app:srcCompat="@drawable/ism_whiteboard_yellow_circle"
+      android:paddingTop="@dimen/ism_dp_16"
+      android:paddingBottom="@dimen/ism_dp_16"
+      android:paddingStart="@dimen/ism_dp_12"
+      android:paddingEnd="@dimen/ism_dp_12" />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivColorGreen"
+      android:layout_width="@dimen/ism_dp_48"
+      android:layout_height="match_parent"
+      app:srcCompat="@drawable/ism_whiteboard_green_circle"
+      android:paddingTop="@dimen/ism_dp_16"
+      android:paddingBottom="@dimen/ism_dp_16"
+      android:paddingStart="@dimen/ism_dp_12"
+      android:paddingEnd="@dimen/ism_dp_12" />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivColorBlue"
+      android:layout_width="@dimen/ism_dp_48"
+      android:layout_height="match_parent"
+      app:srcCompat="@drawable/ism_whiteboard_blue_circle"
+      android:paddingTop="@dimen/ism_dp_16"
+      android:paddingBottom="@dimen/ism_dp_16"
+      android:paddingStart="@dimen/ism_dp_12"
+      android:paddingEnd="@dimen/ism_dp_12" />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivColorPink"
+      android:layout_width="@dimen/ism_dp_48"
+      android:layout_height="match_parent"
+      app:srcCompat="@drawable/ism_whiteboard_pink_circle"
+      android:paddingTop="@dimen/ism_dp_16"
+      android:paddingBottom="@dimen/ism_dp_16"
+      android:paddingStart="@dimen/ism_dp_12"
+      android:paddingEnd="@dimen/ism_dp_12" />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivColorBrown"
+      android:layout_width="@dimen/ism_dp_48"
+      android:layout_height="match_parent"
+      app:srcCompat="@drawable/ism_whiteboard_brown_circle"
+      android:paddingTop="@dimen/ism_dp_16"
+      android:paddingBottom="@dimen/ism_dp_16"
+      android:paddingStart="@dimen/ism_dp_12"
+      android:paddingEnd="@dimen/ism_dp_12" />
+</LinearLayout>

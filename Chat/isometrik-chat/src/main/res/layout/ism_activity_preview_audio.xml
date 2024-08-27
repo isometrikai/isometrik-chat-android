@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ism_preview_image_background_grey"
+    >
+
+  <com.google.android.exoplayer2.ui.PlayerControlView
+      android:id="@+id/pControlView"
+      app:show_timeout="0"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivDefaultImage"
+      android:layout_width="@dimen/ism_dp_72"
+      android:layout_height="@dimen/ism_dp_72"
+      android:layout_centerInParent="true"
+      app:srcCompat="@drawable/ism_ic_mic"
+      />
+
+  <TextView
+      android:id="@+id/tvAudioName"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerHorizontal="true"
+      android:layout_margin="@dimen/ism_dp_13"
+      android:layout_below="@+id/ivDefaultImage"
+      android:textColor="@color/ism_black"
+      />
+  <com.google.android.material.progressindicator.CircularProgressIndicator
+      android:id="@+id/pbBuffering"
+      android:layout_width="@dimen/ism_dp_34"
+      android:layout_height="@dimen/ism_dp_34"
+      app:indicatorSize="@dimen/ism_dp_16"
+      app:indicatorColor="@color/ism_black"
+      app:trackThickness="@dimen/ism_dp_2"
+      app:trackColor="@color/ism_white"
+      android:layout_centerInParent="true"
+      android:indeterminate="true"
+      />
+
+
+  <androidx.appcompat.widget.AppCompatImageButton
+      android:id="@+id/ibClose"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="@android:color/transparent"
+      android:padding="@dimen/ism_dp_16"
+      android:tint="@color/ism_black"
+      app:srcCompat="@drawable/ism_ic_close"
+      />
+
+</RelativeLayout>

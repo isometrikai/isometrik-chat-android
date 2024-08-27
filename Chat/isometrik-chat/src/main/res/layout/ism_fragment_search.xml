@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+  <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+      android:id="@+id/refresh"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSearchItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbarStyle="outsideInset" />
+
+  </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+  <com.facebook.shimmer.ShimmerFrameLayout
+      android:id="@+id/shimmerFrameLayoutConversations"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:visibility="gone"
+      >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+      <include layout="@layout/ism_search_conversations_item_shimmer" />
+      <include layout="@layout/ism_search_conversations_item_shimmer" />
+      <include layout="@layout/ism_search_conversations_item_shimmer" />
+      <include layout="@layout/ism_search_conversations_item_shimmer" />
+      <include layout="@layout/ism_search_conversations_item_shimmer" />
+      <include layout="@layout/ism_search_conversations_item_shimmer" />
+
+    </LinearLayout>
+  </com.facebook.shimmer.ShimmerFrameLayout>
+
+  <com.facebook.shimmer.ShimmerFrameLayout
+      android:id="@+id/shimmerFrameLayoutMessages"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:visibility="gone"
+      >
+
+      <include layout="@layout/ism_activity_messages_shimmer" />
+
+  </com.facebook.shimmer.ShimmerFrameLayout>
+
+  <com.facebook.shimmer.ShimmerFrameLayout
+      android:id="@+id/shimmerFrameLayoutPeople"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:visibility="gone"
+      >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+      <include layout="@layout/ism_search_people_item_shimmer" />
+      <include layout="@layout/ism_search_people_item_shimmer" />
+      <include layout="@layout/ism_search_people_item_shimmer" />
+      <include layout="@layout/ism_search_people_item_shimmer" />
+      <include layout="@layout/ism_search_people_item_shimmer" />
+      <include layout="@layout/ism_search_people_item_shimmer" />
+
+    </LinearLayout>
+  </com.facebook.shimmer.ShimmerFrameLayout>
+
+  <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tvNoSearchItems"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:drawablePadding="@dimen/ism_dp_8"
+      app:drawableTopCompat="@drawable/ism_ic_no_users"
+      android:gravity="center"
+      android:text="@string/ism_forward_no_conversation"
+      android:textColor="@color/ism_black"
+      android:visibility="gone"
+      />
+
+</RelativeLayout>

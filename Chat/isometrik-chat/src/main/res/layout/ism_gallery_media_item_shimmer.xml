@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/ism_dp_260"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/ism_white"
+    >
+
+  <View
+      android:layout_width="@dimen/ism_dp_0_5"
+      android:layout_height="match_parent"
+      android:layout_alignParentEnd="true"
+      android:background="@color/ism_shimmer_grey"
+      />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivMediaImage"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:scaleType="centerCrop"
+      />
+
+  <TextView
+      android:id="@+id/tvMediaSize"
+      android:layout_width="@dimen/ism_dp_24"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/ism_dp_5"
+      android:layout_alignParentEnd="true"
+      android:textSize="@dimen/ism_sp_12"
+      android:background="@color/ism_shimmer_grey"
+      />
+
+  <TextView
+      android:id="@+id/tvMediaDescription"
+      android:layout_width="@dimen/ism_dp_40"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:layout_margin="@dimen/ism_dp_16"
+      android:background="@color/ism_shimmer_grey"
+      />
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:padding="@dimen/ism_dp_5"
+    >
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivSenderImage"
+      android:layout_width="@dimen/ism_dp_36"
+      android:layout_height="@dimen/ism_dp_36"
+      app:srcCompat="@drawable/ism_ic_profile"
+      android:layout_marginStart="@dimen/ism_dp_5"
+      android:layout_marginEnd="@dimen/ism_dp_5"
+      android:layout_centerVertical="true"
+      app:tint="@color/ism_shimmer_grey"
+      />
+
+  <TextView
+      android:id="@+id/tvSenderName"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/ism_dp_4"
+      android:layout_marginEnd="@dimen/ism_dp_5"
+      android:layout_toEndOf="@+id/ivSenderImage"
+      android:textSize="@dimen/ism_sp_14"
+      android:layout_toStartOf="@+id/ivMediaType"
+      android:background="@color/ism_shimmer_grey"
+      />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivMediaType"
+        android:layout_alignParentEnd="true"
+        android:layout_width="@dimen/ism_dp_16"
+        android:layout_height="@dimen/ism_dp_16"
+        android:layout_margin="@dimen/ism_dp_5"
+        android:tint="@color/ism_shimmer_grey"
+        />
+
+  <TextView
+      android:id="@+id/tvMediaType"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/ism_dp_5"
+      android:layout_marginTop="@dimen/ism_dp_2"
+      android:layout_marginBottom="@dimen/ism_dp_5"
+      android:layout_toEndOf="@+id/ivSenderImage"
+      android:layout_below="@+id/tvSenderName"
+      android:textSize="@dimen/ism_sp_12"
+      android:layout_toStartOf="@+id/tvTime"
+      android:background="@color/ism_shimmer_grey"
+      />
+
+  <TextView
+      android:id="@+id/tvTime"
+      android:layout_width="@dimen/ism_dp_30"
+      android:layout_height="wrap_content"
+      android:layout_alignParentEnd="true"
+      android:layout_marginEnd="@dimen/ism_dp_5"
+      android:layout_below="@+id/tvSenderName"
+      android:layout_marginTop="@dimen/ism_dp_4"
+      android:textSize="@dimen/ism_sp_10"
+      android:background="@color/ism_shimmer_grey"
+      />
+
+</RelativeLayout>
+
+</RelativeLayout>

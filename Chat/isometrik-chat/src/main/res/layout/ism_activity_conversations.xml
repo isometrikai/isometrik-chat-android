@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:keepScreenOn="true"
+    >
+
+  <com.google.android.material.appbar.AppBarLayout
+      android:id="@+id/abLayout"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      style="@style/ThemeOverlay.AppCompat.ActionBar"
+      >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/ism_white"
+        >
+
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/ivMentionedMessages"
+          android:layout_width="@dimen/ism_dp_36"
+          android:layout_height="@dimen/ism_dp_36"
+          android:padding="@dimen/ism_dp_5"
+          android:layout_centerVertical="true"
+          app:srcCompat="@drawable/ism_ic_mentioned_messages"
+          android:layout_marginStart="@dimen/ism_dp_8"
+          app:tint="@color/ism_icon_gray"
+          />
+
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/ivUserImage"
+          android:layout_width="@dimen/ism_dp_40"
+          android:layout_height="@dimen/ism_dp_40"
+          android:layout_centerInParent="true"
+          app:srcCompat="@drawable/ism_ic_profile"
+           />
+
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/ivSearch"
+          android:layout_width="@dimen/ism_dp_40"
+          android:layout_height="@dimen/ism_dp_40"
+          android:padding="@dimen/ism_dp_6"
+          android:layout_centerVertical="true"
+          app:srcCompat="@drawable/ism_ic_search"
+          android:layout_toStartOf="@+id/ivMore"
+          android:layout_marginEnd="@dimen/ism_dp_8"
+          app:tint="@color/ism_icon_gray"
+          />
+
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/ivMore"
+          android:layout_width="@dimen/ism_dp_36"
+          android:layout_height="@dimen/ism_dp_36"
+          android:padding="@dimen/ism_dp_8"
+          android:layout_centerVertical="true"
+          app:srcCompat="@drawable/ism_ic_more"
+          android:layout_alignParentEnd="true"
+          android:layout_marginEnd="@dimen/ism_dp_5"
+          app:tint="@color/ism_icon_gray"
+          />
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/ism_dp_1"
+          android:layout_alignParentBottom="true"
+          android:background="@color/ism_line_gray"
+          />
+
+    </RelativeLayout>
+  </com.google.android.material.appbar.AppBarLayout>
+
+  <androidx.viewpager2.widget.ViewPager2
+      android:id="@+id/vpConversations"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@+id/abLayout"
+      android:layout_above="@+id/seperator"
+
+      />
+
+  <View
+      android:id="@+id/seperator"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/ism_dp_1"
+      android:layout_above="@+id/tabLayout"
+      android:background="@color/ism_line_gray"
+      />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivNext"
+      android:layout_width="@dimen/ism_dp_60"
+      android:layout_height="@dimen/ism_dp_60"
+      android:layout_above="@+id/tabLayout"
+      android:layout_alignParentEnd="true"
+      android:layout_marginStart="@dimen/ism_dp_18"
+      android:layout_marginTop="@dimen/ism_dp_18"
+      android:layout_marginEnd="@dimen/ism_dp_18"
+      android:layout_marginBottom="@dimen/ism_dp_18"
+      android:background="@drawable/ism_create_conversation_circle"
+      android:clickable="true"
+      android:elevation="@dimen/ism_dp_5"
+      android:focusable="true"
+      android:padding="@dimen/ism_dp_16"
+      android:tint="@color/ism_white"
+      app:srcCompat="@drawable/ism_ic_new_conversation" />
+
+  <com.google.android.material.tabs.TabLayout
+      android:id="@+id/tabLayout"
+      android:theme="@style/Theme.MaterialComponents.Bridge"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:background="@android:color/transparent"
+      app:tabGravity="center"
+      app:tabIndicatorColor="@color/ism_tab_selected_blue"
+      app:tabIndicatorHeight="@dimen/ism_dp_1"
+      app:tabMode="scrollable"
+      app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+      app:tabTextColor="@color/ism_tab_unselected_grey"
+      app:tabSelectedTextColor="@color/ism_tab_selected_blue"
+      app:tabInlineLabel="true"
+      app:tabIconTint="@color/ism_tab_icon_selector"
+      />
+  <include
+      android:id="@+id/incConnectionState"
+      android:layout_marginTop="?attr/actionBarSize"
+      layout="@layout/ism_overlay_connection_state"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+
+</RelativeLayout>

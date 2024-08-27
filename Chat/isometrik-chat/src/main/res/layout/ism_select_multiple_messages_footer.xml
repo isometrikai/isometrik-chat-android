@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:weightSum="3"
+    android:baselineAligned="false"
+    android:background="@color/ism_white"
+    >
+
+  <RelativeLayout
+    android:id="@+id/rlCopy"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      >
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivCopy"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/ism_dp_16"
+        android:layout_marginBottom="@dimen/ism_dp_8"
+        android:layout_width="@dimen/ism_dp_45"
+        android:layout_height="@dimen/ism_dp_45"
+        android:padding="@dimen/ism_dp_12"
+        app:srcCompat="@drawable/ism_ic_copy"
+        android:background="@drawable/ism_attachment_unselected_background"
+        app:tint="@color/ism_multiple_messages_actions_selector"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCopy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ism_copy_heading"
+        android:layout_below="@+id/ivCopy"
+        android:layout_centerHorizontal="true"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="@dimen/ism_sp_12"
+        android:layout_marginBottom="@dimen/ism_dp_13"
+        android:textColor="@color/ism_multiple_messages_actions_selector"
+        />
+
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:id="@+id/rlDeleteForMe"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      >
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivDeleteForMe"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/ism_dp_16"
+        android:layout_marginBottom="@dimen/ism_dp_8"
+        android:layout_width="@dimen/ism_dp_45"
+        android:layout_height="@dimen/ism_dp_45"
+        android:padding="@dimen/ism_dp_12"
+        app:srcCompat="@drawable/ism_ic_remove_message"
+        android:background="@drawable/ism_attachment_unselected_background"
+        app:tint="@color/ism_multiple_messages_actions_selector"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDeleteForMe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ism_delete_for_me_heading"
+        android:layout_below="@+id/ivDeleteForMe"
+        android:layout_centerHorizontal="true"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="@dimen/ism_sp_12"
+        android:layout_marginBottom="@dimen/ism_dp_13"
+        android:textColor="@color/ism_multiple_messages_actions_selector"
+        />
+
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:id="@+id/rlDeleteForAll"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      >
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivDeleteForAll"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/ism_dp_16"
+        android:layout_marginBottom="@dimen/ism_dp_8"
+        android:layout_width="@dimen/ism_dp_45"
+        android:layout_height="@dimen/ism_dp_45"
+        android:padding="@dimen/ism_dp_12"
+        app:srcCompat="@drawable/ism_ic_trash"
+        android:background="@drawable/ism_attachment_unselected_background"
+        app:tint="@color/ism_multiple_messages_actions_selector"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDeleteForAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ism_delete_for_all_heading"
+        android:layout_below="@+id/ivDeleteForAll"
+        android:layout_centerHorizontal="true"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="@dimen/ism_sp_12"
+        android:layout_marginBottom="@dimen/ism_dp_13"
+        android:textColor="@color/ism_multiple_messages_actions_selector"
+        />
+
+  </RelativeLayout>
+</LinearLayout>

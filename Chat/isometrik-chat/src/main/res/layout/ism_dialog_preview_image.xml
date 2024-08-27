@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/ism_preview_image_background_grey"
+    >
+  <io.isometrik.ui.messages.preview.image.utils.touchview.TouchImageView
+      android:id="@+id/ivPreview"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      />
+
+  <androidx.appcompat.widget.AppCompatImageButton
+      android:id="@+id/ibClose"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="@android:color/transparent"
+      android:padding="@dimen/ism_dp_16"
+      app:srcCompat="@drawable/ism_ic_close"
+      />
+</RelativeLayout>

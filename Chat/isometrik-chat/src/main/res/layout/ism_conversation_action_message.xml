@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatTextView
+    android:id="@+id/tvActionMessage"
+    android:layout_width="match_parent"
+    android:layout_margin="@dimen/ism_dp_8"
+    android:layout_height="wrap_content"
+    android:textColor="@color/ism_action_message_grey"
+    android:text="@string/ism_send_message"
+    android:gravity="center_horizontal"
+    android:textSize="@dimen/ism_sp_16"
+    android:maxLines="10"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    />

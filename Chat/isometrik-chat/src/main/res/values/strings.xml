@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="ism_app_name" translatable="false">Isometrik</string>
+    <string name="ism_error">Failed to complete requested operation, check Isometrik sdk logs for more details</string>
+
+
+    <!-- Users Activity   -->
+    <string name="ism_create_user">Create User</string>
+    <string name="ism_no_users">No registered users found</string>
+    <string name="ism_users">Users</string>
+    <string name="ism_select">Select</string>
+    <string name="ism_fetching_users">Fetching users</string>
+    <string name="ism_continue">CONTINUE</string>
+    <string name="ism_cancel">CANCEL</string>
+    <string name="ism_search_users_hint">Search users…</string>
+    <string name="ism_user_image_alert_heading">User profile image</string>
+    <string name="ism_user_image_alert_message">Create user without a profile image?</string>
+
+    <!-- Create User Activity   -->
+
+    <string name="ism_next">Next</string>
+    <string name="ism_user_name">User Name*</string>
+    <string name="ism_user_identifier">User Identifier*</string>
+    <string name="ism_user_password">User Password*</string>
+    <string name="ism_user_metadata">User Metadata</string>
+    <string name="ism_enter_user_name">Enter user name</string>
+    <string name="ism_enter_user_identifier">Enter username, phone or email</string>
+    <string name="ism_enter_user_password">Enter user password</string>
+    <string name="ism_enter_user_metadata">Enter user\'s additional info</string>
+    <string name="ism_select_user"> Select user</string>
+    <string name="ism_avoid_create_user">Don\'t wanna create user?</string>
+    <string name="ism_permission_image_capture">Grant permission to capture image!!</string>
+    <string name="ism_permission_image_capture_denied">Permission to capture image denied!!</string>
+    <string name="ism_image_capture_canceled">Image capture canceled!!</string>
+    <string name="ism_image_capture_failure">Failed to capture image!!</string>
+    <string name="ism_camera_not_found">Camera not found!!</string>
+    <string name="ism_ok">OK</string>
+    <string name="ism_invalid_username">Add user name to continue!!</string>
+    <string name="ism_invalid_user_identifier">Add user identifier to continue!!</string>
+    <string name="ism_missing_user_password">Add user password to continue!!</string>
+    <string name="ism_invalid_user_password">Password must be atleast 6 characters long and should have atleast one each of digit,small,capital alphabets and special character!!</string>
+    <string name="ism_invalid_user_image">Add user profile pic to continue!!</string>
+    <string name="ism_creating_user">Creating user</string>
+    <string name="ism_uploading_image">Uploading image</string>
+    <string name="ism_unexpected_error">Unexpected error, Try again!!</string>
+
+
+    <!-- Edit User Activity   -->
+
+    <string name="ism_save">Save</string>
+    <string name="ism_edit_user">Edit User</string>
+    <string name="ism_updating_user_details">Updating user details</string>
+    <string name="ism_edit_user_details_canceled">Edit user details canceled!!</string>
+
+    <!-- User Details Activity   -->
+
+    <string name="ism_user_details">User Details</string>
+    <string name="ism_user_name_holder">User Name</string>
+    <string name="ism_user_identifier_holder">User Identifier</string>
+    <string name="ism_user_metadata_holder">User Metadata</string>
+    <string name="ism_user_notifications_holder">Notifications</string>
+    <string name="ism_switch_user">Switch User</string>
+    <string name="ism_deleting_user">Deleting user</string>
+
+    <!-- Connection activity -->
+
+    <string name="ism_connection_lost">You are offline!!</string>
+
+    <!-- Attachment bottom sheet -->
+
+    <string name="ism_photos">Photos</string>
+    <string name="ism_videos">Videos</string>
+    <string name="ism_files">Files</string>
+    <string name="ism_location">Location</string>
+    <string name="ism_contact">Contact</string>
+    <string name="ism_whiteboard">Whiteboard</string>
+    <string name="ism_sticker">Sticker</string>
+    <string name="ism_gif">GIF</string>
+    <string name="ism_share_photos">Share photos</string>
+    <string name="ism_share_videos">Share videos</string>
+    <string name="ism_share_files">Share files</string>
+    <string name="ism_share_location">Share location</string>
+    <string name="ism_share_contact">Share contact</string>
+    <string name="ism_share_whiteboard">Draw on whiteboard</string>
+    <string name="ism_share_sticker">Share sticker</string>
+    <string name="ism_share_gif">Share gif</string>
+    <string name="ism_attachments_title">Attachments</string>
+
+    <!-- New conversation activity -->
+
+    <string name="ism_new_conversation_title">New Conversation</string>
+    <string name="ism_new_private_onetoone_conversation">New Private 1-to-1 Conversation</string>
+    <string name="ism_new_private_group_conversation">New Private Group Conversation</string>
+    <string name="ism_new_public_group_conversation">New Public Conversation</string>
+    <string name="ism_new_open_conversation">New Open Conversation</string>
+
+    <!--  New conversation title/image/settings activity-->
+
+    <string name="ism_public_conversation_title_hint">Public conversation title</string>
+    <string name="ism_private_conversation_title_hint">Private conversation title</string>
+    <string name="ism_open_conversation_title_hint">Open conversation title</string>
+    <string name="ism_setting_notification">Send notifications</string>
+    <string name="ism_setting_typing_message">Send typing message events</string>
+    <string name="ism_setting_read_delivery">Send message delivery or read events</string>
+    <string name="ism_search_participants">Search participants…</string>
+    <string name="ism_conversation_image_alert_heading">Conversation cover image</string>
+    <string name="ism_conversation_image_alert_message">Create conversation without a cover image?</string>
+    <string name="ism_yes">Yes</string>
+    <string name="ism_no">No</string>
+
+    <!--  Conversation attachments activity-->
+
+    <string name="ism_gallery_title">Gallery</string>
+    <string name="ism_empty_attachments">It\'s empty at the moment.</string>
+    <string name="ism_no_media">Media shared in this conversation will appear here.</string>
+    <string name="ism_no_weblinks">Weblinks shared in this conversation will appear here.</string>
+    <string name="ism_no_files">Files shared in this conversation will appear here.</string>
+    <string name="ism_weblinks">Weblinks</string>
+    <string name="ism_media">Media</string>
+    <string name="ism_locations">Locations</string>
+    <string name="ism_contacts">Contacts</string>
+    <string name="ism_whiteboards">Whiteboards</string>
+    <string name="ism_stickers">Stickers</string>
+    <string name="ism_gifs">GIFs</string>
+    <string name="ism_audio_recordings">Audio recordings</string>
+
+
+    <!--  Conversation details activity-->
+
+    <string name="ism_conversation_details_title">Conversation Details</string>
+    <string name="ism_created_by">Created by %1$s</string>
+    <string name="ism_send_message">Send message</string>
+    <string name="ism_search_in_conversation">Search in conversation</string>
+    <string name="ism_participants_count">%1$d PARTICIPANTS</string>
+    <string name="ism_add_participants">Add participants</string>
+    <string name="ism_admin">Admin</string>
+    <string name="ism_make_admin">Make admin</string>
+    <string name="ism_remove_as_admin">Remove from admin</string>
+    <string name="ism_show_more">Show more</string>
+    <string name="ism_conversation_gallery">CONVERSATION GALLERY</string>
+    <string name="ism_conversation_settings">CONVERSATION SETTINGS</string>
+    <string name="ism_add_participants_canceled">Adding participants to conversation canceled</string>
+
+    <string name="ism_delete_conversation">Delete conversation</string>
+    <string name="ism_clear_conversation">Clear messages in conversation</string>
+    <string name="ism_leave_conversation">Leave conversation</string>
+    <string name="ism_join_conversation">Join conversation</string>
+    <string name="ism_empty_gallery_title">The Gallery Is Empty</string>
+    <string name="ism_empty_gallery_description">Photos, videos, files etc shared in this conversation will appear here.</string>
+
+    <string name="ism_update_notification_setting">%1$s notifications</string>
+    <string name="ism_update_typing_message_setting">%1$s typing message events</string>
+    <string name="ism_update_read_delivery_setting">%1$s message delivery or read events</string>
+    <string name="ism_update_conversation_settings">Update conversation settings</string>
+    <string name="ism_enable">Enable</string>
+    <string name="ism_disable">Disable</string>
+
+    <string name="ism_notification_setting">Notifications %1$s</string>
+    <string name="ism_typing_message_setting">Typing message events %1$s</string>
+    <string name="ism_read_delivery_setting">Message delivery or read events %1$s</string>
+    <string name="ism_enabled">enabled</string>
+    <string name="ism_disabled">disabled</string>
+    <string name="ism_updating_typing_message_settings">Updating typing message events settings</string>
+    <string name="ism_updating_message_delivery_read_settings">Updating message delivery or read events settings</string>
+    <string name="ism_updating_notification_settings">Updating notification settings</string>
+
+    <string name="ism_updating_conversation_title">Updating conversation title</string>
+    <string name="ism_updating_conversation_image">Updating conversation image</string>
+
+    <string name="ism_update_conversation_title_alert_heading">Update conversation title</string>
+    <string name="ism_update_conversation_image_alert_heading">Update conversation image</string>
+    <string name="ism_update_conversation_title_alert_message">Conversation title will be changed to %1$s</string>
+    <string name="ism_update_conversation_image_alert_message">Conversation image will be updated</string>
+
+    <string name="ism_leaving_conversation">Leaving conversation</string>
+    <string name="ism_clearing_conversation">Clearing conversation</string>
+    <string name="ism_deleting_conversation">Deleting conversation</string>
+    <string name="ism_type_something">Type something to send message</string>
+    <!-- Confirmation Alerts -->
+    <string name="ism_make_admin_alert_heading">Make %1$s admin</string>
+    <string name="ism_make_admin_alert_message">Granting admin privileges to a member will allow him to add/remove members, grant/revoke admin privileges and update settings of conversation</string>
+    <string name="ism_remove_as_admin_alert_heading">Remove %1$s as admin</string>
+    <string name="ism_remove_as_admin_alert_message">Once admin privileges are revoked, member will no longer be able to add/remove members, grant/revoke admin privileges or update settings of conversation</string>
+    <string name="ism_kick_out_member_heading">Kick-out %1$s</string>
+    <string name="ism_kick_out_member_alert_message">Once kicked out, a member will not receive any messages exchanged in conversation</string>
+
+    <string name="ism_clear_conversation_alert">Clearing conversation will delete all messages in conversation for you</string>
+    <string name="ism_delete_conversation_alert">Once deleted one cannot access conversation details or any messages exchanged in that conversation</string>
+    <string name="ism_leave_conversation_alert">Once left one cannot access conversation details or any messages exchanged in that conversation</string>
+
+    <!--  User chat details activity-->
+
+    <string name="ism_user_details_title">User Details</string>
+    <string name="ism_online_status">Active now</string>
+    <string name="ism_user_new_private_one_to_one_conversation">Create new private one to one conversation with %1$s</string>
+    <string name="ism_user_new_private_group_conversation">Create new private group conversation with %1$s</string>
+    <string name="ism_user_new_public_group_conversation">Create new public conversation with %1$s</string>
+    <string name="ism_user_new_open_conversation">Create new open conversation with %1$s</string>
+
+    <!-- Messages activity-->
+
+    <string name="ism_unavailable">Unavailable</string>
+    <string name="ism_type_something_here">Send a message…</string>
+    <string name="ism_downloaded_successfully">%1$s downloaded successfully</string>
+    <string name="ism_download_failed">%1$s download failed</string>
+    <string name="ism_download_failed_due_to">%1$s download failed due to %2$s</string>
+    <string name="ism_online">Online</string>
+    <string name="ism_offline">Offline</string>
+    <string name="ism_last_seen_at">Last seen: %1$s</string>
+    <string name="ism_typing">%1$s is typing…</string>
+
+    <string name="ism_download_upload_canceled">%1$s %2$s canceled</string>
+    <string name="ism_cancel_download_upload_failed">Failed to cancel %1$s of %2$s</string>
+
+    <string name="ism_request_storage_permission_to_download">Allow external storage access to download %s</string>
+    <string name="ism_storage_permission_to_download_denied">Access external storage permission to download media denied</string>
+    <string name="ism_storage_permission_to_download_granted">Media can now be downloaded as access external storage permission granted</string>
+
+    <string name="ism_request_location_permission">Grant location access to share location</string>
+    <string name="ism_location_permission_denied">Access location permission denied</string>
+    <string name="ism_location_not_enabled">Location not enabled</string>
+    <string name="ism_location_enable">Enable location</string>
+    <string name="ism_location_not_supported">Sharing location not supported in this device</string>
+    <string name="ism_request_record_audio_permission">Grant permission to record audio</string>
+    <string name="ism_record_audio_denied">Record audio permission denied</string>
+    <string name="ism_press_hold_to_record_audio">Press and hold audio share button to record audio</string>
+
+    <string name="ism_photos_selection_canceled">Photos selection canceled</string>
+    <string name="ism_videos_selection_canceled">Videos selection canceled</string>
+    <string name="ism_files_selection_canceled">Files selection canceled</string>
+    <string name="ism_contact_selection_canceled">Contact selection canceled</string>
+    <string name="ism_photos_selection_failed">Failed to select photos</string>
+    <string name="ism_videos_selection_failed">Failed to select videos</string>
+    <string name="ism_files_selection_failed">Failed to select files</string>
+    <string name="ism_contact_selection_failed">Failed to select contact</string>
+    <string name="ism_permission_photos_share">Grant permission to share photos!!</string>
+    <string name="ism_permission_photos_share_denied">Permission to share photos denied!!</string>
+    <string name="ism_permission_videos_share">Grant permission to share videos!!</string>
+    <string name="ism_permission_videos_share_denied">Permission to share videos denied!!</string>
+    <string name="ism_permission_files_share">Grant permission to share files!!</string>
+    <string name="ism_permission_files_share_denied">Permission to share files denied!!</string>
+    <string name="ism_permission_contact_share">Grant permission to share contact!!</string>
+    <string name="ism_permission_contact_share_denied">Permission to share contact denied!!</string>
+    <string name="ism_location_selection_canceled">Location selection canceled</string>
+    <string name="ism_location_selection_failed">Failed to select location</string>
+    <string name="ism_photos_selected_deleted">All selected photos have been deleted previously</string>
+    <string name="ism_videos_selected_deleted">All selected videos have been deleted previously</string>
+    <string name="ism_files_selected_deleted">All selected files have been deleted previously</string>
+    <string name="ism_photos_selection_limit_exceeded">Cannot send more than %1$d photos at a time</string>
+    <string name="ism_videos_selection_limit_exceeded">Cannot send more than %1$d videos at a time</string>
+    <string name="ism_files_selection_limit_exceeded">Cannot send more than %1$d files at a time</string>
+
+    <string name="ism_location_share_failed">Failed to share location</string>
+    <string name="ism_gif_share_failed">Failed to share gif</string>
+    <string name="ism_sticker_share_failed">Failed to share sticker</string>
+    <string name="ism_slide_to_cancel">Slide to cancel</string>
+    <string name="ism_audio_recordings_folder">AudioRecordings</string>
+    <string name="ism_audio_recordings_prefix">Recording_</string>
+    <string name="ism_audio_recordings_alert_heading">Audio Recording</string>
+    <string name="ism_audio_recordings_alert_message">Send recorded audio in conversation or discard it?</string>
+
+    <string name="ism_search_tag_text">/@text</string>
+    <string name="ism_search_tag_photo">/@photo</string>
+    <string name="ism_search_tag_video">/@video</string>
+    <string name="ism_search_tag_audio">/@audio</string>
+    <string name="ism_search_tag_file">/@file</string>
+    <string name="ism_search_tag_location">/@location</string>
+    <string name="ism_search_tag_contact">/@contact</string>
+    <string name="ism_search_tag_sticker">/@sticker</string>
+    <string name="ism_search_tag_gif">/@gif</string>
+    <string name="ism_search_tag_whiteboard">/@whiteboard</string>
+    <string name="ism_search_tag_forward">/@forward</string>
+    <string name="ism_search_messages_hint">Search messages…</string>
+    <string name="ism_group">Group</string>
+
+    <!--  Received messages-->
+
+    <string name="ism_comma">,</string>
+    <string name="ism_file">File</string>
+    <string name="ism_download">Download</string>
+    <string name="ism_upload">Upload</string>
+    <string name="ism_downloading">Downloading…</string>
+    <string name="ism_retry">Retry</string>
+    <string name="ism_attachments_cancel">Cancel</string>
+    <string name="ism_audio_recording">Audio recording</string>
+    <string name="ism_photo">Photo</string>
+    <string name="ism_video">Video</string>
+    <string name="ism_voice_message">Voice Message</string>
+    <string name="ism_sending">Sending…</string>
+    <string name="ism_failed">Failed…</string>
+    <string name="ism_forwarded">Forwarded</string>
+    <string name="ism_message_not_found">Message not found</string>
+
+    <!-- Message delivery status -->
+    <string name="ism_message_info">Message Info</string>
+    <string name="ism_delivered_to">Delivered To-</string>
+    <string name="ism_read_by">Read By-</string>
+    <string name="ism_pending_delivery_to">Pending Delivery To-</string>
+    <string name="ism_pending_read_by">Pending Read By-</string>
+    <string name="ism_delivery_read_events_disabled">Message delivery or read events has been disabled for conversation by the Admin.</string>
+
+    <!-- Add participants activity -->
+    <string name="ism_no_participants_to_add">No users found for adding to conversation.</string>
+    <string name="ism_add">Add</string>
+    <string name="ism_remove">Remove</string>
+    <string name="ism_fetching_participants">Fetching participants</string>
+    <string name="ism_adding_participants">Adding participants</string>
+    <string name="ism_atleast_one_participant">Select atleast participant to add to conversation</string>
+    <string name="ism_search_participants_to_add">Search participants to add…</string>
+    <string name="ism_add_participants_confirmation">Selected %1$d participants will be added to conversation</string>
+    <string name="ism_add_participant_confirmation">Selected participant will be added to conversation</string>
+
+    <!--  New group conversation activity-->
+    <string name="ism_conversation_title_missing">Conversation title can\'t be empty</string>
+    <string name="ism_max_participants_limit_reached">A conversation cannot have more than 100 members at time of creation. Other participants can be added later.</string>
+    <string name="ism_number_of_participants_selected">%1$s of %2$s participants</string>
+    <string name="ism_invalid_conversation_type">Invalid conversation type</string>
+    <string name="ism_conversation_image_missing">Conversation image can\'t be empty</string>
+    <string name="ism_creating_conversation">Creating conversation</string>
+    <string name="ism_invalid_conversation_image">Add conversation image to continue!!</string>
+    <string name="ism_no_participant_added">Add atleast one participant to continue!!</string>
+
+    <!--New one to one conversation activity-->
+    <string name="ism_select_user_for_conversation">Select user to start 1-to-1 conversation</string>
+    <string name="ism_no_user_selected">User must be selected to continue!!</string>
+    <string name="ism_unselect">UnSelect</string>
+
+    <!--  Delivery status activity-->
+    <string name="ism_pending">Pending</string>
+    <string name="ism_complete">Complete</string>
+
+    <!--  Delivery complete fragment-->
+    <string name="ism_delivered_to_none">Message delivered to none of the participants of conversation.</string>
+    <string name="ism_read_by_none">Message read by none of the participants of conversation.</string>
+
+    <!--  Delivery pending fragment-->
+    <string name="ism_delivery_pending_to_none">Message delivered to all of the participants of conversation.</string>
+    <string name="ism_read_pending_by_none">Message read by all of the participants of conversation</string>
+
+    <!-- Add reaction fragment -->
+    <string name="ism_adding_reaction">Adding %1$s reaction</string>
+
+    <!--Fetch/remove reaction fragment-->
+    <string name="ism_removing_reaction">Removing user\'s %1$s reaction</string>
+    <string name="ism_fetching_reaction_users">Fetching user\'s %1$s reactions</string>
+    <string name="ism_no_reaction_users">No users have added this reaction.</string>
+
+    <!--  Members-watchers activity-->
+    <string name="ism_members">Members</string>
+    <string name="ism_watchers">Watchers</string>
+
+    <!--  Members fragment-->
+    <string name="ism_no_members">No members in conversation.</string>
+    <string name="ism_making_admin">Making %1$s admin</string>
+    <string name="ism_removing_admin">Removing %1$s from admin</string>
+    <string name="ism_kicking_out_member">Kicking %1$s out</string>
+    <string name="ism_fetching_conversation_members">Fetching conversation members</string>
+    <string name="ism_search_members">Search members…</string>
+
+    <!--  Watchers fragment-->
+    <string name="ism_no_watchers">No watchers in conversation.</string>
+    <string name="ism_fetching_conversation_watchers">Fetching conversation watchers</string>
+    <string name="ism_search_watchers">Search watchers…</string>
+
+    <!--  Conversations list-->
+    <string name="ism_created_conversation">%1$s created a new conversation</string>
+    <string name="ism_made_admin">%1$s given admin permissions by %2$s</string>
+    <string name="ism_removed_admin">%1$s\'s admin permissions revoked by %2$s</string>
+    <string name="ism_cleared_conversation">Conversation messages were cleared</string>
+    <string name="ism_member_joined_public">%1$s joined public conversation</string>
+    <string name="ism_member_left">%1$s left conversation</string>
+    <string name="ism_members_added">%1$s added %2$s to conversation</string>
+    <string name="ism_members_removed">%1$s removed %2$s from conversation</string>
+    <string name="ism_updated_conversation_title">%1$s updated conversation title to %2$s</string>
+    <string name="ism_updated_conversation_image">%1$s updated conversation image</string>
+    <string name="ism_reaction_added">%1$s added reaction to a message</string>
+    <string name="ism_reaction_removed">%1$s removed reaction from a message</string>
+    <string name="ism_message_deleted_locally">%1$s deleted message locally</string>
+    <string name="ism_message_deleted_for_all">%1$s deleted message for everyone</string>
+    <string name="ism_updated_settings">%1$s updated %2$s conversation settings</string>
+    <string name="ism_settings_typing">typing events</string>
+    <string name="ism_settings_read_delivery_events">message delivery/read events</string>
+    <string name="ism_settings_notifications">notifications</string>
+    <string name="ism_fetching_conversations">Fetching conversations</string>
+    <string name="ism_no_conversations">No conversations found.</string>
+    <string name="ism_yesterday">Yesterday</string>
+    <string name="ism_at">\u0020at\u0020</string>
+    <string name="ism_today">Today</string>
+    <string name="ism_1_1">1–1</string>
+    <string name="ism_public">Public</string>
+    <string name="ism_private">Private</string>
+    <string name="ism_open">Open</string>
+    <string name="ism_join">Join</string>
+    <string name="ism_joining_conversation">Joining conversation</string>
+    <string name="ism_members_count">%1$d members</string>
+    <string name="ism_join_conversation_alert_message">Join public conversation to access its details and send or view messages exchanged in conversation</string>
+    <string name="ism_details_custom_type">custom type</string>
+    <string name="ism_details_metadata">metadata</string>
+    <string name="ism_details_searchable_tags">searchable tags</string>
+    <string name="ism_details_body">body</string>
+    <string name="ism_updated_conversation_details">%1$s updated %2$s of conversation</string>
+    <string name="ism_updated_message_details">%1$s updated %2$s of message</string>
+    <string name="ism_search_conversations">Search conversations…</string>
+    <string name="ism_search_public_conversations">Search public conversations…</string>
+    <string name="ism_search_open_conversations">Search open conversations…</string>
+    <string name="ism_blocked_user">%1$s blocked by %2$s</string>
+    <string name="ism_unblocked_user">%1$s unblocked by %2$s</string>
+    <string name="ism_member_observer_left">%1$s left as observer</string>
+    <string name="ism_member_observer_joined">%1$s joined as observer</string>
+    <string name="ism_hundred_unread_count">99+</string>
+
+    <!-- Gallery Activity -->
+    <string name="ism_fetching_attachments">Fetching attachments</string>
+
+    <!-- Gif/Sticker fragment -->
+    <string name="ism_gif_sticker_category_classic">Classic</string>
+    <string name="ism_gif_sticker_category_featured">Featured</string>
+    <string name="ism_classic_gif_name">Gif No. %1$d</string>
+    <string name="ism_classic_sticker_name">Sticker No. %1$d</string>
+    <string name="ism_no_gifs_stickers_category">No %1$s categories</string>
+    <string name="ism_no_gifs">gif\'s</string>
+    <string name="ism_no_stickers">sticker\'s</string>
+    <string name="ism_search">Search</string>
+    <string name="ism_search_stickers">Search stickers…</string>
+    <string name="ism_search_gifs">Search gifs…</string>
+    <string name="ism_no_gifs_in_category">No gifs found</string>
+    <string name="ism_no_stickers_in_category">No stickers found</string>
+    <string name="ism_enter_gifs_search_text">Enter text to search for gifs</string>
+    <string name="ism_enter_stickers_search_text">Enter text to search for stickers</string>
+
+    <!--  Share location activity-->
+    <string name="ism_send_location">Send location</string>
+    <string name="ism_unable_to_show_maps">Sorry, unable to show maps</string>
+    <string name="ism_not_applicable">NA</string>
+
+    <!--  Capture image result activity-->
+    <string name="ism_done">Done</string>
+    <string name="ism_discard_image">Do you want to discard this image?</string>
+    <string name="ism_discard">Discard</string>
+
+    <!--  Camera activity-->
+    <string name="ism_image_capture_not_supported">Image capture not supported on devices with android version below lollipop.</string>
+
+    <!--  Whiteboard fragment-->
+    <string name="ism_preparing_whiteboard">Preparing your whiteboard for sharing</string>
+
+    <!--  Message reply fragment-->
+    <string name="ism_message_reply_hint">Reply to message…</string>
+    <string name="ism_type_reply">Type something to reply to message</string>
+
+    <!--  Messages action header-->
+    <string name="ism_download_heading">Download media</string>
+    <string name="ism_edit_heading">Edit</string>
+    <string name="ism_copy_heading">Copy</string>
+    <string name="ism_info_heading">Info</string>
+    <string name="ism_quote_heading">Quote</string>
+    <string name="ism_forward_heading">Forward</string>
+    <string name="ism_reaction_heading">React</string>
+    <string name="ism_delete_for_me_heading">Delete for me</string>
+    <string name="ism_delete_for_all_heading">Delete for all</string>
+    <string name="ism_select_messages_heading">Select messages</string>
+    <string name="ism_download_description">Download media in message</string>
+    <string name="ism_edit_description">Edit text message</string>
+    <string name="ism_copy_description">Copy text message</string>
+    <string name="ism_info_description">Message delivery/read information</string>
+    <string name="ism_quote_description">Reply to message</string>
+    <string name="ism_forward_description">Forward message</string>
+    <string name="ism_reaction_description">Add reaction on message</string>
+    <string name="ism_delete_for_me_description">Delete for myself</string>
+    <string name="ism_delete_for_all_description">Delete for all everybody</string>
+    <string name="ism_select_messages_description">Select multiple messages</string>
+    <string name="ism_actions">Actions</string>
+    <string name="ism_text_copied">Copied to clipboard</string>
+
+    <!--  Select multiple messages-->
+    <string name="ism_number_of_messages_selected">%1$d messages selected</string>
+    <string name="ism_delete_for_me_alert_message">Selected message will be deleted only for you, others members will still be able to see it</string>
+    <string name="ism_delete_for_all_alert_message">Selected message will be deleted for all conversation members</string>
+
+    <!--  Forward message activity-->
+    <string name="ism_forward_message">Forward Message</string>
+    <string name="ism_send">Send</string>
+    <string name="ism_forward_message_hint">Type a message here\n(Optional)</string>
+    <string name="ism_conversations">Conversations</string>
+    <string name="ism_people">People</string>
+    <string name="ism_forward_no_people">No people found to forward message</string>
+    <string name="ism_forward_no_conversation">No conversations found to forward message</string>
+    <string name="ism_text">Text</string>
+    <string name="ism_select_people">Select people</string>
+    <string name="ism_select_conversations">Select conversations</string>
+    <string name="ism_number_of_people_selected">%1$s of %2$s people</string>
+    <string name="ism_number_of_conversations_selected">%1$s of %2$s conversations</string>
+    <string name="ism_forward_max_conversations_limit_reached">A message cannot be forwarded in more than 100 conversations at a time.</string>
+    <string name="ism_forward_max_people_limit_reached">A message cannot be forwarded to more than 100 people at a time.</string>
+    <string name="ism_fetching_people">Fetching people</string>
+    <string name="ism_forwarding_message_to_people">Forwarding message to people</string>
+    <string name="ism_forwarding_message_in_conversations">Forwarding message in conversations</string>
+    <string name="ism_forward_message_to_people_confirmation">Selected message will be forwarded to %1$d people?</string>
+    <string name="ism_forward_message_in_conversations_confirmation">Selected message will be forwarded in %1$d conversations?</string>
+    <string name="ism_minimum_one_person_forward">Select atleast one person to forward message</string>
+    <string name="ism_minimum_one_conversation_forward">Select atleast one conversation to forward message</string>
+    <string name="ism_forwarding_message_to_people_failed">Failed to forward message to people.Try again</string>
+    <string name="ism_forwarding_message_in_conversations_failed">Failed to forward message in conversations.Try again</string>
+
+    <!--  Broadcast message activity-->
+    <string name="ism_broadcast_message">Broadcast Message</string>
+    <string name="ism_broadcasting_message_to_people">Broadcasting message to people</string>
+    <string name="ism_broadcast_message_to_people_confirmation">Typed message will be broadcasted to %1$d people?</string>
+    <string name="ism_minimum_one_person_broadcast">Select atleast one person to broadcast message</string>
+    <string name="ism_broadcast_no_people">No people found to broadcast message</string>
+    <string name="ism_broadcast_max_people_limit_reached">A message cannot be broadcasted to more than 100 people at a time.</string>
+    <string name="ism_broadcast_message_hint">Broadcast message…</string>
+    <string name="ism_add_broadcast_message">Empty message cannot be broadcasted</string>
+    <string name="ism_broadcasting_message_to_people_failed">Failed to broadcast message to people.Try again</string>
+    <string name="ism_search_people">Search people…</string>
+    <string name="ism_broadcast_message_alert_heading">Broadcast message</string>
+
+    <!--  FetchPublicConversations Fragment-->
+    <string name="ism_fetching_public_conversations">Fetching public conversations</string>
+    <string name="ism_no_public_conversations">No public conversations found.</string>
+    <string name="ism_public_conversations">Public</string>
+    <string name="ism_all_conversations">Conversations</string>
+
+    <!--  FetchOpenConversations Fragment-->
+    <string name="ism_fetching_open_conversations">Fetching open conversations</string>
+    <string name="ism_no_open_conversations">No open conversations found.</string>
+    <string name="ism_open_conversations">Open</string>
+
+    <!--&lt;!&ndash;  SearchParticipants Activity&ndash;&gt;-->
+    <!--  <string name="ism_conversation_title">Conversation Title</string>-->
+
+    <!-- MentionedMessages Activity -->
+    <string name="ism_mentioned_messages">Mentioned messages</string>
+    <string name="ism_fetching_mentioned_messages">Fetching mentioned messages</string>
+    <string name="ism_no_mentioned_messages">No mentioned messages found.</string>
+    <string name="ism_mentioned_you">%1$s mentioned you</string>
+    <string name="ism_search_mentioned_messages_hint">Search mentioned messages…</string>
+
+    <!--  Preview messages-->
+    <string name="ism_no_apps_installed">No apps installed to complete operation</string>
+    <string name="ism_add_contact">Add contact</string>
+    <string name="ism_dial_contact">Dial contact</string>
+    <string name="ism_dial_save_contact_alert">Would you like to dial or add in contacts?</string>
+    <string name="ism_preview_video_failed">Failed to play video</string>
+    <string name="ism_open_with">Open with</string>
+    <string name="ism_open_media_alert_heading">Preview media</string>
+    <string name="ism_open_media_alert_message">Open media inside the app or open using other 3rd party apps installed in phone?</string>
+    <string name="ism_open_in_app">IN APP</string>
+    <string name="ism_open_in_other_apps">OTHER APPS</string>
+    <string name="ism_download_media_required">Download media to preview</string>
+
+    <!--  Search activity-->
+    <string name="ism_search_hint">Search conversations, messages or people…</string>
+    <string name="ism_messages">Messages</string>
+    <string name="ism_search_no_people">No people found.</string>
+    <string name="ism_search_no_messages">No messages found.</string>
+    <string name="ism_deleted_user">[Deleted user]</string>
+
+    <!--Blocked users activity-->
+    <string name="ism_search_blocked_users_hint">Search blocked users…</string>
+    <string name="ism_search_non_blocked_users_hint">Search non-blocked users…</string>
+    <string name="ism_no_blocked_users_found">No blocked users found</string>
+    <string name="ism_no_non_blocked_users_found">No non blocked users found</string>
+    <string name="ism_blocked_users">Blocked Users</string>
+    <string name="ism_non_blocked_users">Non Blocked Users</string>
+    <string name="ism_block">Block</string>
+    <string name="ism_unblock">Unblock</string>
+    <string name="ism_unblock_user">Unblock %1$s</string>
+    <string name="ism_block_user">Block %1$s</string>
+    <string name="ism_unblocking_user">Unblocking %1$s</string>
+    <string name="ism_blocking_user">Blocking %1$s</string>
+    <string name="ism_fetching_blocked_users">Fetching blocked users</string>
+    <string name="ism_fetching_non_blocked_users">Fetching non-blocked users</string>
+    <string name="ism_block_user_alert_message">Once blocked you will not be able to send message to or create conversations with user.</string>
+    <string name="ism_unblock_user_alert_message">Once unblocked you can send message to or create conversations with user.</string>
+
+    <!--  Notifications-->
+    <string name="ism_notification_permission_denied">Message notifications permission denied.</string>
+    <string name="ism_notification_permission_ask">Grant permission to receive message notifications</string>
+    <string name="ism_no_thanks">NO THANKS</string>
+    <string name="ism_reaction_added_notification">%1$s added %2$s reaction to a message</string>
+    <string name="ism_reaction_removed_notification">%1$s removed %2$s reaction from a message</string>
+    <string name="ism_channel_id">Isometrik-Chat</string>
+    <string name="ism_channel_name">Messages</string>
+    <string name="ism_group_name">Alerts</string>
+    <string name="ism_summary">Summary</string>
+    <string name="ism_summary_title">Isometrik:Chat</string>
+    <string name="ism_summary_text">New messages</string>
+    <string name="ism_attachment_prefix">Attachment:\u0020 </string>
+    <string name="ism_bullet">\u2022\u0020</string>
+
+    <!--  Message edit fragment-->
+    <string name="ism_message_edit_hint">Edit the message…</string>
+    <string name="ism_type_edit_message">Type something to edit the message</string>
+    <string name="ism_editing_message">Editing message</string>
+
+    <!--  Observers activity-->
+    <string name="ism_observers">Observers</string>
+    <string name="ism_fetching_observers">Fetching observers</string>
+    <string name="ism_search_observers_hint">Search observers…</string>
+    <string name="ism_no_observers_found">No observers found</string>
+    <string name="ism_view_all">View All</string>
+    <string name="ism_and_1_other_contact">" and 1 other contact"</string>
+    <string name="ism_other_contacts">" other contacts"</string>
+    <string name="ism_and">" and "</string>
+    <string name="ism_sms">SMS</string>
+    <string name="ism_call">Call</string>
+    <string name="ism_attachment_photo">📷 </string>
+    <string name="ism_attachment_video">📹 </string>
+    <string name="ism_attachment_audio">🎤 </string>
+    <string name="ism_attachment_file">📄 </string>
+    <string name="ism_attachment_location">📍 </string>
+
+    <string name="image_picker_provider_authority_suffix">.io.isometrik.samples.chat.provider</string>
+
+</resources>

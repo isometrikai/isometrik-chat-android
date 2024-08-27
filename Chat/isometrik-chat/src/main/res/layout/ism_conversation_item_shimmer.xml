@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/ism_dp_70"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/ism_white"
+    >
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:layout_width="@dimen/ism_dp_48"
+      android:layout_height="@dimen/ism_dp_48"
+      app:srcCompat="@drawable/ism_ic_profile"
+      android:layout_marginEnd="@dimen/ism_dp_8"
+      android:layout_marginStart="@dimen/ism_dp_8"
+      android:layout_centerVertical="true"
+      android:id="@+id/ivConversationImage"
+      app:tint="@color/ism_shimmer_grey"
+      />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivOnlineStatus"
+      android:layout_width="@dimen/ism_dp_16"
+      android:layout_height="@dimen/ism_dp_16"
+      android:layout_alignEnd="@+id/ivConversationImage"
+      android:layout_alignBottom="@+id/ivConversationImage"
+      app:srcCompat="@drawable/ism_user_online_status_circle"
+      app:tint="@color/ism_shimmer_grey"
+      />
+
+  <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tvConversationTitle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_toEndOf="@+id/ivConversationImage"
+      android:layout_alignTop="@+id/ivConversationImage"
+      android:layout_marginTop="@dimen/ism_dp_2"
+      android:layout_marginEnd="@dimen/ism_dp_5"
+      android:layout_toStartOf="@+id/tvJoinConversation"
+      android:textSize="@dimen/ism_sp_16"
+      android:paddingStart="@dimen/ism_dp_5"
+      android:paddingEnd="@dimen/ism_dp_0"
+      android:background="@color/ism_shimmer_grey"
+      />
+
+  <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tvConversationType"
+      android:layout_width="@dimen/ism_dp_48"
+      android:layout_height="wrap_content"
+      android:layout_toStartOf="@+id/tvLastMessageTime"
+      android:layout_marginEnd="@dimen/ism_dp_8"
+      android:textSize="11sp"
+      android:layout_alignTop="@+id/ivConversationImage"
+      android:paddingBottom="@dimen/ism_dp_3"
+      android:paddingTop="@dimen/ism_dp_2"
+      android:paddingStart="@dimen/ism_dp_6"
+      android:paddingEnd="@dimen/ism_dp_6"
+      android:layout_marginTop="@dimen/ism_dp_4"
+      android:background="@color/ism_shimmer_grey"
+      />
+
+  <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tvJoinConversation"
+      android:layout_width="@dimen/ism_dp_40"
+      android:layout_height="wrap_content"
+      android:layout_toStartOf="@+id/tvConversationType"
+      android:layout_marginEnd="@dimen/ism_dp_8"
+      android:textSize="11sp"
+      android:layout_alignTop="@+id/ivConversationImage"
+      android:paddingBottom="@dimen/ism_dp_3"
+      android:paddingTop="@dimen/ism_dp_2"
+      android:paddingStart="@dimen/ism_dp_6"
+      android:paddingEnd="@dimen/ism_dp_6"
+      android:layout_marginTop="@dimen/ism_dp_4"
+      android:background="@color/ism_shimmer_grey"
+      />
+
+  <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tvLastMessageTime"
+      android:layout_width="@dimen/ism_dp_44"
+      android:layout_height="wrap_content"
+      android:layout_alignParentEnd="true"
+      android:layout_alignTop="@+id/ivConversationImage"
+      android:layout_marginTop="@dimen/ism_dp_5"
+      android:layout_marginEnd="@dimen/ism_dp_6"
+      android:textSize="@dimen/ism_sp_12"
+      android:background="@color/ism_shimmer_grey"
+      />
+
+  <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tvUnreadMessagesCount"
+      android:layout_width="@dimen/ism_dp_24"
+      android:layout_height="@dimen/ism_dp_24"
+      android:layout_alignParentEnd="true"
+      android:layout_below="@+id/tvLastMessageTime"
+      android:layout_marginTop="@dimen/ism_dp_3"
+      android:layout_marginEnd="@dimen/ism_dp_8"
+      android:textSize="@dimen/ism_sp_10"
+      android:background="@color/ism_shimmer_grey"
+      />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivLastMessageType"
+      android:layout_width="@dimen/ism_dp_16"
+      android:layout_height="@dimen/ism_dp_16"
+      android:layout_toEndOf="@+id/ivConversationImage"
+      android:layout_below="@+id/tvConversationTitle"
+      android:layout_alignTop="@+id/tvLastMessage"
+      android:layout_marginTop="@dimen/ism_dp_2"
+      android:paddingStart="@dimen/ism_dp_5"
+      android:paddingEnd="@dimen/ism_dp_0"
+      android:background="@color/ism_shimmer_grey"
+      />
+
+  <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tvLastMessage"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/tvConversationTitle"
+      android:layout_toEndOf="@+id/ivLastMessageType"
+      android:layout_marginEnd="@dimen/ism_dp_2"
+      android:layout_marginTop="@dimen/ism_dp_2"
+      android:paddingStart="@dimen/ism_dp_5"
+      android:paddingEnd="@dimen/ism_dp_0"
+      android:layout_toStartOf="@+id/tvUnreadMessagesCount"
+      android:background="@color/ism_shimmer_grey"
+      />
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/ism_dp_1"
+      android:layout_alignStart="@+id/tvConversationTitle"
+      android:layout_alignParentBottom="true"
+      android:background="@color/ism_shimmer_grey"
+      />
+
+</RelativeLayout>

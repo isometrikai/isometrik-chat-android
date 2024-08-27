@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/ism_dp_8"
+      android:id="@+id/rlMessageOne"
+      >
+
+    <include
+        android:id="@+id/rlConversationDetailsOne"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/ism_message_conversation_title_shimmer"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMessageTimeOne"
+        android:layout_width="@dimen/ism_dp_80"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlConversationDetailsOne"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="@dimen/ism_dp_5"
+        android:background="@color/ism_shimmer_grey"
+        />
+
+    <androidx.appcompat.widget.AppCompatImageView
+       android:layout_width="@dimen/ism_dp_13"
+        android:layout_height="@dimen/ism_dp_13"
+        android:layout_toStartOf="@+id/tvMessageTimeOne"
+        android:layout_marginTop="@dimen/ism_dp_2"
+        android:layout_marginEnd="@dimen/ism_dp_8"
+        app:srcCompat="@drawable/ism_message_delivered_circle"
+        android:layout_below="@+id/rlConversationDetailsOne"
+        app:tint="@color/ism_shimmer_grey"
+        />
+
+      <View
+          android:layout_width="@dimen/ism_dp_40"
+          android:layout_height="@dimen/ism_dp_40"
+          android:layout_marginEnd="@dimen/ism_dp_5"
+          android:padding="@dimen/ism_dp_8"
+          android:background="@color/ism_shimmer_grey"
+          android:layout_toStartOf="@+id/vMessageLayoutOne"
+          android:layout_below="@+id/tvMessageTimeOne"
+          />
+    <View
+        android:id="@+id/vMessageLayoutOne"
+        android:layout_width="@dimen/ism_dp_180"
+        android:layout_height="@dimen/ism_dp_100"
+        android:background="@drawable/ism_sent_message_bubble"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/tvMessageTimeOne"
+        android:backgroundTint="@color/ism_shimmer_grey"
+        />
+
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/ism_dp_8"
+      android:id="@+id/rlMessageTwo"
+      android:layout_below="@+id/rlMessageOne"
+      >
+
+    <include
+        android:id="@+id/rlConversationDetailsTwo"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/ism_message_conversation_title_shimmer"
+        />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivSenderImageTwo"
+        android:layout_width="@dimen/ism_dp_36"
+        android:layout_height="@dimen/ism_dp_36"
+        app:srcCompat="@drawable/ism_ic_profile"
+        android:layout_marginEnd="@dimen/ism_dp_8"
+        android:layout_below="@+id/rlConversationDetailsTwo"
+        app:tint="@color/ism_shimmer_grey"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSenderNameTwo"
+        android:layout_width="@dimen/ism_dp_80"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/ism_sp_12"
+        android:layout_marginBottom="@dimen/ism_dp_5"
+        android:layout_toEndOf="@+id/ivSenderImageTwo"
+        android:layout_alignTop="@+id/ivSenderImageTwo"
+        android:background="@color/ism_shimmer_grey"
+        />
+
+    <LinearLayout
+        android:id="@+id/llMessageLayoutTwo"
+        android:layout_toEndOf="@+id/ivSenderImageTwo"
+        android:layout_below="@+id/tvSenderNameTwo"
+        android:layout_width="@dimen/ism_dp_180"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/ism_dp_40"
+          android:background="@drawable/ism_received_message_header_bubble"
+          android:backgroundTint="@color/ism_shimmer_grey"
+          />
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/ism_dp_120"
+          android:background="@color/ism_shimmer_grey"
+          />
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/ism_dp_1"
+          android:background="@color/ism_white"
+          />
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/ism_dp_40"
+          android:background="@drawable/ism_received_message_status_bubble"
+          android:backgroundTint="@color/ism_shimmer_grey"
+          />
+    </LinearLayout>
+
+        <View
+            android:layout_width="@dimen/ism_dp_40"
+            android:layout_height="@dimen/ism_dp_40"
+            android:layout_marginStart="@dimen/ism_dp_5"
+            android:padding="@dimen/ism_dp_8"
+            android:background="@color/ism_shimmer_grey"
+            android:layout_toEndOf="@+id/llMessageLayoutTwo"
+            android:layout_below="@+id/tvSenderNameTwo"
+            />
+
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/ism_dp_8"
+      android:id="@+id/rlMessageThree"
+      android:layout_below="@+id/rlMessageTwo"
+      >
+
+    <include
+        android:id="@+id/rlConversationDetailsThree"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/ism_message_conversation_title_shimmer"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMessageTimeThree"
+        android:layout_width="@dimen/ism_dp_80"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlConversationDetailsThree"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="@dimen/ism_dp_5"
+        android:background="@color/ism_shimmer_grey"
+        />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="@dimen/ism_dp_13"
+        android:layout_height="@dimen/ism_dp_13"
+        android:layout_toStartOf="@+id/tvMessageTimeThree"
+        android:layout_marginTop="@dimen/ism_dp_2"
+        android:layout_marginEnd="@dimen/ism_dp_8"
+        app:srcCompat="@drawable/ism_message_delivered_circle"
+        android:layout_below="@+id/rlConversationDetailsThree"
+        app:tint="@color/ism_shimmer_grey"
+        />
+
+    <View
+        android:layout_width="@dimen/ism_dp_40"
+        android:layout_height="@dimen/ism_dp_40"
+        android:layout_marginEnd="@dimen/ism_dp_5"
+        android:padding="@dimen/ism_dp_8"
+        android:background="@color/ism_shimmer_grey"
+        android:layout_toStartOf="@+id/llMessageLayoutThree"
+        android:layout_below="@+id/tvMessageTimeThree"
+        />
+
+    <View
+        android:id="@+id/llMessageLayoutThree"
+        android:layout_below="@+id/tvMessageTimeThree"
+        android:layout_alignParentEnd="true"
+        android:layout_width="@dimen/ism_dp_200"
+        android:layout_height="@dimen/ism_dp_80"
+        android:background="@drawable/ism_sent_message_bubble"
+        android:backgroundTint="@color/ism_shimmer_grey"
+        />
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/ism_dp_8"
+      android:id="@+id/rlMessageFour"
+      android:layout_below="@+id/rlMessageThree"
+      >
+
+    <include
+        android:id="@+id/rlConversationDetailsFour"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/ism_message_conversation_title_shimmer"
+        />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivSenderImageFour"
+        android:layout_width="@dimen/ism_dp_36"
+        android:layout_height="@dimen/ism_dp_36"
+        app:srcCompat="@drawable/ism_ic_profile"
+        android:layout_marginEnd="@dimen/ism_dp_8"
+        android:layout_below="@+id/rlConversationDetailsFour"
+        app:tint="@color/ism_shimmer_grey"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSenderNameFour"
+        android:layout_width="@dimen/ism_dp_80"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/ism_sp_12"
+        android:layout_marginBottom="@dimen/ism_dp_5"
+        android:layout_toEndOf="@+id/ivSenderImageFour"
+        android:layout_alignTop="@+id/ivSenderImageFour"
+        android:background="@color/ism_shimmer_grey"
+        />
+
+    <View
+        android:id="@+id/vMessageLayoutFour"
+        android:layout_width="@dimen/ism_dp_260"
+        android:layout_height="@dimen/ism_dp_40"
+        android:background="@drawable/ism_received_message_bubble"
+        android:layout_toEndOf="@+id/ivSenderImageFour"
+        android:layout_below="@+id/tvSenderNameFour"
+        android:backgroundTint="@color/ism_shimmer_grey"
+        />
+
+    <View
+        android:layout_width="@dimen/ism_dp_40"
+        android:layout_height="@dimen/ism_dp_40"
+        android:layout_marginStart="@dimen/ism_dp_5"
+        android:padding="@dimen/ism_dp_8"
+        android:background="@color/ism_shimmer_grey"
+        android:layout_toEndOf="@+id/vMessageLayoutFour"
+        android:layout_below="@+id/tvSenderNameFour"
+        />
+
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/ism_dp_8"
+      android:id="@+id/rlMessageFive"
+      android:layout_below="@+id/rlMessageFour"
+      >
+
+    <include
+        android:id="@+id/rlConversationDetailsFive"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/ism_message_conversation_title_shimmer"
+        />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMessageTimeFive"
+        android:layout_width="@dimen/ism_dp_80"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlConversationDetailsFive"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="@dimen/ism_dp_5"
+        android:background="@color/ism_shimmer_grey"
+        />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="@dimen/ism_dp_13"
+        android:layout_height="@dimen/ism_dp_13"
+        android:layout_toStartOf="@+id/tvMessageTimeFive"
+        android:layout_marginTop="@dimen/ism_dp_2"
+        android:layout_marginEnd="@dimen/ism_dp_8"
+        app:srcCompat="@drawable/ism_message_delivered_circle"
+        android:layout_below="@+id/rlConversationDetailsFive"
+        app:tint="@color/ism_shimmer_grey"
+        />
+
+    <View
+        android:layout_width="@dimen/ism_dp_40"
+        android:layout_height="@dimen/ism_dp_40"
+        android:layout_marginEnd="@dimen/ism_dp_5"
+        android:padding="@dimen/ism_dp_8"
+        android:background="@color/ism_shimmer_grey"
+        android:layout_toStartOf="@+id/vMessageLayoutFive"
+        android:layout_below="@+id/tvMessageTimeFive"
+        />
+    <View
+        android:id="@+id/vMessageLayoutFive"
+        android:layout_width="@dimen/ism_dp_180"
+        android:layout_height="@dimen/ism_dp_160"
+        android:background="@drawable/ism_sent_message_bubble"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/tvMessageTimeFive"
+        android:backgroundTint="@color/ism_shimmer_grey"
+        />
+
+  </RelativeLayout>
+
+</RelativeLayout>

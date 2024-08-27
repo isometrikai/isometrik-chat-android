@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/ism_white"
+    >
+
+  <View
+      android:id="@+id/vPeek"
+      android:layout_margin="@dimen/ism_dp_20"
+      android:layout_width="@dimen/ism_dp_80"
+      android:layout_height="@dimen/ism_dp_4"
+      android:layout_centerHorizontal="true"
+      android:background="@drawable/ism_peek_rectangle_background"
+      android:layout_marginBottom="@dimen/ism_dp_5"
+      />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivReactionImage"
+      android:layout_width="@dimen/ism_dp_70"
+      android:layout_height="@dimen/ism_dp_70"
+      app:srcCompat="@drawable/ism_ic_reaction_talking_too_much"
+      android:layout_centerHorizontal="true"
+      android:layout_marginTop="@dimen/ism_dp_5"
+      android:layout_below="@+id/vPeek"
+      />
+
+  <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tvReactionName"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/ivReactionImage"
+      android:textSize="@dimen/ism_sp_16"
+      android:layout_centerHorizontal="true"
+      android:text="@string/ism_user_name"
+      android:layout_margin="@dimen/ism_dp_13"
+      android:maxLines="1"
+      android:ellipsize="end"
+      android:textColor="@color/ism_reaction_name_grey"
+      />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivAddReaction"
+      android:layout_width="@dimen/ism_dp_34"
+      android:layout_height="@dimen/ism_dp_34"
+      app:srcCompat="@drawable/ism_ic_send_message"
+      android:tint="@color/ism_white"
+      android:layout_toEndOf="@id/ivReactionImage"
+      android:padding="@dimen/ism_dp_8"
+      android:layout_marginTop="@dimen/ism_dp_70"
+      android:layout_marginStart="@dimen/ism_dp_30"
+      android:background="@drawable/ism_create_conversation_circle"
+      />
+
+  <View
+      android:id="@+id/vDivider"
+      android:layout_below="@+id/tvReactionName"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/ism_dp_1"
+      android:background="@color/ism_line_gray"
+      />
+
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/rvReactions"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/vDivider"
+      />
+
+<!--  <androidx.core.widget.NestedScrollView-->
+<!--      android:layout_below="@+id/vDivider"-->
+<!--      android:id="@+id/nsvReactions"-->
+<!--      android:layout_width="match_parent"-->
+<!--      android:layout_height="wrap_content"-->
+<!--      app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+<!--      >-->
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        >-->
+
+<!--      <androidx.appcompat.widget.AppCompatImageView-->
+<!--          android:id="@+id/ivYes"-->
+<!--          android:layout_width="wrap_content"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          app:srcCompat="@drawable/ism_ic_reaction_yes"-->
+<!--          android:padding="@dimen/ism_dp_5"-->
+<!--          android:layout_margin="@dimen/ism_dp_2"-->
+<!--          />-->
+
+<!--      <androidx.appcompat.widget.AppCompatImageView-->
+<!--          android:id="@+id/ivSurprised"-->
+<!--          android:layout_width="wrap_content"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          app:srcCompat="@drawable/ism_ic_reaction_surprised"-->
+<!--          android:padding="@dimen/ism_dp_5"-->
+<!--          android:layout_margin="@dimen/ism_dp_2"-->
+<!--          />-->
+
+<!--      <androidx.appcompat.widget.AppCompatImageView-->
+<!--          android:id="@+id/ivCryingWithLaughter"-->
+<!--          android:layout_width="wrap_content"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          app:srcCompat="@drawable/ism_ic_reaction_crying_laughing"-->
+<!--          android:padding="@dimen/ism_dp_5"-->
+<!--          android:layout_margin="@dimen/ism_dp_2"-->
+<!--          />-->
+
+<!--      <androidx.appcompat.widget.AppCompatImageView-->
+<!--          android:id="@+id/ivCrying"-->
+<!--          android:layout_width="wrap_content"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          app:srcCompat="@drawable/ism_ic_reaction_crying"-->
+<!--          android:padding="@dimen/ism_dp_5"-->
+<!--          android:layout_margin="@dimen/ism_dp_2"-->
+<!--          />-->
+
+<!--      <androidx.appcompat.widget.AppCompatImageView-->
+<!--          android:id="@+id/ivHeart"-->
+<!--          android:layout_width="wrap_content"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          app:srcCompat="@drawable/ism_ic_reaction_heart"-->
+<!--          android:padding="@dimen/ism_dp_5"-->
+<!--          android:layout_margin="@dimen/ism_dp_2"-->
+<!--          />-->
+
+<!--      <androidx.appcompat.widget.AppCompatImageView-->
+<!--          android:id="@+id/ivSarcastic"-->
+<!--          android:layout_width="wrap_content"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          app:srcCompat="@drawable/ism_ic_reaction_sarcasm"-->
+<!--          android:padding="@dimen/ism_dp_5"-->
+<!--          android:layout_margin="@dimen/ism_dp_2"-->
+<!--          />-->
+
+<!--      <androidx.appcompat.widget.AppCompatImageView-->
+<!--          android:id="@+id/ivRock"-->
+<!--          android:layout_width="wrap_content"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          app:srcCompat="@drawable/ism_ic_reaction_rock"-->
+<!--          android:padding="@dimen/ism_dp_5"-->
+<!--          android:layout_margin="@dimen/ism_dp_2"-->
+<!--          />-->
+
+<!--      <androidx.appcompat.widget.AppCompatImageView-->
+<!--          android:id="@+id/ivFacePalm"-->
+<!--          android:layout_width="wrap_content"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          app:srcCompat="@drawable/ism_ic_reaction_facepalm"-->
+<!--          android:padding="@dimen/ism_dp_5"-->
+<!--          android:layout_margin="@dimen/ism_dp_2"-->
+<!--          />-->
+
+<!--      <androidx.appcompat.widget.AppCompatImageView-->
+<!--          android:id="@+id/ivStar"-->
+<!--          android:layout_width="wrap_content"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          app:srcCompat="@drawable/ism_ic_reaction_star"-->
+<!--          android:padding="@dimen/ism_dp_5"-->
+<!--          android:layout_margin="@dimen/ism_dp_2"-->
+<!--          />-->
+
+<!--      <androidx.appcompat.widget.AppCompatImageView-->
+<!--          android:id="@+id/ivNo"-->
+<!--          android:layout_width="wrap_content"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          app:srcCompat="@drawable/ism_ic_reaction_no"-->
+<!--          android:padding="@dimen/ism_dp_5"-->
+<!--          android:layout_margin="@dimen/ism_dp_2"-->
+<!--          />-->
+
+<!--      <androidx.appcompat.widget.AppCompatImageView-->
+<!--          android:id="@+id/ivBowing"-->
+<!--          android:layout_width="wrap_content"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          app:srcCompat="@drawable/ism_ic_reaction_bowing"-->
+<!--          android:padding="@dimen/ism_dp_5"-->
+<!--          android:layout_margin="@dimen/ism_dp_2"-->
+<!--          />-->
+
+<!--      <androidx.appcompat.widget.AppCompatImageView-->
+<!--          android:id="@+id/ivParty"-->
+<!--          android:layout_width="wrap_content"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          app:srcCompat="@drawable/ism_ic_reaction_party"-->
+<!--          android:padding="@dimen/ism_dp_5"-->
+<!--          android:layout_margin="@dimen/ism_dp_2"-->
+<!--          />-->
+
+<!--      <androidx.appcompat.widget.AppCompatImageView-->
+<!--          android:id="@+id/ivHighFive"-->
+<!--          android:layout_width="wrap_content"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          app:srcCompat="@drawable/ism_ic_reaction_high_five"-->
+<!--          android:padding="@dimen/ism_dp_5"-->
+<!--          android:layout_margin="@dimen/ism_dp_2"-->
+<!--          />-->
+
+<!--      <androidx.appcompat.widget.AppCompatImageView-->
+<!--          android:id="@+id/ivTalkingTooMuch"-->
+<!--          android:layout_width="wrap_content"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          app:srcCompat="@drawable/ism_ic_reaction_talking_too_much"-->
+<!--          android:padding="@dimen/ism_dp_5"-->
+<!--          android:layout_margin="@dimen/ism_dp_2"-->
+<!--          />-->
+
+<!--      <androidx.appcompat.widget.AppCompatImageView-->
+<!--          android:id="@+id/ivDancing"-->
+<!--          android:layout_width="wrap_content"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          app:srcCompat="@drawable/ism_ic_reaction_dancing"-->
+<!--          android:padding="@dimen/ism_dp_5"-->
+<!--          android:layout_margin="@dimen/ism_dp_2"-->
+<!--          />-->
+<!--    </LinearLayout>-->
+<!--  </androidx.core.widget.NestedScrollView>-->
+
+    <View
+        android:layout_below="@+id/rvReactions"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ism_dp_1"
+        android:background="@color/ism_line_gray"
+        />
+</RelativeLayout>

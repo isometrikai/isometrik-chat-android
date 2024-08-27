@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/ism_white"
+    >
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivReaction"
+      android:layout_width="@dimen/ism_dp_40"
+      android:layout_height="@dimen/ism_dp_40"
+      app:srcCompat="@drawable/ism_ic_reaction_sarcasm"
+      android:padding="@dimen/ism_dp_5"
+      android:layout_marginTop="@dimen/ism_dp_8"
+      android:layout_marginStart="@dimen/ism_dp_5"
+      android:layout_marginEnd="@dimen/ism_dp_5"
+      android:layout_marginBottom="@dimen/ism_dp_10"
+
+      />
+
+</RelativeLayout>

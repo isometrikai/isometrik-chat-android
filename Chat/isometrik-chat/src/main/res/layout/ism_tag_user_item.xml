@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/ism_dp_48"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/ism_white"
+    >
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:layout_width="@dimen/ism_dp_30"
+      android:layout_height="@dimen/ism_dp_30"
+      app:srcCompat="@drawable/ism_ic_profile"
+      android:layout_marginEnd="@dimen/ism_dp_13"
+      android:layout_marginStart="@dimen/ism_dp_8"
+      android:layout_centerVertical="true"
+      android:id="@+id/ivProfilePic"
+      />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivOnlineStatus"
+      android:layout_width="@dimen/ism_dp_10"
+      android:layout_height="@dimen/ism_dp_10"
+      android:layout_alignEnd="@+id/ivProfilePic"
+      android:layout_alignBottom="@+id/ivProfilePic"
+      app:srcCompat="@drawable/ism_user_online_status_circle"
+      />
+
+  <TextView
+      android:id="@+id/tvUserName"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/ism_dp_13"
+      android:paddingStart="@dimen/ism_dp_5"
+      android:paddingEnd="@dimen/ism_dp_0"
+      android:layout_toEndOf="@+id/ivProfilePic"
+      android:ellipsize="end"
+      android:maxLines="1"
+      android:singleLine="true"
+      android:text="@string/ism_user_name"
+      android:textColor="@color/ism_black"
+      android:textStyle="bold"
+      android:layout_centerVertical="true"
+      android:layout_toStartOf="@+id/tvAdmin"
+      />
+
+  <TextView
+      android:id="@+id/tvAdmin"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/ism_dp_13"
+      android:layout_alignParentEnd="true"
+      android:text="@string/ism_admin"
+      android:textColor="@color/ism_admin_text_grey"
+      android:textSize="@dimen/ism_sp_12"
+      android:layout_centerVertical="true"
+      android:background="@drawable/ism_admin_background"
+      android:paddingBottom="@dimen/ism_dp_5"
+      android:paddingEnd="@dimen/ism_dp_8"
+      android:paddingStart="@dimen/ism_dp_8"
+      android:paddingTop="@dimen/ism_dp_5"
+      />
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/ism_dp_1"
+      android:layout_alignStart="@+id/tvUserName"
+      android:layout_alignParentBottom="true"
+      android:background="@color/ism_line_gray"
+      />
+
+</RelativeLayout>

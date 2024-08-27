@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/ism_white"
+    >
+
+  <View
+      android:id="@+id/vPeek"
+      android:layout_margin="@dimen/ism_dp_20"
+      android:layout_width="@dimen/ism_dp_80"
+      android:layout_height="@dimen/ism_dp_4"
+      android:layout_centerHorizontal="true"
+      android:background="@drawable/ism_peek_rectangle_background"
+      />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivUserImage"
+      android:layout_width="@dimen/ism_dp_80"
+      android:layout_height="@dimen/ism_dp_80"
+      app:srcCompat="@drawable/ism_ic_profile"
+      android:layout_centerHorizontal="true"
+      android:layout_marginTop="@dimen/ism_dp_8"
+      android:layout_below="@+id/vPeek"
+      />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivOnlineStatus"
+      android:layout_width="@dimen/ism_dp_18"
+      android:layout_height="@dimen/ism_dp_18"
+      android:layout_alignEnd="@+id/ivUserImage"
+      android:layout_alignBottom="@+id/ivUserImage"
+      app:srcCompat="@drawable/ism_user_offline_status_circle"
+      />
+
+  <TextView
+      android:id="@+id/tvUserName"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/ivUserImage"
+      android:textSize="@dimen/ism_sp_18"
+      android:textColor="@color/ism_black"
+      android:layout_centerHorizontal="true"
+      android:gravity="center_horizontal"
+      android:layout_marginTop="@dimen/ism_dp_16"
+      android:layout_marginStart="@dimen/ism_dp_44"
+      android:layout_marginEnd="@dimen/ism_dp_44"
+      android:layout_marginBottom="@dimen/ism_dp_16"
+      android:textStyle="bold"
+      />
+
+  <TextView
+      android:id="@+id/tvUserIdentifier"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/tvUserName"
+      android:textSize="@dimen/ism_sp_14"
+      android:textColor="@color/ism_identifier_text_grey"
+      android:layout_centerHorizontal="true"
+      android:gravity="center_horizontal"
+      android:layout_marginStart="@dimen/ism_dp_30"
+      android:layout_marginEnd="@dimen/ism_dp_30"
+      android:layout_marginBottom="@dimen/ism_dp_20"
+      />
+
+  <TextView
+      android:id="@+id/tvFailedToFetchMemberDetails"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:drawablePadding="@dimen/ism_dp_8"
+      app:drawableTopCompat="@drawable/ism_ic_no_users"
+      android:gravity="center"
+      android:text="@string/ism_no_users"
+      android:textColor="@color/ism_black"
+      android:visibility="gone"
+      />
+
+</RelativeLayout>

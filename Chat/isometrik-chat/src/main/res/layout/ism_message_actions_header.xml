@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ism_create_conversation_rectangle"
+    android:elevation="@dimen/ism_dp_60"
+    >
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivClose"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:layout_gravity="center"
+      android:padding="@dimen/ism_dp_8"
+      app:srcCompat="@drawable/ism_ic_arrow_back" />
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:layout_marginStart="@dimen/ism_dp_5"
+      android:layout_toEndOf="@+id/ivClose"
+      android:layout_toStartOf="@+id/ivEdit"
+      android:ellipsize="end"
+      android:maxLines="1"
+      android:text="12"
+      android:textColor="@color/ism_white"
+      android:textSize="@dimen/ism_sp_16" />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivEdit"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:padding="@dimen/ism_dp_6"
+      android:layout_toStartOf="@+id/ivRemove"
+      android:tint="@color/ism_white"
+      app:srcCompat="@drawable/ism_ic_edit_title"
+      />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivRemove"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:padding="@dimen/ism_dp_6"
+      android:layout_toStartOf="@+id/ivAttachment"
+      android:tint="@color/ism_white"
+      app:srcCompat="@drawable/ism_ic_remove_message"
+      />
+
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivAttachment"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:padding="@dimen/ism_dp_6"
+      android:layout_toStartOf="@+id/ivReply"
+      android:tint="@color/ism_white"
+      app:srcCompat="@drawable/ism_ic_attachment"
+      />
+
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivReply"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:padding="@dimen/ism_dp_6"
+      android:layout_toStartOf="@+id/ivMessageInfo"
+      android:tint="@color/ism_white"
+      app:srcCompat="@drawable/ism_ic_forward"
+      android:rotationY="180"
+      />
+
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivMessageInfo"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:padding="@dimen/ism_dp_6"
+      android:layout_toStartOf="@+id/ivDelete"
+      android:tint="@color/ism_white"
+      app:srcCompat="@drawable/ism_ic_message_info"
+      />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivDelete"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:padding="@dimen/ism_dp_6"
+      android:layout_toStartOf="@+id/ivForward"
+      android:tint="@color/ism_white"
+      app:srcCompat="@drawable/ism_ic_trash" />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivForward"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:padding="@dimen/ism_dp_6"
+      android:layout_toStartOf="@+id/ivCopy"
+      android:tint="@color/ism_white"
+      android:visibility="visible"
+      app:srcCompat="@drawable/ism_ic_forward"
+      />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivCopy"
+      android:layout_width="@dimen/ism_dp_36"
+      android:layout_height="@dimen/ism_dp_36"
+      android:layout_alignParentEnd="true"
+      android:layout_centerVertical="true"
+      android:padding="@dimen/ism_dp_6"
+      android:layout_marginEnd="@dimen/ism_dp_3"
+      android:tint="@color/ism_white"
+      app:srcCompat="@drawable/ism_ic_copy"
+      />
+</RelativeLayout>

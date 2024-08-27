@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlReaction"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/ism_dp_2"
+    android:background="@drawable/ism_reaction_item_curved_background"
+    android:elevation="@dimen/ism_dp_3"
+    android:padding="@dimen/ism_dp_5"
+    >
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivReaction"
+      android:layout_width="@dimen/ism_dp_24"
+      android:layout_height="@dimen/ism_dp_24"
+      app:srcCompat="@drawable/ism_ic_reaction_sarcasm"
+      />
+  <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tvReactionCount"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:layout_marginStart="@dimen/ism_dp_3"
+      android:layout_toEndOf="@+id/ivReaction"
+      android:ellipsize="end"
+      android:maxLength="3"
+      android:maxLines="1"
+      android:text="99+"
+      android:textColor="@color/ism_reaction_name_grey"
+      android:textSize="@dimen/ism_sp_12"
+      />
+</RelativeLayout>

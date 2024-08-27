@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+  <com.google.android.material.appbar.AppBarLayout
+      android:id="@+id/abLayout"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      style="@style/ThemeOverlay.AppCompat.ActionBar"
+      app:layout_constraintTop_toTopOf="parent"
+      >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/ism_white"
+        >
+
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/ivClose"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          app:srcCompat="@drawable/ism_ic_close"
+          android:layout_centerVertical="true"
+          android:background="@android:color/transparent"
+          android:padding="@dimen/ism_dp_16"
+          />
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/ism_dp_1"
+          android:layout_alignParentBottom="true"
+          android:background="@color/ism_line_gray"
+          />
+
+      <androidx.appcompat.widget.AppCompatButton
+          android:id="@+id/btDone"
+          android:background="@android:color/transparent"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_centerVertical="true"
+          android:text="@string/ism_done"
+          android:padding="@dimen/ism_dp_16"
+          android:textAllCaps="false"
+          android:textColor="@color/ism_blue"
+          android:textSize="@dimen/ism_sp_16"
+          tools:ignore="RtlCompat" />
+
+        <View
+            android:id="@+id/vPeek"
+            android:layout_width="@dimen/ism_dp_80"
+            android:layout_height="@dimen/ism_dp_4"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ism_peek_rectangle_background"
+            />
+
+    </RelativeLayout>
+  </com.google.android.material.appbar.AppBarLayout>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/abLayout"
+      app:layout_constraintTop_toBottomOf="@+id/abLayout"
+      >
+
+    <io.isometrik.ui.messages.media.whiteboard.utils.DrawView
+        android:id="@+id/canvasView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/ism_white"
+
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/drawTools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/ism_white"
+        android:elevation="@dimen/ism_dp_4"
+        android:translationY="@dimen/ism_dp_56" >
+
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/ivEraser"
+          android:layout_width="@dimen/ism_dp_56"
+          android:layout_height="@dimen/ism_dp_56"
+          app:srcCompat="@drawable/ism_whiteboard_eraser"
+          android:padding="@dimen/ism_dp_16"
+          app:tint="@color/ism_whiteboard_tools_icon_color_selector"
+          app:layout_constraintHorizontal_chainStyle="packed"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toStartOf="@id/ivChangeWidth"
+          app:layout_constraintTop_toTopOf="parent" />
+
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/ivChangeWidth"
+          android:layout_width="@dimen/ism_dp_56"
+          android:layout_height="@dimen/ism_dp_56"
+          app:srcCompat="@drawable/ism_whiteboard_adjust_width"
+          android:padding="@dimen/ism_dp_16"
+          app:tint="@color/ism_whiteboard_tools_icon_color_selector"
+          app:layout_constraintStart_toEndOf="@id/ivEraser"
+          app:layout_constraintEnd_toStartOf="@id/ivChangeColor"
+          app:layout_constraintTop_toTopOf="parent"/>
+
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/ivChangeColor"
+          android:layout_width="@dimen/ism_dp_56"
+          android:layout_height="@dimen/ism_dp_56"
+          app:srcCompat="@drawable/ism_whiteboard_change_color"
+          android:padding="@dimen/ism_dp_16"
+          app:tint="@color/ism_whiteboard_tools_icon_color_selector"
+          app:layout_constraintStart_toEndOf="@id/ivChangeWidth"
+          app:layout_constraintEnd_toStartOf="@id/ivChangeOpacity"
+          app:layout_constraintTop_toTopOf="parent"/>
+
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/ivChangeOpacity"
+          android:layout_width="@dimen/ism_dp_56"
+          android:layout_height="@dimen/ism_dp_56"
+          app:srcCompat="@drawable/ism_whiteboard_change_opacity"
+          android:padding="@dimen/ism_dp_16"
+          app:tint="@color/ism_whiteboard_tools_icon_color_selector"
+          app:layout_constraintStart_toEndOf="@id/ivChangeColor"
+          app:layout_constraintEnd_toStartOf="@id/ivUndo"
+          app:layout_constraintTop_toTopOf="parent"/>
+
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/ivUndo"
+          android:layout_width="@dimen/ism_dp_56"
+          android:layout_height="@dimen/ism_dp_56"
+          app:srcCompat="@drawable/ism_whiteboard_undo"
+          android:padding="@dimen/ism_dp_16"
+          app:tint="@color/ism_whiteboard_tools_icon_color_selector"
+          app:layout_constraintStart_toEndOf="@id/ivChangeOpacity"
+          app:layout_constraintEnd_toStartOf="@id/ivRedo"
+          app:layout_constraintTop_toTopOf="parent" />
+
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/ivRedo"
+          android:layout_width="@dimen/ism_dp_56"
+          android:layout_height="@dimen/ism_dp_56"
+          app:srcCompat="@drawable/ism_whiteboard_redo"
+          android:padding="@dimen/ism_dp_16"
+          app:tint="@color/ism_whiteboard_tools_icon_color_selector"
+          app:layout_constraintStart_toEndOf="@id/ivUndo"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+      <SeekBar
+          android:id="@+id/sbWidth"
+          android:layout_width="@dimen/ism_dp_0"
+          android:layout_height="@dimen/ism_dp_56"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toStartOf="@+id/cvWidth"
+          app:layout_constraintTop_toBottomOf="@id/ivEraser"
+          android:progress="8"
+          android:paddingStart="@dimen/ism_dp_16"
+          android:paddingEnd="@dimen/ism_dp_16" />
+
+      <io.isometrik.ui.messages.media.whiteboard.utils.CircleView
+          android:id="@+id/cvWidth"
+          android:layout_width="@dimen/ism_dp_56"
+          android:layout_height="@dimen/ism_dp_56"
+          app:layout_constraintTop_toBottomOf="@id/ivEraser"
+          app:layout_constraintEnd_toEndOf="parent" />
+
+      <SeekBar
+          android:id="@+id/sbOpacity"
+          android:layout_width="@dimen/ism_dp_0"
+          android:layout_height="@dimen/ism_dp_56"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toStartOf="@+id/cvOpacity"
+          app:layout_constraintTop_toBottomOf="@id/ivEraser"
+          android:progress="100"
+          android:paddingStart="@dimen/ism_dp_16"
+          android:paddingEnd="@dimen/ism_dp_16" />
+
+      <io.isometrik.ui.messages.media.whiteboard.utils.CircleView
+          android:id="@+id/cvOpacity"
+          android:layout_width="@dimen/ism_dp_56"
+          android:layout_height="@dimen/ism_dp_56"
+          app:layout_constraintTop_toBottomOf="@id/ivEraser"
+          app:layout_constraintEnd_toEndOf="parent" />
+
+      <include
+          android:id="@+id/vColorPalette"
+          layout="@layout/ism_whiteboard_color_palette"
+          android:layout_width="@dimen/ism_dp_0"
+          android:layout_height="@dimen/ism_dp_56"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/ivEraser" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+  </RelativeLayout>

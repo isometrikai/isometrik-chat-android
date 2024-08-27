@@ -1,0 +1,816 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/ism_white"
+    >
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/abLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:background="@color/ism_white"
+        >
+    <com.google.android.material.appbar.CollapsingToolbarLayout
+        app:layout_scrollFlags="scroll|exitUntilCollapsed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+      <RelativeLayout
+          android:layout_marginTop="?attr/actionBarSize"
+          app:layout_collapseMode="parallax"
+          android:layout_marginEnd="@dimen/ism_dp_13"
+          android:layout_marginStart="@dimen/ism_dp_13"
+          android:layout_marginBottom="@dimen/ism_dp_13"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+        <!--    Audio-->
+      <RelativeLayout
+          android:id="@+id/rlAudioMessage"
+          android:layout_width="@dimen/ism_dp_180"
+          android:layout_height="wrap_content"
+          android:background="@drawable/ism_sent_message_bubble"
+          android:layout_alignParentEnd="true"
+          android:visibility="gone"
+          >
+
+        <include
+            android:id="@+id/vParentMessageAudio"
+            layout="@layout/ism_parent_message_layout"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivAudioImagePh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ism_ic_mic"
+            android:layout_margin="@dimen/ism_dp_5"
+            android:layout_below="@+id/vParentMessageAudio"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/ism_black"
+            android:text="@string/ism_audio_recording"
+            android:layout_toEndOf="@+id/ivAudioImagePh"
+            android:layout_marginTop="@dimen/ism_dp_6"
+            android:textStyle="bold"
+            android:layout_below="@+id/vParentMessageAudio"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAudioName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivAudioImagePh"
+            android:textColor="@color/ism_black"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="@string/ism_audio_recording"
+            android:layout_marginStart="@dimen/ism_dp_13"
+            android:layout_marginEnd="@dimen/ism_dp_13"
+            android:layout_toStartOf="@+id/ivPlayAudio"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivPlayAudio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ism_ic_play_audio"
+            android:layout_marginTop="@dimen/ism_dp_8"
+            android:layout_below="@+id/ivAudioImagePh"
+            android:layout_alignParentEnd="true"
+            android:paddingEnd="@dimen/ism_dp_13"
+            android:paddingStart="@dimen/ism_dp_1"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAudioSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/ism_black"
+            android:textSize="@dimen/ism_sp_12"
+            android:layout_below="@+id/tvAudioName"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginStart="@dimen/ism_dp_13"
+            android:text="1MB"
+            android:layout_marginTop="@dimen/ism_dp_3"
+            android:layout_marginEnd="@dimen/ism_dp_13"
+            android:layout_marginBottom="@dimen/ism_dp_8"
+            />
+
+      </RelativeLayout>
+<!--    Contact-->
+      <RelativeLayout
+          android:id="@+id/rlContact"
+          android:layout_width="@dimen/ism_dp_180"
+          android:layout_height="wrap_content"
+          android:background="@drawable/ism_sent_message_bubble"
+          android:layout_alignParentEnd="true"
+          android:visibility="gone"
+          >
+
+        <include
+            android:id="@+id/vParentMessageContact"
+            layout="@layout/ism_parent_message_layout"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivContactImagePh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ism_ic_contact"
+            android:layout_margin="@dimen/ism_dp_5"
+            android:layout_below="@+id/vParentMessageContact"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/ism_black"
+            android:text="@string/ism_contact"
+            android:layout_toEndOf="@+id/ivContactImagePh"
+            android:layout_marginTop="@dimen/ism_dp_6"
+            android:textStyle="bold"
+            android:layout_below="@+id/vParentMessageContact"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivContactImage"
+            android:layout_below="@+id/ivContactImagePh"
+            android:layout_width="@dimen/ism_dp_28"
+            android:layout_height="@dimen/ism_dp_28"
+            app:srcCompat="@drawable/ism_ic_profile"
+            android:layout_marginEnd="@dimen/ism_dp_8"
+            android:layout_marginStart="@dimen/ism_dp_8"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvContactName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivContactImagePh"
+            android:textColor="@color/ism_black"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_toEndOf="@+id/ivContactImage"
+            android:text="@string/ism_user_name"
+            android:layout_marginEnd="@dimen/ism_dp_13"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvContactIdentifier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/ism_black"
+            android:textSize="@dimen/ism_sp_12"
+            android:layout_below="@+id/tvContactName"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_toEndOf="@+id/ivContactImage"
+            android:text="@string/ism_user_identifier"
+            android:layout_marginTop="@dimen/ism_dp_3"
+            android:layout_marginEnd="@dimen/ism_dp_13"
+            android:layout_marginBottom="@dimen/ism_dp_8"
+            />
+      </RelativeLayout>
+
+<!--    File-->
+      <RelativeLayout
+          android:id="@+id/rlFile"
+          android:layout_width="@dimen/ism_dp_180"
+          android:layout_height="wrap_content"
+          android:background="@drawable/ism_sent_message_bubble"
+          android:layout_alignParentEnd="true"
+          android:visibility="gone"
+          >
+
+        <include
+            android:id="@+id/vParentMessageFile"
+            layout="@layout/ism_parent_message_layout"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivFileImagePh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ism_ic_file"
+            android:layout_margin="@dimen/ism_dp_5"
+            android:layout_below="@+id/vParentMessageFile"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/ism_black"
+            android:text="@string/ism_file"
+            android:layout_toEndOf="@+id/ivFileImagePh"
+            android:layout_marginTop="@dimen/ism_dp_8"
+            android:textStyle="bold"
+            android:layout_below="@+id/vParentMessageFile"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvFileName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivFileImagePh"
+            android:textColor="@color/ism_black"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="@string/ism_files"
+            android:layout_marginStart="@dimen/ism_dp_13"
+            android:layout_marginEnd="@dimen/ism_dp_13"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvFileSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/ism_black"
+            android:textSize="@dimen/ism_sp_12"
+            android:layout_below="@+id/tvFileName"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginStart="@dimen/ism_dp_13"
+            android:text="1MB"
+            android:layout_marginTop="@dimen/ism_dp_3"
+            android:layout_marginEnd="@dimen/ism_dp_13"
+            android:layout_marginBottom="@dimen/ism_dp_8"
+            />
+
+      </RelativeLayout>
+<!--    Gif-->
+      <RelativeLayout
+          android:id="@+id/rlGif"
+          android:layout_width="@dimen/ism_dp_180"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:visibility="gone"
+          >
+
+        <RelativeLayout
+            android:id="@+id/rlGifHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ism_sent_message_header_bubble"
+            >
+
+          <include
+              android:id="@+id/vParentMessageGif"
+              layout="@layout/ism_parent_message_layout"
+              />
+
+          <androidx.appcompat.widget.AppCompatImageView
+              android:id="@+id/ivGifPh"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:srcCompat="@drawable/ism_ic_gif"
+              android:layout_margin="@dimen/ism_dp_8"
+              android:layout_below="@+id/vParentMessageGif"
+              />
+
+          <androidx.appcompat.widget.AppCompatTextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textColor="@color/ism_black"
+              android:text="@string/ism_gif"
+              android:layout_toEndOf="@+id/ivGifPh"
+              android:layout_marginTop="@dimen/ism_dp_9"
+              android:textStyle="bold"
+              android:layout_marginEnd="@dimen/ism_dp_5"
+              android:maxLines="1"
+              android:ellipsize="end"
+              android:layout_below="@+id/vParentMessageGif"
+              />
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivGifImage"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ism_dp_120"
+            android:layout_below="@+id/rlGifHeader"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ism_avatar_group_large"
+            />
+
+      </RelativeLayout>
+<!--    Location-->
+      <RelativeLayout
+          android:id="@+id/rlLocation"
+          android:layout_alignParentEnd="true"
+          android:layout_width="@dimen/ism_dp_180"
+          android:layout_height="wrap_content"
+          android:background="@drawable/ism_sent_message_bubble"
+          android:visibility="gone"
+          >
+
+    <RelativeLayout
+        android:id="@+id/rlLocationLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include
+            android:id="@+id/vParentMessageLocation"
+            layout="@layout/ism_parent_message_layout"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivLocationImagePh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ism_ic_location"
+            android:layout_margin="@dimen/ism_dp_5"
+            android:layout_below="@+id/vParentMessageLocation"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/ism_black"
+            android:text="@string/ism_location"
+            android:layout_toEndOf="@+id/ivLocationImagePh"
+            android:layout_marginTop="@dimen/ism_dp_8"
+            android:textStyle="bold"
+            android:layout_below="@+id/vParentMessageLocation"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLocationName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivLocationImagePh"
+            android:textColor="@color/ism_black"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="@string/ism_share_location"
+            android:layout_marginStart="@dimen/ism_dp_13"
+            android:layout_marginEnd="@dimen/ism_dp_13"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLocationDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/ism_black"
+            android:textSize="@dimen/ism_sp_12"
+            android:layout_below="@+id/tvLocationName"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:layout_marginStart="@dimen/ism_dp_13"
+            android:text="@string/ism_share_location"
+            android:layout_marginTop="@dimen/ism_dp_3"
+            android:layout_marginEnd="@dimen/ism_dp_13"
+            android:layout_marginBottom="@dimen/ism_dp_8"
+            />
+
+<!--        <com.google.android.gms.maps.MapView-->
+<!--            android:id="@+id/map"-->
+<!--            android:layout_below="@+id/tvLocationDescription"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="@dimen/ism_dp_120"-->
+<!--            app:mapType="normal"-->
+<!--            tools:liteMode="true"-->
+<!--            />-->
+          </RelativeLayout>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivLocationImage"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ism_dp_120"
+            android:layout_below="@+id/rlLocationLayout"
+            android:scaleType="centerCrop"
+            />
+      </RelativeLayout>
+
+<!--    Photo-->
+      <RelativeLayout
+          android:id="@+id/rlPhoto"
+          android:layout_width="@dimen/ism_dp_180"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:visibility="gone"
+          >
+
+        <RelativeLayout
+            android:id="@+id/rlPhotoHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ism_sent_message_header_bubble"
+            >
+
+          <include
+              android:id="@+id/vParentMessagePhoto"
+              layout="@layout/ism_parent_message_layout"
+              />
+
+          <androidx.appcompat.widget.AppCompatImageView
+              android:id="@+id/ivPhotoPh"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:srcCompat="@drawable/ism_ic_picture"
+              android:layout_margin="@dimen/ism_dp_8"
+              android:layout_below="@+id/vParentMessagePhoto"
+              />
+
+          <androidx.appcompat.widget.AppCompatTextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textColor="@color/ism_black"
+              android:text="@string/ism_photo"
+              android:layout_toEndOf="@+id/ivPhotoPh"
+              android:layout_marginTop="@dimen/ism_dp_10"
+              android:layout_toStartOf="@+id/tvPhotoSize"
+              android:textStyle="bold"
+              android:layout_marginEnd="@dimen/ism_dp_5"
+              android:maxLines="1"
+              android:ellipsize="end"
+              android:layout_below="@+id/vParentMessagePhoto"
+              />
+
+          <androidx.appcompat.widget.AppCompatTextView
+              android:id="@+id/tvPhotoSize"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textColor="@color/ism_black"
+              android:text="1MB"
+              android:layout_alignParentEnd="true"
+              android:layout_marginTop="@dimen/ism_dp_10"
+              android:layout_marginEnd="@dimen/ism_dp_8"
+              android:layout_below="@+id/vParentMessagePhoto"
+              />
+
+        </RelativeLayout>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivPhoto"
+            android:layout_below="@+id/rlPhotoHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ism_avatar_group_large"
+            />
+
+      </RelativeLayout>
+<!--    Sticker-->
+      <RelativeLayout
+          android:id="@+id/rlSticker"
+          android:layout_width="@dimen/ism_dp_180"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:visibility="gone"
+          >
+
+        <RelativeLayout
+            android:id="@+id/rlStickerHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ism_sent_message_header_bubble"
+            >
+
+          <include
+              android:id="@+id/vParentMessageSticker"
+              layout="@layout/ism_parent_message_layout"
+              />
+
+          <androidx.appcompat.widget.AppCompatImageView
+              android:id="@+id/ivStickerPh"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:srcCompat="@drawable/ism_ic_sticker"
+              android:layout_margin="@dimen/ism_dp_8"
+              android:layout_below="@+id/vParentMessageSticker"
+              />
+
+          <androidx.appcompat.widget.AppCompatTextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textColor="@color/ism_black"
+              android:text="@string/ism_sticker"
+              android:layout_toEndOf="@+id/ivStickerPh"
+              android:layout_marginTop="@dimen/ism_dp_9"
+              android:textStyle="bold"
+              android:layout_marginEnd="@dimen/ism_dp_5"
+              android:maxLines="1"
+              android:ellipsize="end"
+              android:layout_below="@+id/vParentMessageSticker"
+              />
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivStickerImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlStickerHeader"
+            app:srcCompat="@drawable/ism_avatar_group_large"
+            />
+
+      </RelativeLayout>
+<!--    Text message-->
+      <RelativeLayout
+          android:id="@+id/rlTextMessage"
+          android:background="@drawable/ism_sent_message_bubble"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:visibility="gone"
+          >
+
+        <include
+            android:id="@+id/vParentMessageText"
+            layout="@layout/ism_parent_text_message_layout"
+            />
+
+        <View
+            android:id="@+id/dividerText"
+            android:layout_width="wrap_content"
+            android:layout_alignEnd="@+id/tvTextMessage"
+            android:layout_alignStart="@+id/tvTextMessage"
+            android:layout_height="@dimen/ism_dp_0_5"
+            android:background="@color/ism_black"
+            android:layout_below="@+id/vParentMessageText"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTextMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/ism_black"
+            android:text="@string/ism_send_message"
+            android:padding="@dimen/ism_dp_13"
+            android:textSize="@dimen/ism_sp_16"
+            android:minWidth="@dimen/ism_dp_60"
+            android:maxWidth="@dimen/ism_dp_200"
+            android:layout_below="@+id/dividerText"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            />
+
+      </RelativeLayout>
+<!--    Video-->
+      <RelativeLayout
+          android:id="@+id/rlVideo"
+          android:layout_width="@dimen/ism_dp_180"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:visibility="gone"
+          >
+
+        <RelativeLayout
+            android:id="@+id/rlVideoHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ism_sent_message_header_bubble"
+            >
+
+          <include
+              android:id="@+id/vParentMessageVideo"
+              layout="@layout/ism_parent_message_layout"
+              />
+
+          <androidx.appcompat.widget.AppCompatImageView
+              android:id="@+id/ivVideoPh"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:srcCompat="@drawable/ism_ic_video"
+              android:layout_margin="@dimen/ism_dp_8"
+              android:layout_below="@+id/vParentMessageVideo"
+              />
+
+          <androidx.appcompat.widget.AppCompatTextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textColor="@color/ism_black"
+              android:text="@string/ism_video"
+              android:layout_toEndOf="@+id/ivVideoPh"
+              android:layout_marginTop="@dimen/ism_dp_9"
+              android:layout_toStartOf="@+id/tvVideoSize"
+              android:textStyle="bold"
+              android:layout_marginEnd="@dimen/ism_dp_5"
+              android:maxLines="1"
+              android:ellipsize="end"
+              android:layout_below="@+id/vParentMessageVideo"
+              />
+
+          <androidx.appcompat.widget.AppCompatTextView
+              android:id="@+id/tvVideoSize"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textColor="@color/ism_black"
+              android:text="1MB"
+              android:layout_alignParentEnd="true"
+              android:layout_marginTop="@dimen/ism_dp_10"
+              android:layout_marginEnd="@dimen/ism_dp_8"
+              android:layout_below="@+id/vParentMessageVideo"
+              />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlVideoThumbnail"
+            android:layout_below="@+id/rlVideoHeader"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ism_dp_120">
+
+          <androidx.appcompat.widget.AppCompatImageView
+              android:id="@+id/ivVideoThumbnail"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:scaleType="centerCrop"
+              app:srcCompat="@drawable/ism_avatar_group_large"
+              />
+
+          <androidx.appcompat.widget.AppCompatImageView
+              android:layout_width="@dimen/ism_dp_48"
+              android:layout_height="@dimen/ism_dp_48"
+              app:srcCompat="@drawable/ism_ic_play"
+              android:tint="@color/ism_white"
+              android:layout_centerInParent="true"
+              />
+        </RelativeLayout>
+
+      </RelativeLayout>
+<!--    Whiteboard-->
+      <RelativeLayout
+          android:id="@+id/rlWhiteboard"
+          android:layout_width="@dimen/ism_dp_180"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:visibility="gone"
+          >
+
+        <RelativeLayout
+            android:id="@+id/rlWhiteboardHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ism_sent_message_header_bubble"
+            >
+
+          <include
+              android:id="@+id/vParentMessageWhiteboard"
+              layout="@layout/ism_parent_message_layout"
+              />
+
+          <androidx.appcompat.widget.AppCompatImageView
+              android:id="@+id/ivWhiteboardPh"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:srcCompat="@drawable/ism_ic_whiteboard"
+              android:layout_margin="@dimen/ism_dp_8"
+              android:layout_below="@+id/vParentMessageWhiteboard"
+              />
+
+          <androidx.appcompat.widget.AppCompatTextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textColor="@color/ism_black"
+              android:text="@string/ism_whiteboard"
+              android:layout_toEndOf="@+id/ivWhiteboardPh"
+              android:layout_marginTop="@dimen/ism_dp_9"
+              android:layout_toStartOf="@+id/tvWhiteboardSize"
+              android:textStyle="bold"
+              android:layout_marginEnd="@dimen/ism_dp_5"
+              android:maxLines="1"
+              android:ellipsize="end"
+              android:layout_below="@+id/vParentMessageWhiteboard"
+              />
+
+          <androidx.appcompat.widget.AppCompatTextView
+              android:id="@+id/tvWhiteboardSize"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textColor="@color/ism_black"
+              android:text="1MB"
+              android:layout_alignParentEnd="true"
+              android:layout_marginTop="@dimen/ism_dp_10"
+              android:layout_marginEnd="@dimen/ism_dp_8"
+              android:layout_below="@+id/vParentMessageWhiteboard"
+              />
+
+        </RelativeLayout>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivWhiteboard"
+            android:layout_below="@+id/rlWhiteboardHeader"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ism_dp_120"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ism_avatar_group_large"
+            />
+
+      </RelativeLayout>
+
+      </RelativeLayout>
+
+      <androidx.appcompat.widget.Toolbar
+          app:contentInsetStart="@dimen/ism_dp_0"
+          app:contentInsetStartWithNavigation="@dimen/ism_dp_0"
+          android:layout_width="match_parent"
+          android:layout_height="?attr/actionBarSize"
+          app:layout_collapseMode="pin" >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/ism_white">
+
+          <androidx.appcompat.widget.AppCompatImageButton
+              android:id="@+id/ibBack"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_alignParentStart="true"
+              android:background="@android:color/transparent"
+              android:padding="@dimen/ism_dp_16"
+              android:tint="@color/ism_text_black"
+              app:srcCompat="@drawable/ism_ic_arrow_back"
+              />
+
+          <TextView
+              android:id="@+id/tvTitle"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerInParent="true"
+              android:text="@string/ism_message_info"
+              android:textColor="@color/ism_title_black"
+              android:textSize="@dimen/ism_sp_20"
+              />
+
+        </RelativeLayout>
+
+      </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.CollapsingToolbarLayout>
+  </com.google.android.material.appbar.AppBarLayout>
+
+
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          app:layout_behavior="@string/appbar_scrolling_view_behavior"
+          >
+        <View
+            android:id="@+id/vDivider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ism_dp_1"
+            android:background="@color/ism_line_gray"
+            />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_below="@+id/vDivider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:tabGravity="start"
+            app:tabIndicatorColor="@color/ism_tab_selected_blue"
+            app:tabIndicatorHeight="@dimen/ism_dp_1"
+            app:tabMode="scrollable"
+            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+            app:tabTextColor="@color/ism_tab_unselected_grey"
+            app:tabSelectedTextColor="@color/ism_tab_selected_blue"
+            app:tabInlineLabel="true"
+            app:tabIconTint="@color/ism_tab_icon_selector"
+            />
+
+        <View
+            android:id="@+id/vSeperator"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ism_dp_1"
+            android:background="@color/ism_line_gray"
+            android:layout_below="@id/tabLayout"
+            />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vpDeliveryStatus"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/vSeperator"
+            />
+
+      <RelativeLayout
+          android:id="@+id/rlReadEventsDisabled"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/ism_white"
+          android:visibility="gone"
+          >
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/ism_dp_80"
+            android:layout_marginStart="@dimen/ism_dp_16"
+            android:layout_marginEnd="@dimen/ism_dp_16"
+            android:drawablePadding="@dimen/ism_dp_8"
+            app:drawableTopCompat="@drawable/ism_ic_no_members"
+            android:text="@string/ism_delivery_read_events_disabled"
+            />
+
+      </RelativeLayout>
+
+      </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

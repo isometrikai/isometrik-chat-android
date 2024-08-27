@@ -1,0 +1,3 @@
+include ':isometrik-chat'
+include ':app'
+rootProject.name = "IsometrikChat"

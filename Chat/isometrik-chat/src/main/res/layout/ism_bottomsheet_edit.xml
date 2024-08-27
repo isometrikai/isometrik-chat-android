@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/ism_white"
+    >
+
+  <RelativeLayout
+      android:layout_margin="@dimen/ism_dp_8"
+      android:id="@+id/rlOriginalMessage"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivQuote"
+      android:layout_width="@dimen/ism_dp_16"
+      android:layout_height="@dimen/ism_dp_16"
+      android:layout_margin="@dimen/ism_dp_5"
+      app:srcCompat="@drawable/ism_ic_quote"
+      />
+
+  <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tvMessage"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textColor="@color/ism_black"
+      android:maxLines="3"
+      android:ellipsize="end"
+      android:text="@string/ism_send_message"
+      android:layout_marginEnd="@dimen/ism_dp_13"
+      android:layout_toEndOf="@+id/ivQuote"
+      android:layout_toStartOf="@+id/ivMessageImage"
+      android:layout_marginTop="@dimen/ism_dp_5"
+      />
+
+  <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tvSenderName"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textColor="@color/ism_parent_message_time_grey"
+      android:text="@string/ism_user_name"
+      android:textSize="@dimen/ism_sp_12"
+      android:layout_below="@+id/tvMessage"
+      android:layout_marginStart="@dimen/ism_dp_13"
+      android:layout_marginTop="@dimen/ism_dp_6"
+      android:maxLength="20"
+      android:ellipsize="end"
+      />
+
+  <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tvComma"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textColor="@color/ism_parent_message_time_grey"
+      android:text="@string/ism_comma"
+      android:textSize="@dimen/ism_sp_12"
+      android:layout_toEndOf="@+id/tvSenderName"
+      android:layout_marginEnd="@dimen/ism_dp_5"
+      android:layout_below="@+id/tvMessage"
+      android:layout_marginTop="@dimen/ism_dp_6"
+      />
+
+  <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tvMessageTime"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textColor="@color/ism_parent_message_time_grey"
+      android:text="23:00"
+      android:layout_toEndOf="@+id/tvComma"
+      android:textSize="@dimen/ism_sp_12"
+      android:layout_below="@+id/tvMessage"
+      android:layout_marginTop="@dimen/ism_dp_6"
+      android:layout_marginBottom="@dimen/ism_dp_5"
+      />
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivMessageImage"
+      android:layout_width="@dimen/ism_dp_24"
+      android:layout_height="@dimen/ism_dp_24"
+      app:srcCompat="@drawable/ism_ic_picture"
+      android:layout_centerVertical="true"
+      android:layout_alignParentEnd="true"
+      android:layout_marginEnd="@dimen/ism_dp_13"
+      />
+
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:layout_below="@+id/rlOriginalMessage"
+      android:id="@+id/rlSendMessages"
+      android:layout_width="wrap_content"
+      android:background="@drawable/ism_send_message_background"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/ism_dp_4"
+      android:elevation="@dimen/ism_dp_1"
+      android:layout_toStartOf="@+id/ivSendMessage"
+      android:layout_marginStart="@dimen/ism_dp_16"
+      android:layout_marginBottom="@dimen/ism_dp_16"
+      >
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etEditMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/ism_message_edit_hint"
+        android:maxLength="1000"
+        android:maxLines="10"
+        android:paddingBottom="@dimen/ism_dp_10"
+        android:paddingStart="@dimen/ism_dp_16"
+        android:paddingEnd="@dimen/ism_dp_16"
+        android:paddingTop="@dimen/ism_dp_10"
+        android:textColor="@color/ism_hint_grey"
+        android:textColorHint="@color/ism_hint_grey"
+        android:textSize="@dimen/ism_sp_14"
+        android:background="@drawable/ism_send_message_background"
+        />
+
+  </RelativeLayout>
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivSendMessage"
+      android:layout_below="@+id/rlOriginalMessage"
+      android:layout_width="@dimen/ism_dp_34"
+      android:layout_height="@dimen/ism_dp_34"
+      app:srcCompat="@drawable/ism_ic_send_message"
+      android:tint="@color/ism_white"
+      android:padding="@dimen/ism_dp_8"
+      android:layout_margin="@dimen/ism_dp_8"
+      android:background="@drawable/ism_create_conversation_circle"
+      android:layout_alignParentEnd="true"
+      />
+
+</RelativeLayout>

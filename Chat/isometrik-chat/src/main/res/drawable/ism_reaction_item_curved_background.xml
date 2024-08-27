@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+  <corners
+      android:bottomLeftRadius="@dimen/ism_dp_20"
+      android:bottomRightRadius="@dimen/ism_dp_20"
+      android:topLeftRadius="@dimen/ism_dp_20"
+      android:topRightRadius="@dimen/ism_dp_20" />
+  <solid android:color="@color/ism_white"/>
+</shape>
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<shape xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:shape="oval">-->
+<!--  <solid android:color="@color/ism_white" />-->
+<!--</shape>-->

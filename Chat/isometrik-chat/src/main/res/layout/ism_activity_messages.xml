@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/ism_white"
+    android:keepScreenOn="true"
+    >
+
+  <com.google.android.material.appbar.AppBarLayout
+      android:id="@+id/abLayout"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      style="@style/ThemeOverlay.AppCompat.ActionBar"
+      >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/ism_white"
+        >
+
+    <RelativeLayout
+        android:id="@+id/rlConversationDetails"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@+id/ibBack"
+        android:layout_toStartOf="@+id/ivRefreshOnlineStatus"
+        >
+      <TextView
+          android:id="@+id/tvConversationOrUserName"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/ism_private_conversation_title_hint"
+          android:textColor="@color/ism_title_black"
+          android:textSize="@dimen/ism_sp_16"
+          android:textStyle="bold"
+          android:maxLines="1"
+          android:ellipsize="end"
+          android:layout_marginTop="@dimen/ism_dp_5"
+          android:layout_marginEnd="@dimen/ism_dp_13"
+          />
+
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/ivOnlineStatus"
+          android:layout_width="@dimen/ism_dp_13"
+          android:layout_height="@dimen/ism_dp_13"
+          android:layout_below="@+id/tvConversationOrUserName"
+          app:srcCompat="@drawable/ism_user_online_status_circle"
+          android:layout_marginTop="@dimen/ism_dp_5"
+          android:layout_marginEnd="@dimen/ism_dp_5"
+          />
+
+      <TextView
+          android:id="@+id/tvParticipantsCountOrOnlineStatus"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/tvConversationOrUserName"
+          android:text="@string/ism_participants_count"
+          android:maxLines="1"
+          android:ellipsize="end"
+          android:textColor="@color/ism_conversation_details_grey"
+          android:layout_marginTop="@dimen/ism_dp_1"
+          android:layout_marginEnd="@dimen/ism_dp_13"
+          android:layout_toEndOf="@+id/ivOnlineStatus"
+          />
+
+    </RelativeLayout>
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/ism_dp_1"
+          android:layout_alignParentBottom="true"
+          android:background="@color/ism_line_gray"
+          />
+
+      <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/ism_dp_10"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ism_ic_search_message"
+                android:layout_marginEnd="@dimen/ism_dp_8"
+                android:layout_alignParentEnd="true"
+          />
+
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/ivRefreshOnlineStatus"
+          android:layout_width="@dimen/ism_dp_44"
+          android:layout_height="@dimen/ism_dp_44"
+          android:padding="@dimen/ism_dp_10"
+          android:layout_centerVertical="true"
+          app:srcCompat="@drawable/ism_ic_refresh_online_status"
+          android:visibility="gone"
+          android:layout_toStartOf="@id/ivSearch"
+          />
+
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/ivObservers"
+          android:layout_width="@dimen/ism_dp_44"
+          android:layout_height="@dimen/ism_dp_44"
+          android:padding="@dimen/ism_dp_10"
+          android:layout_centerVertical="true"
+          app:srcCompat="@drawable/ism_ic_observers"
+          android:layout_toStartOf="@+id/ivSearch"
+          android:visibility="gone"
+          />
+
+      <androidx.appcompat.widget.AppCompatImageButton
+          android:id="@+id/ibBack"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_alignParentStart="true"
+          android:background="@android:color/transparent"
+          android:padding="@dimen/ism_dp_16"
+          android:tint="@color/ism_text_black"
+          app:srcCompat="@drawable/ism_ic_arrow_back"
+          android:layout_marginEnd="@dimen/ism_dp_5"
+          />
+      <include
+          android:id="@+id/vSelectMultipleMessagesHeader"
+          layout="@layout/ism_select_multiple_messages_header"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_alignParentTop="true"
+          android:clickable="true"
+          android:focusable="true"
+          android:visibility="gone"
+          />
+    </RelativeLayout>
+
+  </com.google.android.material.appbar.AppBarLayout>
+
+
+  <RelativeLayout
+      android:id="@+id/rlSearch"
+      android:layout_width="wrap_content"
+      android:background="@drawable/ism_send_message_background"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/ism_dp_10"
+      android:layout_marginBottom="@dimen/ism_dp_5"
+      android:layout_marginStart="@dimen/ism_dp_16"
+      android:layout_marginEnd="@dimen/ism_dp_16"
+      android:elevation="@dimen/ism_dp_1"
+      android:layout_below="@+id/abLayout"
+      android:visibility="gone"
+      >
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/ism_search_messages_hint"
+        android:maxLength="100"
+        android:maxLines="3"
+        android:paddingBottom="@dimen/ism_dp_10"
+        android:paddingStart="@dimen/ism_dp_16"
+        android:paddingEnd="@dimen/ism_dp_16"
+        android:paddingTop="@dimen/ism_dp_10"
+        android:textColor="@color/ism_hint_grey"
+        android:textColorHint="@color/ism_hint_grey"
+        android:textSize="@dimen/ism_sp_14"
+        android:background="@drawable/ism_send_message_background"
+        />
+  </RelativeLayout>
+
+  <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+      android:id="@+id/refresh"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@+id/rlSearch"
+      android:layout_above="@+id/rlBottomLayout"
+      android:layout_marginBottom="@dimen/ism_dp_30"
+      >
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/rvMessages"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      />
+  </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+  <TextView
+      android:id="@+id/tvTyping"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/ism_typing"
+      android:maxLines="1"
+      android:ellipsize="end"
+      android:textColor="@color/ism_conversation_details_grey"
+      android:layout_above="@id/rlBottomLayout"
+      android:layout_marginBottom="@dimen/ism_dp_8"
+      android:layout_marginStart="@dimen/ism_dp_16"
+      android:layout_marginEnd="@dimen/ism_dp_16"
+      android:visibility="gone"
+      />
+
+  <include
+      android:id="@+id/vTagUsers"
+      layout="@layout/ism_tag_member_suggestions"
+      android:layout_above="@+id/rlBottomLayout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:visibility="gone"
+      />
+
+  <RelativeLayout
+      android:id="@+id/rlBottomLayout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      >
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivAddAttachment"
+      android:layout_width="@dimen/ism_dp_34"
+      android:layout_height="@dimen/ism_dp_34"
+      app:srcCompat="@drawable/ism_ic_add_attachment"
+      android:tint="@color/ism_white"
+      android:padding="@dimen/ism_dp_8"
+      android:layout_margin="@dimen/ism_dp_8"
+      android:background="@drawable/ism_create_conversation_circle"
+      />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivCaptureImage"
+        android:layout_width="@dimen/ism_dp_36"
+        android:layout_height="@dimen/ism_dp_36"
+        app:srcCompat="@drawable/ism_ic_camera"
+        android:paddingBottom="@dimen/ism_dp_4"
+        android:paddingTop="@dimen/ism_dp_2"
+        android:paddingEnd="@dimen/ism_dp_2"
+        android:paddingStart="@dimen/ism_dp_2"
+        android:layout_marginStart="@dimen/ism_dp_8"
+        android:layout_marginBottom="@dimen/ism_dp_8"
+        android:layout_marginTop="@dimen/ism_dp_8"
+        android:layout_marginEnd="@dimen/ism_dp_64"
+        android:layout_alignParentEnd="true"
+        />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivSendMessage"
+        android:layout_width="@dimen/ism_dp_34"
+        android:layout_height="@dimen/ism_dp_34"
+        app:srcCompat="@drawable/ism_ic_send_message"
+        android:tint="@color/ism_white"
+        android:layout_toEndOf="@id/rlSendMessages"
+        android:padding="@dimen/ism_dp_8"
+        android:layout_margin="@dimen/ism_dp_8"
+        android:background="@drawable/ism_create_conversation_circle"
+        android:visibility="gone"
+        />
+
+    <RelativeLayout
+        android:id="@+id/rlSendMessages"
+        android:layout_width="wrap_content"
+        android:layout_toEndOf="@+id/ivAddAttachment"
+        android:background="@drawable/ism_send_message_background"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ism_dp_4"
+        android:elevation="@dimen/ism_dp_1"
+        android:layout_toStartOf="@+id/ivCaptureImage"
+        >
+
+      <androidx.appcompat.widget.AppCompatEditText
+          android:id="@+id/etSendMessage"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:hint="@string/ism_type_something_here"
+          android:maxLength="1000"
+          android:maxLines="10"
+          android:paddingBottom="@dimen/ism_dp_10"
+          android:paddingStart="@dimen/ism_dp_16"
+          android:paddingEnd="@dimen/ism_dp_16"
+          android:paddingTop="@dimen/ism_dp_10"
+          android:textColor="@color/ism_hint_grey"
+          android:textColorHint="@color/ism_hint_grey"
+          android:textSize="@dimen/ism_sp_14"
+          android:background="@drawable/ism_send_message_background"
+           />
+
+    </RelativeLayout>
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:id="@+id/rlDeleteConversation"
+      android:layout_alignParentBottom="true"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/ism_dp_48"
+      android:background="@color/ism_send_message_grey"
+      android:visibility="gone"
+      android:clickable="true"
+      android:focusable="true"
+      >
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ism_delete_conversation"
+        android:textStyle="bold"
+        android:textColor="@color/ism_black"
+        android:layout_centerInParent="true"
+        android:drawableStart="@drawable/ism_ic_delete_conversation"
+        android:drawablePadding="@dimen/ism_dp_13"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ism_dp_0_5"
+        android:layout_alignParentTop="true"
+        android:background="@color/ism_line_gray"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ism_dp_0_5"
+        android:layout_alignParentBottom="true"
+        android:background="@color/ism_line_gray"
+        />
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:id="@+id/rlRecordAudio"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_marginBottom="@dimen/ism_dp_9"
+      android:layout_marginEnd="@dimen/ism_dp_8"
+      android:layout_marginStart="@dimen/ism_dp_8"
+      android:layout_marginTop="@dimen/ism_dp_8"
+      >
+
+    <io.isometrik.ui.messages.media.audio.record.views.RecordButton
+        android:id="@+id/btRecord"
+        android:layout_width="@dimen/ism_dp_36"
+        android:layout_height="@dimen/ism_dp_36"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/ism_create_conversation_circle"
+        android:padding="@dimen/ism_dp_8"
+        android:scaleType="centerInside"
+        android:layout_marginEnd="@dimen/ism_dp_4"
+        app:mic_icon="@drawable/ism_ic_mic"
+        app:tint="@color/ism_white"
+        />
+
+    <io.isometrik.ui.messages.media.audio.record.views.RecordLockView
+        android:id="@+id/vRecordLock"
+        android:layout_width="@dimen/ism_dp_34"
+        android:layout_height="@dimen/ism_dp_34"
+        android:layout_above="@id/btRecord"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="@dimen/ism_dp_100"
+        android:layout_marginEnd="@dimen/ism_dp_5"
+        app:circle_color="@color/ism_record_lock_blue"
+        app:lock_color="@color/ism_white"
+        />
+
+    <io.isometrik.ui.messages.media.audio.record.views.RecordView
+        android:id="@+id/vRecordView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@id/btRecord"
+        app:counter_time_color="@color/ism_cancel_recording_red"
+        app:slide_to_cancel_arrow="@drawable/ism_ic_slide_to_cancel"
+        app:slide_to_cancel_arrow_color="@color/ism_black"
+        app:slide_to_cancel_bounds="@dimen/ism_dp_8"
+        app:slide_to_cancel_margin_right="@dimen/ism_dp_10"
+        app:slide_to_cancel_text="@string/ism_slide_to_cancel"
+        />
+
+  </RelativeLayout>
+
+
+  <TextView
+      android:id="@+id/tvNoMessages"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:drawablePadding="@dimen/ism_dp_8"
+      app:drawableTopCompat="@drawable/ism_ic_no_members"
+      android:gravity="center"
+      android:text="@string/ism_search_no_messages"
+      android:textColor="@color/ism_black"
+      android:visibility="gone"
+      />
+
+  <include
+      android:id="@+id/vSelectMultipleMessagesFooter"
+      layout="@layout/ism_select_multiple_messages_footer"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:clickable="true"
+      android:focusable="true"
+      android:visibility="gone"
+      />
+
+  <include
+      android:id="@+id/incMessageNotification"
+      layout="@layout/ism_message_notification"/>
+
+  <include
+      android:id="@+id/incConnectionState"
+      android:layout_marginTop="?attr/actionBarSize"
+      layout="@layout/ism_overlay_connection_state"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+
+  <!--  Extras relative layout added to remove transparent shimmer problem-->
+  <RelativeLayout
+      android:id="@+id/rlShimmer"
+      android:background="@color/ism_white"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@+id/abLayout"
+      android:clickable="true"
+      android:focusable="true"
+      android:visibility="gone"
+      >
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+      <include
+          android:id="@+id/incShimmer"
+          layout="@layout/ism_activity_messages_shimmer" />
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+  </RelativeLayout>
+
+  <include
+      android:id="@+id/vLoadingOverlay"
+      layout="@layout/ism_loading_overlay"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@+id/abLayout"
+      android:clickable="true"
+      android:focusable="true"
+      android:visibility="gone"
+      />
+
+</RelativeLayout>

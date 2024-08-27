@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="io.isometrik.chat">
+
+  <uses-feature android:name="android.hardware.camera" />
+  <uses-feature android:name="android.hardware.camera.autofocus" />
+  <uses-feature android:name="android.hardware.sensor.gyroscope" />
+
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.CAMERA" />
+  <uses-permission android:name="android.hardware.camera.autofocus" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+      android:maxSdkVersion="32" />
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+      android:maxSdkVersion="32" />
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.READ_CONTACTS" />
+  <uses-permission android:name="android.permission.RECORD_AUDIO" />
+  <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+  <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+  <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+
+  <queries>
+    <intent>
+      <action android:name="android.intent.action.VIEW" />
+
+      <category android:name="android.intent.category.DEFAULT" />
+
+      <data android:mimeType="vnd.android.cursor.dir/contact" />
+    </intent>
+  </queries>
+
+  <application
+      android:allowBackup="false"
+      android:label="@string/ism_app_name"
+      android:networkSecurityConfig="@xml/network_security_config"
+      android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+    <activity
+        android:name="io.isometrik.ui.messages.chat.contactList.ContactsListActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        android:exported="false" />
+    <activity
+        android:name="io.isometrik.ui.splash.SplashActivity"
+        android:label="@string/ism_app_name"
+        android:screenOrientation="portrait"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar.Launcher"
+        tools:ignore="LockedOrientationActivity"/>
+    <activity
+        android:name="io.isometrik.ui.users.list.UsersActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.users.details.UserDetailsActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.users.create.CreateUserActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.users.edit.EditUserActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.conversations.newconversation.type.SelectConversationTypeActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.conversations.newconversation.group.NewGroupConversationActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.conversations.participants.AddParticipantsActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.conversations.list.ConversationsActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.conversations.details.userconversation.UserConversationDetailsActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.conversations.details.groupconversation.ConversationDetailsActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.messages.deliverystatus.MessageDeliveryStatusActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.conversations.newconversation.onetoone.NewOneToOneConversationActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.conversations.details.participants.MembersWatchersActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.conversations.gallery.GalleryMediaItemsActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.messages.chat.ConversationMessagesActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:parentActivityName="io.isometrik.ui.conversations.list.ConversationsActivity"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" /> <!-- android:parentActivityName=".conversations.list.ConversationsActivity" -->
+    <activity
+        android:name="io.isometrik.ui.camera.CameraActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.camera.CapturedImagePreviewActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.messages.media.location.ShareLocationActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.messages.forward.ForwardMessageActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.messages.broadcast.BroadcastMessageActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.messages.mentioned.MentionedMessagesActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.messages.preview.video.PreviewVideoActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.messages.preview.audio.PreviewAudioActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.search.SearchActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.users.blockedornonblocked.BlockedOrNonBlockedUsersActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name="io.isometrik.ui.conversations.details.observers.ObserversActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" /> <!-- <activity android:name=".conversations.newconversation.group.search.SearchParticipantsActivity" -->
+    <!-- android:screenOrientation="portrait" -->
+    <!-- tools:ignore="LockedOrientationActivity" -->
+    <!-- android:configChanges="orientation|keyboardHidden|screenSize" -->
+    <!-- android:windowSoftInputMode="adjustPan" -->
+    <!-- /> -->
+    <provider
+        android:name="androidx.core.content.FileProvider"
+        android:authorities="${applicationId}.provider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+      <meta-data
+          android:name="android.support.FILE_PROVIDER_PATHS"
+          android:resource="@xml/ism_provider_paths" />
+    </provider>
+
+    <uses-library
+        android:name="org.apache.http.legacy"
+        android:required="false" />
+
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="maps_api_key" />
+
+    <service android:name="io.isometrik.ui.messages.media.location.FetchAddressIntentService" />
+    <service
+        android:name="io.isometrik.ui.notifications.MyFirebaseMessagingService"
+        android:exported="false">
+      <intent-filter>
+        <action android:name="com.google.firebase.MESSAGING_EVENT" />
+      </intent-filter>
+    </service>
+  </application>
+</manifest>

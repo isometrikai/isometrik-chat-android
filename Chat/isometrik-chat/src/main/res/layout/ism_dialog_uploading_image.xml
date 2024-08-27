@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/ism_white"
+    >
+
+  <com.google.android.material.progressindicator.CircularProgressIndicator
+      android:id="@+id/pbUpload"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerHorizontal="true"
+      app:indicatorColor="@color/ism_black"
+      app:indicatorSize="@dimen/ism_dp_24"
+      app:trackColor="@color/ism_seperator_grey"
+      app:trackThickness="@dimen/ism_dp_2"
+      android:layout_marginTop="@dimen/ism_dp_13"
+      />
+
+  <TextView
+      android:id="@+id/tvMessage"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:ellipsize="end"
+      android:maxLines="1"
+      android:layout_below="@+id/pbUpload"
+      android:layout_centerHorizontal="true"
+      android:layout_marginStart="@dimen/ism_dp_13"
+      android:layout_marginEnd="@dimen/ism_dp_13"
+      android:layout_marginTop="@dimen/ism_dp_5"
+      android:layout_marginBottom="@dimen/ism_dp_13"
+      android:text="@string/ism_uploading_image"
+      />
+
+  <androidx.appcompat.widget.AppCompatButton
+      android:id="@+id/btCancel"
+      android:layout_width="wrap_content"
+      android:layout_height="@dimen/ism_dp_36"
+      android:layout_below="@+id/tvMessage"
+      android:layout_marginTop="@dimen/ism_dp_8"
+      android:layout_marginBottom="@dimen/ism_dp_16"
+      android:paddingEnd="@dimen/ism_dp_30"
+      android:paddingStart="@dimen/ism_dp_30"
+      android:layout_centerHorizontal="true"
+      android:background="@drawable/ism_gradient_curved_background"
+      android:text="@string/ism_cancel"
+      android:textAllCaps="false"
+      android:textColor="@color/ism_white"
+      />
+</RelativeLayout>
