@@ -105,7 +105,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'io.isometrik.chat'
                 artifactId = 'android'
-                version = '1.0.6'
+                version = '1.0.7'
             }
         }
     }
