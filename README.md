@@ -1,5 +1,4 @@
-README
-What is this repository for?
+
 Contains sdks for android apps to interact with isometrik backend for , groupstreaming chat.
 
 # Technical details
