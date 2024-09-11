@@ -7,21 +7,7 @@ A simple chat library for Android applications.
 
 To use this library in your Android project, follow the steps below to add the required dependency.
 
-### Step 1: Configure Repositories
-
-Open your `settings.gradle` file (located at the root of your project) and add the following:
-
-```groovy
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        mavenCentral()
-        maven { url 'https://jitpack.io' }
-    }
-}
-```
-
-### Step 2: Configure Project Repositories
+### Step 1: Configure Project Repositories
 
 Ensure your project's build.gradle (Project Level) file contains the following repositories:
 
@@ -34,16 +20,16 @@ allprojects {
 }
 ```
 
-### Step 3: Add the Dependency
+### Step 2: Add the Dependency
 
 Open your build.gradle file (app-level) and add the following line in the dependencies section:
 
 ```groovy
 dependencies {
-    implementation 'com.github.isometrikai:isometrik-chat-android:1.0.1'
+    implementation 'com.github.isometrikai:isometrik-chat-android:1.1.0'
 }
 ```
-### Step 4: Sync Your Project
+### Step 3: Sync Your Project
 
 Once you've made the changes, sync your project with the Gradle files by clicking the "Sync Now" button in Android Studio.
 
