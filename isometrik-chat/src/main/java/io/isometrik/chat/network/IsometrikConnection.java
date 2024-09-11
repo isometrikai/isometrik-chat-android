@@ -260,4 +260,11 @@ public class IsometrikConnection {
       }
     }
   }
+
+  public boolean isConnected(){
+    if (mqttClient != null){
+     return mqttClient.isConnected();
+    }
+    return false;
+  }
 }

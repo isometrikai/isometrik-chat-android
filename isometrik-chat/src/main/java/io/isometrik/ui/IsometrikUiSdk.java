@@ -215,4 +215,11 @@ public class IsometrikUiSdk {
     return applicationName;
   }
 
+  public boolean isConnected(){
+    if (isometrik != null) {
+      return isometrik.isConnected();
+    }
+    return false;
+  }
+
 }

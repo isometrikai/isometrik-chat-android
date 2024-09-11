@@ -77,18 +77,20 @@ public class ConversationsActivity extends FragmentActivity implements Conversat
       }
     }).attach();
 
-    try {
-      IsometrikUiSdk.getInstance()
-          .getIsometrik()
-          .getExecutor()
-          .execute(() -> IsometrikUiSdk.getInstance()
-              .getIsometrik()
-              .createConnection(IsometrikUiSdk.getInstance().getUserSession().getUserId()
-                      + IsometrikUiSdk.getInstance().getUserSession().getDeviceId(),
-                  IsometrikUiSdk.getInstance().getUserSession().getUserToken()));
-    } catch (Exception ignore) {
+      try {
+          if (!IsometrikUiSdk.getInstance().getIsometrik().isConnected()) {
+              IsometrikUiSdk.getInstance()
+                      .getIsometrik()
+                      .getExecutor()
+                      .execute(() -> IsometrikUiSdk.getInstance()
+                              .getIsometrik()
+                              .createConnection(IsometrikUiSdk.getInstance().getUserSession().getUserId()
+                                              + IsometrikUiSdk.getInstance().getUserSession().getDeviceId(),
+                                      IsometrikUiSdk.getInstance().getUserSession().getUserToken()));
+          }
+      } catch (Exception ignore) {
 
-    }
+      }
     loadUserImage(IsometrikUiSdk.getInstance().getUserSession().getUserProfilePic());
 
     ismActivityConversationsBinding.ivNext.setOnClickListener(v -> startActivity(

@@ -298,4 +298,8 @@ public class Isometrik {
         .putLong("deliveryStatusUpdatedUpto", deliveryStatusUpdatedUpto)
         .apply();
   }
+
+  public boolean isConnected(){
+    return isometrikConnection.isConnected();
+  }
 }
