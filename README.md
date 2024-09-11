@@ -26,67 +26,81 @@ Open your build.gradle file (app-level) and add the following line in the depend
 
 ```groovy
 dependencies {
-    implementation 'com.github.isometrikai:isometrik-chat-android:1.1.0'
+    implementation 'com.github.isometrikai:isometrik-chat-android:1.1.1'
 }
 ```
 ### Step 3: Sync Your Project
 
 Once you've made the changes, sync your project with the Gradle files by clicking the "Sync Now" button in Android Studio.
 
-## Usage
 
-### Step 1: SDK initialization
+# SDK Integration Guide
 
-Initialize SDK in project Application class's onCreate() method.
+Follow the steps below to integrate and configure the Isometrik UI SDK in your Android project.
 
-```groovy
+## Step 1: SDK Initialization
+
+Initialize the SDK in your project's `Application` class, specifically within the `onCreate()` method.
+
+```java
 IsometrikUiSdk.getInstance().sdkInitialize(this);
 ```
 
-### Step 2: SDK Configuration
-Configure SDK at most first calling method in app. mostly it would be Application class's onCreate() method. you will require below details for configuration.
+## Step 2: SDK Configuration
 
-1) app_secret
-2) user_secret
-3) license_key
-4) google_places_api_key
-5) giphy_api_key
-6) accountId
-7) projectId
-8) keysetId
+Configure the SDK in the first method called in your app, typically within the `Application` class's `onCreate()` method. You will need the following details for configuration:
 
-you can provides this details in below method param.
+- `app_secret`
+- `user_secret`
+- `license_key`
+- `google_places_api_key`
+- `giphy_api_key`
+- `accountId`
+- `projectId`
+- `keysetId`
 
-```groovy
+Provide these details using the parameters in the method below:
+
+```java
 IsometrikUiSdk.getInstance()
-        .createConfiguration(getString(R.string.app_secret), getString(R.string.user_secret),
-            getString(R.string.accountId),getString(R.string.projectId),getString(R.string.keysetId),
-                userName,password ,getString(R.string.license_key),
-            BuildConfig.APPLICATION_ID,getString(R.string.app_name), getString(R.string.google_places_api_key),
-            getString(R.string.giphy_api_key));
+        .createConfiguration(
+            getString(R.string.app_secret),
+            getString(R.string.user_secret),
+            getString(R.string.accountId),
+            getString(R.string.projectId),
+            getString(R.string.keysetId),
+            userName,
+            password,
+            getString(R.string.license_key),
+            BuildConfig.APPLICATION_ID,
+            getString(R.string.app_name),
+            getString(R.string.google_places_api_key),
+            getString(R.string.giphy_api_key)
+        );
 ```
-and call below method on app terminal. mostly it would be onTerminate() method of Application class.
+To handle SDK termination, call the following method, usually in the onTerminate() method of the Application class:
 
-```groovy
+```java
 IsometrikUiSdk.getInstance().onTerminate();
 ```
 
-### Step 3: Create Connection
+## Step 3: Create a Connection
 
-make this connection on your app base screen which execute first then you go for chat. (ex MainActivity or LandingActivity)
-for connection you require below details
+Establish a connection on the base screen of your app (e.g., `MainActivity` or `LandingActivity`) before accessing the chat functionality. You will need the following details:
 
-1) userClientId  (isometrikUserId)
-2) userIsometrikToken
+- `userClientId` (isometrikUserId)
+- `userIsometrikToken`
 
-```groovy
- IsometrikUiSdk.getInstance().getIsometrik().createConnection(userClientId,  userIsometrikToken);
+Use the following method to create a connection:
+
+```java
+IsometrikUiSdk.getInstance().getIsometrik().createConnection(userClientId, userIsometrikToken);
 ```
 
-### Step 4: That's it
-Now, you can call ConversationsActivity from any click action and you good to go for chat.
+### Step 4: Start a Conversation
+You are now ready to start a conversation. You can launch ConversationsActivity from any click action in your app:
 
-```groovy
+```java
  Intent intent = new Intent(this, ConversationsActivity.class);
  startActivity(intent);
 ```
