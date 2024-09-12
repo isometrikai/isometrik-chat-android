@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import io.isometrik.chat.databinding.IsmMessageReactionItemBinding;
 import io.isometrik.ui.messages.reaction.util.ReactionClickListener;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -64,7 +64,7 @@ public class MessageReactionsAdapter extends RecyclerView.Adapter<RecyclerView.V
         holder.ismMessageReactionItemBinding.tvReactionCount.setText(
             String.valueOf(reactionModel.getReactionCount()));
         try {
-          GlideApp.with(mContext)
+          Glide.with(mContext)
               .load(reactionModel.getReactionIcon())
               .diskCacheStrategy(DiskCacheStrategy.NONE)
               .into(holder.ismMessageReactionItemBinding.ivReaction);

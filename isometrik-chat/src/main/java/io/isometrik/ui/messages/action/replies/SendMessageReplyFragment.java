@@ -15,7 +15,7 @@ import io.isometrik.chat.databinding.IsmBottomsheetReplyBinding;
 import io.isometrik.ui.messages.action.MessageActionCallback;
 import io.isometrik.ui.messages.chat.MessagesModel;
 import io.isometrik.ui.messages.chat.utils.messageutils.ReplyMessageUtil;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.TimeUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,7 +59,7 @@ public class SendMessageReplyFragment extends BottomSheetDialogFragment {
     if (parentMessagePlaceHolderIcon != null) {
 
       try {
-        GlideApp.with(activity)
+        Glide.with(activity)
             .load(parentMessagePlaceHolderIcon)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .into(ismBottomsheetReplyBinding.ivMessageImage);

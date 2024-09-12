@@ -25,10 +25,11 @@
   <color name="ism_offline_yellow">#FDD835</color>
 
 <!--  Create conversation background-->
-  <color name="ism_end_blue">#56C2FA</color>
-  <color name="ism_start_blue">#0389DB</color>
+  <color name="ism_end_blue">#7062E9</color>
+  <color name="ism_theme_base">#7062E9</color>
   <color name="ism_settings_text_grey">#757575</color>
   <color name="ism_settings_button_blue">#0389DB</color>
+  <color name="ism_count_bg_color">#F15C46</color>
 
   <!--Conversation attachments-->
   <color name="ism_attachment_type_grey">#757575</color>

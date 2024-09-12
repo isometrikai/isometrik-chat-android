@@ -6,10 +6,10 @@ import com.bumptech.glide.module.AppGlideModule;
 /**
  * The helper class for Glide module.
  */
-@GlideModule
-public class MyGlideApp extends AppGlideModule {
-  @Override
-  public boolean isManifestParsingEnabled() {
-    return false;
-  }
-}
+//@GlideModule
+//public class MyGlideApp extends AppGlideModule {
+//  @Override
+//  public boolean isManifestParsingEnabled() {
+//    return false;
+//  }
+//}

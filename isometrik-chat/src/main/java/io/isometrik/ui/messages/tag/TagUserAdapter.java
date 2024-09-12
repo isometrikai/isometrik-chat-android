@@ -7,10 +7,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmTagUserItemBinding;
-import io.isometrik.ui.utils.GlideApp;
 import io.isometrik.chat.utils.PlaceholderUtils;
 import java.util.ArrayList;
 
@@ -64,7 +65,7 @@ public class TagUserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (PlaceholderUtils.isValidImageUrl(tagUserModel.getMemberProfileImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(tagUserModel.getMemberProfileImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())

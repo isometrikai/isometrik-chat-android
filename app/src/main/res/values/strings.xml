@@ -1,3 +1,4 @@
 <resources>
-  <string name="app_name">Isometrik Chat</string>
+    <string name="app_name">Isometrik Chat</string>
+    <string name="new_conversation_list">new conversation list</string>
 </resources>

@@ -612,5 +612,6 @@
     <string name="ism_attachment_location">📍 </string>
 
     <string name="image_picker_provider_authority_suffix">.io.isometrik.samples.chat.provider</string>
+    <string name="chats">Chats</string>
 
 </resources>

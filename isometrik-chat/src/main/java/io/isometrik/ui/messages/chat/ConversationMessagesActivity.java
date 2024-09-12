@@ -84,7 +84,7 @@ import io.isometrik.ui.messages.tag.TagUserModel;
 import io.isometrik.ui.messages.tag.TaggedUserCallback;
 import io.isometrik.chat.utils.Constants;
 import io.isometrik.chat.utils.GalleryIntentsUtil;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.KeyboardUtil;
 import io.isometrik.chat.utils.MentionedUserSpan;
 import io.isometrik.chat.utils.PlaceholderUtils;
@@ -2016,7 +2016,7 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
             if (PlaceholderUtils.isValidImageUrl(conversationImageUrl)) {
 
                 try {
-                    GlideApp.with(ConversationMessagesActivity.this).load(conversationImageUrl).placeholder(R.drawable.ism_ic_profile).transform(new CircleCrop()).into(ismActivityMessagesBinding.incMessageNotification.ivConversationImage);
+                    Glide.with(ConversationMessagesActivity.this).load(conversationImageUrl).placeholder(R.drawable.ism_ic_profile).transform(new CircleCrop()).into(ismActivityMessagesBinding.incMessageNotification.ivConversationImage);
                 } catch (IllegalArgumentException | NullPointerException ignore) {
                 }
             } else {
@@ -2027,7 +2027,7 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
                 if (PlaceholderUtils.isValidImageUrl(senderImageUrl)) {
 
                     try {
-                        GlideApp.with(ConversationMessagesActivity.this).load(senderImageUrl).placeholder(R.drawable.ism_ic_profile).transform(new CircleCrop()).into(ismActivityMessagesBinding.incMessageNotification.ivSenderImage);
+                        Glide.with(ConversationMessagesActivity.this).load(senderImageUrl).placeholder(R.drawable.ism_ic_profile).transform(new CircleCrop()).into(ismActivityMessagesBinding.incMessageNotification.ivSenderImage);
                     } catch (IllegalArgumentException | NullPointerException ignore) {
                     }
                 } else {
@@ -2041,7 +2041,7 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
 
             if (messagePlaceHolderImage != null) {
                 try {
-                    GlideApp.with(ConversationMessagesActivity.this).load(messagePlaceHolderImage).diskCacheStrategy(DiskCacheStrategy.NONE).into(ismActivityMessagesBinding.incMessageNotification.ivMessageType);
+                    Glide.with(ConversationMessagesActivity.this).load(messagePlaceHolderImage).diskCacheStrategy(DiskCacheStrategy.NONE).into(ismActivityMessagesBinding.incMessageNotification.ivMessageType);
                 } catch (IllegalArgumentException | NullPointerException ignore) {
                 }
 

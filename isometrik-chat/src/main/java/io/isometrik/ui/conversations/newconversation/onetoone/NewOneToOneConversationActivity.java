@@ -16,7 +16,7 @@ import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmActivityNewOnetooneConversationBinding;
 import io.isometrik.ui.messages.chat.ConversationMessagesActivity;
 import io.isometrik.chat.utils.AlertProgress;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.PlaceholderUtils;
 import io.isometrik.chat.utils.RecyclerItemClickListener;
 import java.util.ArrayList;
@@ -70,7 +70,7 @@ public class NewOneToOneConversationActivity extends AppCompatActivity
       if (PlaceholderUtils.isValidImageUrl(selectedUser.getUserProfilePic())) {
 
         try {
-          GlideApp.with(NewOneToOneConversationActivity.this)
+          Glide.with(NewOneToOneConversationActivity.this)
               .load(selectedUser.getUserProfilePic())
               .placeholder(R.drawable.ism_ic_profile)
               .transform(new CircleCrop())
@@ -100,7 +100,7 @@ public class NewOneToOneConversationActivity extends AppCompatActivity
                         getString(R.string.ism_select_user_for_conversation));
 
                     try {
-                      GlideApp.with(NewOneToOneConversationActivity.this)
+                      Glide.with(NewOneToOneConversationActivity.this)
                           .load(R.drawable.ism_ic_profile)
                           .into(ismActivityNewOnetooneConversationBinding.ivSelectedUserImage);
                     } catch (IllegalArgumentException | NullPointerException ignore) {
@@ -112,7 +112,7 @@ public class NewOneToOneConversationActivity extends AppCompatActivity
                     if (PlaceholderUtils.isValidImageUrl(user.getUserProfilePic())) {
 
                       try {
-                        GlideApp.with(NewOneToOneConversationActivity.this)
+                        Glide.with(NewOneToOneConversationActivity.this)
                             .load(user.getUserProfilePic())
                             .placeholder(R.drawable.ism_ic_profile)
                             .transform(new CircleCrop())

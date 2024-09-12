@@ -35,7 +35,7 @@ import io.isometrik.chat.databinding.IsmActivityNewGroupConversationBinding;
 import io.isometrik.ui.messages.chat.ConversationMessagesActivity;
 import io.isometrik.chat.utils.AlertProgress;
 import io.isometrik.chat.utils.Constants;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.KeyboardUtil;
 import io.isometrik.chat.utils.RecyclerItemClickListener;
 import io.isometrik.chat.utils.Utilities;
@@ -239,7 +239,7 @@ public class NewGroupConversationActivity extends AppCompatActivity
           conversationImagePadding);
 
       try {
-        GlideApp.with(NewGroupConversationActivity.this)
+        Glide.with(NewGroupConversationActivity.this)
             .load(R.drawable.ism_ic_add_image)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .into(ismActivityNewGroupConversationBinding.ivConversationImage);
@@ -257,7 +257,7 @@ public class NewGroupConversationActivity extends AppCompatActivity
               ismActivityNewGroupConversationBinding.ivConversationImage.setPadding(0, 0, 0, 0);
 
               try {
-                GlideApp.with(this)
+                Glide.with(this)
                     .load(imageFile.getAbsolutePath())
                     .transform(new CircleCrop())
                     .into(ismActivityNewGroupConversationBinding.ivConversationImage);

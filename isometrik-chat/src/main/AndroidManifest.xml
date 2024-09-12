@@ -99,6 +99,12 @@
         android:windowSoftInputMode="stateAlwaysHidden"
         tools:ignore="LockedOrientationActivity" />
     <activity
+        android:name="io.isometrik.ui.conversations.list.ConversationsListActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
         android:name="io.isometrik.ui.conversations.details.userconversation.UserConversationDetailsActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:screenOrientation="portrait"

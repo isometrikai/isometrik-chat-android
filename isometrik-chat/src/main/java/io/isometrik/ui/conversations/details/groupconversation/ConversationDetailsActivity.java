@@ -42,7 +42,7 @@ import io.isometrik.chat.databinding.IsmActivityConversationDetailsBinding;
 import io.isometrik.ui.messages.preview.PreviewMessageUtil;
 import io.isometrik.ui.messages.preview.image.PreviewImagePopup;
 import io.isometrik.chat.utils.AlertProgress;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.KeyboardUtil;
 import io.isometrik.chat.utils.PlaceholderUtils;
 import io.isometrik.chat.utils.RecyclerItemClickListener;
@@ -200,7 +200,7 @@ public class ConversationDetailsActivity extends AppCompatActivity
 
                             ismActivityConversationDetailsBinding.ivConversationImage.setPadding(0, 0, 0, 0);
                             try {
-                                GlideApp.with(this)
+                                Glide.with(this)
                                         .load(imageFile.getAbsolutePath())
                                         .transform(new CircleCrop())
                                         .into(ismActivityConversationDetailsBinding.ivConversationImage);
@@ -936,7 +936,7 @@ public class ConversationDetailsActivity extends AppCompatActivity
         if (PlaceholderUtils.isValidImageUrl(conversationImageUrl)) {
 
             try {
-                GlideApp.with(this)
+                Glide.with(this)
                         .load(conversationImageUrl)
                         .placeholder(R.drawable.ism_ic_profile)
                         .transform(new CircleCrop())

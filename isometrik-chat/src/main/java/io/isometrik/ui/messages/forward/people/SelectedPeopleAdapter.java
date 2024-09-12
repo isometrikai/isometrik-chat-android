@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmSelectedConversationPeopleItemBinding;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.PlaceholderUtils;
 import java.util.ArrayList;
 
@@ -67,7 +67,7 @@ public class SelectedPeopleAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(peopleModel.getUserProfileImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(peopleModel.getUserProfileImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())

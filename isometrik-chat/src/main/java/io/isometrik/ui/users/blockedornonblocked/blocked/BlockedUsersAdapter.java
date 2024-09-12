@@ -10,7 +10,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmBlockedNonBlockedUserItemBinding;
 import io.isometrik.ui.users.blockedornonblocked.BlockedOrNonBlockedUsersModel;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.PlaceholderUtils;
 
 import java.util.ArrayList;
@@ -63,7 +63,7 @@ public class BlockedUsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
       if (PlaceholderUtils.isValidImageUrl(blockedUser.getUserProfileImageUrl())) {
 
         try {
-          GlideApp.with(mContext)
+          Glide.with(mContext)
               .load(blockedUser.getUserProfileImageUrl())
               .placeholder(R.drawable.ism_ic_profile)
               .transform(new CircleCrop())

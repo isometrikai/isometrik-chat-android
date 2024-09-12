@@ -85,6 +85,24 @@
     </LinearLayout>
   </com.facebook.shimmer.ShimmerFrameLayout>
 
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ivAdd"
+      android:layout_width="@dimen/ism_dp_54"
+      android:layout_height="@dimen/ism_dp_54"
+      android:layout_alignParentEnd="true"
+      android:layout_marginStart="@dimen/ism_dp_18"
+      android:layout_marginTop="@dimen/ism_dp_18"
+      android:layout_marginEnd="@dimen/ism_dp_18"
+      android:layout_marginBottom="@dimen/ism_dp_18"
+      android:background="@drawable/ism_create_conversation_circle"
+      android:clickable="true"
+      android:layout_gravity="end|bottom"
+      android:elevation="@dimen/ism_dp_5"
+      android:focusable="true"
+      android:padding="@dimen/ism_dp_16"
+      android:tint="@color/ism_white"
+      app:srcCompat="@drawable/ism_ic_add_attachment" />
+
   <androidx.appcompat.widget.AppCompatTextView
       android:id="@+id/tvNoConversations"
       android:layout_width="match_parent"

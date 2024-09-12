@@ -10,7 +10,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmGalleryMediaItemBinding;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.PlaceholderUtils;
 import java.util.ArrayList;
 
@@ -57,7 +57,7 @@ public class GalleryItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
           galleryModel.isVideo() ? View.VISIBLE : View.GONE);
       if(PlaceholderUtils.isValidImageUrl(galleryModel.getSenderProfileImageUrl())){
       try {
-        GlideApp.with(mContext)
+        Glide.with(mContext)
             .load(galleryModel.getSenderProfileImageUrl())
             .placeholder(R.drawable.ism_ic_profile)
             .transform(new CircleCrop())
@@ -69,7 +69,7 @@ public class GalleryItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
           holder.ismGalleryMediaItemBinding.ivSenderImage, position, 12);
     }
       try {
-        GlideApp.with(mContext)
+        Glide.with(mContext)
             .load(galleryModel.getMediaTypeIcon())
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .into(holder.ismGalleryMediaItemBinding.ivMediaType);
@@ -96,7 +96,7 @@ public class GalleryItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
       } else {
         holder.ismGalleryMediaItemBinding.ivMediaImage.setVisibility(View.VISIBLE);
         try {
-          GlideApp.with(mContext)
+          Glide.with(mContext)
               .load(galleryModel.getMediaUrl())
               .into(holder.ismGalleryMediaItemBinding.ivMediaImage);
         } catch (IllegalArgumentException | NullPointerException ignore) {

@@ -20,7 +20,7 @@ import io.isometrik.ui.messages.action.MessageActionCallback;
 import io.isometrik.ui.messages.reaction.add.ReactionModel;
 import io.isometrik.chat.utils.AlertProgress;
 import io.isometrik.chat.utils.Constants;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import org.jetbrains.annotations.NotNull;
@@ -79,7 +79,7 @@ public class FetchReactionUsersFragment extends BottomSheetDialogFragment
     ismBottomsheetReactionUsersBinding.tvReactionName.setText(reactionModel.getReactionName());
 
     try {
-      GlideApp.with(activity)
+      Glide.with(activity)
           .load(reactionModel.getReactionIcon())
           .into(ismBottomsheetReactionUsersBinding.ivReactionImage);
     } catch (IllegalArgumentException | NullPointerException ignore) {

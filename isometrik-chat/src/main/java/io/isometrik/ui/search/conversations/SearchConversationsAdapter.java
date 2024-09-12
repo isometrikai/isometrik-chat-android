@@ -16,7 +16,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import io.isometrik.chat.R;
 import io.isometrik.ui.conversations.list.ConversationsModel;
 import io.isometrik.chat.databinding.IsmSearchConversationsItemBinding;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.PlaceholderUtils;
 import java.util.ArrayList;
 
@@ -88,7 +88,7 @@ public class SearchConversationsAdapter extends RecyclerView.Adapter<RecyclerVie
       if (PlaceholderUtils.isValidImageUrl(conversationsModel.getConversationImageUrl())) {
 
         try {
-          GlideApp.with(mContext)
+          Glide.with(mContext)
               .load(conversationsModel.getConversationImageUrl())
               .placeholder(R.drawable.ism_ic_profile)
               .transform(new CircleCrop())
@@ -120,7 +120,7 @@ public class SearchConversationsAdapter extends RecyclerView.Adapter<RecyclerVie
               conversationsModel.getLastMessageSendersProfileImageUrl())) {
 
             try {
-              GlideApp.with(mContext)
+              Glide.with(mContext)
                   .load(conversationsModel.getLastMessageSendersProfileImageUrl())
                   .placeholder(R.drawable.ism_ic_profile)
                   .transform(new CircleCrop())
@@ -140,7 +140,7 @@ public class SearchConversationsAdapter extends RecyclerView.Adapter<RecyclerVie
 
       if (conversationsModel.getLastMessagePlaceHolderImage() != null) {
         try {
-          GlideApp.with(mContext)
+          Glide.with(mContext)
               .load(conversationsModel.getLastMessagePlaceHolderImage())
               .diskCacheStrategy(DiskCacheStrategy.NONE)
               .into(holder.ismSearchConversationsItemBinding.ivLastMessageType);

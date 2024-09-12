@@ -25,7 +25,7 @@ import io.isometrik.chat.builder.message.delivery.MarkMessageAsDeliveredQuery;
 import io.isometrik.ui.IsometrikUiSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.messages.chat.ConversationMessagesActivity;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.NotificationUtil;
 import io.isometrik.chat.utils.PlaceholderUtils;
 import java.util.List;
@@ -438,7 +438,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
               int density = (int) getResources().getDisplayMetrics().density;
 
-              FutureTarget<Bitmap> futureTarget = GlideApp.with(this)
+              FutureTarget<Bitmap> futureTarget = Glide.with(this)
                   .asBitmap()
                   .load(senderProfileImageUrl)
                   .transform(new CircleCrop())

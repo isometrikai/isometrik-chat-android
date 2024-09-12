@@ -15,7 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmConversationItemBinding;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.PlaceholderUtils;
 import java.util.ArrayList;
 
@@ -74,15 +74,15 @@ public class ConversationsAdapter extends RecyclerView.Adapter<RecyclerView.View
           conversationsModel.getLastMessageText());
       if (conversationsModel.isCanJoin()) {
         holder.ismConversationItemBinding.tvJoinConversation.setVisibility(View.VISIBLE);
-        holder.ismConversationItemBinding.tvConversationType.setVisibility(View.GONE);
+//        holder.ismConversationItemBinding.tvConversationType.setVisibility(View.GONE);
         holder.ismConversationItemBinding.tvJoinConversation.setOnClickListener(
             v -> conversationsFragment.joinConversation(conversationsModel));
       } else {
 
         holder.ismConversationItemBinding.tvJoinConversation.setVisibility(View.GONE);
-        holder.ismConversationItemBinding.tvConversationType.setVisibility(View.VISIBLE);
-        holder.ismConversationItemBinding.tvConversationType.setText(
-            conversationsModel.getConversationTypeText());
+//        holder.ismConversationItemBinding.tvConversationType.setVisibility(View.VISIBLE);
+//        holder.ismConversationItemBinding.tvConversationType.setText(
+//            conversationsModel.getConversationTypeText());
 
       }
 
@@ -101,7 +101,7 @@ public class ConversationsAdapter extends RecyclerView.Adapter<RecyclerView.View
       if (PlaceholderUtils.isValidImageUrl(conversationsModel.getConversationImageUrl())) {
 
         try {
-          GlideApp.with(mContext)
+          Glide.with(mContext)
               .load(conversationsModel.getConversationImageUrl())
               .placeholder(R.drawable.ism_ic_profile)
               .transform(new CircleCrop())
@@ -134,7 +134,7 @@ public class ConversationsAdapter extends RecyclerView.Adapter<RecyclerView.View
               conversationsModel.getLastMessageSendersProfileImageUrl())) {
 
             try {
-              GlideApp.with(mContext)
+              Glide.with(mContext)
                   .load(conversationsModel.getLastMessageSendersProfileImageUrl())
                   .placeholder(R.drawable.ism_ic_profile)
                   .transform(new CircleCrop())
@@ -155,7 +155,7 @@ public class ConversationsAdapter extends RecyclerView.Adapter<RecyclerView.View
 
       if (conversationsModel.getLastMessagePlaceHolderImage() != null) {
         try {
-          GlideApp.with(mContext)
+          Glide.with(mContext)
               .load(conversationsModel.getLastMessagePlaceHolderImage())
               .diskCacheStrategy(DiskCacheStrategy.NONE)
               .into(holder.ismConversationItemBinding.ivLastMessageType);

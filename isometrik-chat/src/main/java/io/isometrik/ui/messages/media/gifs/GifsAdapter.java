@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import io.isometrik.chat.databinding.IsmGifStickerItemBinding;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 /**
@@ -53,7 +53,7 @@ public class GifsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
       }
       try {
 
-        GlideApp.with(mContext)
+        Glide.with(mContext)
             .load(gifsModel.getGifImageUrl())
             .fitCenter()
             .into(holder.ismGifItemBinding.ivGifSticker);

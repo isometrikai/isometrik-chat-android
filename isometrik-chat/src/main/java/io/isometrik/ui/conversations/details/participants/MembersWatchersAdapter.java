@@ -16,7 +16,7 @@ import io.isometrik.ui.conversations.details.groupconversation.ConversationDetai
 import io.isometrik.ui.conversations.details.participants.members.MembersFragment;
 import io.isometrik.ui.conversations.details.participants.watchers.WatchersFragment;
 import io.isometrik.chat.databinding.IsmConversationMemberItemBinding;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.PlaceholderUtils;
 
 import java.util.ArrayList;
@@ -149,7 +149,7 @@ public class MembersWatchersAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         if (PlaceholderUtils.isValidImageUrl(membersModel.getMemberProfileImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(membersModel.getMemberProfileImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())

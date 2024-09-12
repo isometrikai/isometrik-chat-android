@@ -14,7 +14,7 @@ import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmActivityMessageDeliveryStatusBinding;
 import io.isometrik.ui.messages.chat.MessagesModel;
 import io.isometrik.chat.utils.Constants;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.PlaceholderUtils;
 
 /**
@@ -72,7 +72,7 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
                  View.GONE);
            } else {
              try {
-               GlideApp.with(this)
+               Glide.with(this)
                    .load(originalMessagePlaceholderImage)
                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                    .into(ismActivityMessageDeliveryStatusBinding.vParentMessageText.ivMessageImage);
@@ -106,7 +106,7 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
                  View.GONE);
            } else {
              try {
-               GlideApp.with(this)
+               Glide.with(this)
                    .load(originalMessagePlaceholderImage)
                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                    .into(
@@ -121,9 +121,9 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
                .setVisibility(View.GONE);
          }
          try {
-           GlideApp.with(this)
+           Glide.with(this)
                .load(messagesModel.getPhotoMainUrl())
-               .thumbnail(GlideApp.with(this).load(messagesModel.getPhotoThumbnailUrl()))
+               .thumbnail(Glide.with(this).load(messagesModel.getPhotoThumbnailUrl()))
                .placeholder(R.drawable.ism_avatar_group_large)
                .transform(new CenterCrop(),
                    new GranularRoundedCorners(0, 0, cornerRadius, cornerRadius))
@@ -151,7 +151,7 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
                  View.GONE);
            } else {
              try {
-               GlideApp.with(this)
+               Glide.with(this)
                    .load(originalMessagePlaceholderImage)
                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                    .into(
@@ -166,9 +166,9 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
                .setVisibility(View.GONE);
          }
          try {
-           GlideApp.with(this)
+           Glide.with(this)
                .load(messagesModel.getVideoMainUrl())
-               .thumbnail(GlideApp.with(this).load(messagesModel.getVideoThumbnailUrl()))
+               .thumbnail(Glide.with(this).load(messagesModel.getVideoThumbnailUrl()))
                .placeholder(R.drawable.ism_avatar_group_large)
                .transform(new CenterCrop(),
                    new GranularRoundedCorners(0, 0, cornerRadius, cornerRadius))
@@ -196,7 +196,7 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
                  View.GONE);
            } else {
              try {
-               GlideApp.with(this)
+               Glide.with(this)
                    .load(originalMessagePlaceholderImage)
                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                    .into(
@@ -233,7 +233,7 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
                  View.GONE);
            } else {
              try {
-               GlideApp.with(this)
+               Glide.with(this)
                    .load(originalMessagePlaceholderImage)
                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                    .into(ismActivityMessageDeliveryStatusBinding.vParentMessageFile.ivMessageImage);
@@ -269,7 +269,7 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
                  View.GONE);
            } else {
              try {
-               GlideApp.with(this)
+               Glide.with(this)
                    .load(originalMessagePlaceholderImage)
                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                    .into(
@@ -284,7 +284,7 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
                .setVisibility(View.GONE);
          }
          try {
-           GlideApp.with(this)
+           Glide.with(this)
                .load(Constants.LOCATION_PLACEHOLDER_IMAGE_URL)
                .placeholder(R.drawable.ism_avatar_group_large)
                .transform(new CenterCrop(),
@@ -314,7 +314,7 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
                  View.GONE);
            } else {
              try {
-               GlideApp.with(this)
+               Glide.with(this)
                    .load(originalMessagePlaceholderImage)
                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                    .into(
@@ -332,7 +332,7 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
          if (PlaceholderUtils.isValidImageUrl(messagesModel.getContactImageUrl())) {
 
            try {
-             GlideApp.with(this)
+             Glide.with(this)
                  .load(messagesModel.getContactImageUrl())
                  .placeholder(R.drawable.ism_ic_profile)
                  .transform(new CircleCrop())
@@ -366,7 +366,7 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
                  View.GONE);
            } else {
              try {
-               GlideApp.with(this)
+               Glide.with(this)
                    .load(originalMessagePlaceholderImage)
                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                    .into(
@@ -381,9 +381,9 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
                .setVisibility(View.GONE);
          }
          try {
-           GlideApp.with(this)
+           Glide.with(this)
                .load(messagesModel.getWhiteboardMainUrl())
-               .thumbnail(GlideApp.with(this).load(messagesModel.getWhiteboardThumbnailUrl()))
+               .thumbnail(Glide.with(this).load(messagesModel.getWhiteboardThumbnailUrl()))
                .placeholder(R.drawable.ism_avatar_group_large)
                .transform(new CenterCrop(),
                    new GranularRoundedCorners(0, 0, cornerRadius, cornerRadius))
@@ -412,7 +412,7 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
                  View.GONE);
            } else {
              try {
-               GlideApp.with(this)
+               Glide.with(this)
                    .load(originalMessagePlaceholderImage)
                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                    .into(ismActivityMessageDeliveryStatusBinding.vParentMessageGif.ivMessageImage);
@@ -426,9 +426,9 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
                .setVisibility(View.GONE);
          }
          try {
-           GlideApp.with(this)
+           Glide.with(this)
                .load(messagesModel.getGifMainUrl())
-               .thumbnail(GlideApp.with(this).load(messagesModel.getGifStillUrl()))
+               .thumbnail(Glide.with(this).load(messagesModel.getGifStillUrl()))
                .placeholder(R.drawable.ism_avatar_group_large)
                .transform(new CenterCrop(),
                    new GranularRoundedCorners(0, 0, cornerRadius, cornerRadius))
@@ -453,7 +453,7 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
                  View.GONE);
            } else {
              try {
-               GlideApp.with(this)
+               Glide.with(this)
                    .load(originalMessagePlaceholderImage)
                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                    .into(
@@ -468,9 +468,9 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
                .setVisibility(View.GONE);
          }
          try {
-           GlideApp.with(this)
+           Glide.with(this)
                .load(messagesModel.getStickerMainUrl())
-               .thumbnail(GlideApp.with(this).load(messagesModel.getStickerStillUrl()))
+               .thumbnail(Glide.with(this).load(messagesModel.getStickerStillUrl()))
                .placeholder(R.drawable.ism_avatar_group_large)
                .transform(new GranularRoundedCorners(0, 0, cornerRadius, cornerRadius))
                .into(ismActivityMessageDeliveryStatusBinding.ivStickerImage);

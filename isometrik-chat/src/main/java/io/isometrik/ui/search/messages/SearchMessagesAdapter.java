@@ -62,7 +62,7 @@ import io.isometrik.ui.messages.chat.viewholders.WhiteboardMessageReceivedViewHo
 import io.isometrik.ui.messages.chat.viewholders.WhiteboardMessageSentViewHolder;
 import io.isometrik.ui.messages.reaction.add.MessageReactionsAdapter;
 import io.isometrik.chat.utils.Constants;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.PlaceholderUtils;
 import java.util.ArrayList;
 
@@ -512,7 +512,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 View.GONE);
           } else {
             try {
-              GlideApp.with(mContext)
+              Glide.with(mContext)
                   .load(message.getOriginalMessagePlaceholderImage())
                   .diskCacheStrategy(DiskCacheStrategy.NONE)
                   .into(
@@ -564,7 +564,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getConversationImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getConversationImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -662,7 +662,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 View.GONE);
           } else {
             try {
-              GlideApp.with(mContext)
+              Glide.with(mContext)
                   .load(message.getOriginalMessagePlaceholderImage())
                   .diskCacheStrategy(DiskCacheStrategy.NONE)
                   .into(
@@ -696,9 +696,9 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         photoMessageSentViewHolder.ismSentMessagePhotoBinding.rlUpload.setVisibility(View.GONE);
         photoMessageSentViewHolder.ismSentMessagePhotoBinding.rlDownload.setVisibility(View.GONE);
         try {
-          GlideApp.with(mContext)
+          Glide.with(mContext)
               .load(message.getPhotoMainUrl())
-              .thumbnail(GlideApp.with(mContext).load(message.getPhotoThumbnailUrl()))
+              .thumbnail(Glide.with(mContext).load(message.getPhotoThumbnailUrl()))
               .placeholder(R.drawable.ism_avatar_group_large)
               .transform(new CenterCrop(),
                   new GranularRoundedCorners(0, 0, cornerRadius, cornerRadius))
@@ -722,7 +722,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getConversationImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getConversationImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -819,7 +819,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 View.GONE);
           } else {
             try {
-              GlideApp.with(mContext)
+              Glide.with(mContext)
                   .load(message.getOriginalMessagePlaceholderImage())
                   .diskCacheStrategy(DiskCacheStrategy.NONE)
                   .into(
@@ -853,9 +853,9 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         videoMessageSentViewHolder.ismSentMessageVideoBinding.rlUpload.setVisibility(View.GONE);
         videoMessageSentViewHolder.ismSentMessageVideoBinding.rlDownload.setVisibility(View.GONE);
         try {
-          GlideApp.with(mContext)
+          Glide.with(mContext)
               .load(message.getVideoMainUrl())
-              .thumbnail(GlideApp.with(mContext).load(message.getVideoThumbnailUrl()))
+              .thumbnail(Glide.with(mContext).load(message.getVideoThumbnailUrl()))
               .placeholder(R.drawable.ism_avatar_group_large)
               .transform(new CenterCrop(),
                   new GranularRoundedCorners(0, 0, cornerRadius, cornerRadius))
@@ -879,7 +879,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getConversationImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getConversationImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -976,7 +976,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 View.GONE);
           } else {
             try {
-              GlideApp.with(mContext)
+              Glide.with(mContext)
                   .load(message.getOriginalMessagePlaceholderImage())
                   .diskCacheStrategy(DiskCacheStrategy.NONE)
                   .into(
@@ -1029,7 +1029,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getConversationImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getConversationImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -1126,7 +1126,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 View.GONE);
           } else {
             try {
-              GlideApp.with(mContext)
+              Glide.with(mContext)
                   .load(message.getOriginalMessagePlaceholderImage())
                   .diskCacheStrategy(DiskCacheStrategy.NONE)
                   .into(
@@ -1179,7 +1179,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getConversationImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getConversationImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -1276,7 +1276,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 View.GONE);
           } else {
             try {
-              GlideApp.with(mContext)
+              Glide.with(mContext)
                   .load(message.getOriginalMessagePlaceholderImage())
                   .diskCacheStrategy(DiskCacheStrategy.NONE)
                   .into(
@@ -1306,9 +1306,9 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
               View.GONE);
         }
         try {
-          GlideApp.with(mContext)
+          Glide.with(mContext)
               .load(message.getStickerMainUrl())
-              .thumbnail(GlideApp.with(mContext).load(message.getStickerStillUrl()))
+              .thumbnail(Glide.with(mContext).load(message.getStickerStillUrl()))
               .placeholder(R.drawable.ism_avatar_group_large)
               .transform(new GranularRoundedCorners(0, 0, cornerRadius, cornerRadius))
               .into(stickerMessageSentViewHolder.ismSentMessageStickerBinding.ivStickerImage);
@@ -1331,7 +1331,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getConversationImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getConversationImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -1428,7 +1428,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 View.GONE);
           } else {
             try {
-              GlideApp.with(mContext)
+              Glide.with(mContext)
                   .load(message.getOriginalMessagePlaceholderImage())
                   .diskCacheStrategy(DiskCacheStrategy.NONE)
                   .into(
@@ -1457,9 +1457,9 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
               View.GONE);
         }
         try {
-          GlideApp.with(mContext)
+          Glide.with(mContext)
               .load(message.getGifMainUrl())
-              .thumbnail(GlideApp.with(mContext).load(message.getGifStillUrl()))
+              .thumbnail(Glide.with(mContext).load(message.getGifStillUrl()))
               .placeholder(R.drawable.ism_avatar_group_large)
               .transform(new CenterCrop(),
                   new GranularRoundedCorners(0, 0, cornerRadius, cornerRadius))
@@ -1483,7 +1483,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getConversationImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getConversationImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -1579,7 +1579,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 .setVisibility(View.GONE);
           } else {
             try {
-              GlideApp.with(mContext)
+              Glide.with(mContext)
                   .load(message.getOriginalMessagePlaceholderImage())
                   .diskCacheStrategy(DiskCacheStrategy.NONE)
                   .into(
@@ -1613,9 +1613,9 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         whiteboardMessageSentViewHolder.ismSentMessageWhiteboardBinding.rlDownload.setVisibility(
             View.GONE);
         try {
-          GlideApp.with(mContext)
+          Glide.with(mContext)
               .load(message.getWhiteboardMainUrl())
-              .thumbnail(GlideApp.with(mContext).load(message.getWhiteboardThumbnailUrl()))
+              .thumbnail(Glide.with(mContext).load(message.getWhiteboardThumbnailUrl()))
               .placeholder(R.drawable.ism_avatar_group_large)
               .transform(new CenterCrop(),
                   new GranularRoundedCorners(0, 0, cornerRadius, cornerRadius))
@@ -1642,7 +1642,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getConversationImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getConversationImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -1704,7 +1704,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         //locationMessageSentViewHolder.ismSentMessageLocationBinding.  map.onCreate(null);
         //locationMessageSentViewHolder.ismSentMessageLocationBinding.   map.onResume();  //Probably U r missing this
         try {
-          GlideApp.with(mContext)
+          Glide.with(mContext)
               .load(Constants.LOCATION_PLACEHOLDER_IMAGE_URL)
               .placeholder(R.drawable.ism_avatar_group_large)
               .transform(new CenterCrop(),
@@ -1752,7 +1752,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 .setVisibility(View.GONE);
           } else {
             try {
-              GlideApp.with(mContext)
+              Glide.with(mContext)
                   .load(message.getOriginalMessagePlaceholderImage())
                   .diskCacheStrategy(DiskCacheStrategy.NONE)
                   .into(
@@ -1804,7 +1804,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getConversationImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getConversationImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -1903,7 +1903,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 View.GONE);
           } else {
             try {
-              GlideApp.with(mContext)
+              Glide.with(mContext)
                   .load(message.getOriginalMessagePlaceholderImage())
                   .diskCacheStrategy(DiskCacheStrategy.NONE)
                   .into(
@@ -1935,7 +1935,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getContactImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getContactImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -1967,7 +1967,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getConversationImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getConversationImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -2059,7 +2059,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 .setVisibility(View.GONE);
           } else {
             try {
-              GlideApp.with(mContext)
+              Glide.with(mContext)
                   .load(message.getOriginalMessagePlaceholderImage())
                   .diskCacheStrategy(DiskCacheStrategy.NONE)
                   .into(
@@ -2102,7 +2102,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getSenderImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getSenderImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -2135,7 +2135,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getConversationImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getConversationImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -2213,7 +2213,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 .setVisibility(View.GONE);
           } else {
             try {
-              GlideApp.with(mContext)
+              Glide.with(mContext)
                   .load(message.getOriginalMessagePlaceholderImage())
                   .diskCacheStrategy(DiskCacheStrategy.NONE)
                   .into(
@@ -2254,7 +2254,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getSenderImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getSenderImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -2267,9 +2267,9 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
               12);
         }
         try {
-          GlideApp.with(mContext)
+          Glide.with(mContext)
               .load(message.getPhotoMainUrl())
-              .thumbnail(GlideApp.with(mContext).load(message.getPhotoThumbnailUrl()))
+              .thumbnail(Glide.with(mContext).load(message.getPhotoThumbnailUrl()))
               .placeholder(R.drawable.ism_avatar_group_large)
               .transform(new CenterCrop(),
                   new GranularRoundedCorners(0, 0, cornerRadius, cornerRadius))
@@ -2299,7 +2299,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getConversationImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getConversationImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -2378,7 +2378,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 .setVisibility(View.GONE);
           } else {
             try {
-              GlideApp.with(mContext)
+              Glide.with(mContext)
                   .load(message.getOriginalMessagePlaceholderImage())
                   .diskCacheStrategy(DiskCacheStrategy.NONE)
                   .into(
@@ -2419,7 +2419,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getSenderImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getSenderImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -2432,9 +2432,9 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
               12);
         }
         try {
-          GlideApp.with(mContext)
+          Glide.with(mContext)
               .load(message.getVideoMainUrl())
-              .thumbnail(GlideApp.with(mContext).load(message.getVideoThumbnailUrl()))
+              .thumbnail(Glide.with(mContext).load(message.getVideoThumbnailUrl()))
               .placeholder(R.drawable.ism_avatar_group_large)
               .transform(new CenterCrop(),
                   new GranularRoundedCorners(0, 0, cornerRadius, cornerRadius))
@@ -2464,7 +2464,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getConversationImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getConversationImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -2543,7 +2543,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 .setVisibility(View.GONE);
           } else {
             try {
-              GlideApp.with(mContext)
+              Glide.with(mContext)
                   .load(message.getOriginalMessagePlaceholderImage())
                   .diskCacheStrategy(DiskCacheStrategy.NONE)
                   .into(
@@ -2584,7 +2584,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getSenderImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getSenderImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CenterCrop(),
@@ -2622,7 +2622,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getConversationImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getConversationImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -2701,7 +2701,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 .setVisibility(View.GONE);
           } else {
             try {
-              GlideApp.with(mContext)
+              Glide.with(mContext)
                   .load(message.getOriginalMessagePlaceholderImage())
                   .diskCacheStrategy(DiskCacheStrategy.NONE)
                   .into(
@@ -2742,7 +2742,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getSenderImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getSenderImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CenterCrop(),
@@ -2780,7 +2780,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getConversationImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getConversationImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -2860,7 +2860,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 .setVisibility(View.GONE);
           } else {
             try {
-              GlideApp.with(mContext)
+              Glide.with(mContext)
                   .load(message.getOriginalMessagePlaceholderImage())
                   .diskCacheStrategy(DiskCacheStrategy.NONE)
                   .into(
@@ -2901,7 +2901,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getSenderImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getSenderImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -2915,9 +2915,9 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
               position, 12);
         }
         try {
-          GlideApp.with(mContext)
+          Glide.with(mContext)
               .load(message.getStickerMainUrl())
-              .thumbnail(GlideApp.with(mContext).load(message.getStickerStillUrl()))
+              .thumbnail(Glide.with(mContext).load(message.getStickerStillUrl()))
               .placeholder(R.drawable.ism_avatar_group_large)
               .transform(new GranularRoundedCorners(0, 0, cornerRadius, cornerRadius))
               .into(
@@ -2941,7 +2941,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getConversationImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getConversationImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -3020,7 +3020,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 View.GONE);
           } else {
             try {
-              GlideApp.with(mContext)
+              Glide.with(mContext)
                   .load(message.getOriginalMessagePlaceholderImage())
                   .diskCacheStrategy(DiskCacheStrategy.NONE)
                   .into(
@@ -3061,7 +3061,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getSenderImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getSenderImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -3074,9 +3074,9 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
               12);
         }
         try {
-          GlideApp.with(mContext)
+          Glide.with(mContext)
               .load(message.getGifMainUrl())
-              .thumbnail(GlideApp.with(mContext).load(message.getGifStillUrl()))
+              .thumbnail(Glide.with(mContext).load(message.getGifStillUrl()))
               .placeholder(R.drawable.ism_avatar_group_large)
               .transform(new CenterCrop(),
                   new GranularRoundedCorners(0, 0, cornerRadius, cornerRadius))
@@ -3100,7 +3100,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getConversationImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getConversationImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -3180,7 +3180,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 .setVisibility(View.GONE);
           } else {
             try {
-              GlideApp.with(mContext)
+              Glide.with(mContext)
                   .load(message.getOriginalMessagePlaceholderImage())
                   .diskCacheStrategy(DiskCacheStrategy.NONE)
                   .into(
@@ -3221,7 +3221,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getSenderImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getSenderImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -3235,9 +3235,9 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
               position, 12);
         }
         try {
-          GlideApp.with(mContext)
+          Glide.with(mContext)
               .load(message.getWhiteboardMainUrl())
-              .thumbnail(GlideApp.with(mContext).load(message.getWhiteboardThumbnailUrl()))
+              .thumbnail(Glide.with(mContext).load(message.getWhiteboardThumbnailUrl()))
               .placeholder(R.drawable.ism_avatar_group_large)
               .transform(new CenterCrop(),
                   new GranularRoundedCorners(0, 0, cornerRadius, cornerRadius))
@@ -3268,7 +3268,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getConversationImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getConversationImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -3349,7 +3349,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 .setVisibility(View.GONE);
           } else {
             try {
-              GlideApp.with(mContext)
+              Glide.with(mContext)
                   .load(message.getOriginalMessagePlaceholderImage())
                   .diskCacheStrategy(DiskCacheStrategy.NONE)
                   .into(
@@ -3364,7 +3364,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
               .setVisibility(View.GONE);
         }
         try {
-          GlideApp.with(mContext)
+          Glide.with(mContext)
               .load(Constants.LOCATION_PLACEHOLDER_IMAGE_URL)
               .placeholder(R.drawable.ism_avatar_group_large)
               .transform(new CenterCrop(),
@@ -3398,7 +3398,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getSenderImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getSenderImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -3432,7 +3432,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getConversationImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getConversationImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -3512,7 +3512,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 .setVisibility(View.GONE);
           } else {
             try {
-              GlideApp.with(mContext)
+              Glide.with(mContext)
                   .load(message.getOriginalMessagePlaceholderImage())
                   .diskCacheStrategy(DiskCacheStrategy.NONE)
                   .into(
@@ -3553,7 +3553,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getSenderImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getSenderImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -3569,7 +3569,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getContactImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getContactImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())
@@ -3604,7 +3604,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (PlaceholderUtils.isValidImageUrl(message.getConversationImageUrl())) {
 
           try {
-            GlideApp.with(mContext)
+            Glide.with(mContext)
                 .load(message.getConversationImageUrl())
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())

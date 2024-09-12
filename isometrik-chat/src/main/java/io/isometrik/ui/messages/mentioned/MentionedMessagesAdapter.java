@@ -11,7 +11,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmMentionedMessageItemBinding;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.PlaceholderUtils;
 import java.util.ArrayList;
 
@@ -64,7 +64,7 @@ public class MentionedMessagesAdapter extends RecyclerView.Adapter<RecyclerView.
       if (PlaceholderUtils.isValidImageUrl(mentionedMessagesModel.getConversationImageUrl())) {
 
         try {
-          GlideApp.with(mContext)
+          Glide.with(mContext)
               .load(mentionedMessagesModel.getConversationImageUrl())
               .placeholder(R.drawable.ism_ic_profile)
               .transform(new CircleCrop())
@@ -93,7 +93,7 @@ public class MentionedMessagesAdapter extends RecyclerView.Adapter<RecyclerView.
               mentionedMessagesModel.getMentionedMessageSendersProfileImageUrl())) {
 
             try {
-              GlideApp.with(mContext)
+              Glide.with(mContext)
                   .load(mentionedMessagesModel.getMentionedMessageSendersProfileImageUrl())
                   .placeholder(R.drawable.ism_ic_profile)
                   .transform(new CircleCrop())
@@ -113,7 +113,7 @@ public class MentionedMessagesAdapter extends RecyclerView.Adapter<RecyclerView.
 
       if (mentionedMessagesModel.getLastMessagePlaceHolderImage() != null) {
         try {
-          GlideApp.with(mContext)
+          Glide.with(mContext)
               .load(mentionedMessagesModel.getLastMessagePlaceHolderImage())
               .diskCacheStrategy(DiskCacheStrategy.NONE)
               .into(holder.ismMentionedMessageItemBinding.ivMentionedMessageType);

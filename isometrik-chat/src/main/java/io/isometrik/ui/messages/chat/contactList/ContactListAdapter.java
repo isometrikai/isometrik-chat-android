@@ -66,7 +66,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 //        if (PlaceholderUtils.isValidImageUrl(contact.getUserProfilePic())) {
 //
 //          try {
-//            GlideApp.with(mContext)
+//            Glide.with(mContext)
 //                .load(contact.p())
 //                .placeholder(R.drawable.ism_ic_profile)
 //                .transform(new CircleCrop())

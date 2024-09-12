@@ -15,7 +15,7 @@ import com.google.android.exoplayer2.upstream.DefaultDataSource;
 import com.google.android.exoplayer2.util.Util;
 import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmActivityPreviewVideoBinding;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 
 /**
  * The activity to preview video message.
@@ -31,7 +31,7 @@ public class PreviewVideoActivity extends AppCompatActivity {
     View view = ismActivityPreviewVideoBinding.getRoot();
     setContentView(view);
     try {
-      GlideApp.with(this)
+      Glide.with(this)
           .load(getIntent().getStringExtra("videoThumbnailUrl"))
           .into(ismActivityPreviewVideoBinding.ivCoverImage);
     } catch (IllegalArgumentException | NullPointerException ignore) {

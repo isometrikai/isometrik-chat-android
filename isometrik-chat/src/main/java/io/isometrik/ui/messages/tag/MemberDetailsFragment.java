@@ -13,7 +13,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmBottomsheetMemberDetailsBinding;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.PlaceholderUtils;
 
 /**
@@ -86,7 +86,7 @@ public class MemberDetailsFragment extends BottomSheetDialogFragment
         if (PlaceholderUtils.isValidImageUrl(memberProfileImageUrl)) {
 
           try {
-            GlideApp.with(activity)
+            Glide.with(activity)
                 .load(memberProfileImageUrl)
                 .placeholder(R.drawable.ism_ic_profile)
                 .transform(new CircleCrop())

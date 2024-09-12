@@ -17,7 +17,7 @@ import io.isometrik.chat.databinding.IsmBottomsheetReactionBinding;
 import io.isometrik.ui.messages.action.MessageActionCallback;
 import io.isometrik.ui.messages.reaction.util.ReactionRepository;
 import io.isometrik.chat.utils.AlertProgress;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.RecyclerItemClickListener;
 
 import java.util.ArrayList;
@@ -67,7 +67,7 @@ public class AddReactionFragment extends BottomSheetDialogFragment
 
     ismBottomsheetReactionBinding.tvReactionName.setText(reactions.get(0).getReactionName());
     try {
-      GlideApp.with(activity)
+      Glide.with(activity)
           .load(reactions.get(0).getReactionIcon())
           .into(ismBottomsheetReactionBinding.ivReactionImage);
     } catch (IllegalArgumentException | NullPointerException ignore) {
@@ -86,7 +86,7 @@ public class AddReactionFragment extends BottomSheetDialogFragment
                         reactionModel.getReactionName());
 
                     try {
-                      GlideApp.with(activity)
+                      Glide.with(activity)
                           .load(reactionModel.getReactionIcon())
                           .into(ismBottomsheetReactionBinding.ivReactionImage);
                     } catch (IllegalArgumentException | NullPointerException e) {

@@ -7,9 +7,11 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide;
+
 import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmActivityCaptureImageResultBinding;
-import io.isometrik.ui.utils.GlideApp;
 
 /**
  * The activity to preview the captured image with option to discard image.
@@ -27,7 +29,7 @@ public class CapturedImagePreviewActivity extends AppCompatActivity {
     setContentView(view);
 
     try {
-      GlideApp.with(this)
+      Glide.with(this)
           .load(getIntent().getExtras().getString("capturedImagePath"))
           .placeholder(R.drawable.ism_ic_conversation_image)
           .into(ismActivityCaptureImageResultBinding.ivPreview);

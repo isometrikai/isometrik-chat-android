@@ -30,7 +30,7 @@ import io.isometrik.chat.R;
 import io.isometrik.ui.camera.CameraActivity;
 import io.isometrik.chat.databinding.IsmActivityEditUserBinding;
 import io.isometrik.chat.utils.AlertProgress;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.PlaceholderUtils;
 import io.isometrik.chat.utils.UserSession;
 import io.isometrik.chat.utils.Utilities;
@@ -126,7 +126,7 @@ public class EditUserActivity extends AppCompatActivity implements EditUserContr
                             imageFile = new File(result.getData().getStringExtra("capturedImagePath"));
 
                             try {
-                                GlideApp.with(this)
+                                Glide.with(this)
                                         .load(imageFile.getAbsolutePath())
                                         .transform(new CircleCrop())
                                         .into(ismActivityEditUserBinding.ivProfilePic);
@@ -369,7 +369,7 @@ public class EditUserActivity extends AppCompatActivity implements EditUserContr
         if (PlaceholderUtils.isValidImageUrl(userSession.getUserProfilePic())) {
 
             try {
-                GlideApp.with(this)
+                Glide.with(this)
                         .load(userSession.getUserProfilePic())
                         .transform(new CircleCrop())
                         .into(ismActivityEditUserBinding.ivProfilePic);

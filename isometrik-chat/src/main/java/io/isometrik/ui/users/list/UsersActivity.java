@@ -22,7 +22,7 @@ import io.isometrik.ui.conversations.list.ConversationsActivity;
 import io.isometrik.chat.databinding.IsmActivityUsersBinding;
 import io.isometrik.ui.users.create.CreateUserActivity;
 import io.isometrik.chat.utils.AlertProgress;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.PlaceholderUtils;
 import java.util.ArrayList;
 import org.jetbrains.annotations.NotNull;
@@ -113,7 +113,7 @@ public class UsersActivity extends AppCompatActivity implements UsersContract.Vi
     if (PlaceholderUtils.isValidImageUrl(user.getUserProfileImageUrl())) {
 
       try {
-        GlideApp.with(this)
+        Glide.with(this)
             .load(user.getUserProfileImageUrl())
             .transform(new CircleCrop())
             .placeholder(R.drawable.ism_ic_profile)

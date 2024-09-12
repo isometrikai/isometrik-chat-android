@@ -41,9 +41,10 @@ public class ConversationsListFragment extends Fragment implements Conversations
   private AlertDialog alertDialog;
 
   private IsmFragmentConversationsBinding ismFragmentConversationsBinding;
-  private ConversationType conversationType;
+  private ConversationType conversationType =  ConversationType.AllConversations;
 
   private Handler handler;
+  private String newConversationListActivity;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -153,8 +154,23 @@ public class ConversationsListFragment extends Fragment implements Conversations
 
     ismFragmentConversationsBinding.refresh.setOnRefreshListener(
         () -> fetchConversations(false, null, true, true));
+    ismFragmentConversationsBinding.ivAdd.setOnClickListener(v -> {
 
-    return ismFragmentConversationsBinding.getRoot();
+      if(newConversationListActivity != null){
+        Intent intent = new Intent().setClassName(getContext(), newConversationListActivity);
+        startActivity(intent);
+      }
+    });
+
+    if(newConversationListActivity == null) {
+      ismFragmentConversationsBinding.ivAdd.setVisibility(View.GONE);
+    }
+
+      return ismFragmentConversationsBinding.getRoot();
+  }
+
+  public void setNewConversationListActivity(String className){
+    newConversationListActivity = className;
   }
 
   @Override

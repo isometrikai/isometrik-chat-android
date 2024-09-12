@@ -98,13 +98,49 @@ IsometrikUiSdk.getInstance().getIsometrik().createConnection(userClientId, userI
 ```
 
 ### Step 4: Start a Conversation
-You are now ready to start a conversation. You can launch ConversationsActivity from any click action in your app:
+You are now ready to start a conversation. You can launch ConversationsListActivity or load ConversationsListFragment from any click action in your app:
 
 ```java
  Intent intent = new Intent(this, ConversationsActivity.class);
  startActivity(intent);
 ```
+  for fragment
+```java
+ConversationsListFragment fragment = new ConversationsListFragment();
 
+getSupportFragmentManager()
+        .beginTransaction()
+        .replace(R.id.fragment_container, fragment)
+        .commit();
+```
+
+# Customization
+
+## Open a Custom Activity from Your Module
+
+To open a new screen for creating a new conversation when clicking the "+" (plus) icon, you can set the `newConversationListActivity` class name. Below is an example of how to set the class name:
+
+For an **Activity**:
+
+```java
+Intent intent = new Intent(this, ConversationsActivity.class);
+intent.putExtra("newConversationListActivity", "FULL.ACTIVITY_CLASS.PATH");
+startActivity(intent);
+
+```
+For a **Fragment**:
+```java
+ConversationsListFragment fragment = new ConversationsListFragment();
+fragment.setNewConversationListActivity("FULL.ACTIVITY_CLASS.PATH")
+```
+### Change the Base Color
+
+To change the base color of the module, add the following color name to your module's colors.xml file:
+
+```java
+<color name="ism_theme_base">#YOUR_COLOR_HAS</color>
+```
+Replace #YOUR_COLOR_HEX with your desired color value.
 
 
 # Technical details

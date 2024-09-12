@@ -30,7 +30,7 @@ import io.isometrik.ui.search.SearchActivity;
 import io.isometrik.ui.users.blockedornonblocked.BlockedOrNonBlockedUsersActivity;
 import io.isometrik.ui.users.details.UserDetailsActivity;
 import io.isometrik.ui.users.list.UsersActivity;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.PlaceholderUtils;
 
 /**
@@ -200,7 +200,7 @@ public class ConversationsActivity extends FragmentActivity implements Conversat
       if (PlaceholderUtils.isValidImageUrl(userProfileImageUrl)) {
 
         try {
-          GlideApp.with(ConversationsActivity.this)
+          Glide.with(ConversationsActivity.this)
               .load(userProfileImageUrl)
               .placeholder(R.drawable.ism_ic_profile)
               .transform(new CircleCrop())

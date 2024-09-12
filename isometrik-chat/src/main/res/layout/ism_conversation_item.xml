@@ -60,6 +60,7 @@
       android:paddingStart="@dimen/ism_dp_6"
       android:paddingEnd="@dimen/ism_dp_6"
       android:maxLines="1"
+      android:visibility="gone"
       android:layout_marginTop="@dimen/ism_dp_4"
       android:ellipsize="end"
       />
@@ -108,7 +109,7 @@
       android:layout_marginEnd="@dimen/ism_dp_8"
       android:textSize="@dimen/ism_sp_10"
       android:gravity="center"
-      android:background="@drawable/ism_create_conversation_circle"
+      android:background="@drawable/ism_unread_count_circle"
       android:text="3"
       android:maxLength="3"
       />

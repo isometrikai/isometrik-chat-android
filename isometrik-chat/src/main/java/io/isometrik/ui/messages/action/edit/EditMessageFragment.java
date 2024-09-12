@@ -15,7 +15,7 @@ import io.isometrik.chat.databinding.IsmBottomsheetEditBinding;
 import io.isometrik.ui.messages.action.MessageActionCallback;
 import io.isometrik.ui.messages.chat.MessagesModel;
 import io.isometrik.ui.messages.chat.utils.enums.MessageTypesForUI;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.TimeUtil;
 
 /**
@@ -56,7 +56,7 @@ public class EditMessageFragment extends BottomSheetDialogFragment {
     if (originalMessagePlaceHolderIcon != null) {
 
       try {
-        GlideApp.with(activity)
+        Glide.with(activity)
             .load(originalMessagePlaceHolderIcon)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .into(ismBottomsheetEditBinding.ivMessageImage);

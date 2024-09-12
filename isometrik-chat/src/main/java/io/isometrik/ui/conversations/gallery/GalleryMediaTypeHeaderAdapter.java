@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import io.isometrik.chat.databinding.IsmGalleryMediaTypeHeaderItemBinding;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 /**
@@ -52,7 +52,7 @@ public class GalleryMediaTypeHeaderAdapter extends RecyclerView.Adapter<Recycler
           galleryMediaTypeHeaderModel.getMediaTypeText());
 
       try {
-        GlideApp.with(mContext)
+        Glide.with(mContext)
             .load(galleryMediaTypeHeaderModel.getMediaTypeIcon())
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .into(holder.ismGalleryMediaTypeHeaderItemBinding.ivMediaType);

@@ -20,7 +20,7 @@ import io.isometrik.ui.messages.forward.people.ForwardToPeopleFragment;
 import io.isometrik.ui.messages.preview.PreviewMessageUtil;
 import io.isometrik.chat.utils.AlertProgress;
 import io.isometrik.chat.utils.Constants;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -76,9 +76,9 @@ public class ForwardMessageActivity extends FragmentActivity
         ismActivityForwardMessageBinding.tvMediaDescription.setVisibility(View.GONE);
         attachmentPlaceholderIcon = R.drawable.ism_ic_picture;
         try {
-          GlideApp.with(this)
+          Glide.with(this)
               .load(messagesModel.getPhotoMainUrl())
-              .thumbnail(GlideApp.with(this).load(messagesModel.getPhotoThumbnailUrl()))
+              .thumbnail(Glide.with(this).load(messagesModel.getPhotoThumbnailUrl()))
               .placeholder(R.drawable.ism_avatar_group_large)
               .transform(new CenterCrop(),
                   new GranularRoundedCorners(cornerRadius, cornerRadius, cornerRadius,
@@ -98,9 +98,9 @@ public class ForwardMessageActivity extends FragmentActivity
         ismActivityForwardMessageBinding.tvMediaDescription.setVisibility(View.GONE);
         attachmentPlaceholderIcon = R.drawable.ism_ic_video;
         try {
-          GlideApp.with(this)
+          Glide.with(this)
               .load(messagesModel.getVideoMainUrl())
-              .thumbnail(GlideApp.with(this).load(messagesModel.getVideoThumbnailUrl()))
+              .thumbnail(Glide.with(this).load(messagesModel.getVideoThumbnailUrl()))
               .placeholder(R.drawable.ism_avatar_group_large)
               .transform(new CenterCrop(),
                   new GranularRoundedCorners(cornerRadius, cornerRadius, cornerRadius,
@@ -147,7 +147,7 @@ public class ForwardMessageActivity extends FragmentActivity
             String.format("%s\n%s", messagesModel.getLocationName(), messagesModel.getLocationDescription()));
         attachmentPlaceholderIcon = R.drawable.ism_ic_location;
         try {
-          GlideApp.with(this)
+          Glide.with(this)
               .load(Constants.LOCATION_PLACEHOLDER_IMAGE_URL)
               .placeholder(R.drawable.ism_avatar_group_large)
               .transform(new CenterCrop(),
@@ -180,9 +180,9 @@ public class ForwardMessageActivity extends FragmentActivity
         ismActivityForwardMessageBinding.tvMediaDescription.setVisibility(View.GONE);
         attachmentPlaceholderIcon = R.drawable.ism_ic_whiteboard;
         try {
-          GlideApp.with(this)
+          Glide.with(this)
               .load(messagesModel.getWhiteboardMainUrl())
-              .thumbnail(GlideApp.with(this).load(messagesModel.getWhiteboardThumbnailUrl()))
+              .thumbnail(Glide.with(this).load(messagesModel.getWhiteboardThumbnailUrl()))
               .placeholder(R.drawable.ism_avatar_group_large)
               .transform(new CenterCrop(),
                   new GranularRoundedCorners(cornerRadius, cornerRadius, cornerRadius,
@@ -203,9 +203,9 @@ public class ForwardMessageActivity extends FragmentActivity
         ismActivityForwardMessageBinding.tvMediaDescription.setVisibility(View.GONE);
         attachmentPlaceholderIcon = R.drawable.ism_ic_gif;
         try {
-          GlideApp.with(this)
+          Glide.with(this)
               .load(messagesModel.getGifMainUrl())
-              .thumbnail(GlideApp.with(this).load(messagesModel.getGifStillUrl()))
+              .thumbnail(Glide.with(this).load(messagesModel.getGifStillUrl()))
               .placeholder(R.drawable.ism_avatar_group_large)
               .transform(new CenterCrop(),
                   new GranularRoundedCorners(cornerRadius, cornerRadius, cornerRadius,
@@ -225,9 +225,9 @@ public class ForwardMessageActivity extends FragmentActivity
         ismActivityForwardMessageBinding.tvMediaDescription.setVisibility(View.GONE);
         attachmentPlaceholderIcon = R.drawable.ism_ic_sticker;
         try {
-          GlideApp.with(this)
+          Glide.with(this)
               .load(messagesModel.getStickerMainUrl())
-              .thumbnail(GlideApp.with(this).load(messagesModel.getStickerStillUrl()))
+              .thumbnail(Glide.with(this).load(messagesModel.getStickerStillUrl()))
               .placeholder(R.drawable.ism_avatar_group_large)
               .transform(new CenterCrop(),
                   new GranularRoundedCorners(cornerRadius, cornerRadius, cornerRadius,
@@ -244,7 +244,7 @@ public class ForwardMessageActivity extends FragmentActivity
     }
     if (attachmentPlaceholderIcon != null) {
       try {
-        GlideApp.with(this)
+        Glide.with(this)
             .load(attachmentPlaceholderIcon)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .into(ismActivityForwardMessageBinding.ivAttachmentPh);

@@ -9,7 +9,7 @@ import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import io.isometrik.chat.databinding.IsmDialogPreviewImageBinding;
-import io.isometrik.ui.utils.GlideApp;
+import com.bumptech.glide.Glide;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -33,7 +33,7 @@ public class PreviewImagePopup {
       dialog.setContentView(ismDialogPreviewImageBinding.getRoot());
       try {
 
-        GlideApp.with(activity).load(mediaUrl).into(new CustomTarget<Drawable>() {
+        Glide.with(activity).load(mediaUrl).into(new CustomTarget<Drawable>() {
           @Override
           public void onResourceReady(@NonNull @NotNull Drawable resource,
               @Nullable Transition<? super Drawable> transition) {
