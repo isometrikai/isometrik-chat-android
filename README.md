@@ -138,7 +138,7 @@ fragment.setNewConversationListActivity("FULL.ACTIVITY_CLASS.PATH")
 To change the base color of the module, add the following color name to your module's colors.xml file:
 
 ```java
-<color name="ism_theme_base">#YOUR_COLOR_HAS</color>
+<color name="ism_theme_base">#YOUR_COLOR_HEX</color>
 ```
 Replace #YOUR_COLOR_HEX with your desired color value.
 
