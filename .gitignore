@@ -14,5 +14,6 @@
 .cxx
 local.properties
 
+
 # Ignore the specific file
 app/src/main/res/values/strings_config.xml

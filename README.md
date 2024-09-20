@@ -114,6 +114,41 @@ getSupportFragmentManager()
         .commit();
 ```
 
+### Create a Conversation
+start new conversation from any action in your project
+
+```java
+  isometrik.getRemoteUseCases()
+                .getConversationUseCases()
+                .createConversation(new CreateConversationQuery.Builder().setUserToken(userToken)
+                        .setGroup(false)
+                        .setConversationType(0)
+                        .setMembers(Collections.singletonList(selectedUserId))
+                        .setReadEvents(enableMessageDeliveryReadEvents)
+                        .setTypingEvents(enableMessageTypingEvents)
+                        .setPushNotifications(enablePushNotifications)
+                        .setSearchableTags(searchableTags)
+                        .build(), (var1, var2) -> {
+                    if (var1 != null) {
+                        String conversationId = var1.getConversationId();
+                        Intent intent =
+                                      new Intent(YourActivity.this, ConversationMessagesActivity.class);
+                                intent.putExtra("messageDeliveryReadEventsEnabled",true);
+                                intent.putExtra("typingEventsEnabled",true);
+                                intent.putExtra("newConversation", true);
+                                intent.putExtra("conversationId", conversationId);
+                                intent.putExtra("isPrivateOneToOne", true);
+                                intent.putExtra("userName", your.userName);
+                                intent.putExtra("userImageUrl", your.profilePicUrl);
+                                intent.putExtra("isOnline", false);
+                                intent.putExtra("lastSeenAt", "");
+                                intent.putExtra("userId", your.userId);
+                                startActivity(intent);
+                    }
+                });
+
+```
+
 # Customization
 
 ## Open a Custom Activity from Your Module
