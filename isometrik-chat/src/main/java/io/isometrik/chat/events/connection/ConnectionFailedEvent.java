@@ -1,7 +1,5 @@
 package io.isometrik.chat.events.connection;
 
-import org.eclipse.paho.client.mqttv3.MqttException;
-
 /**
  * The type Connection failed event.
  */
@@ -19,8 +17,8 @@ public class ConnectionFailedEvent {
    *
    * @param mqttException the cause of the connection drop
    */
-  public ConnectionFailedEvent(MqttException mqttException) {
-    this.errorCode = mqttException.getReasonCode();
+  public ConnectionFailedEvent(Exception mqttException) {
+    this.errorCode = 0;
     this.reason = mqttException.getMessage();
     this.throwable = mqttException.getCause();
   }

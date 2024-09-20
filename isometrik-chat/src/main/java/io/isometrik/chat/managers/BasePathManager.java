@@ -30,6 +30,7 @@ public class BasePathManager {
   private static final String DEFAULT_BASE_PATH = BuildConfig.DEFAULT_BASE_PATH;
 
   private static final String CONNECTIONS_BASE_PATH = BuildConfig.CONNECTIONS_BASE_PATH;
+  private static final int PORT = BuildConfig.PORT;
 
   private static final String CONNECTIONS_DEFAULT_SUBDOMAIN =
       BuildConfig.CONNECTIONS_DEFAULT_SUBDOMAIN;
@@ -94,5 +95,9 @@ public class BasePathManager {
     constructedUrl.append(CONNECTIONS_DEFAULT_SUBDOMAIN).append(".").append(CONNECTIONS_BASE_PATH);
 
     return constructedUrl.toString();
+  }
+
+  public int getPort(){
+    return PORT;
   }
 }

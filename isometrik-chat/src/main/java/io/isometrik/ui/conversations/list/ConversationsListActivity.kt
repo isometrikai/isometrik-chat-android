@@ -135,9 +135,12 @@ class ConversationsListActivity : FragmentActivity(), ConversationsContract.View
             popup.show()
         }
 
-        //    IsometrikUiSdk.getInstance().getIsometrik().getExecutor().execute(() -> {
-//      conversationsPresenter.fetchUserDetails();
-//    });
+        // As up now we are not showing unread count at bottom tab bar
+
+//        IsometrikUiSdk.getInstance().isometrik.executor.execute {
+//            fetchUnreadConversationsCount()
+//            conversationsPresenter?.fetchUserDetails()
+//        }
         askNotificationPermission()
         NotificationManagerCompat.from(this).cancelAll()
         fetchAllUndeliveredMessages()

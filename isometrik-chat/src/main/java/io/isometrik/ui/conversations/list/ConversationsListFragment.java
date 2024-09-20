@@ -602,14 +602,18 @@ public class ConversationsListFragment extends Fragment implements Conversations
   @Override
   public void fetchUnreadConversationsCount() {
     if (getActivity() != null) {
-      ((ConversationsActivity) getActivity()).fetchUnreadConversationsCount();
+      if(getActivity() instanceof  ConversationsListActivity){
+        ((ConversationsListActivity) getActivity()).fetchUnreadConversationsCount();
+      }
     }
   }
 
   @Override
   public void connectionStateChanged(boolean connected) {
     if (getActivity() != null) {
-      ((ConversationsActivity) getActivity()).connectionStateChanged(connected);
+      if(getActivity() instanceof  ConversationsListActivity){
+        ((ConversationsListActivity) getActivity()).connectionStateChanged(connected);
+      }
     }
   }
 
@@ -649,16 +653,18 @@ public class ConversationsListFragment extends Fragment implements Conversations
   public void onUserProfileImageUpdated(String userProfileImageUrl) {
 
     if (getActivity() != null) {
-
-      ((ConversationsActivity) getActivity()).loadUserImage(userProfileImageUrl);
+      if(getActivity() instanceof  ConversationsListActivity){
+        ((ConversationsListActivity) getActivity()).loadUserImage(userProfileImageUrl);
+      }
     }
   }
 
   @Override
   public void onUserDeleted() {
     if (getActivity() != null) {
-
-      ((ConversationsActivity) getActivity()).onUserDeleted();
+      if(getActivity() instanceof  ConversationsListActivity){
+        ((ConversationsListActivity) getActivity()).onUserDeleted();
+      }
     }
   }
 

@@ -2,7 +2,7 @@ plugins {
   id 'com.android.application'
   id 'com.google.gms.google-services'
   id 'com.google.firebase.crashlytics'
-    id 'org.jetbrains.kotlin.android'
+  id 'org.jetbrains.kotlin.android'
 }
 
 // new
@@ -36,10 +36,22 @@ android {
     sourceCompatibility JavaVersion.VERSION_17
     targetCompatibility JavaVersion.VERSION_17
   }
+
+//  packagingOptions {
+//    resources {
+//      excludes += ['META-INF/INDEX.LIST','META-INF/io.netty.versions.properties']
+//    }
+//  }
+  packaging {
+    resources {
+      it.excludes += "META-INF/INDEX.LIST"
+      it.excludes += "META-INF/io.netty.versions.properties"
+    }
+  }
 }
 
 dependencies {
-  implementation platform('com.google.firebase:firebase-bom:33.1.2')
+  implementation platform('com.google.firebase:firebase-bom:33.2.0')
   implementation 'androidx.appcompat:appcompat:1.7.0'
   implementation project(path: ':isometrik-chat')
   implementation 'androidx.multidex:multidex:2.0.1'

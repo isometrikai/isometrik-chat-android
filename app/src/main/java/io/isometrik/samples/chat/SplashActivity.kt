@@ -16,7 +16,7 @@ class SplashActivity : AppCompatActivity() {
         } else {
             Intent(this@SplashActivity, ConversationsListActivity::class.java)
         }
-        intent.putExtra("newConversationListActivity","io.isometrik.samples.chat.NewChatActivity")
+        intent.putExtra("newConversationListActivity","io.isometrik.ui.conversations.newconversation.type.SelectConversationTypeActivity")
         startActivity(intent)
         finish()
     }
