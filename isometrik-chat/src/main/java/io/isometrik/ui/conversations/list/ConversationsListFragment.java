@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import io.isometrik.chat.enums.ConversationType;
 import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmFragmentConversationsBinding;
+import io.isometrik.ui.IsometrikUiSdk;
 import io.isometrik.ui.messages.chat.ConversationMessagesActivity;
 import io.isometrik.chat.utils.AlertProgress;
 import io.isometrik.chat.utils.RecyclerItemClickListener;
@@ -44,7 +45,6 @@ public class ConversationsListFragment extends Fragment implements Conversations
   private ConversationType conversationType =  ConversationType.AllConversations;
 
   private Handler handler;
-  private String newConversationListActivity;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -156,21 +156,15 @@ public class ConversationsListFragment extends Fragment implements Conversations
         () -> fetchConversations(false, null, true, true));
     ismFragmentConversationsBinding.ivAdd.setOnClickListener(v -> {
 
-      if(newConversationListActivity != null){
-        Intent intent = new Intent().setClassName(getContext(), newConversationListActivity);
-        startActivity(intent);
-      }
+      IsometrikUiSdk.getInstance().getChatActionsClickListener().onNewChatIconClicked();
     });
 
-    if(newConversationListActivity == null) {
+
+    if(IsometrikUiSdk.getInstance().getChatActionsClickListener() == null) {
       ismFragmentConversationsBinding.ivAdd.setVisibility(View.GONE);
     }
 
       return ismFragmentConversationsBinding.getRoot();
-  }
-
-  public void setNewConversationListActivity(String className){
-    newConversationListActivity = className;
   }
 
   @Override

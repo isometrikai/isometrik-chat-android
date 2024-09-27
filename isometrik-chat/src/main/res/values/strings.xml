@@ -564,6 +564,7 @@
     <string name="ism_blocked_users">Blocked Users</string>
     <string name="ism_non_blocked_users">Non Blocked Users</string>
     <string name="ism_block">Block</string>
+    <string name="ism_clear_chat">Clear chat</string>
     <string name="ism_unblock">Unblock</string>
     <string name="ism_unblock_user">Unblock %1$s</string>
     <string name="ism_block_user">Block %1$s</string>

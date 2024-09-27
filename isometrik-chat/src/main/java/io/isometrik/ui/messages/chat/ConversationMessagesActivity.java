@@ -21,7 +21,9 @@ import android.text.TextWatcher;
 import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuInflater;
 import android.view.View;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +47,7 @@ import com.google.android.material.snackbar.Snackbar;
 import io.isometrik.chat.enums.AttachmentMessageType;
 import io.isometrik.chat.enums.PresignedUrlMediaTypes;
 import io.isometrik.chat.response.message.utils.schemas.Attachment;
+import io.isometrik.chat.utils.AlertProgress;
 import io.isometrik.chat.utils.FileUriUtils;
 import io.isometrik.ui.IsometrikUiSdk;
 import io.isometrik.chat.R;
@@ -163,6 +166,9 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
     private boolean messagingDisabled, joiningAsObserver;
     private boolean firstResume = true;
 
+    private androidx.appcompat.app.AlertDialog alertDialog;
+    private AlertProgress alertProgress;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,6 +176,7 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
         View view = ismActivityMessagesBinding.getRoot();
         setContentView(view);
         updateShimmerVisibility(true);
+        alertProgress = new AlertProgress();
         conversationMessagesPresenter = new ConversationMessagesPresenter(this, this);
 
         messagingDisabled = getIntent().getExtras().containsKey("messagingDisabled");
@@ -198,12 +205,12 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
 
         scrollToMessageNeeded = getIntent().getBooleanExtra("scrollToMessageNeeded", false);
         if (scrollToMessageNeeded) {
-            ismActivityMessagesBinding.ivSearch.setVisibility(View.GONE);
+//            ismActivityMessagesBinding.ivSearch.setVisibility(View.GONE);
             ismActivityMessagesBinding.vLoadingOverlay.getRoot().setVisibility(View.VISIBLE);
         }
 
         if (joiningAsObserver) {
-            ismActivityMessagesBinding.ivSearch.setVisibility(View.GONE);
+//            ismActivityMessagesBinding.ivSearch.setVisibility(View.GONE);
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) ismActivityMessagesBinding.ivObservers.getLayoutParams();
             params.addRule(RelativeLayout.ALIGN_PARENT_END);
 
@@ -666,7 +673,54 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
             intent.putExtra("conversationId", conversationId);
             startActivity(intent);
         });
+
+        ismActivityMessagesBinding.ivMore.setOnClickListener(v -> {
+            if (ismActivityMessagesBinding.vSelectMultipleMessagesHeader.getRoot().getVisibility()
+                    == View.GONE && clickActionsNotBlocked()) {
+                PopupMenu popup = new PopupMenu(this, v);
+                MenuInflater inflater = popup.getMenuInflater();
+                if (messagingDisabled) {
+                    inflater.inflate(R.menu.ism_unblock_menu, popup.getMenu());
+                } else {
+                    inflater.inflate(R.menu.ism_block_menu, popup.getMenu());
+                }
+                popup.setOnMenuItemClickListener(item -> {
+//                    if (item.getItemId() == R.id.blockOrUnBlockUser) {
+//                        if (messagingDisabled) {
+//                            showProgressDialog(getString(R.string.ism_unblocking_user, conversationUserFullName));
+//                            conversationMessagesPresenter.unBlockUser(userIsometrikUserId, false, userPersonalUserId);
+//                        } else {
+//                            showProgressDialog(getString(R.string.ism_blocking_user, conversationUserFullName));
+//                            conversationMessagesPresenter.blockUser(userIsometrikUserId, true, userPersonalUserId);
+//                        }
+//                        return true;
+//                    }
+//                    if (item.getItemId() == R.id.clearChat) {
+//                        // implement clear chat feature
+//                        new androidx.appcompat.app.AlertDialog.Builder(this).setTitle(getString(R.string.ism_clear_conversation))
+//                                .setMessage(getString(R.string.ism_clear_conversation_alert))
+//                                .setCancelable(true)
+//                                .setPositiveButton(getString(R.string.ism_continue), (dialog, id) -> {
+//                                    dialog.cancel();
+//                                    showProgressDialog(getString(R.string.ism_clearing_conversation));
+//                                    conversationMessagesPresenter.clearConversation(conversationId);
+//                                })
+//                                .setNegativeButton(getString(R.string.ism_cancel), (dialog, id) -> dialog.cancel())
+//                                .create()
+//                                .show();
+//                    }
+                    return false;
+                });
+                popup.show();
+            }
+        });
     }
+
+    private void showProgressDialog(String message) {
+        alertDialog = alertProgress.getProgressDialog(this, message);
+        if (!isFinishing()) alertDialog.show();
+    }
+
 
     private final TextWatcher sendMessageTextWatcher = new TextWatcher() {
         @Override
@@ -1344,12 +1398,12 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
                                     int finalI = i;
                                     handler.postDelayed(() -> {
                                         messagesLayoutManager.scrollToPositionWithOffset(finalI, 0);
-                                        ismActivityMessagesBinding.ivSearch.setVisibility(View.VISIBLE);
+//                                        ismActivityMessagesBinding.ivSearch.setVisibility(View.VISIBLE);
                                         ismActivityMessagesBinding.vLoadingOverlay.getRoot().setVisibility(View.GONE);
                                         updateShimmerVisibility(false);
                                     }, 100);
                                 } catch (IndexOutOfBoundsException | NullPointerException ignore) {
-                                    ismActivityMessagesBinding.ivSearch.setVisibility(View.VISIBLE);
+//                                    ismActivityMessagesBinding.ivSearch.setVisibility(View.VISIBLE);
                                     ismActivityMessagesBinding.vLoadingOverlay.getRoot().setVisibility(View.GONE);
                                     updateShimmerVisibility(false);
                                 }
@@ -1357,7 +1411,7 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
                             }
                         }
                     } else {
-                        ismActivityMessagesBinding.ivSearch.setVisibility(View.VISIBLE);
+//                        ismActivityMessagesBinding.ivSearch.setVisibility(View.VISIBLE);
                         ismActivityMessagesBinding.vLoadingOverlay.getRoot().setVisibility(View.GONE);
                         scrollToLastMessage();
                         Toast.makeText(this, getString(R.string.ism_message_not_found), Toast.LENGTH_SHORT).show();
@@ -1884,7 +1938,7 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
 
             ismActivityMessagesBinding.vSelectMultipleMessagesHeader.tvConversationTitle.setText(userName);
             ismActivityMessagesBinding.ivOnlineStatus.setVisibility(View.VISIBLE);
-            ismActivityMessagesBinding.ivRefreshOnlineStatus.setVisibility(messagingDisabled ? View.GONE : View.VISIBLE);
+//            ismActivityMessagesBinding.ivRefreshOnlineStatus.setVisibility(messagingDisabled ? View.GONE : View.VISIBLE);
 
             if (local) {
                 if (getIntent().getExtras().containsKey("isOnline")) {
@@ -1930,7 +1984,7 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
             ismActivityMessagesBinding.tvConversationOrUserName.setText(conversationTitle);
             ismActivityMessagesBinding.vSelectMultipleMessagesHeader.tvConversationTitle.setText(conversationTitle);
             ismActivityMessagesBinding.ivOnlineStatus.setVisibility(View.GONE);
-            ismActivityMessagesBinding.ivRefreshOnlineStatus.setVisibility(View.GONE);
+//            ismActivityMessagesBinding.ivRefreshOnlineStatus.setVisibility(View.GONE);
 
             if (local) {
                 if (getIntent().getExtras().containsKey("participantsCount")) {
@@ -1947,7 +2001,7 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
     public void messageToScrollToNotFound() {
         runOnUiThread(() -> {
             scrollToMessageNeeded = false;
-            ismActivityMessagesBinding.ivSearch.setVisibility(View.VISIBLE);
+//            ismActivityMessagesBinding.ivSearch.setVisibility(View.VISIBLE);
             ismActivityMessagesBinding.vLoadingOverlay.getRoot().setVisibility(View.GONE);
             scrollToLastMessage();
             Toast.makeText(this, getString(R.string.ism_message_not_found), Toast.LENGTH_SHORT).show();
@@ -1970,14 +2024,14 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
                 }
                 ismActivityMessagesBinding.ivOnlineStatus.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ism_ic_blocked));
                 ismActivityMessagesBinding.tvParticipantsCountOrOnlineStatus.setText(getString(R.string.ism_unavailable));
-                ismActivityMessagesBinding.ivRefreshOnlineStatus.setVisibility(View.GONE);
+//                ismActivityMessagesBinding.ivRefreshOnlineStatus.setVisibility(View.GONE);
             } else {
                 if (conversationMessagesAdapter.isMessagingDisabled()) {
                     conversationMessagesAdapter.setMessagingDisabled(false);
                     conversationMessagesAdapter.notifyDataSetChanged();
                 }
                 if (conversationMessagesPresenter.isPrivateOneToOne()) {
-                    ismActivityMessagesBinding.ivRefreshOnlineStatus.setVisibility(View.VISIBLE);
+//                    ismActivityMessagesBinding.ivRefreshOnlineStatus.setVisibility(View.VISIBLE);
                     conversationMessagesPresenter.requestConversationDetails();
                 }
             }

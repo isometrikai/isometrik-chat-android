@@ -115,7 +115,7 @@
         android:textColor="@color/ism_black"
         android:textSize="14sp"
         android:drawablePadding="@dimen/ism_dp_5"
-        android:drawableStart="@drawable/ic_call"
+        android:drawableStart="@drawable/ism_ic_audio_call"
         android:layout_height="wrap_content" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

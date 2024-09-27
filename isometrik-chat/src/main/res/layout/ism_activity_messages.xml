@@ -82,6 +82,7 @@
                 android:layout_centerVertical="true"
                 app:srcCompat="@drawable/ism_ic_search_message"
                 android:layout_marginEnd="@dimen/ism_dp_8"
+                android:visibility="gone"
                 android:layout_alignParentEnd="true"
           />
 
@@ -94,6 +95,39 @@
           app:srcCompat="@drawable/ism_ic_refresh_online_status"
           android:visibility="gone"
           android:layout_toStartOf="@id/ivSearch"
+          />
+
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/ivAudioCall"
+          android:layout_width="@dimen/ism_dp_40"
+          android:layout_height="@dimen/ism_dp_40"
+          android:padding="@dimen/ism_dp_10"
+          android:visibility="gone"
+          android:layout_centerVertical="true"
+          app:srcCompat="@drawable/ism_ic_audio_call"
+          android:layout_toStartOf="@id/ivVideoCall"
+          />
+
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/ivVideoCall"
+          android:layout_width="@dimen/ism_dp_40"
+          android:layout_height="@dimen/ism_dp_40"
+          android:padding="@dimen/ism_dp_10"
+          android:layout_centerVertical="true"
+          android:visibility="gone"
+          app:srcCompat="@drawable/ism_ic_video_call"
+          android:layout_toStartOf="@id/ivMore"
+          />
+
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/ivMore"
+          android:layout_width="@dimen/ism_dp_40"
+          android:layout_height="@dimen/ism_dp_40"
+          android:padding="@dimen/ism_dp_10"
+          android:visibility="gone"
+          android:layout_centerVertical="true"
+          app:srcCompat="@drawable/ism_ic_more"
+          android:layout_alignParentEnd="true"
           />
 
       <androidx.appcompat.widget.AppCompatImageView

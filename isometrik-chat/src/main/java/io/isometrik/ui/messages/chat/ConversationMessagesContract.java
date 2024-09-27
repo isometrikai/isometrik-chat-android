@@ -334,6 +334,20 @@ public interface ConversationMessagesContract {
      * Leave as observer.
      */
     void leaveAsObserver();
+
+    /**
+     * Block user.
+     *
+     * @param userId the user id
+     */
+    void blockUser(String userId,boolean isBlocked,String personalUserId);
+
+    /**
+     * UnBlock user.
+     *
+     * @param userId the user id
+     */
+    void unBlockUser(String userId,boolean isBlocked,String personalUserId);
   }
 
   /**

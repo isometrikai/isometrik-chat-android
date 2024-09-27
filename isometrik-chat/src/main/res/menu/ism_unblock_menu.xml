@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/blockOrUnBlockUser"
+        android:title="@string/ism_unblock"
+        android:icon="@drawable/ism_ic_block"
+        android:iconTint="@color/ism_red_dark"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/clearChat"
+        android:title="@string/ism_clear_chat"
+        android:icon="@drawable/ism_ic_block"
+        android:iconTint="@color/ism_red_dark"
+        app:showAsAction="ifRoom" />
+</menu>

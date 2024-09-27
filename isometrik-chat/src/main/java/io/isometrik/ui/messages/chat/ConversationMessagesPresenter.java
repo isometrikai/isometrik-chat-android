@@ -26,6 +26,8 @@ import io.isometrik.chat.builder.message.delivery.MarkMultipleMessagesAsReadQuer
 import io.isometrik.chat.builder.message.delivery.UpdateLastReadInConversationQuery;
 import io.isometrik.chat.builder.upload.CancelMediaUploadQuery;
 import io.isometrik.chat.builder.upload.UploadMediaQuery;
+import io.isometrik.chat.builder.user.block.BlockUserQuery;
+import io.isometrik.chat.builder.user.block.UnblockUserQuery;
 import io.isometrik.chat.callbacks.ConnectionEventCallback;
 import io.isometrik.chat.callbacks.ConversationEventCallback;
 import io.isometrik.chat.callbacks.MembershipControlEventCallback;
@@ -2163,6 +2165,36 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                         .build(), (var1, var2) -> {
 
                 });
+    }
+
+    @Override
+    public void blockUser(String userId,boolean isBlocked,String personalUserId) {
+//        blockProfileuser(personalUserId,isBlocked); //this will be used for blocking/unblocking user profile (NODE api)
+//        isometrik.getRemoteUseCases()
+//                .getUserUseCases()
+//                .blockUser(
+//                        new BlockUserQuery.Builder().setUserToken(userToken).setOpponentId(userId).build(), (var1, var2) -> {
+//                            if (var1 != null) {
+//                                conversationMessagesView.onUserBlocked();
+//                            } else {
+//                                conversationMessagesView.onError(var2.getErrorMessage());
+//                            }
+//                        });
+    }
+    @Override
+    public void unBlockUser(String userId,boolean isBlocked,String personalUserId) {
+//        blockProfileuser(personalUserId,isBlocked); //this will be used for blocking user profile (NODE api)
+//        isometrik.getRemoteUseCases()
+//                .getUserUseCases()
+//                .unblockUser(new UnblockUserQuery.Builder().setUserToken(userToken)
+//                        .setOpponentId(userId)
+//                        .build(), (var1, var2) -> {
+//                    if (var1 != null) {
+//                        conversationMessagesView.onUserUnBlocked();
+//                    } else {
+//                        conversationMessagesView.onError(var2.getErrorMessage());
+//                    }
+//                });
     }
 }
 

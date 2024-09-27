@@ -13,6 +13,7 @@ import io.isometrik.chat.enums.IMLogVerbosity;
 import io.isometrik.chat.enums.IMRealtimeEventsVerbosity;
 import io.isometrik.chat.utils.UserSession;
 import io.isometrik.ui.conversations.list.ConversationsListActionCallback;
+import io.isometrik.ui.messages.chat.ChatActionsClickListener;
 
 /**
  * The IsometrikUiSdk singleton to expose sdk functionality to other modules.
@@ -25,7 +26,7 @@ public class IsometrikUiSdk {
   private String applicationName;
   private Context applicationContext;
   private static volatile IsometrikUiSdk isometrikUiSdk;
-  private ConversationsListActionCallback conversationsListActionCallback;
+  private ChatActionsClickListener chatActionsClickListener;
   /**
    * private constructor.
    */
@@ -225,15 +226,15 @@ public class IsometrikUiSdk {
   }
 
   /**
-   * register conversationsList Action callbacl
+   * register conversations Action callbacl
   * */
 
-  public void registerConversationsListActionCallback(ConversationsListActionCallback mConversationsListActionCallback){
-    conversationsListActionCallback = mConversationsListActionCallback;
+  public void addClickListeners(ChatActionsClickListener chatActionsClickListener){
+     this.chatActionsClickListener = chatActionsClickListener;
   }
 
-  public ConversationsListActionCallback getConversationsListActionCallback(){
-    return conversationsListActionCallback;
+  public ChatActionsClickListener getChatActionsClickListener(){
+    return chatActionsClickListener;
   }
 
 }

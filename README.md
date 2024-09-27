@@ -153,27 +153,26 @@ start new conversation from any action in your project
 
 ## Open a Custom Activity from Your Module
 
-To open a new screen for creating a new conversation when clicking the "+" (plus) icon, you can set the `newConversationListActivity` class name. Below is an example of how to set the class name:
+To open a new screen for creating a new conversation when clicking the "+" (plus) icon, you can add addClickListeners(). Below is an example of how to add ClickListener:
 
-For an **Activity**:
+```kotlin
 
-```java
-Intent intent = new Intent(this, ConversationsActivity.class);
-intent.putExtra("newConversationListActivity", "FULL.ACTIVITY_CLASS.PATH");
-startActivity(intent);
+  IsometrikUiSdk.getInstance().addClickListeners(object : ChatActionsClickListener{
+            override fun onNewChatIconClicked() {
+               val i = Intent(this,NewChatActivity::class.java)
+                startActivity(i)
+            }
+        })
 
-```
-For a **Fragment**:
-```java
-ConversationsListFragment fragment = new ConversationsListFragment();
-fragment.setNewConversationListActivity("FULL.ACTIVITY_CLASS.PATH")
 ```
 ### Change the Base Color
 
-To change the base color of the module, add the following color name to your module's colors.xml file:
+To change the theme color of the module, add the following color name to your module's colors.xml file:
 
 ```java
 <color name="ism_theme_base">#YOUR_COLOR_HEX</color>
+<color name="ism_conversation_bg">#YOUR_COLOR_HEX</color>
+<color name="ism_send_message_bg">#YOUR_COLOR_HEX</color>
 ```
 Replace #YOUR_COLOR_HEX with your desired color value.
 
@@ -188,4 +187,5 @@ Replace #YOUR_COLOR_HEX with your desired color value.
 * targetCompatibility 17
 * JDK version 17
 * Kotlin version 1.9.23
+* One Signal version 5.1.21
 

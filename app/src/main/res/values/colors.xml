@@ -9,4 +9,8 @@
   <color name="white">#FFFFFFFF</color>
 
 
+  <color name="ism_theme_base">#7062E9</color>
+  <color name="ism_conversation_bg">#FFFFFF</color>
+  <color name="ism_send_message_bg">#EEEEEE</color>
+
 </resources>

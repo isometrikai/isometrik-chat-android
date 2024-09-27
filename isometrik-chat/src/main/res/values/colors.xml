@@ -9,6 +9,7 @@
   <color name="ism_title_black">#484848</color>
   <color name="ism_blue">#007AFF</color>
   <color name="ism_text_black">#222222</color>
+  <color name="ism_red_dark">#EF5350</color>
 
 <!--  User's item-->
   <color name="ism_select_text_blue">#00B3FF</color>
@@ -116,5 +117,8 @@
 
 <!--  Notification-->
   <color name="ism_notification_icon">#FF4081</color>
+
+  <color name="ism_conversation_bg">#FFFFFF</color>
+  <color name="ism_send_message_bg">#EEEEEE</color>
 
 </resources>

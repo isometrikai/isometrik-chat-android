@@ -7,5 +7,5 @@
       android:bottomRightRadius="@dimen/ism_dp_18"
       android:topLeftRadius="@dimen/ism_dp_18"
       android:topRightRadius="@dimen/ism_dp_18" />
-  <solid android:color="@color/ism_send_message_grey" />
+  <solid android:color="@color/ism_send_message_bg" />
 </shape>

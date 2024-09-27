@@ -38,7 +38,7 @@ import io.isometrik.ui.users.list.UsersActivity
 class ConversationsListActivity : FragmentActivity(), ConversationsContract.View {
     private var conversationsPresenter: ConversationsContract.Presenter? = null
     private var ismActivityConversationsListBinding: IsmActivityConversationsListBinding? = null
-    private var newConversationListActivity: String? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,8 +56,6 @@ class ConversationsListActivity : FragmentActivity(), ConversationsContract.View
 //        args.putInt("conversationType", ConversationType.AllConversations.value)
 //        fragment.arguments = args
 
-        newConversationListActivity = intent.getStringExtra("newConversationListActivity")
-        fragment.setNewConversationListActivity(newConversationListActivity)
         loadFragment(fragment)
 
 
