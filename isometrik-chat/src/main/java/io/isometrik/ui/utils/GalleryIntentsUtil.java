@@ -3,7 +3,7 @@ package io.isometrik.ui.utils;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -48,7 +48,7 @@ public class GalleryIntentsUtil {
     // special intent for Samsung file manager
     Intent samsungIntent = new Intent("com.sec.android.app.myfiles.PICK_DATA");
 
-    if (IsometrikUiSdk.getInstance()
+    if (IsometrikChatSdk.getInstance()
         .getContext()
         .getPackageManager()
         .resolveActivity(samsungIntent, 0) == null) {

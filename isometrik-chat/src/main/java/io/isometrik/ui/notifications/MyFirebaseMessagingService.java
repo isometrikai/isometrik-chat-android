@@ -22,7 +22,7 @@ import com.bumptech.glide.request.FutureTarget;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import io.isometrik.chat.builder.message.delivery.MarkMessageAsDeliveredQuery;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.messages.chat.ConversationMessagesActivity;
 import com.bumptech.glide.Glide;
@@ -48,15 +48,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     Map<String, String> data = remoteMessage.getData();
     try {
 
-      if (IsometrikUiSdk.getInstance().getUserSession().getUserId() != null) {
-        IsometrikUiSdk.getInstance()
+      if (IsometrikChatSdk.getInstance().getUserSession().getUserId() != null) {
+        IsometrikChatSdk.getInstance()
             .getIsometrik()
             .getConfiguration()
-            .setClientId(IsometrikUiSdk.getInstance().getUserSession().getUserId());
-        IsometrikUiSdk.getInstance()
+            .setClientId(IsometrikChatSdk.getInstance().getUserSession().getUserId());
+        IsometrikChatSdk.getInstance()
             .getIsometrik()
             .getConfiguration()
-            .setUserToken(IsometrikUiSdk.getInstance().getUserSession().getUserToken());
+            .setUserToken(IsometrikChatSdk.getInstance().getUserSession().getUserToken());
 
         String senderName = null, senderProfileImageUrl = null, senderId = null;
         String message = null;
@@ -69,7 +69,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
               senderId = data.get("userId");
               senderName = data.get("userName");
               senderProfileImageUrl = data.get("userProfileImageUrl");
-              message = IsometrikUiSdk.getInstance()
+              message = IsometrikChatSdk.getInstance()
                   .getContext()
                   .getString(R.string.ism_member_observer_joined, senderName);
               break;
@@ -79,7 +79,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
               senderId = data.get("userId");
               senderName = data.get("userName");
               senderProfileImageUrl = data.get("userProfileImageUrl");
-              message = IsometrikUiSdk.getInstance()
+              message = IsometrikChatSdk.getInstance()
                   .getContext()
                   .getString(R.string.ism_member_observer_left, senderName);
               break;
@@ -89,7 +89,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
               senderId = data.get("initiatorId");
               senderName = data.get("initiatorName");
               senderProfileImageUrl = data.get("initiatorProfileImageUrl");
-              message = IsometrikUiSdk.getInstance()
+              message = IsometrikChatSdk.getInstance()
                   .getContext()
                   .getString(R.string.ism_blocked_user, data.get("opponentName"), senderName);
               break;
@@ -99,7 +99,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
               senderId = data.get("initiatorId");
               senderName = data.get("initiatorName");
               senderProfileImageUrl = data.get("initiatorProfileImageUrl");
-              message = IsometrikUiSdk.getInstance()
+              message = IsometrikChatSdk.getInstance()
                   .getContext()
                   .getString(R.string.ism_unblocked_user, data.get("opponentName"), senderName);
               break;
@@ -394,16 +394,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             }
           }
           try {
-            if (IsometrikUiSdk.getInstance().getUserSession().getUserToken() != null) {
+            if (IsometrikChatSdk.getInstance().getUserSession().getUserToken() != null) {
               if (senderId != null && !senderId.equals(
-                  IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                  IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
                 if (data.get("deliveryReadEventsEnabled") == null || (Boolean.parseBoolean(
                     data.get("deliveryReadEventsEnabled")))) {
 
-                  IsometrikUiSdk.getInstance()
+                  IsometrikChatSdk.getInstance()
                       .getIsometrik()
                       .getExecutor()
-                      .execute(() -> IsometrikUiSdk.getInstance()
+                      .execute(() -> IsometrikChatSdk.getInstance()
                           .getIsometrik()
                           .getRemoteUseCases()
                           .getMessageUseCases()
@@ -411,7 +411,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                               new MarkMessageAsDeliveredQuery.Builder().setConversationId(
                                       data.get("conversationId"))
                                   .setUserToken(
-                                      IsometrikUiSdk.getInstance().getUserSession().getUserToken())
+                                      IsometrikChatSdk.getInstance().getUserSession().getUserToken())
                                   .setMessageId(data.get("messageId"))
                                   .build(), (var1, var2) -> {
                                 if (var1 != null) {
@@ -430,7 +430,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         if (senderId != null) {
-          if (!IsometrikUiSdk.getInstance().getUserSession().getUserId().equals(senderId)) {
+          if (!IsometrikChatSdk.getInstance().getUserSession().getUserId().equals(senderId)) {
             message = getString(R.string.ism_bullet) + message;
 
             Bitmap bitmap = null;
@@ -642,7 +642,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
       for (StatusBarNotification notification : notifications) {
 
-        if (notification.getPackageName().equals(IsometrikUiSdk.getInstance().getApplicationId())
+        if (notification.getPackageName().equals(IsometrikChatSdk.getInstance().getApplicationId())
             && notification.getTag() != null
             && notification.getTag().equals(conversationId)) {
 

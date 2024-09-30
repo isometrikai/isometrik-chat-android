@@ -9,7 +9,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners;
 import com.google.android.material.tabs.TabLayoutMediator;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmActivityMessageDeliveryStatusBinding;
 import io.isometrik.ui.messages.chat.MessagesModel;
@@ -31,7 +31,7 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
      View view = ismActivityMessageDeliveryStatusBinding.getRoot();
      setContentView(view);
 
-     MessagesModel messagesModel = IsometrikUiSdk.getInstance()
+     MessagesModel messagesModel = IsometrikChatSdk.getInstance()
          .getIsometrik()
          .getGson()
          .fromJson(getIntent().getStringExtra("message"), MessagesModel.class);

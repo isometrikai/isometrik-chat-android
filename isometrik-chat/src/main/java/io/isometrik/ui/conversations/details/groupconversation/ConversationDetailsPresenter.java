@@ -20,7 +20,7 @@ import io.isometrik.chat.builder.upload.UploadConversationImageQuery;
 import io.isometrik.chat.response.conversation.utils.ConversationDetailsUtil;
 import io.isometrik.chat.response.conversation.utils.ConversationMember;
 import io.isometrik.chat.response.message.utils.fetchmessages.Message;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.ui.conversations.details.participants.MembersWatchersModel;
 import io.isometrik.ui.conversations.gallery.GalleryMediaItemsSettingsUtil;
 import io.isometrik.ui.conversations.gallery.GalleryModel;
@@ -51,8 +51,8 @@ public class ConversationDetailsPresenter implements ConversationDetailsContract
   }
 
   private final ConversationDetailsContract.View conversationDetailsView;
-  private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
-  private final String userToken = IsometrikUiSdk.getInstance().getUserSession().getUserToken();
+  private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
+  private final String userToken = IsometrikChatSdk.getInstance().getUserSession().getUserToken();
   private final GalleryMediaItemsSettingsUtil galleryMediaItemsSettingsUtil;
 
   private boolean isUserAnAdmin;
@@ -188,7 +188,7 @@ public class ConversationDetailsPresenter implements ConversationDetailsContract
           if (var1 != null) {
             if (!oldConversationTitle.equals(conversationTitle)) {
 
-              IsometrikUiSdk.getInstance().getIsometrik()
+              IsometrikChatSdk.getInstance().getIsometrik()
                   .getExecutor()
                   .execute(() -> updateConversationSearchableTags(conversationId, conversationTitle,
                       oldConversationTitle));
@@ -292,7 +292,7 @@ public class ConversationDetailsPresenter implements ConversationDetailsContract
   public void requestImageUpload(String requestId, String conversationId, String mediaPath) {
     uploadRequestId = requestId;
     FetchConversationPresignedUrlQuery.Builder builder = new FetchConversationPresignedUrlQuery.Builder().setUserToken(
-            IsometrikUiSdk.getInstance().getUserSession().getUserToken())
+            IsometrikChatSdk.getInstance().getUserSession().getUserToken())
         .setConversationId(conversationId)
         .setNewConversation(false)
         .setMediaExtension(new AttachmentMetadata(mediaPath).getExtension());

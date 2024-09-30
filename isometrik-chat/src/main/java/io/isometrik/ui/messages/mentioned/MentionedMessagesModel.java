@@ -4,7 +4,7 @@ import android.graphics.Typeface;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import io.isometrik.chat.response.message.utils.fetchmessages.MentionedMessage;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.chat.utils.TimeUtil;
 
@@ -35,9 +35,9 @@ public class MentionedMessagesModel {
       isOnline = mentionedMessage.getOpponentDetails().isOnline();
       if (mentionedMessage.getOpponentDetails().getUserId() == null) {
         conversationTitle =
-            IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
+            IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
         mentionedMessageSenderName =
-            IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
+            IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
         messagingDisabled = true;
       } else {
         conversationTitle = mentionedMessage.getOpponentDetails().getUserName();
@@ -51,13 +51,13 @@ public class MentionedMessagesModel {
     }
 
     if (messagingDisabled) {
-      mentionedBy = new SpannableString(IsometrikUiSdk.getInstance()
+      mentionedBy = new SpannableString(IsometrikChatSdk.getInstance()
           .getContext()
           .getString(R.string.ism_mentioned_you, mentionedMessageSenderName));
       mentionedBy.setSpan(new StyleSpan(Typeface.ITALIC), 0, mentionedMessageSenderName.length(),
           0);
     } else {
-      mentionedBy = new SpannableString(IsometrikUiSdk.getInstance()
+      mentionedBy = new SpannableString(IsometrikChatSdk.getInstance()
           .getContext()
           .getString(R.string.ism_mentioned_you, mentionedMessageSenderName));
     }
@@ -79,49 +79,49 @@ public class MentionedMessagesModel {
       }
       case "AttachmentMessage:Image": {
         lastMessagePlaceHolderImage = R.drawable.ism_ic_picture;
-        mentionedText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_photo);
+        mentionedText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_photo);
         break;
       }
       case "AttachmentMessage:Video": {
         lastMessagePlaceHolderImage = R.drawable.ism_ic_video;
-        mentionedText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_video);
+        mentionedText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_video);
         break;
       }
       case "AttachmentMessage:Audio": {
         lastMessagePlaceHolderImage = R.drawable.ism_ic_mic;
         mentionedText =
-            IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_audio_recording);
+            IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_audio_recording);
         break;
       }
       case "AttachmentMessage:File": {
         lastMessagePlaceHolderImage = R.drawable.ism_ic_file;
-        mentionedText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_file);
+        mentionedText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_file);
         break;
       }
       case "AttachmentMessage:Sticker": {
         lastMessagePlaceHolderImage = R.drawable.ism_ic_sticker;
-        mentionedText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_sticker);
+        mentionedText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_sticker);
         break;
       }
       case "AttachmentMessage:Gif": {
         lastMessagePlaceHolderImage = R.drawable.ism_ic_gif;
-        mentionedText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_gif);
+        mentionedText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_gif);
         break;
       }
       case "AttachmentMessage:Whiteboard": {
         lastMessagePlaceHolderImage = R.drawable.ism_ic_whiteboard;
         mentionedText =
-            IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_whiteboard);
+            IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_whiteboard);
         break;
       }
       case "AttachmentMessage:Location": {
         lastMessagePlaceHolderImage = R.drawable.ism_ic_location;
-        mentionedText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_location);
+        mentionedText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_location);
         break;
       }
       case "AttachmentMessage:Contact": {
         lastMessagePlaceHolderImage = R.drawable.ism_ic_contact;
-        mentionedText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_contact);
+        mentionedText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_contact);
         break;
       }
       case "AttachmentMessage:Reply": {

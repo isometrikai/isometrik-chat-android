@@ -2,7 +2,7 @@ package io.isometrik.ui.messages.reaction.add;
 
 import io.isometrik.chat.Isometrik;
 import io.isometrik.chat.builder.reaction.AddReactionQuery;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.ui.messages.reaction.util.ReactionUtil;
 
 /**
@@ -17,8 +17,8 @@ public class AddReactionPresenter implements AddReactionContract.Presenter {
   }
 
   private AddReactionContract.View addReactionView;
-  private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
-  private final String userToken = IsometrikUiSdk.getInstance().getUserSession().getUserToken();
+  private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
+  private final String userToken = IsometrikChatSdk.getInstance().getUserSession().getUserToken();
 
   @Override
   public void attachView(AddReactionContract.View reactionView) {

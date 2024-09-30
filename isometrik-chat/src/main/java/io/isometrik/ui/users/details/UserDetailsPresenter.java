@@ -3,7 +3,7 @@ package io.isometrik.ui.users.details;
 import io.isometrik.chat.Isometrik;
 import io.isometrik.chat.builder.user.DeleteUserQuery;
 import io.isometrik.chat.builder.user.FetchUserDetailsQuery;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.utils.UserSession;
 
 /**
@@ -27,7 +27,7 @@ public class UserDetailsPresenter implements UserDetailsContract.Presenter {
   private boolean deletingUser;
   private boolean fetchingUserDetails;
 
-  private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
+  private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
 
   /**
    * {@link UserDetailsContract.Presenter#requestUserDetails(String)}
@@ -45,7 +45,7 @@ public class UserDetailsPresenter implements UserDetailsContract.Presenter {
 
                   try {
 
-                    UserSession userSession = IsometrikUiSdk.getInstance().getUserSession();
+                    UserSession userSession = IsometrikChatSdk.getInstance().getUserSession();
 
                     boolean notificationToBeUpdated , nameToBeUpdated = true,
                         identifierToBeUpdated = true, profilePicToBeUpdated = true,
@@ -95,7 +95,7 @@ public class UserDetailsPresenter implements UserDetailsContract.Presenter {
    */
   @Override
   public void clearUserSession() {
-    IsometrikUiSdk.getInstance().getUserSession().clear();
+    IsometrikChatSdk.getInstance().getUserSession().clear();
   }
 
   /**

@@ -2,7 +2,7 @@ package io.isometrik.ui.search.messages.utils;
 
 import io.isometrik.chat.response.message.utils.fetchmessages.UserMessage;
 import io.isometrik.chat.response.message.utils.schemas.Attachment;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.messages.chat.MessagesModel;
 import io.isometrik.ui.messages.chat.utils.enums.MessageTypesForUI;
@@ -35,7 +35,7 @@ public class SearchAttachmentMessageUtil {
       if (message.getSenderInfo().getUserId() != null) {
         selfMessage = message.getSenderInfo()
             .getUserId()
-            .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId());
+            .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId());
       }
       switch (message.getCustomType()) {
 
@@ -270,7 +270,7 @@ public class SearchAttachmentMessageUtil {
 
         if (conversationTitle == null || conversationTitle.isEmpty()) {
           conversationTitle =
-              IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
+              IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
           messagesModel.setMessagingDisabled(true);
         }
         messagesModel.setConversationTitle(conversationTitle);

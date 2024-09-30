@@ -1,6 +1,6 @@
 package io.isometrik.ui.messages.media.gifstickerutils;
 
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 
 /**
  * The helper class containing endpoints for sticker and gif apis of Giphy.
@@ -31,7 +31,7 @@ public class Constants {
    * The constant GIPHY_API_KEY.
    */
   public static final String GIPHY_API_KEY =
-      IsometrikUiSdk.getInstance().getIsometrik().getConfiguration().getGiphyApiKey();
+      IsometrikChatSdk.getInstance().getIsometrik().getConfiguration().getGiphyApiKey();
 
   /**
    * The constant GIFS_STICKERS_PAGE_SIZE.

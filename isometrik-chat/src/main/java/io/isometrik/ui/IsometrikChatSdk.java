@@ -12,28 +12,27 @@ import io.isometrik.chat.Isometrik;
 import io.isometrik.chat.enums.IMLogVerbosity;
 import io.isometrik.chat.enums.IMRealtimeEventsVerbosity;
 import io.isometrik.chat.utils.UserSession;
-import io.isometrik.ui.conversations.list.ConversationsListActionCallback;
 import io.isometrik.ui.messages.chat.ChatActionsClickListener;
 
 /**
  * The IsometrikUiSdk singleton to expose sdk functionality to other modules.
  */
-public class IsometrikUiSdk {
+public class IsometrikChatSdk {
 
   private Isometrik isometrik;
   private UserSession userSession;
   private String applicationId;
   private String applicationName;
   private Context applicationContext;
-  private static volatile IsometrikUiSdk isometrikUiSdk;
+  private static volatile IsometrikChatSdk isometrikChatSdk;
   private ChatActionsClickListener chatActionsClickListener;
   /**
    * private constructor.
    */
-  private IsometrikUiSdk() {
+  private IsometrikChatSdk() {
 
     //Prevent form the reflection api.
-    if (isometrikUiSdk != null) {
+    if (isometrikChatSdk != null) {
       throw new RuntimeException(
           "Use getInstance() method to get the single instance of this class.");
     }
@@ -44,15 +43,15 @@ public class IsometrikUiSdk {
    *
    * @return the IsometrikUiSdk instance
    */
-  public static IsometrikUiSdk getInstance() {
-    if (isometrikUiSdk == null) {
-      synchronized (IsometrikUiSdk.class) {
-        if (isometrikUiSdk == null) {
-          isometrikUiSdk = new IsometrikUiSdk();
+  public static IsometrikChatSdk getInstance() {
+    if (isometrikChatSdk == null) {
+      synchronized (IsometrikChatSdk.class) {
+        if (isometrikChatSdk == null) {
+          isometrikChatSdk = new IsometrikChatSdk();
         }
       }
     }
-    return isometrikUiSdk;
+    return isometrikChatSdk;
   }
 
   /**

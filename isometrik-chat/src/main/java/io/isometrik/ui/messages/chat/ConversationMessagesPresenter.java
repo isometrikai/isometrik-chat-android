@@ -26,8 +26,6 @@ import io.isometrik.chat.builder.message.delivery.MarkMultipleMessagesAsReadQuer
 import io.isometrik.chat.builder.message.delivery.UpdateLastReadInConversationQuery;
 import io.isometrik.chat.builder.upload.CancelMediaUploadQuery;
 import io.isometrik.chat.builder.upload.UploadMediaQuery;
-import io.isometrik.chat.builder.user.block.BlockUserQuery;
-import io.isometrik.chat.builder.user.block.UnblockUserQuery;
 import io.isometrik.chat.callbacks.ConnectionEventCallback;
 import io.isometrik.chat.callbacks.ConversationEventCallback;
 import io.isometrik.chat.callbacks.MembershipControlEventCallback;
@@ -84,7 +82,7 @@ import io.isometrik.chat.response.message.utils.fetchmessages.Message;
 import io.isometrik.chat.response.message.utils.schemas.Attachment;
 import io.isometrik.chat.response.message.utils.schemas.EventForMessage;
 import io.isometrik.chat.response.message.utils.schemas.MentionedUser;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.conversations.details.groupconversation.ConversationDetailsActivity;
 import io.isometrik.ui.conversations.details.userconversation.UserConversationDetailsActivity;
@@ -152,8 +150,8 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
     }
 
     private final ConversationMessagesContract.View conversationMessagesView;
-    private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
-    private final String userToken = IsometrikUiSdk.getInstance().getUserSession().getUserToken();
+    private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
+    private final String userToken = IsometrikChatSdk.getInstance().getUserSession().getUserToken();
     /**
      * The constant CONVERSATION_MESSAGES_PAGE_SIZE.
      */
@@ -299,8 +297,8 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                                         localMediaAttachmentHelper.getMediaUrl(),
                                         localMediaAttachmentHelper.getMimeType(),
                                         localMediaAttachmentHelper.getMediaExtension(),
-                                        IsometrikUiSdk.getInstance().getUserSession().getUserName(),
-                                        IsometrikUiSdk.getInstance().getUserSession().getUserProfilePic(),
+                                        IsometrikChatSdk.getInstance().getUserSession().getUserName(),
+                                        IsometrikChatSdk.getInstance().getUserSession().getUserProfilePic(),
                                         new ArrayList<>(), false, localMessageId, originalReplyMessageUtil,
                                         localMediaAttachmentHelper.getFileSize(),
                                         localMediaAttachmentHelper.getMediaName(), mediaId, messageType.getValue(),
@@ -318,8 +316,8 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                                         localMediaAttachmentHelper.getMediaName(),
                                         localMediaAttachmentHelper.getMimeType(),
                                         localMediaAttachmentHelper.getMediaExtension(),
-                                        IsometrikUiSdk.getInstance().getUserSession().getUserName(),
-                                        IsometrikUiSdk.getInstance().getUserSession().getUserProfilePic(),
+                                        IsometrikChatSdk.getInstance().getUserSession().getUserName(),
+                                        IsometrikChatSdk.getInstance().getUserSession().getUserProfilePic(),
                                         new ArrayList<>(), false, false, localMessageId, originalReplyMessageUtil,
                                         localMediaAttachmentHelper.getFileSize(), mediaId, messageType.getValue(),
                                         messageMetadata, false, false, conversationId, false);
@@ -335,8 +333,8 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                                         localMediaAttachmentHelper.getMediaName(),
                                         localMediaAttachmentHelper.getMimeType(),
                                         localMediaAttachmentHelper.getMediaExtension(),
-                                        IsometrikUiSdk.getInstance().getUserSession().getUserName(),
-                                        IsometrikUiSdk.getInstance().getUserSession().getUserProfilePic(),
+                                        IsometrikChatSdk.getInstance().getUserSession().getUserName(),
+                                        IsometrikChatSdk.getInstance().getUserSession().getUserProfilePic(),
                                         new ArrayList<>(), true, false, localMessageId, originalReplyMessageUtil,
                                         localMediaAttachmentHelper.getFileSize(), mediaId, messageType.getValue(),
                                         messageMetadata, false, false, conversationId, false);
@@ -357,7 +355,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
         } else {
             String localMessageId = String.valueOf(System.currentTimeMillis());
             List<String> searchableTags = null;
-            String notificationTitle = IsometrikUiSdk.getInstance().getUserSession().getUserName();
+            String notificationTitle = IsometrikChatSdk.getInstance().getUserSession().getUserName();
             String notificationBody = "";
 
             switch (messageTypesForUI) {
@@ -369,8 +367,8 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                             new MessagesModel(null, messageTypesForUI, true, System.currentTimeMillis(),
                                     parentMessageId != null,
                                     TagUserUtil.parseMentionedUsers(messageBody, mentionedUsers, taggedUserCallback),
-                                    IsometrikUiSdk.getInstance().getUserSession().getUserName(),
-                                    IsometrikUiSdk.getInstance().getUserSession().getUserProfilePic(),
+                                    IsometrikChatSdk.getInstance().getUserSession().getUserName(),
+                                    IsometrikChatSdk.getInstance().getUserSession().getUserProfilePic(),
                                     new ArrayList<>(), false, localMessageId, originalReplyMessageUtil,
                                     messageType.getValue(), messageMetadata, false, false, conversationId, false);
                     searchableTags = SearchTagUtils.generateSearchTags(messageModel, null);
@@ -385,8 +383,8 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                                     parentMessageId != null, String.valueOf(attachment.getLatitude()),
                                     attachment.getTitle(), String.valueOf(attachment.getLongitude()),
                                     attachment.getAddress(),
-                                    IsometrikUiSdk.getInstance().getUserSession().getUserName(),
-                                    IsometrikUiSdk.getInstance().getUserSession().getUserProfilePic(),
+                                    IsometrikChatSdk.getInstance().getUserSession().getUserName(),
+                                    IsometrikChatSdk.getInstance().getUserSession().getUserProfilePic(),
                                     new ArrayList<>(), false, localMessageId, originalReplyMessageUtil,
                                     messageType.getValue(), messageMetadata, false, false, conversationId, false);
                     searchableTags = SearchTagUtils.generateSearchTags(messageModel, null);
@@ -399,8 +397,8 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                     messageModel =
                             new MessagesModel(null, messageTypesForUI, true, System.currentTimeMillis(),
                                     parentMessageId != null, attachment.getStillUrl(), attachment.getMediaUrl(),
-                                    IsometrikUiSdk.getInstance().getUserSession().getUserName(),
-                                    IsometrikUiSdk.getInstance().getUserSession().getUserProfilePic(),
+                                    IsometrikChatSdk.getInstance().getUserSession().getUserName(),
+                                    IsometrikChatSdk.getInstance().getUserSession().getUserProfilePic(),
                                     new ArrayList<>(), true, false, localMessageId, originalReplyMessageUtil,
                                     attachment.getName(), attachment.getMediaId(), messageType.getValue(),
                                     messageMetadata, false, false, conversationId, false);
@@ -414,8 +412,8 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                     messageModel =
                             new MessagesModel(null, messageTypesForUI, true, System.currentTimeMillis(),
                                     parentMessageId != null, attachment.getStillUrl(), attachment.getMediaUrl(),
-                                    IsometrikUiSdk.getInstance().getUserSession().getUserName(),
-                                    IsometrikUiSdk.getInstance().getUserSession().getUserProfilePic(),
+                                    IsometrikChatSdk.getInstance().getUserSession().getUserName(),
+                                    IsometrikChatSdk.getInstance().getUserSession().getUserProfilePic(),
                                     new ArrayList<>(), false, false, localMessageId, originalReplyMessageUtil,
                                     attachment.getName(), attachment.getMediaId(), messageType.getValue(),
                                     messageMetadata, false, false, conversationId, false);
@@ -444,8 +442,8 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                                     parentMessageId != null, contactName,
                                     contactIdentifier,
                                     contactImageUrl,
-                                    IsometrikUiSdk.getInstance().getUserSession().getUserName(),
-                                    IsometrikUiSdk.getInstance().getUserSession().getUserProfilePic(),
+                                    IsometrikChatSdk.getInstance().getUserSession().getUserName(),
+                                    IsometrikChatSdk.getInstance().getUserSession().getUserProfilePic(),
                                     new ArrayList<>(), false, localMessageId, originalReplyMessageUtil,
                                     messageType.getValue(), messageMetadata, false, false, conversationId, false);
 
@@ -467,7 +465,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                     .setShowInConversation(showInConversation)
                     .setNotificationTitle(notificationTitle)
                     .setNotificationBody(notificationBody)
-                    .setDeviceId(IsometrikUiSdk.getInstance().getUserSession().getDeviceId());
+                    .setDeviceId(IsometrikChatSdk.getInstance().getUserSession().getDeviceId());
 
             if (attachments != null) {
                 sendMessageQuery.setAttachments(attachments);
@@ -601,9 +599,9 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                                                     .setBody(messageBody)
                                                     .setMessageType(messageType.getValue())
                                                     .setShowInConversation(showInConversation)
-                                                    .setNotificationTitle(IsometrikUiSdk.getInstance().getUserSession().getUserName())
+                                                    .setNotificationTitle(IsometrikChatSdk.getInstance().getUserSession().getUserName())
                                                     .setNotificationBody(NotificationBodyUtils.getNotificationBody(messageModel,null))
-                                                    .setDeviceId(IsometrikUiSdk.getInstance().getUserSession().getDeviceId());
+                                                    .setDeviceId(IsometrikChatSdk.getInstance().getUserSession().getDeviceId());
 
                                             Map<String, String> mediaMapInner = mediaDetailsMap.get(var11.getMediaId());
 
@@ -882,7 +880,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                         }
                         int count =
                                 MarkMessagesAsReadUtil.fetchMessagesToBeMarkedAsReadCount(messages, userToken,
-                                        IsometrikUiSdk.getInstance().getUserSession().getUserId());
+                                        IsometrikChatSdk.getInstance().getUserSession().getUserId());
                         if (count > 0) {
                             markMessagesAsRead();
                         }
@@ -941,13 +939,13 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                         conversationImageUrl = updateConversationImageEvent.getConversationImageUrl();
                         conversationMessagesView.addMessageInUI(messagesModel);
                         if (!updateConversationImageEvent.getUserId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
                             updateLastReadInConversation();
                         }
                     } else {
 
                         if (!updateConversationImageEvent.getUserId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                             conversationMessagesView.showMessageNotification(
                                     updateConversationImageEvent.getConversationId(),
@@ -977,12 +975,12 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                             typingEventsEnabled = updateConversationSettingsEvent.getConfig().getTypingEvents();
                         }
                         if (!updateConversationSettingsEvent.getUserId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
                             updateLastReadInConversation();
                         }
                     } else {
                         if (!updateConversationSettingsEvent.getUserId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                             conversationMessagesView.showMessageNotification(
                                     updateConversationSettingsEvent.getConversationId(),
@@ -1009,12 +1007,12 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                     if (updateConversationDetailsEvent.getConversationId().equals(conversationId)) {
                         conversationMessagesView.addMessageInUI(messagesModel);
                         if (!updateConversationDetailsEvent.getUserId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
                             updateLastReadInConversation();
                         }
                     } else {
                         if (!updateConversationDetailsEvent.getUserId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                             conversationMessagesView.showMessageNotification(
                                     updateConversationDetailsEvent.getConversationId(),
@@ -1043,12 +1041,12 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                         conversationTitle = updateConversationTitleEvent.getConversationTitle();
                         conversationMessagesView.addMessageInUI(messagesModel);
                         if (!updateConversationTitleEvent.getUserId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
                             updateLastReadInConversation();
                         }
                     } else {
                         if (!updateConversationTitleEvent.getUserId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                             conversationMessagesView.showMessageNotification(
                                     updateConversationTitleEvent.getConversationId(),
@@ -1069,13 +1067,13 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                     if (!createConversationEvent.getConversationId().equals(conversationId)) {
 
                         if (!createConversationEvent.getUserId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
                             conversationMessagesView.showMessageNotification(
                                     createConversationEvent.getConversationId(),
                                     createConversationEvent.getConversationDetails().isPrivateOneToOne()
                                             ? createConversationEvent.getUserName()
                                             : createConversationEvent.getConversationDetails().getConversationTitle(),
-                                    IsometrikUiSdk.getInstance()
+                                    IsometrikChatSdk.getInstance()
                                             .getContext()
                                             .getString(R.string.ism_created_conversation,
                                                     createConversationEvent.getUserName()),
@@ -1096,7 +1094,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
 
             if (isPrivateOneToOne) {
                 if (blockUserEvent.getInitiatorId()
-                        .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                        .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                     if (blockUserEvent.getOpponentId().equals(userId)) {
                         conversationMessagesView.onMessagingStatusChanged(true);
@@ -1147,12 +1145,12 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                     if (observerJoinEvent.getConversationId().equals(conversationId)) {
                         conversationMessagesView.addMessageInUI(messagesModel);
                         if (!observerJoinEvent.getUserId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
                             updateLastReadInConversation();
                         }
                     } else {
                         if (!observerJoinEvent.getUserId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                             conversationMessagesView.showMessageNotification(
                                     observerJoinEvent.getConversationId(), observerJoinEvent.getConversationTitle(),
@@ -1172,12 +1170,12 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                     if (observerLeaveEvent.getConversationId().equals(conversationId)) {
                         conversationMessagesView.addMessageInUI(messagesModel);
                         if (!observerLeaveEvent.getUserId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
                             updateLastReadInConversation();
                         }
                     } else {
                         if (!observerLeaveEvent.getUserId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                             conversationMessagesView.showMessageNotification(observerLeaveEvent.getConversationId(),
                                     observerLeaveEvent.getConversationTitle(),
@@ -1194,12 +1192,12 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                     if (addAdminEvent.getConversationId().equals(conversationId)) {
                         conversationMessagesView.addMessageInUI(messagesModel);
                         if (!addAdminEvent.getInitiatorId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
                             updateLastReadInConversation();
                         }
                     } else {
                         if (!addAdminEvent.getInitiatorId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                             conversationMessagesView.showMessageNotification(addAdminEvent.getConversationId(),
                                     addAdminEvent.getConversationTitle(), messagesModel.getConversationActionMessage(),
@@ -1217,12 +1215,12 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                         conversationMessagesView.addMessageInUI(messagesModel);
                         conversationMessagesView.updateParticipantsCount(addMembersEvent.getMembersCount());
                         if (!addMembersEvent.getUserId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
                             updateLastReadInConversation();
                         }
                     } else {
                         if (!addMembersEvent.getUserId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                             conversationMessagesView.showMessageNotification(addMembersEvent.getConversationId(),
                                     addMembersEvent.getConversationTitle(), messagesModel.getConversationActionMessage(),
@@ -1241,12 +1239,12 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                         conversationMessagesView.addMessageInUI(messagesModel);
                         conversationMessagesView.updateParticipantsCount(joinConversationEvent.getMembersCount());
                         if (!joinConversationEvent.getUserId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
                             updateLastReadInConversation();
                         }
                     } else {
                         if (!joinConversationEvent.getUserId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                             conversationMessagesView.showMessageNotification(
                                     joinConversationEvent.getConversationId(),
@@ -1265,7 +1263,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                             RealtimeMessageUtil.parseLeaveConversationEvent(leaveConversationEvent);
                     if (leaveConversationEvent.getConversationId().equals(conversationId)) {
                         if (leaveConversationEvent.getUserId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
                             conversationMessagesView.closeConversation();
                         } else {
                             conversationMessagesView.addMessageInUI(messagesModel);
@@ -1277,7 +1275,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                         }
                     } else {
                         if (!leaveConversationEvent.getUserId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                             conversationMessagesView.showMessageNotification(
                                     leaveConversationEvent.getConversationId(),
@@ -1297,12 +1295,12 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                     if (removeAdminEvent.getConversationId().equals(conversationId)) {
                         conversationMessagesView.addMessageInUI(messagesModel);
                         if (!removeAdminEvent.getInitiatorId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
                             updateLastReadInConversation();
                         }
                     } else {
                         if (!removeAdminEvent.getInitiatorId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                             conversationMessagesView.showMessageNotification(removeAdminEvent.getConversationId(),
                                     removeAdminEvent.getConversationTitle(), messagesModel.getConversationActionMessage(),
@@ -1318,7 +1316,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                     MessagesModel messagesModel = RealtimeMessageUtil.parseRemoveMembersEvent(removeMembersEvent);
                     if (removeMembersEvent.getConversationId().equals(conversationId)) {
 
-                        String userId = IsometrikUiSdk.getInstance().getUserSession().getUserId();
+                        String userId = IsometrikChatSdk.getInstance().getUserSession().getUserId();
 
                         boolean loggedInUserRemoved = false;
                         List<RemoveMembersEvent.ConversationMember> members = removeMembersEvent.getMembers();
@@ -1332,7 +1330,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
 
                         if (loggedInUserRemoved) {
                             if (!removeMembersEvent.getUserId()
-                                    .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                    .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
                                 updateLastReadInConversation();
                             }
                             conversationMessagesView.closeConversation();
@@ -1340,13 +1338,13 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                             conversationMessagesView.addMessageInUI(messagesModel);
                             conversationMessagesView.updateParticipantsCount(removeMembersEvent.getMembersCount());
                             if (!removeMembersEvent.getUserId()
-                                    .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                    .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
                                 updateLastReadInConversation();
                             }
                         }
                     } else {
                         if (!removeMembersEvent.getUserId()
-                                .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                             conversationMessagesView.showMessageNotification(removeMembersEvent.getConversationId(),
                                     removeMembersEvent.getConversationTitle(),
@@ -1367,7 +1365,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
             if (updateMessageDetailsEvent.getConversationId().equals(conversationId)) {
                 conversationMessagesView.addMessageInUI(messagesModel);
                 if (!updateMessageDetailsEvent.getUserId()
-                        .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                        .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
                     updateLastReadInConversation();
                 }
                 if (updateMessageDetailsEvent.getDetails().getBody() != null) {
@@ -1377,7 +1375,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                 }
             } else {
                 if (!updateMessageDetailsEvent.getUserId()
-                        .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                        .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                     conversationMessagesView.showMessageNotification(
                             updateMessageDetailsEvent.getConversationId(),
@@ -1414,14 +1412,14 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                         removeMessagesForEveryoneEvent.getMessageIds());
             } else {
                 if (!removeMessagesForEveryoneEvent.getUserId()
-                        .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                        .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                     conversationMessagesView.showMessageNotification(
                             removeMessagesForEveryoneEvent.getConversationId(),
                             removeMessagesForEveryoneEvent.isPrivateOneToOne()
                                     ? removeMessagesForEveryoneEvent.getUserName()
                                     : removeMessagesForEveryoneEvent.getConversationTitle(),
-                            IsometrikUiSdk.getInstance()
+                            IsometrikChatSdk.getInstance()
                                     .getContext()
                                     .getString(R.string.ism_message_deleted_for_all,
                                             removeMessagesForEveryoneEvent.getUserName()),
@@ -1450,7 +1448,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
         public void messageMarkedAsDelivered(@NotNull Isometrik isometrik, @NotNull MarkMessageAsDeliveredEvent markMessageAsDeliveredEvent) {
 
             if (markMessageAsDeliveredEvent.getConversationId().equals(conversationId)) {
-                if (!markMessageAsDeliveredEvent.getUserId().equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                if (!markMessageAsDeliveredEvent.getUserId().equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                     if (isPrivateOneToOne) {
                         conversationMessagesView.markMessageAsDeliveredToAll(markMessageAsDeliveredEvent.getMessageId());
@@ -1467,7 +1465,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
         @Override
         public void messageMarkedAsRead(@NotNull Isometrik isometrik, @NotNull MarkMessageAsReadEvent markMessageAsReadEvent) {
             if (markMessageAsReadEvent.getConversationId().equals(conversationId)) {
-                if (!markMessageAsReadEvent.getUserId().equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                if (!markMessageAsReadEvent.getUserId().equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                     if (isPrivateOneToOne) {
                         conversationMessagesView.markMessageAsReadByAll(markMessageAsReadEvent.getMessageId());
@@ -1481,7 +1479,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
         @Override
         public void multipleMessagesMarkedAsRead(@NotNull Isometrik isometrik, @NotNull MarkMultipleMessagesAsReadEvent markMultipleMessagesAsReadEvent) {
             if (markMultipleMessagesAsReadEvent.getConversationId().equals(conversationId)) {
-                if (!markMultipleMessagesAsReadEvent.getUserId().equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                if (!markMultipleMessagesAsReadEvent.getUserId().equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
                     conversationMessagesView.onMultipleMessagesMarkedAsReadEvent();
                 }
             }
@@ -1491,10 +1489,10 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
         public void messageSent(@NotNull Isometrik isometrik, @NotNull SendMessageEvent sendMessageEvent) {
 
             if (sendMessageEvent.getConversationId().equals(conversationId)) {
-                if (sendMessageEvent.getAction() != null || (!sendMessageEvent.getSenderId()
-                        .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())
+                if (sendMessageEvent.getAction() != null && (!sendMessageEvent.getSenderId()
+                        .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())
                         || !sendMessageEvent.getDeviceId()
-                        .equals(IsometrikUiSdk.getInstance().getUserSession().getDeviceId()))) {
+                        .equals(IsometrikChatSdk.getInstance().getUserSession().getDeviceId()))) {
                     MessagesModel messageModel =
                             RealtimeMessageUtil.parseSendMessageEvent(sendMessageEvent, taggedUserCallback);
 
@@ -1504,13 +1502,13 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                 }
 
                 if (!sendMessageEvent.getSenderId()
-                        .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                        .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                     if (sendMessageEvent.getDeliveryReadEventsEnabled()
                             && activeInConversation
                             && !joiningAsObserver) {
 
-                        IsometrikUiSdk.getInstance()
+                        IsometrikChatSdk.getInstance()
                                 .getIsometrik()
                                 .getExecutor()
                                 .execute(() -> isometrik.getRemoteUseCases()
@@ -1526,7 +1524,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                 }
             } else {
                 if (!sendMessageEvent.getSenderId()
-                        .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                        .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                     LocalMessageNotificationUtil localMessageNotificationUtil =
                             RealtimeMessageUtil.parseMessageEventForNotification(sendMessageEvent);
@@ -1548,8 +1546,8 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
 
             if (sendTypingMessageEvent.getConversationId().equals(conversationId)) {
                 if (!sendTypingMessageEvent.getUserId()
-                        .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
-                    conversationMessagesView.onRemoteUserTypingEvent(IsometrikUiSdk.getInstance()
+                        .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
+                    conversationMessagesView.onRemoteUserTypingEvent(IsometrikChatSdk.getInstance()
                             .getContext()
                             .getString(R.string.ism_typing, sendTypingMessageEvent.getUserName()));
                 }
@@ -1566,12 +1564,12 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                 conversationMessagesView.onMessagingStatusChanged(
                         blockUserInConversationEvent.isMessagingDisabled());
                 if (!blockUserInConversationEvent.getInitiatorId()
-                        .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                        .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
                     updateLastReadInConversation();
                 }
             } else {
                 if (!blockUserInConversationEvent.getInitiatorId()
-                        .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                        .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                     conversationMessagesView.showMessageNotification(
                             blockUserInConversationEvent.getConversationId(),
@@ -1594,12 +1592,12 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                 conversationMessagesView.onMessagingStatusChanged(
                         unblockUserInConversationEvent.isMessagingDisabled());
                 if (!unblockUserInConversationEvent.getInitiatorId()
-                        .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                        .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
                     updateLastReadInConversation();
                 }
             } else {
                 if (!unblockUserInConversationEvent.getInitiatorId()
-                        .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                        .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                     conversationMessagesView.showMessageNotification(
                             unblockUserInConversationEvent.getConversationId(),
@@ -1627,11 +1625,11 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                             reactionModel, true);
                 } else {
                     if (!addReactionEvent.getUserId()
-                            .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                            .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                         conversationMessagesView.showMessageNotification(addReactionEvent.getConversationId(),
                                 addReactionEvent.isPrivateOneToOne() ? addReactionEvent.getUserName()
-                                        : addReactionEvent.getConversationTitle(), IsometrikUiSdk.getInstance()
+                                        : addReactionEvent.getConversationTitle(), IsometrikChatSdk.getInstance()
                                         .getContext()
                                         .getString(R.string.ism_reaction_added, addReactionEvent.getUserName()),
                                 addReactionEvent.isPrivateOneToOne(), reactionModel.getReactionIcon(), true,
@@ -1655,12 +1653,12 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                             reactionModel, false);
                 } else {
                     if (!removeReactionEvent.getUserId()
-                            .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                            .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                         conversationMessagesView.showMessageNotification(
                                 removeReactionEvent.getConversationId(),
                                 removeReactionEvent.isPrivateOneToOne() ? removeReactionEvent.getUserName()
-                                        : removeReactionEvent.getConversationTitle(), IsometrikUiSdk.getInstance()
+                                        : removeReactionEvent.getConversationTitle(), IsometrikChatSdk.getInstance()
                                         .getContext()
                                         .getString(R.string.ism_reaction_removed, removeReactionEvent.getUserName()),
                                 removeReactionEvent.isPrivateOneToOne(), reactionModel.getReactionIcon(), true,
@@ -1889,7 +1887,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
 
                                 for (int i = 0; i < size; i++) {
                                     ConversationMember conversationMember = conversationMembers.get(i);
-                                    if (!conversationMember.getUserId().equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+                                    if (!conversationMember.getUserId().equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
                                         tagUsersModels.add(new TagUserModel(conversationMember));
                                     }
                                 }
@@ -1912,7 +1910,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                 .getDeliveryStatusUseCases()
                 .fetchMessagesDeliveryReadStatus(new FetchMessagesDeliveryReadStatusQuery.Builder().setConversationId(conversationId)
                         .setMessageIds(messageIds)
-                        .setUserToken(IsometrikUiSdk.getInstance().getUserSession().getUserToken())
+                        .setUserToken(IsometrikChatSdk.getInstance().getUserSession().getUserToken())
                         .build(), (var1, var2) -> {
                     if (var1 != null) {
                         ArrayList<FetchMessagesDeliveryReadStatusResult.MessageDeliveryReadStatus>
@@ -1984,7 +1982,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                                     }
 
                                     if (userId == null) {
-                                        userName = IsometrikUiSdk.getInstance()
+                                        userName = IsometrikChatSdk.getInstance()
                                                 .getContext()
                                                 .getString(R.string.ism_deleted_user);
                                         conversationMessagesView.onMessagingStatusChanged(true);

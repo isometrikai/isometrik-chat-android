@@ -11,7 +11,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmActivityForwardMessageBinding;
 import io.isometrik.ui.messages.chat.MessagesModel;
@@ -49,7 +49,7 @@ public class ForwardMessageActivity extends FragmentActivity
     alertProgress = new AlertProgress();
     forwardMessagePresenter = new ForwardMessagePresenter(this);
 
-    messagesModel = IsometrikUiSdk.getInstance()
+    messagesModel = IsometrikChatSdk.getInstance()
         .getIsometrik()
         .getGson()
         .fromJson(getIntent().getStringExtra("message"), MessagesModel.class);

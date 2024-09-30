@@ -3,7 +3,7 @@ package io.isometrik.ui.messages.chat.utils.attachmentutils;
 import io.isometrik.chat.builder.download.DownloadMediaQuery;
 import io.isometrik.chat.enums.DownloadMediaType;
 import io.isometrik.chat.models.download.mediautils.DownloadProgressListener;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.messages.chat.MessagesModel;
 import io.isometrik.ui.messages.chat.utils.enums.MessageTypesForUI;
@@ -28,7 +28,7 @@ public class MediaDownloadOrUploadHelper {
 
     DownloadMediaQuery.Builder downloadMediaQuery =
         new DownloadMediaQuery.Builder().setMessageId(messagesModel.getMessageId())
-            .setApplicationName(IsometrikUiSdk.getInstance().getApplicationName())
+            .setApplicationName(IsometrikChatSdk.getInstance().getApplicationName())
             .setMimeType(messagesModel.getMimeType())
             .setMediaExtension(messagesModel.getMediaExtension())
             .setDownloadProgressListener(downloadProgressListener);
@@ -40,15 +40,15 @@ public class MediaDownloadOrUploadHelper {
       case PhotoReceived: {
         downloadMediaQuery.setDownloadMediaType(DownloadMediaType.Image)
             .setMediaUrl(messagesModel.getPhotoMainUrl());
-        downloadSuccessMessage = IsometrikUiSdk.getInstance()
+        downloadSuccessMessage = IsometrikChatSdk.getInstance()
             .getContext()
             .getString(R.string.ism_downloaded_successfully,
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_photo));
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_photo));
 
-        downloadFailureMessage = IsometrikUiSdk.getInstance()
+        downloadFailureMessage = IsometrikChatSdk.getInstance()
             .getContext()
             .getString(R.string.ism_download_failed,
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_photo));
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_photo));
         break;
       }
 
@@ -57,15 +57,15 @@ public class MediaDownloadOrUploadHelper {
       case VideoReceived: {
         downloadMediaQuery.setDownloadMediaType(DownloadMediaType.Video)
             .setMediaUrl(messagesModel.getVideoMainUrl());
-        downloadSuccessMessage = IsometrikUiSdk.getInstance()
+        downloadSuccessMessage = IsometrikChatSdk.getInstance()
             .getContext()
             .getString(R.string.ism_downloaded_successfully,
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_video));
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_video));
 
-        downloadFailureMessage = IsometrikUiSdk.getInstance()
+        downloadFailureMessage = IsometrikChatSdk.getInstance()
             .getContext()
             .getString(R.string.ism_download_failed,
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_video));
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_video));
 
         break;
       }
@@ -76,15 +76,15 @@ public class MediaDownloadOrUploadHelper {
         downloadMediaQuery.setDownloadMediaType(DownloadMediaType.Audio)
             .setMediaUrl(messagesModel.getAudioUrl());
 
-        downloadSuccessMessage = IsometrikUiSdk.getInstance()
+        downloadSuccessMessage = IsometrikChatSdk.getInstance()
             .getContext()
             .getString(R.string.ism_downloaded_successfully,
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_audio_recording));
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_audio_recording));
 
-        downloadFailureMessage = IsometrikUiSdk.getInstance()
+        downloadFailureMessage = IsometrikChatSdk.getInstance()
             .getContext()
             .getString(R.string.ism_download_failed,
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_audio_recording));
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_audio_recording));
 
         break;
       }
@@ -95,15 +95,15 @@ public class MediaDownloadOrUploadHelper {
         downloadMediaQuery.setDownloadMediaType(DownloadMediaType.File)
             .setMediaUrl(messagesModel.getFileUrl());
 
-        downloadSuccessMessage = IsometrikUiSdk.getInstance()
+        downloadSuccessMessage = IsometrikChatSdk.getInstance()
             .getContext()
             .getString(R.string.ism_downloaded_successfully,
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_file));
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_file));
 
-        downloadFailureMessage = IsometrikUiSdk.getInstance()
+        downloadFailureMessage = IsometrikChatSdk.getInstance()
             .getContext()
             .getString(R.string.ism_download_failed,
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_file));
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_file));
 
         break;
       }
@@ -113,14 +113,14 @@ public class MediaDownloadOrUploadHelper {
       case WhiteboardReceived: {
         downloadMediaQuery.setDownloadMediaType(DownloadMediaType.Whiteboard)
             .setMediaUrl(messagesModel.getWhiteboardMainUrl());
-        downloadSuccessMessage = IsometrikUiSdk.getInstance()
+        downloadSuccessMessage = IsometrikChatSdk.getInstance()
             .getContext()
             .getString(R.string.ism_downloaded_successfully,
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_whiteboard));
-        downloadFailureMessage = IsometrikUiSdk.getInstance()
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_whiteboard));
+        downloadFailureMessage = IsometrikChatSdk.getInstance()
             .getContext()
             .getString(R.string.ism_download_failed,
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_whiteboard));
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_whiteboard));
 
         break;
       }
@@ -198,50 +198,50 @@ public class MediaDownloadOrUploadHelper {
 
       case PhotoReceived: {
 
-        return IsometrikUiSdk.getInstance()
+        return IsometrikChatSdk.getInstance()
             .getContext()
             .getString(R.string.ism_download_failed_due_to,
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_photo),
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_photo),
                 errorMessage);
       }
 
       case VideoSent:
 
       case VideoReceived: {
-        return IsometrikUiSdk.getInstance()
+        return IsometrikChatSdk.getInstance()
             .getContext()
             .getString(R.string.ism_download_failed_due_to,
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_video),
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_video),
                 errorMessage);
       }
 
       case AudioSent:
 
       case AudioReceived: {
-        return IsometrikUiSdk.getInstance()
+        return IsometrikChatSdk.getInstance()
             .getContext()
             .getString(R.string.ism_download_failed_due_to,
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_audio_recording),
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_audio_recording),
                 errorMessage);
       }
 
       case FileSent:
 
       case FileReceived: {
-        return IsometrikUiSdk.getInstance()
+        return IsometrikChatSdk.getInstance()
             .getContext()
             .getString(R.string.ism_download_failed_due_to,
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_file),
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_file),
                 errorMessage);
       }
 
       case WhiteboardSent:
 
       case WhiteboardReceived: {
-        return IsometrikUiSdk.getInstance()
+        return IsometrikChatSdk.getInstance()
             .getContext()
             .getString(R.string.ism_download_failed_due_to,
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_whiteboard),
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_whiteboard),
                 errorMessage);
       }
 
@@ -261,7 +261,7 @@ public class MediaDownloadOrUploadHelper {
   public static String parseMediaDownloadOrUploadCanceledMessage(MessageTypesForUI messageTypesForUI,
       boolean success, boolean download) {
 
-    String actionType=download?IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_download):IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_upload);
+    String actionType=download? IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_download): IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_upload);
     
     
     switch (messageTypesForUI) {
@@ -271,15 +271,15 @@ public class MediaDownloadOrUploadHelper {
       case PhotoReceived: {
 
         if (success) {
-          return IsometrikUiSdk.getInstance()
+          return IsometrikChatSdk.getInstance()
               .getContext()
               .getString(R.string.ism_download_upload_canceled,
-                  IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_photo),actionType);
+                  IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_photo),actionType);
         } else {
-          return IsometrikUiSdk.getInstance()
+          return IsometrikChatSdk.getInstance()
               .getContext()
               .getString(R.string.ism_cancel_download_upload_failed,actionType,
-                  IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_photo));
+                  IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_photo));
         }
       }
 
@@ -287,15 +287,15 @@ public class MediaDownloadOrUploadHelper {
 
       case VideoReceived: {
         if (success) {
-          return IsometrikUiSdk.getInstance()
+          return IsometrikChatSdk.getInstance()
               .getContext()
               .getString(R.string.ism_download_upload_canceled,
-                  IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_video),actionType);
+                  IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_video),actionType);
         } else {
-          return IsometrikUiSdk.getInstance()
+          return IsometrikChatSdk.getInstance()
               .getContext()
               .getString(R.string.ism_cancel_download_upload_failed,actionType,
-                  IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_video));
+                  IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_video));
         }
       }
 
@@ -303,15 +303,15 @@ public class MediaDownloadOrUploadHelper {
 
       case AudioReceived: {
         if (success) {
-          return IsometrikUiSdk.getInstance()
+          return IsometrikChatSdk.getInstance()
               .getContext()
-              .getString(R.string.ism_download_upload_canceled, IsometrikUiSdk.getInstance()
+              .getString(R.string.ism_download_upload_canceled, IsometrikChatSdk.getInstance()
                   .getContext()
                   .getString(R.string.ism_audio_recording),actionType);
         } else {
-          return IsometrikUiSdk.getInstance()
+          return IsometrikChatSdk.getInstance()
               .getContext()
-              .getString(R.string.ism_cancel_download_upload_failed,actionType, IsometrikUiSdk.getInstance()
+              .getString(R.string.ism_cancel_download_upload_failed,actionType, IsometrikChatSdk.getInstance()
                   .getContext()
                   .getString(R.string.ism_audio_recording));
         }
@@ -321,15 +321,15 @@ public class MediaDownloadOrUploadHelper {
 
       case FileReceived: {
         if (success) {
-          return IsometrikUiSdk.getInstance()
+          return IsometrikChatSdk.getInstance()
               .getContext()
               .getString(R.string.ism_download_upload_canceled,
-                  IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_file),actionType);
+                  IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_file),actionType);
         } else {
-          return IsometrikUiSdk.getInstance()
+          return IsometrikChatSdk.getInstance()
               .getContext()
               .getString(R.string.ism_cancel_download_upload_failed,actionType,
-                  IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_file));
+                  IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_file));
         }
       }
 
@@ -337,15 +337,15 @@ public class MediaDownloadOrUploadHelper {
 
       case WhiteboardReceived: {
         if (success) {
-          return IsometrikUiSdk.getInstance()
+          return IsometrikChatSdk.getInstance()
               .getContext()
               .getString(R.string.ism_download_upload_canceled,
-                  IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_whiteboard),actionType);
+                  IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_whiteboard),actionType);
         } else {
-          return IsometrikUiSdk.getInstance()
+          return IsometrikChatSdk.getInstance()
               .getContext()
               .getString(R.string.ism_cancel_download_upload_failed,actionType,
-                  IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_whiteboard));
+                  IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_whiteboard));
         }
       }
 

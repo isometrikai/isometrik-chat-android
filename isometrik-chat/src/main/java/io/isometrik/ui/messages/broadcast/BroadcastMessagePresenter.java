@@ -5,7 +5,7 @@ import io.isometrik.chat.builder.message.broadcastforward.BroadcastMessageQuery;
 import io.isometrik.chat.builder.user.block.FetchNonBlockedUsersQuery;
 import io.isometrik.chat.response.message.utils.schemas.EventForMessage;
 import io.isometrik.chat.response.user.utils.NonBlockedUser;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.messages.chat.utils.enums.RemoteMessageTypes;
 import io.isometrik.chat.utils.Constants;
@@ -19,8 +19,8 @@ import java.util.List;
  */
 public class BroadcastMessagePresenter implements BroadcastMessageContract.Presenter {
 
-  private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
-  private final String userToken = IsometrikUiSdk.getInstance().getUserSession().getUserToken();
+  private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
+  private final String userToken = IsometrikChatSdk.getInstance().getUserSession().getUserToken();
 
   private int offset;
   private boolean isLastPage;
@@ -46,7 +46,7 @@ public class BroadcastMessagePresenter implements BroadcastMessageContract.Prese
 
     List<String> searchableTags = new ArrayList<>();
     searchableTags.add(
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_search_tag_text));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_search_tag_text));
     searchableTags.add(message);
 
     BroadcastMessageQuery.Builder broadcastMessageQuery =
@@ -59,7 +59,7 @@ public class BroadcastMessagePresenter implements BroadcastMessageContract.Prese
             .setUserIds(userIds)
             .setSearchableTags(searchableTags)
             .setCustomType(CustomMessageTypes.Text.getValue())
-            .setDeviceId(IsometrikUiSdk.getInstance().getUserSession().getDeviceId());
+            .setDeviceId(IsometrikChatSdk.getInstance().getUserSession().getDeviceId());
 
     isometrik.getRemoteUseCases()
         .getMessageUseCases()

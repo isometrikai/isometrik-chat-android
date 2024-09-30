@@ -4,7 +4,7 @@ import io.isometrik.chat.Isometrik;
 import io.isometrik.chat.builder.membershipcontrol.AddMembersQuery;
 import io.isometrik.chat.builder.membershipcontrol.FetchMembersToAddToConversationQuery;
 import io.isometrik.chat.response.membershipcontrol.FetchMembersToAddToConversationResult;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.utils.Constants;
 import java.util.ArrayList;
 
@@ -27,9 +27,9 @@ public class AddParticipantsPresenter implements AddParticipantsContract.Present
   }
 
   private final AddParticipantsContract.View addParticipantsView;
-  private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
+  private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
   private final String conversationId;
-  private final String userToken = IsometrikUiSdk.getInstance().getUserSession().getUserToken();
+  private final String userToken = IsometrikChatSdk.getInstance().getUserSession().getUserToken();
 
   private int offset;
   private boolean isLastPage;

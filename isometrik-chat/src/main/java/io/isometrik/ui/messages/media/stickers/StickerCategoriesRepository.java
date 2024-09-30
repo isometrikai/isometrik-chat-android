@@ -1,6 +1,6 @@
 package io.isometrik.ui.messages.media.stickers;
 
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import java.util.ArrayList;
 
@@ -274,69 +274,69 @@ public class StickerCategoriesRepository {
     ArrayList<StickersModel> stickersModels = new ArrayList<>();
     int i = 0;
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE1.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE2.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE3.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE4.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE5.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE6.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE7.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE8.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE9.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE10.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE11.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE12.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE13.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE14.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE15.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE16.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE17.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE18.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE19.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE20.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE21.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE22.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE23.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE24.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE25.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE26.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE27.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE28.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE29.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE30.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE31.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++)));
     stickersModels.add(new StickersModel(ClassicStickersEnum.STICKER_URL_IMAGE32.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i)));
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i)));
 
     return stickersModels;
   }

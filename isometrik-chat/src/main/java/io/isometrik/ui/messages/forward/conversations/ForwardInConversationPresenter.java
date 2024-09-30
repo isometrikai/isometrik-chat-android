@@ -3,7 +3,7 @@ package io.isometrik.ui.messages.forward.conversations;
 import io.isometrik.chat.Isometrik;
 import io.isometrik.chat.builder.conversation.FetchConversationsQuery;
 import io.isometrik.chat.response.conversation.utils.Conversation;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.utils.Constants;
 import java.util.ArrayList;
 
@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class ForwardInConversationPresenter implements ForwardInConversationContract.Presenter {
 
   private ForwardInConversationContract.View forwardInConversationView;
-  private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
-  private final String userToken = IsometrikUiSdk.getInstance().getUserSession().getUserToken();
+  private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
+  private final String userToken = IsometrikChatSdk.getInstance().getUserSession().getUserToken();
 
   private int offset;
   private boolean isLastPage;

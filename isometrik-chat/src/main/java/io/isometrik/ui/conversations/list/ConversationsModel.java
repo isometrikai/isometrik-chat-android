@@ -4,7 +4,7 @@ import io.isometrik.chat.enums.ConversationType;
 import io.isometrik.chat.events.conversation.CreateConversationEvent;
 import io.isometrik.chat.response.conversation.utils.Conversation;
 import io.isometrik.chat.response.conversation.utils.ConversationMember;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.messages.reaction.util.ReactionPlaceHolderIconHelper;
 import io.isometrik.chat.utils.TimeUtil;
@@ -48,17 +48,17 @@ public class ConversationsModel {
     if (conversationType == ConversationType.PrivateConversation.getValue()) {
       if (createConversationEvent.getConversationDetails().isGroup()) {
         conversationTypeText =
-            IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_private);
+            IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_private);
       } else {
         conversationTypeText =
-            IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_1_1);
+            IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_1_1);
 
       }
     } else if (conversationType == ConversationType.PublicConversation.getValue()) {
       conversationTypeText =
-          IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_public);
+          IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_public);
     } else if (conversationType == ConversationType.OpenConversation.getValue()) {
-      conversationTypeText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_open);
+      conversationTypeText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_open);
     }
 
     lastMessageTime = TimeUtil.formatTimestampToOnlyDate(
@@ -70,7 +70,7 @@ public class ConversationsModel {
         createConversationEvent.getConversationDetails().getConfig().isTypingEvents();
     privateOneToOneConversation =
         createConversationEvent.getConversationDetails().isPrivateOneToOne();
-    unreadMessagesCount = (IsometrikUiSdk.getInstance()
+    unreadMessagesCount = (IsometrikChatSdk.getInstance()
         .getUserSession()
         .getUserId()
         .equals(createConversationEvent.getConversationDetails().getCreatedBy())) ? 0 : 1;
@@ -79,7 +79,7 @@ public class ConversationsModel {
     lastMessagePlaceHolderImage = null;
     lastMessageSenderName=createConversationEvent.getConversationDetails().getCreatedByUserName();
     lastMessageSendersProfileImageUrl = createConversationEvent.getConversationDetails().getCreatedByUserImageUrl();
-    lastMessageText = IsometrikUiSdk.getInstance()
+    lastMessageText = IsometrikChatSdk.getInstance()
         .getContext()
         .getString(R.string.ism_created_conversation,
             createConversationEvent.getConversationDetails().getCreatedByUserName());
@@ -88,7 +88,7 @@ public class ConversationsModel {
       if (createConversationEvent.getConversationDetails()
           .getOpponentDetails()
           .getUserId()
-          .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+          .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
         List<ConversationMember> members =
             createConversationEvent.getConversationDetails().getConversationMembers();
@@ -97,7 +97,7 @@ public class ConversationsModel {
 
           if (!members.get(i)
               .getUserId()
-              .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+              .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
             ConversationMember conversationMember = members.get(i);
             opponentId = conversationMember.getUserId();
@@ -148,7 +148,7 @@ public class ConversationsModel {
     if (canJoin || canObserve) {
       lastMessagePlaceHolderImage = R.drawable.ism_ic_member;
       lastMessageSendersProfileImageUrl = null;
-      lastMessageText = IsometrikUiSdk.getInstance()
+      lastMessageText = IsometrikChatSdk.getInstance()
           .getContext()
           .getString(R.string.ism_members_count, conversation.getMembersCount());
       lastMessageTime = TimeUtil.formatTimestampToOnlyDate(conversation.getCreatedAt());
@@ -166,7 +166,7 @@ public class ConversationsModel {
     messagingDisabled = conversation.isMessagingDisabled();
     remoteUserTyping = false;
     parseConversationMessage(conversation);
-    membersCountText = IsometrikUiSdk.getInstance()
+    membersCountText = IsometrikChatSdk.getInstance()
         .getContext()
         .getString(R.string.ism_members_count, conversation.getMembersCount());
   }
@@ -177,16 +177,16 @@ public class ConversationsModel {
     if (conversationType == ConversationType.PrivateConversation.getValue()) {
       if (conversation.isGroup()) {
         conversationTypeText =
-            IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_private);
+            IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_private);
       } else {
         conversationTypeText =
-            IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_1_1);
+            IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_1_1);
       }
     } else if (conversationType == ConversationType.PublicConversation.getValue()) {
       conversationTypeText =
-          IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_public);
+          IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_public);
     } else if (conversationType == ConversationType.OpenConversation.getValue()) {
-      conversationTypeText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_open);
+      conversationTypeText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_open);
     }
 
     messageDeliveryReadEventsEnabled = conversation.getConfig().isReadEvents();
@@ -209,7 +209,7 @@ public class ConversationsModel {
             lastMessagePlaceHolderImage = null;
             lastMessageSenderName = lastMessage.getString("userName");
             lastMessageSendersProfileImageUrl = lastMessage.getString("userProfileImageUrl");
-            lastMessageText = IsometrikUiSdk.getInstance()
+            lastMessageText = IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_member_observer_joined, lastMessage.getString("userName"));
             break;
@@ -219,7 +219,7 @@ public class ConversationsModel {
             lastMessagePlaceHolderImage = null;
             lastMessageSenderName = lastMessage.getString("userName");
             lastMessageSendersProfileImageUrl = lastMessage.getString("userProfileImageUrl");
-            lastMessageText = IsometrikUiSdk.getInstance()
+            lastMessageText = IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_member_observer_left, lastMessage.getString("userName"));
             break;
@@ -228,7 +228,7 @@ public class ConversationsModel {
             lastMessagePlaceHolderImage = null;
             lastMessageSenderName = lastMessage.getString("initiatorName");
             lastMessageSendersProfileImageUrl = lastMessage.getString("initiatorProfileImageUrl");
-            lastMessageText = IsometrikUiSdk.getInstance()
+            lastMessageText = IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_blocked_user, lastMessage.getString("opponentName"),
                     lastMessage.getString("initiatorName"));
@@ -239,7 +239,7 @@ public class ConversationsModel {
             lastMessagePlaceHolderImage = null;
             lastMessageSenderName = lastMessage.getString("initiatorName");
             lastMessageSendersProfileImageUrl = lastMessage.getString("initiatorProfileImageUrl");
-            lastMessageText = IsometrikUiSdk.getInstance()
+            lastMessageText = IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_unblocked_user, lastMessage.getString("opponentName"),
                     lastMessage.getString("initiatorName"));
@@ -250,7 +250,7 @@ public class ConversationsModel {
             lastMessagePlaceHolderImage = null;
             lastMessageSenderName = lastMessage.getString("userName");
             lastMessageSendersProfileImageUrl = lastMessage.getString("userProfileImageUrl");
-            lastMessageText = IsometrikUiSdk.getInstance()
+            lastMessageText = IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_created_conversation, lastMessage.getString("userName"));
             break;
@@ -260,7 +260,7 @@ public class ConversationsModel {
             lastMessagePlaceHolderImage = null;
             lastMessageSenderName =lastMessage.getString("initiatorName");
             lastMessageSendersProfileImageUrl = lastMessage.getString("initiatorProfileImageUrl");
-            lastMessageText = IsometrikUiSdk.getInstance()
+            lastMessageText = IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_made_admin, lastMessage.getString("memberName"),
                     lastMessage.getString("initiatorName"));
@@ -271,7 +271,7 @@ public class ConversationsModel {
             lastMessagePlaceHolderImage = null;
             lastMessageSenderName =lastMessage.getString("initiatorName");
             lastMessageSendersProfileImageUrl = lastMessage.getString("initiatorProfileImageUrl");
-            lastMessageText = IsometrikUiSdk.getInstance()
+            lastMessageText = IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_removed_admin, lastMessage.getString("memberName"),
                     lastMessage.getString("initiatorName"));
@@ -281,7 +281,7 @@ public class ConversationsModel {
           case "clearConversation": {
             lastMessagePlaceHolderImage = null;
             lastMessageSendersProfileImageUrl = null;
-            lastMessageText = IsometrikUiSdk.getInstance()
+            lastMessageText = IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_cleared_conversation);
             break;
@@ -291,7 +291,7 @@ public class ConversationsModel {
             lastMessagePlaceHolderImage = null;
             lastMessageSenderName =lastMessage.getString("userName");
             lastMessageSendersProfileImageUrl = lastMessage.getString("userProfileImageUrl");
-            lastMessageText = IsometrikUiSdk.getInstance()
+            lastMessageText = IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_member_joined_public, lastMessage.getString("userName"));
             break;
@@ -301,7 +301,7 @@ public class ConversationsModel {
             lastMessagePlaceHolderImage = null;
             lastMessageSenderName =lastMessage.getString("userName");
             lastMessageSendersProfileImageUrl = lastMessage.getString("userProfileImageUrl");
-            lastMessageText = IsometrikUiSdk.getInstance()
+            lastMessageText = IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_member_left, lastMessage.getString("userName"));
             break;
@@ -317,7 +317,7 @@ public class ConversationsModel {
             for (int i = 0; i < size; i++) {
               membersAdded.append(", ").append(members.getJSONObject(i).getString("memberName"));
             }
-            lastMessageText = IsometrikUiSdk.getInstance()
+            lastMessageText = IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_members_added, lastMessage.getString("userName"),
                     membersAdded.substring(2));
@@ -334,7 +334,7 @@ public class ConversationsModel {
               membersRemoved.append(", ").append(members.getJSONObject(i).getString("memberName"));
             }
 
-            lastMessageText = IsometrikUiSdk.getInstance()
+            lastMessageText = IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_members_removed, lastMessage.getString("userName"),
                     membersRemoved.substring(2));
@@ -345,7 +345,7 @@ public class ConversationsModel {
             lastMessagePlaceHolderImage = null;
             lastMessageSenderName =lastMessage.getString("userName");
             lastMessageSendersProfileImageUrl = lastMessage.getString("userProfileImageUrl");
-            lastMessageText = IsometrikUiSdk.getInstance()
+            lastMessageText = IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_updated_conversation_image,
                     lastMessage.getString("userName"));
@@ -356,7 +356,7 @@ public class ConversationsModel {
             lastMessagePlaceHolderImage = null;
             lastMessageSenderName =lastMessage.getString("userName");
             lastMessageSendersProfileImageUrl = lastMessage.getString("userProfileImageUrl");
-            lastMessageText = IsometrikUiSdk.getInstance()
+            lastMessageText = IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_updated_conversation_title,
                     lastMessage.getString("userName"), lastMessage.getString("conversationTitle"));
@@ -370,7 +370,7 @@ public class ConversationsModel {
                 ReactionPlaceHolderIconHelper.fetchLastMessagePlaceHolderIcon(
                     lastMessage.getString("reactionType"));
             lastMessageSendersProfileImageUrl = lastMessage.getString("userProfileImageUrl");
-            lastMessageText = IsometrikUiSdk.getInstance()
+            lastMessageText = IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_reaction_added, lastMessage.getString("userName"));
             break;
@@ -383,7 +383,7 @@ public class ConversationsModel {
                 ReactionPlaceHolderIconHelper.fetchLastMessagePlaceHolderIcon(
                     lastMessage.getString("reactionType"));
             lastMessageSendersProfileImageUrl = lastMessage.getString("userProfileImageUrl");
-            lastMessageText = IsometrikUiSdk.getInstance()
+            lastMessageText = IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_reaction_removed, lastMessage.getString("userName"));
             break;
@@ -392,7 +392,7 @@ public class ConversationsModel {
             lastMessagePlaceHolderImage = null;
             lastMessageSenderName =lastMessage.getString("userName");
             lastMessageSendersProfileImageUrl = lastMessage.getString("userProfileImageUrl");
-            lastMessageText = IsometrikUiSdk.getInstance()
+            lastMessageText = IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_message_deleted_locally, lastMessage.getString("userName"));
             break;
@@ -402,7 +402,7 @@ public class ConversationsModel {
             lastMessagePlaceHolderImage = null;
             lastMessageSenderName =lastMessage.getString("userName");
             lastMessageSendersProfileImageUrl = lastMessage.getString("userProfileImageUrl");
-            lastMessageText = IsometrikUiSdk.getInstance()
+            lastMessageText = IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_message_deleted_for_all, lastMessage.getString("userName"));
             break;
@@ -417,22 +417,22 @@ public class ConversationsModel {
 
             String settingsUpdated = "";
             if (config.has("config.typingEvents")) {
-              settingsUpdated = settingsUpdated + ", " + IsometrikUiSdk.getInstance()
+              settingsUpdated = settingsUpdated + ", " + IsometrikChatSdk.getInstance()
                   .getContext()
                   .getString(R.string.ism_settings_typing);
             }
             if (config.has("config.readEvents")) {
-              settingsUpdated = settingsUpdated + ", " + IsometrikUiSdk.getInstance()
+              settingsUpdated = settingsUpdated + ", " + IsometrikChatSdk.getInstance()
                   .getContext()
                   .getString(R.string.ism_settings_read_delivery_events);
             }
             if (config.has("config.pushNotifications")) {
-              settingsUpdated = settingsUpdated + ", " + IsometrikUiSdk.getInstance()
+              settingsUpdated = settingsUpdated + ", " + IsometrikChatSdk.getInstance()
                   .getContext()
                   .getString(R.string.ism_settings_notifications);
             }
 
-            lastMessageText = IsometrikUiSdk.getInstance()
+            lastMessageText = IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_updated_settings, lastMessage.getString("userName"),
                     settingsUpdated.substring(2));
@@ -448,22 +448,22 @@ public class ConversationsModel {
 
             String detailsUpdated = "";
             if (details.has("customType")) {
-              detailsUpdated = detailsUpdated + ", " + IsometrikUiSdk.getInstance()
+              detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
                   .getContext()
                   .getString(R.string.ism_details_custom_type);
             }
             if (details.has("metadata")) {
-              detailsUpdated = detailsUpdated + ", " + IsometrikUiSdk.getInstance()
+              detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
                   .getContext()
                   .getString(R.string.ism_details_metadata);
             }
             if (details.has("searchableTags")) {
-              detailsUpdated = detailsUpdated + ", " + IsometrikUiSdk.getInstance()
+              detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
                   .getContext()
                   .getString(R.string.ism_details_searchable_tags);
             }
 
-            lastMessageText = IsometrikUiSdk.getInstance()
+            lastMessageText = IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_updated_conversation_details,
                     lastMessage.getString("userName"), detailsUpdated.substring(2));
@@ -479,26 +479,26 @@ public class ConversationsModel {
 
             String detailsUpdated = "";
             if (details.has("customType")) {
-              detailsUpdated = detailsUpdated + ", " + IsometrikUiSdk.getInstance()
+              detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
                   .getContext()
                   .getString(R.string.ism_details_custom_type);
             }
             if (details.has("metadata")) {
-              detailsUpdated = detailsUpdated + ", " + IsometrikUiSdk.getInstance()
+              detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
                   .getContext()
                   .getString(R.string.ism_details_metadata);
             }
             if (details.has("searchableTags")) {
-              detailsUpdated = detailsUpdated + ", " + IsometrikUiSdk.getInstance()
+              detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
                   .getContext()
                   .getString(R.string.ism_details_searchable_tags);
             }
             if (details.has("body")) {
-              detailsUpdated = detailsUpdated + ", " + IsometrikUiSdk.getInstance()
+              detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
                   .getContext()
                   .getString(R.string.ism_details_body);
             }
-            lastMessageText = IsometrikUiSdk.getInstance()
+            lastMessageText = IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_updated_message_details, lastMessage.getString("userName"),
                     detailsUpdated.substring(2));
@@ -530,54 +530,54 @@ public class ConversationsModel {
           case "AttachmentMessage:Image": {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_picture;
             lastMessageText =
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_photo);
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_photo);
             break;
           }
           case "AttachmentMessage:Video": {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_video;
             lastMessageText =
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_video);
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_video);
             break;
           }
           case "AttachmentMessage:Audio": {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_mic;
             lastMessageText =
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_audio_recording);
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_audio_recording);
             break;
           }
           case "AttachmentMessage:File": {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_file;
             lastMessageText =
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_file);
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_file);
             break;
           }
           case "AttachmentMessage:Sticker": {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_sticker;
             lastMessageText =
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_sticker);
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_sticker);
             break;
           }
           case "AttachmentMessage:Gif": {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_gif;
-            lastMessageText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_gif);
+            lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_gif);
             break;
           }
           case "AttachmentMessage:Whiteboard": {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_whiteboard;
             lastMessageText =
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_whiteboard);
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_whiteboard);
             break;
           }
           case "AttachmentMessage:Location": {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_location;
             lastMessageText =
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_location);
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_location);
             break;
           }
           case "AttachmentMessage:Contact": {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_contact;
             lastMessageText =
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_contact);
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_contact);
             break;
           }
           case "AttachmentMessage:Reply":{
@@ -598,7 +598,7 @@ public class ConversationsModel {
       lastSeenAt = conversation.getOpponentDetails().getLastSeen();
       if (opponentId == null) {
         conversationTitle =
-            IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
+            IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
         messagingDisabled = true;
       }
     } else {

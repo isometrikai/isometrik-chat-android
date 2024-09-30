@@ -21,7 +21,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import io.isometrik.chat.R
 import io.isometrik.chat.databinding.IsmActivityConversationsListBinding
 import io.isometrik.chat.utils.PlaceholderUtils
-import io.isometrik.ui.IsometrikUiSdk
+import io.isometrik.ui.IsometrikChatSdk
 import io.isometrik.ui.conversations.newconversation.type.SelectConversationTypeActivity
 import io.isometrik.ui.messages.broadcast.BroadcastMessageActivity
 import io.isometrik.ui.messages.mentioned.MentionedMessagesActivity
@@ -60,23 +60,23 @@ class ConversationsListActivity : FragmentActivity(), ConversationsContract.View
 
 
         try {
-            if (!IsometrikUiSdk.getInstance().isometrik.isConnected) {
-                IsometrikUiSdk.getInstance()
+            if (!IsometrikChatSdk.getInstance().isometrik.isConnected) {
+                IsometrikChatSdk.getInstance()
                     .isometrik
                     .executor
                     .execute {
-                        IsometrikUiSdk.getInstance()
+                        IsometrikChatSdk.getInstance()
                             .isometrik
                             .createConnection(
-                                IsometrikUiSdk.getInstance().userSession.userId
-                                        + IsometrikUiSdk.getInstance().userSession.deviceId,
-                                IsometrikUiSdk.getInstance().userSession.userToken
+                                IsometrikChatSdk.getInstance().userSession.userId
+                                        + IsometrikChatSdk.getInstance().userSession.deviceId,
+                                IsometrikChatSdk.getInstance().userSession.userToken
                             )
                     }
             }
         } catch (ignore: Exception) {
         }
-        loadUserImage(IsometrikUiSdk.getInstance().userSession.userProfilePic)
+        loadUserImage(IsometrikChatSdk.getInstance().userSession.userProfilePic)
 
         ismActivityConversationsListBinding!!.ivNext.setOnClickListener { v: View? ->
             startActivity(
@@ -205,7 +205,7 @@ class ConversationsListActivity : FragmentActivity(), ConversationsContract.View
             } else {
                 PlaceholderUtils.setTextRoundDrawable(
                     this@ConversationsListActivity,
-                    IsometrikUiSdk.getInstance().userSession.userName,
+                    IsometrikChatSdk.getInstance().userSession.userName,
                     ismActivityConversationsListBinding!!.ivUserImage, 13
                 )
             }
@@ -261,7 +261,7 @@ class ConversationsListActivity : FragmentActivity(), ConversationsContract.View
      * Fetch all undelivered messages.
      */
     fun fetchAllUndeliveredMessages() {
-        IsometrikUiSdk.getInstance()
+        IsometrikChatSdk.getInstance()
             .isometrik
             .executor
             .execute { conversationsPresenter!!.fetchAllUndeliveredMessages(0) }

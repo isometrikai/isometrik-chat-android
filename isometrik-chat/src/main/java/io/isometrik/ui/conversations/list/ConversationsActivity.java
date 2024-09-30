@@ -20,7 +20,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.tabs.TabLayoutMediator;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.conversations.newconversation.type.SelectConversationTypeActivity;
 import io.isometrik.chat.databinding.IsmActivityConversationsBinding;
@@ -78,20 +78,20 @@ public class ConversationsActivity extends FragmentActivity implements Conversat
     }).attach();
 
       try {
-          if (!IsometrikUiSdk.getInstance().getIsometrik().isConnected()) {
-              IsometrikUiSdk.getInstance()
+          if (!IsometrikChatSdk.getInstance().getIsometrik().isConnected()) {
+              IsometrikChatSdk.getInstance()
                       .getIsometrik()
                       .getExecutor()
-                      .execute(() -> IsometrikUiSdk.getInstance()
+                      .execute(() -> IsometrikChatSdk.getInstance()
                               .getIsometrik()
-                              .createConnection(IsometrikUiSdk.getInstance().getUserSession().getUserId()
-                                              + IsometrikUiSdk.getInstance().getUserSession().getDeviceId(),
-                                      IsometrikUiSdk.getInstance().getUserSession().getUserToken()));
+                              .createConnection(IsometrikChatSdk.getInstance().getUserSession().getUserId()
+                                              + IsometrikChatSdk.getInstance().getUserSession().getDeviceId(),
+                                      IsometrikChatSdk.getInstance().getUserSession().getUserToken()));
           }
       } catch (Exception ignore) {
 
       }
-    loadUserImage(IsometrikUiSdk.getInstance().getUserSession().getUserProfilePic());
+    loadUserImage(IsometrikChatSdk.getInstance().getUserSession().getUserProfilePic());
 
     ismActivityConversationsBinding.ivNext.setOnClickListener(v -> startActivity(
         new Intent(ConversationsActivity.this, SelectConversationTypeActivity.class)));
@@ -123,7 +123,7 @@ public class ConversationsActivity extends FragmentActivity implements Conversat
       popup.show();
     });
 
-    IsometrikUiSdk.getInstance().getIsometrik().getExecutor().execute(() -> {
+    IsometrikChatSdk.getInstance().getIsometrik().getExecutor().execute(() -> {
       fetchUnreadConversationsCount();
       conversationsPresenter.fetchUserDetails();
     });
@@ -209,7 +209,7 @@ public class ConversationsActivity extends FragmentActivity implements Conversat
         }
       } else {
         PlaceholderUtils.setTextRoundDrawable(ConversationsActivity.this,
-            IsometrikUiSdk.getInstance().getUserSession().getUserName(),
+            IsometrikChatSdk.getInstance().getUserSession().getUserName(),
             ismActivityConversationsBinding.ivUserImage, 13);
       }
     });
@@ -258,7 +258,7 @@ public class ConversationsActivity extends FragmentActivity implements Conversat
    * Fetch all undelivered messages.
    */
   public void fetchAllUndeliveredMessages() {
-    IsometrikUiSdk.getInstance()
+    IsometrikChatSdk.getInstance()
         .getIsometrik()
         .getExecutor()
         .execute(() -> conversationsPresenter.fetchAllUndeliveredMessages(0));

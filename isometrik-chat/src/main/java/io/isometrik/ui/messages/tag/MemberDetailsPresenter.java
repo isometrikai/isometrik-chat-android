@@ -2,15 +2,15 @@ package io.isometrik.ui.messages.tag;
 
 import io.isometrik.chat.Isometrik;
 import io.isometrik.chat.builder.conversation.FetchConversationMemberDetailsQuery;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 
 /**
  * The presenter to fetch details of a tagged user on click.
  */
 public class MemberDetailsPresenter implements MemberDetailsContract.Presenter {
 
-  private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
-  private final String userToken = IsometrikUiSdk.getInstance().getUserSession().getUserToken();
+  private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
+  private final String userToken = IsometrikChatSdk.getInstance().getUserSession().getUserToken();
 
   private MemberDetailsContract.View memberDetailsView;
 

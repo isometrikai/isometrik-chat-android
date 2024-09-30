@@ -4,7 +4,7 @@ import io.isometrik.chat.Isometrik;
 import io.isometrik.chat.builder.user.AuthenticateUserQuery;
 import io.isometrik.chat.builder.user.FetchUsersQuery;
 import io.isometrik.chat.response.user.FetchUsersResult;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.utils.Constants;
 import java.util.ArrayList;
 
@@ -31,7 +31,7 @@ public class UsersPresenter implements UsersContract.Presenter {
   private boolean isLastPage;
   private boolean isLoading, authenticatingUser;
 
-  private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
+  private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
 
   private boolean isSearchRequest;
   private String searchTag;
@@ -125,7 +125,7 @@ public class UsersPresenter implements UsersContract.Presenter {
       isometrik.getRemoteUseCases().getUserUseCases().authenticateUser(builder.build(), (var1, var2) -> {
         authenticatingUser = false;
         if (var1 != null) {
-          IsometrikUiSdk.getInstance()
+          IsometrikChatSdk.getInstance()
               .getUserSession()
               .switchUser(var1.getUserId(), var1.getUserToken(), userModel.getUserName(),
                   userModel.getUserIdentifier(), userModel.getUserProfileImageUrl(), true,

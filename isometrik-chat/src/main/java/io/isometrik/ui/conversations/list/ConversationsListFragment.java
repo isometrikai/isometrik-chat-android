@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import io.isometrik.chat.enums.ConversationType;
 import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmFragmentConversationsBinding;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.ui.messages.chat.ConversationMessagesActivity;
 import io.isometrik.chat.utils.AlertProgress;
 import io.isometrik.chat.utils.RecyclerItemClickListener;
@@ -156,11 +156,11 @@ public class ConversationsListFragment extends Fragment implements Conversations
         () -> fetchConversations(false, null, true, true));
     ismFragmentConversationsBinding.ivAdd.setOnClickListener(v -> {
 
-      IsometrikUiSdk.getInstance().getChatActionsClickListener().onNewChatIconClicked();
+      IsometrikChatSdk.getInstance().getChatActionsClickListener().onNewChatIconClicked();
     });
 
 
-    if(IsometrikUiSdk.getInstance().getChatActionsClickListener() == null) {
+    if(IsometrikChatSdk.getInstance().getChatActionsClickListener() == null) {
       ismFragmentConversationsBinding.ivAdd.setVisibility(View.GONE);
     }
 

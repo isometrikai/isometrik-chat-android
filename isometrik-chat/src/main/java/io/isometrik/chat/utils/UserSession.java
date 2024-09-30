@@ -10,7 +10,7 @@ import androidx.core.app.NotificationManagerCompat;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 
 import io.isometrik.ui.notifications.FirebaseUtils;
 
@@ -137,11 +137,11 @@ public class UserSession {
   public void clear() {
     FirebaseUtils.unsubscribeFromTopic(getUserId());
     try {
-      IsometrikUiSdk.getInstance().getIsometrik().dropConnection();
+      IsometrikChatSdk.getInstance().getIsometrik().dropConnection();
     } catch (Exception ignore) {
     }
     try {
-      NotificationManagerCompat.from(IsometrikUiSdk.getInstance().getContext()).cancelAll();
+      NotificationManagerCompat.from(IsometrikChatSdk.getInstance().getContext()).cancelAll();
     } catch (Exception ignore) {
     }
 
@@ -173,7 +173,7 @@ public class UserSession {
     sharedPreferences.edit().putBoolean("userSelected", userSelected).apply();
     sharedPreferences.edit().putString("userMetadata", userMetadata.toString()).apply();
     sharedPreferences.edit().putBoolean("userNotification", notification).apply();
-    sharedPreferences.edit().putString("deviceId", Settings.Secure.getString(IsometrikUiSdk.getInstance().getContext().getContentResolver(), Settings.Secure.ANDROID_ID)).apply();
+    sharedPreferences.edit().putString("deviceId", Settings.Secure.getString(IsometrikChatSdk.getInstance().getContext().getContentResolver(), Settings.Secure.ANDROID_ID)).apply();
 
     if (deliveryStatusUpdatedUpto == 0) {
       sharedPreferences.edit()

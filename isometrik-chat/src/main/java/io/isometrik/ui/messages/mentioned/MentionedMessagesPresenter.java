@@ -3,7 +3,7 @@ package io.isometrik.ui.messages.mentioned;
 import io.isometrik.chat.Isometrik;
 import io.isometrik.chat.builder.message.FetchMentionedMessagesQuery;
 import io.isometrik.chat.response.message.utils.fetchmessages.MentionedMessage;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.utils.Constants;
 import java.util.ArrayList;
 
@@ -23,8 +23,8 @@ public class MentionedMessagesPresenter implements MentionedMessagesContract.Pre
   }
 
   private final MentionedMessagesContract.View mentionedMessagesView;
-  private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
-  private final String userToken = IsometrikUiSdk.getInstance().getUserSession().getUserToken();
+  private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
+  private final String userToken = IsometrikChatSdk.getInstance().getUserSession().getUserToken();
   private final int MENTIONED_MESSAGES_PAGE_SIZE = Constants.MENTIONED_MESSAGES_PAGE_SIZE;
 
   private int offset;

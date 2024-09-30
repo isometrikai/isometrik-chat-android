@@ -19,7 +19,6 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
 import android.text.style.StyleSpan;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuInflater;
 import android.view.View;
@@ -49,7 +48,7 @@ import io.isometrik.chat.enums.PresignedUrlMediaTypes;
 import io.isometrik.chat.response.message.utils.schemas.Attachment;
 import io.isometrik.chat.utils.AlertProgress;
 import io.isometrik.chat.utils.FileUriUtils;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.camera.CameraActivity;
 import io.isometrik.ui.conversations.details.observers.ObserversActivity;
@@ -655,7 +654,7 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
         if (getIntent().getBooleanExtra("fromNotification", false)) {
 
             try {
-                IsometrikUiSdk.getInstance().getIsometrik().getExecutor().execute(() -> IsometrikUiSdk.getInstance().getIsometrik().createConnection(IsometrikUiSdk.getInstance().getUserSession().getUserId() + IsometrikUiSdk.getInstance().getUserSession().getDeviceId(), IsometrikUiSdk.getInstance().getUserSession().getUserToken()));
+                IsometrikChatSdk.getInstance().getIsometrik().getExecutor().execute(() -> IsometrikChatSdk.getInstance().getIsometrik().createConnection(IsometrikChatSdk.getInstance().getUserSession().getUserId() + IsometrikChatSdk.getInstance().getUserSession().getDeviceId(), IsometrikChatSdk.getInstance().getUserSession().getUserToken()));
             } catch (Exception ignore) {
 
             }
@@ -1569,7 +1568,7 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
             messagesModel.setTextMessage(new SpannableString(messagesModel.getTextMessage().toString()));
         }
         Intent intent = new Intent(this, MessageDeliveryStatusActivity.class);
-        intent.putExtra("message", IsometrikUiSdk.getInstance().getIsometrik().getGson().toJson(messagesModel));
+        intent.putExtra("message", IsometrikChatSdk.getInstance().getIsometrik().getGson().toJson(messagesModel));
         intent.putExtra("conversationId", conversationId);
         intent.putExtra("messageId", messagesModel.getMessageId());
         intent.putExtra("sentAt", messagesModel.getSentAt());
@@ -1587,7 +1586,7 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
             KeyboardUtil.hideKeyboard(this);
 
             Intent intent = new Intent(this, ForwardMessageActivity.class);
-            intent.putExtra("message", IsometrikUiSdk.getInstance().getIsometrik().getGson().toJson(messagesModel));
+            intent.putExtra("message", IsometrikChatSdk.getInstance().getIsometrik().getGson().toJson(messagesModel));
             startActivity(intent);
         }
     }
