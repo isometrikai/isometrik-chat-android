@@ -16,7 +16,7 @@ import io.isometrik.chat.events.message.delivery.UpdatedLastReadInConversationEv
 import io.isometrik.chat.events.message.user.block.BlockUserInConversationEvent;
 import io.isometrik.chat.events.message.user.block.UnblockUserInConversationEvent;
 import io.isometrik.chat.response.user.utils.PendingDeliveryToReadByUser;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.ui.messages.deliverystatus.UsersModel;
 import io.isometrik.chat.utils.Constants;
 import java.util.ArrayList;
@@ -29,8 +29,8 @@ import org.jetbrains.annotations.NotNull;
 public class DeliveryPendingPresenter implements DeliveryPendingContract.Presenter {
 
   private DeliveryPendingContract.View deliveryPendingView;
-  private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
-  private final String userToken = IsometrikUiSdk.getInstance().getUserSession().getUserToken();
+  private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
+  private final String userToken = IsometrikChatSdk.getInstance().getUserSession().getUserToken();
 
   private String conversationId, messageId;
 
@@ -83,7 +83,7 @@ public class DeliveryPendingPresenter implements DeliveryPendingContract.Present
                 ArrayList<UsersModel> usersModels = new ArrayList<>();
         ArrayList<PendingDeliveryToReadByUser> users = var1.getDeliveryPendingToUsers();
         int size = users.size();
-        String userId = IsometrikUiSdk.getInstance().getUserSession().getUserId();
+        String userId = IsometrikChatSdk.getInstance().getUserSession().getUserId();
         for (int i = 0; i < size; i++) {
           if (users.get(i).getUserId().equals(userId)) {
             deliveryCount++;
@@ -146,7 +146,7 @@ public class DeliveryPendingPresenter implements DeliveryPendingContract.Present
                 ArrayList<UsersModel> usersModels = new ArrayList<>();
             ArrayList<PendingDeliveryToReadByUser> users = var1.getReadPendingByUsers();
             int size = users.size();
-                String userId = IsometrikUiSdk.getInstance().getUserSession().getUserId();
+                String userId = IsometrikChatSdk.getInstance().getUserSession().getUserId();
                 for (int i = 0; i < size; i++) {
                   if (users.get(i).getUserId().equals(userId)) {
                     readCount++;
@@ -247,7 +247,7 @@ public class DeliveryPendingPresenter implements DeliveryPendingContract.Present
         @NotNull MarkMessageAsDeliveredEvent markMessageAsDeliveredEvent) {
       if (markMessageAsDeliveredEvent.getConversationId().equals(conversationId)) {
         if (!markMessageAsDeliveredEvent.getUserId()
-            .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+            .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
           if (markMessageAsDeliveredEvent.getMessageId().equals(messageId)) {
             if (deliveryPendingView != null) {
@@ -263,7 +263,7 @@ public class DeliveryPendingPresenter implements DeliveryPendingContract.Present
         @NotNull MarkMessageAsReadEvent markMessageAsReadEvent) {
       if (markMessageAsReadEvent.getConversationId().equals(conversationId)) {
         if (!markMessageAsReadEvent.getUserId()
-            .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+            .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
           if (markMessageAsReadEvent.getMessageId().equals(messageId)) {
 
@@ -282,7 +282,7 @@ public class DeliveryPendingPresenter implements DeliveryPendingContract.Present
         @NotNull MarkMultipleMessagesAsReadEvent markMultipleMessagesAsReadEvent) {
       if (markMultipleMessagesAsReadEvent.getConversationId().equals(conversationId)) {
         if (!markMultipleMessagesAsReadEvent.getUserId()
-            .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+            .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
           if (markMultipleMessagesAsReadEvent.getLastReadAt() > sentAt) {
             if (deliveryPendingView != null) {

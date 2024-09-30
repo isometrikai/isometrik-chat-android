@@ -29,7 +29,7 @@ import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmActivityShareLocationBinding;
 import java.util.Arrays;
@@ -162,7 +162,7 @@ public class ShareLocationActivity extends AppCompatActivity implements OnMapRea
     if (!Places.isInitialized()) {
 
       Places.initialize(getApplicationContext(),
-          IsometrikUiSdk.getInstance().getIsometrik().getConfiguration().getGooglePlacesApiKey());
+          IsometrikChatSdk.getInstance().getIsometrik().getConfiguration().getGooglePlacesApiKey());
     }
 
     // Set the fields to specify which types of place data to return.

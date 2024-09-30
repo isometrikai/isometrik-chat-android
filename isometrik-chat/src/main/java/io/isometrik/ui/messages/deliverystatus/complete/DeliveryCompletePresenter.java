@@ -16,7 +16,7 @@ import io.isometrik.chat.events.message.delivery.UpdatedLastReadInConversationEv
 import io.isometrik.chat.events.message.user.block.BlockUserInConversationEvent;
 import io.isometrik.chat.events.message.user.block.UnblockUserInConversationEvent;
 import io.isometrik.chat.response.user.utils.DeliveredToOrReadByUser;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.ui.messages.deliverystatus.UsersModel;
 import io.isometrik.chat.utils.Constants;
 
@@ -30,8 +30,8 @@ import org.jetbrains.annotations.NotNull;
 public class DeliveryCompletePresenter implements DeliveryCompleteContract.Presenter {
 
   private DeliveryCompleteContract.View deliveryCompleteView;
-  private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
-  private final String userToken = IsometrikUiSdk.getInstance().getUserSession().getUserToken();
+  private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
+  private final String userToken = IsometrikChatSdk.getInstance().getUserSession().getUserToken();
 
   private String conversationId, messageId;
 
@@ -82,7 +82,7 @@ public class DeliveryCompletePresenter implements DeliveryCompleteContract.Prese
             ArrayList<UsersModel> usersModels = new ArrayList<>();
             ArrayList<DeliveredToOrReadByUser> users = var1.getDeliveredToUsers();
             int size = users.size();
-            String userId = IsometrikUiSdk.getInstance().getUserSession().getUserId();
+            String userId = IsometrikChatSdk.getInstance().getUserSession().getUserId();
             for (int i = 0; i < size; i++) {
               if (users.get(i).getUserId().equals(userId)) {
                 deliveryCount++;
@@ -142,7 +142,7 @@ public class DeliveryCompletePresenter implements DeliveryCompleteContract.Prese
             ArrayList<UsersModel> usersModels = new ArrayList<>();
             ArrayList<DeliveredToOrReadByUser> users = var1.getReadByUsers();
             int size = users.size();
-            String userId = IsometrikUiSdk.getInstance().getUserSession().getUserId();
+            String userId = IsometrikChatSdk.getInstance().getUserSession().getUserId();
             for (int i = 0; i < size; i++) {
               if (users.get(i).getUserId().equals(userId)) {
                 readCount++;
@@ -242,7 +242,7 @@ public class DeliveryCompletePresenter implements DeliveryCompleteContract.Prese
         @NotNull MarkMessageAsDeliveredEvent markMessageAsDeliveredEvent) {
       if (markMessageAsDeliveredEvent.getConversationId().equals(conversationId)) {
         if (!markMessageAsDeliveredEvent.getUserId()
-            .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+            .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
           if (markMessageAsDeliveredEvent.getMessageId().equals(messageId)) {
             if (deliveryCompleteView != null) {
@@ -259,7 +259,7 @@ public class DeliveryCompletePresenter implements DeliveryCompleteContract.Prese
         @NotNull MarkMessageAsReadEvent markMessageAsReadEvent) {
       if (markMessageAsReadEvent.getConversationId().equals(conversationId)) {
         if (!markMessageAsReadEvent.getUserId()
-            .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+            .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
           if (markMessageAsReadEvent.getMessageId().equals(messageId)) {
             if (deliveryCompleteView != null) {
@@ -278,7 +278,7 @@ public class DeliveryCompletePresenter implements DeliveryCompleteContract.Prese
       if (markMultipleMessagesAsReadEvent.getConversationId().equals(conversationId)) {
 
         if (!markMultipleMessagesAsReadEvent.getUserId()
-            .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+            .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
           if (markMultipleMessagesAsReadEvent.getLastReadAt() > sentAt) {
 

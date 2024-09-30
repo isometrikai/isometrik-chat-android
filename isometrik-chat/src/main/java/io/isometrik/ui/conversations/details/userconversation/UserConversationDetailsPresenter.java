@@ -15,7 +15,7 @@ import io.isometrik.chat.events.user.block.UnblockUserEvent;
 import io.isometrik.chat.response.conversation.utils.ConversationDetailsUtil;
 import io.isometrik.chat.response.conversation.utils.ConversationMember;
 import io.isometrik.chat.response.message.utils.fetchmessages.Message;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.ui.conversations.details.participants.MembersWatchersModel;
 import io.isometrik.ui.conversations.gallery.GalleryMediaItemsSettingsUtil;
 import io.isometrik.ui.conversations.gallery.GalleryModel;
@@ -47,8 +47,8 @@ public class UserConversationDetailsPresenter implements UserConversationDetails
   }
 
   private final UserConversationDetailsContract.View userConversationDetailsView;
-  private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
-  private final String userToken = IsometrikUiSdk.getInstance().getUserSession().getUserToken();
+  private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
+  private final String userToken = IsometrikChatSdk.getInstance().getUserSession().getUserToken();
   private final GalleryMediaItemsSettingsUtil galleryMediaItemsSettingsUtil;
   private String opponentId;
 
@@ -215,7 +215,7 @@ public class UserConversationDetailsPresenter implements UserConversationDetails
     @Override
     public void userBlocked(@NotNull Isometrik isometrik, @NotNull BlockUserEvent blockUserEvent) {
 
-      if (blockUserEvent.getInitiatorId().equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+      if (blockUserEvent.getInitiatorId().equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
         if (blockUserEvent.getOpponentId().equals(opponentId)) {
           userConversationDetailsView.onUserBlocked();

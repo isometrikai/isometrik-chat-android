@@ -5,7 +5,7 @@ import io.isometrik.chat.builder.upload.CancelUserImageUploadQuery;
 import io.isometrik.chat.builder.upload.UploadUserImageQuery;
 import io.isometrik.chat.builder.user.FetchUpdateUserPresignedUrlQuery;
 import io.isometrik.chat.builder.user.UpdateUserQuery;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.chat.utils.UserSession;
 import io.isometrik.chat.utils.AttachmentMetadata;
@@ -35,7 +35,7 @@ public class EditUserPresenter implements EditUserContract.Presenter {
   private final EditUserContract.View editUserView;
   private boolean updatingUser;
   private String uploadRequestId;
-  private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
+  private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
 
   /**
    * {@link EditUserContract.Presenter#requestUserDetailsUpdate(String, String, String,
@@ -77,7 +77,7 @@ public class EditUserPresenter implements EditUserContract.Presenter {
       isometrik.getRemoteUseCases().getUserUseCases().updateUser(builder.build(), (var1, var2) -> {
         updatingUser = false;
 
-        UserSession userSession = IsometrikUiSdk.getInstance().getUserSession();
+        UserSession userSession = IsometrikChatSdk.getInstance().getUserSession();
 
         if (var1 != null) {
           if (userNameUpdated) {
@@ -132,15 +132,15 @@ public class EditUserPresenter implements EditUserContract.Presenter {
 
     if (userName.isEmpty()) {
       errorMessage =
-          IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_invalid_username);
+          IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_invalid_username);
     } else if (userIdentifier.isEmpty()) {
       errorMessage =
-          IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_invalid_user_identifier);
+          IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_invalid_user_identifier);
     } else {
       if (profilePicUpdated) {
         if (file == null || !file.exists()) {
           errorMessage =
-              IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_invalid_user_image);
+              IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_invalid_user_image);
         }
       }
     }
@@ -164,7 +164,7 @@ public class EditUserPresenter implements EditUserContract.Presenter {
     uploadRequestId = requestId;
     FetchUpdateUserPresignedUrlQuery.Builder builder =
         new FetchUpdateUserPresignedUrlQuery.Builder().setUserToken(
-            IsometrikUiSdk.getInstance().getUserSession().getUserToken())
+            IsometrikChatSdk.getInstance().getUserSession().getUserToken())
             .setMediaExtension(new AttachmentMetadata(mediaPath).getExtension());
     isometrik.getRemoteUseCases()
         .getUserUseCases()

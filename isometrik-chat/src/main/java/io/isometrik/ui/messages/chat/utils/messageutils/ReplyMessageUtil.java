@@ -1,6 +1,6 @@
 package io.isometrik.ui.messages.chat.utils.messageutils;
 
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.messages.chat.MessagesModel;
 import io.isometrik.chat.utils.enums.CustomMessageTypes;
@@ -195,7 +195,7 @@ public class ReplyMessageUtil {
           replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Image.getValue());
 
           replyMessageDetails.put("parentMessageBody",
-              IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_photo));
+              IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_photo));
           replyMessageDetails.put("parentMessageAttachmentUrl", messagesModel.getPhotoThumbnailUrl());
           replyMessageDetails.put("parentMessageInitiator", messagesModel.isSentMessage());
           replyMessageDetails.put("parentMessageUserId", "");
@@ -210,7 +210,7 @@ public class ReplyMessageUtil {
           replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Video.getValue());
 
           replyMessageDetails.put("parentMessageBody",
-              IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_video));
+              IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_video));
           replyMessageDetails.put("parentMessageAttachmentUrl",messagesModel.getVideoThumbnailUrl());
           replyMessageDetails.put("parentMessageInitiator", messagesModel.isSentMessage());
           replyMessageDetails.put("parentMessageUserId", "");
@@ -225,7 +225,7 @@ public class ReplyMessageUtil {
           replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Audio.getValue());
 
           replyMessageDetails.put("parentMessageBody",
-              IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_audio_recording));
+              IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_audio_recording));
           replyMessageDetails.put("parentMessageAttachmentUrl", null);
           replyMessageDetails.put("parentMessageInitiator", messagesModel.isSentMessage());
           replyMessageDetails.put("parentMessageUserId", "");
@@ -240,7 +240,7 @@ public class ReplyMessageUtil {
           replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.File.getValue());
 
           replyMessageDetails.put("parentMessageBody",
-              IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_file));
+              IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_file));
           replyMessageDetails.put("parentMessageAttachmentUrl", null);
           replyMessageDetails.put("parentMessageInitiator", messagesModel.isSentMessage());
           replyMessageDetails.put("parentMessageUserId", "");
@@ -255,7 +255,7 @@ public class ReplyMessageUtil {
           replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Sticker.getValue());
 
           replyMessageDetails.put("parentMessageBody",
-              IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_sticker));
+              IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_sticker));
           replyMessageDetails.put("parentMessageAttachmentUrl", null);
           replyMessageDetails.put("parentMessageInitiator", messagesModel.isSentMessage());
           replyMessageDetails.put("parentMessageUserId", "");
@@ -270,7 +270,7 @@ public class ReplyMessageUtil {
           replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Gif.getValue());
 
           replyMessageDetails.put("parentMessageBody",
-              IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_gif));
+              IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_gif));
           replyMessageDetails.put("parentMessageAttachmentUrl", null);
           replyMessageDetails.put("parentMessageInitiator", messagesModel.isSentMessage());
           replyMessageDetails.put("parentMessageUserId", "");
@@ -285,7 +285,7 @@ public class ReplyMessageUtil {
           replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Whiteboard.getValue());
 
           replyMessageDetails.put("parentMessageBody",
-              IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_whiteboard));
+              IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_whiteboard));
           replyMessageDetails.put("parentMessageAttachmentUrl", messagesModel.getWhiteboardThumbnailUrl());
           replyMessageDetails.put("parentMessageInitiator", messagesModel.isSentMessage());
           replyMessageDetails.put("parentMessageUserId", "");
@@ -300,7 +300,7 @@ public class ReplyMessageUtil {
           replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Location.getValue());
 
           replyMessageDetails.put("parentMessageBody",
-              IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_location));
+              IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_location));
           replyMessageDetails.put("parentMessageAttachmentUrl", null);
           replyMessageDetails.put("parentMessageInitiator", messagesModel.isSentMessage());
           replyMessageDetails.put("parentMessageUserId", "");
@@ -315,7 +315,7 @@ public class ReplyMessageUtil {
           replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Contact.getValue());
 
           replyMessageDetails.put("parentMessageBody",
-              IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_contact));
+              IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_contact));
           replyMessageDetails.put("parentMessageAttachmentUrl", null);
           replyMessageDetails.put("parentMessageInitiator", messagesModel.isSentMessage());
           replyMessageDetails.put("parentMessageUserId", "");

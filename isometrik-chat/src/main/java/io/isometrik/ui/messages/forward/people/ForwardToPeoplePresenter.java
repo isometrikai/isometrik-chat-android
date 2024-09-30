@@ -3,7 +3,7 @@ package io.isometrik.ui.messages.forward.people;
 import io.isometrik.chat.Isometrik;
 import io.isometrik.chat.builder.user.block.FetchNonBlockedUsersQuery;
 import io.isometrik.chat.response.user.utils.NonBlockedUser;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.utils.Constants;
 import java.util.ArrayList;
 
@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class ForwardToPeoplePresenter implements ForwardToPeopleContract.Presenter {
 
   private ForwardToPeopleContract.View forwardToPeopleView;
-  private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
-  private final String userToken = IsometrikUiSdk.getInstance().getUserSession().getUserToken();
+  private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
+  private final String userToken = IsometrikChatSdk.getInstance().getUserSession().getUserToken();
   private int offset;
   private boolean isLastPage;
   private boolean isLoading;

@@ -20,7 +20,7 @@ import io.isometrik.chat.events.message.user.block.UnblockUserInConversationEven
 import io.isometrik.chat.response.message.utils.fetchmessages.Config;
 import io.isometrik.chat.response.message.utils.fetchmessages.Details;
 import io.isometrik.chat.response.message.utils.schemas.Attachment;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.messages.chat.MessagesModel;
 import io.isometrik.ui.messages.chat.utils.enums.MessageTypesForUI;
@@ -47,7 +47,7 @@ public class RealtimeMessageUtil {
   public static MessagesModel parseClearConversationEvent(
       ClearConversationEvent clearConversationEvent) {
     conversationActionMessage =
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_cleared_conversation);
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_cleared_conversation);
 
     messageModel =
         new MessagesModel(conversationActionMessage, null, clearConversationEvent.getSentAt(),
@@ -64,7 +64,7 @@ public class RealtimeMessageUtil {
    */
   public static MessagesModel parseUpdateConversationImageEvent(
       UpdateConversationImageEvent updateConversationImageEvent) {
-    conversationActionMessage = IsometrikUiSdk.getInstance()
+    conversationActionMessage = IsometrikChatSdk.getInstance()
         .getContext()
         .getString(R.string.ism_updated_conversation_image,
             updateConversationImageEvent.getUserName());
@@ -88,22 +88,22 @@ public class RealtimeMessageUtil {
 
     String settingsUpdated = "";
     if (config.getTypingEvents() != null) {
-      settingsUpdated = settingsUpdated + ", " + IsometrikUiSdk.getInstance()
+      settingsUpdated = settingsUpdated + ", " + IsometrikChatSdk.getInstance()
           .getContext()
           .getString(R.string.ism_settings_typing);
     }
     if (config.getReadEvents() != null) {
-      settingsUpdated = settingsUpdated + ", " + IsometrikUiSdk.getInstance()
+      settingsUpdated = settingsUpdated + ", " + IsometrikChatSdk.getInstance()
           .getContext()
           .getString(R.string.ism_settings_read_delivery_events);
     }
     if (config.getPushNotifications() != null) {
-      settingsUpdated = settingsUpdated + ", " + IsometrikUiSdk.getInstance()
+      settingsUpdated = settingsUpdated + ", " + IsometrikChatSdk.getInstance()
           .getContext()
           .getString(R.string.ism_settings_notifications);
     }
 
-    conversationActionMessage = IsometrikUiSdk.getInstance()
+    conversationActionMessage = IsometrikChatSdk.getInstance()
         .getContext()
         .getString(R.string.ism_updated_settings, updateConversationSettingsEvent.getUserName(),
             settingsUpdated.substring(2));
@@ -128,22 +128,22 @@ public class RealtimeMessageUtil {
 
     String detailsUpdated = "";
     if (details.getCustomType() != null) {
-      detailsUpdated = detailsUpdated + ", " + IsometrikUiSdk.getInstance()
+      detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
           .getContext()
           .getString(R.string.ism_details_custom_type);
     }
     if (details.getMetadata() != null && details.getMetadata().length() > 0) {
-      detailsUpdated = detailsUpdated + ", " + IsometrikUiSdk.getInstance()
+      detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
           .getContext()
           .getString(R.string.ism_details_metadata);
     }
     if (details.getSearchableTags() != null) {
-      detailsUpdated = detailsUpdated + ", " + IsometrikUiSdk.getInstance()
+      detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
           .getContext()
           .getString(R.string.ism_details_searchable_tags);
     }
 
-    conversationActionMessage = IsometrikUiSdk.getInstance()
+    conversationActionMessage = IsometrikChatSdk.getInstance()
         .getContext()
         .getString(R.string.ism_updated_conversation_details,
             updateConversationDetailsEvent.getUserName(), detailsUpdated.substring(2));
@@ -168,27 +168,27 @@ public class RealtimeMessageUtil {
 
     String detailsUpdated = "";
     if (details.getCustomType() != null) {
-      detailsUpdated = detailsUpdated + ", " + IsometrikUiSdk.getInstance()
+      detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
           .getContext()
           .getString(R.string.ism_details_custom_type);
     }
     if (details.getMetadata() != null && details.getMetadata().length() > 0) {
-      detailsUpdated = detailsUpdated + ", " + IsometrikUiSdk.getInstance()
+      detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
           .getContext()
           .getString(R.string.ism_details_metadata);
     }
     if (details.getSearchableTags() != null) {
-      detailsUpdated = detailsUpdated + ", " + IsometrikUiSdk.getInstance()
+      detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
           .getContext()
           .getString(R.string.ism_details_searchable_tags);
     }
     if (details.getBody() != null) {
-      detailsUpdated = detailsUpdated + ", " + IsometrikUiSdk.getInstance()
+      detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
           .getContext()
           .getString(R.string.ism_details_body);
     }
 
-    conversationActionMessage = IsometrikUiSdk.getInstance()
+    conversationActionMessage = IsometrikChatSdk.getInstance()
         .getContext()
         .getString(R.string.ism_updated_message_details, updateMessageDetailsEvent.getUserName(),
             detailsUpdated.substring(2));
@@ -207,7 +207,7 @@ public class RealtimeMessageUtil {
    */
   public static MessagesModel parseUpdateConversationTitleEvent(
       UpdateConversationTitleEvent updateConversationTitleEvent) {
-    conversationActionMessage = IsometrikUiSdk.getInstance()
+    conversationActionMessage = IsometrikChatSdk.getInstance()
         .getContext()
         .getString(R.string.ism_updated_conversation_title,
             updateConversationTitleEvent.getUserName(),
@@ -226,7 +226,7 @@ public class RealtimeMessageUtil {
    * @return the messages model
    */
   public static MessagesModel parseAddAdminEvent(AddAdminEvent addAdminEvent) {
-    conversationActionMessage = IsometrikUiSdk.getInstance()
+    conversationActionMessage = IsometrikChatSdk.getInstance()
         .getContext()
         .getString(R.string.ism_made_admin, addAdminEvent.getMemberName(),
             addAdminEvent.getInitiatorName());
@@ -250,7 +250,7 @@ int size = members.size();
     for (int j = 0; j < size; j++) {
       membersAdded.append(", ").append(members.get(j).getMemberName());
     }
-    conversationActionMessage = IsometrikUiSdk.getInstance()
+    conversationActionMessage = IsometrikChatSdk.getInstance()
         .getContext()
         .getString(R.string.ism_members_added, addMembersEvent.getUserName(),
             membersAdded.substring(2));
@@ -269,7 +269,7 @@ int size = members.size();
    */
   public static MessagesModel parseJoinConversationEvent(
       JoinConversationEvent joinConversationEvent) {
-    conversationActionMessage = IsometrikUiSdk.getInstance()
+    conversationActionMessage = IsometrikChatSdk.getInstance()
         .getContext()
         .getString(R.string.ism_member_joined_public, joinConversationEvent.getUserName());
     messageModel =
@@ -287,7 +287,7 @@ int size = members.size();
    */
   public static MessagesModel parseLeaveConversationEvent(
       LeaveConversationEvent leaveConversationEvent) {
-    conversationActionMessage = IsometrikUiSdk.getInstance()
+    conversationActionMessage = IsometrikChatSdk.getInstance()
         .getContext()
         .getString(R.string.ism_member_left, leaveConversationEvent.getUserName());
     messageModel =
@@ -304,7 +304,7 @@ int size = members.size();
    * @return the messages model
    */
   public static MessagesModel parseRemoveAdminEvent(RemoveAdminEvent removeAdminEvent) {
-    conversationActionMessage = IsometrikUiSdk.getInstance()
+    conversationActionMessage = IsometrikChatSdk.getInstance()
         .getContext()
         .getString(R.string.ism_removed_admin, removeAdminEvent.getMemberName(),
             removeAdminEvent.getInitiatorName());
@@ -329,7 +329,7 @@ int size= members.size();
       membersRemoved.append(", ").append(members.get(j).getMemberName());
     }
 
-    conversationActionMessage = IsometrikUiSdk.getInstance()
+    conversationActionMessage = IsometrikChatSdk.getInstance()
         .getContext()
         .getString(R.string.ism_members_removed, removeMembersEvent.getUserName(),
             membersRemoved.substring(2));
@@ -348,7 +348,7 @@ int size= members.size();
    */
   public static MessagesModel parseUserBlockEvent(
       BlockUserInConversationEvent blockUserInConversationEvent) {
-    conversationActionMessage = IsometrikUiSdk.getInstance()
+    conversationActionMessage = IsometrikChatSdk.getInstance()
         .getContext()
         .getString(R.string.ism_blocked_user, blockUserInConversationEvent.getOpponentName(),
             blockUserInConversationEvent.getInitiatorName());
@@ -367,7 +367,7 @@ int size= members.size();
    */
   public static MessagesModel parseUserUnblockEvent(
       UnblockUserInConversationEvent unblockUserInConversationEvent) {
-    conversationActionMessage = IsometrikUiSdk.getInstance()
+    conversationActionMessage = IsometrikChatSdk.getInstance()
         .getContext()
         .getString(R.string.ism_unblocked_user, unblockUserInConversationEvent.getOpponentName(),
             unblockUserInConversationEvent.getInitiatorName());
@@ -385,7 +385,7 @@ int size= members.size();
    * @return the messages model
    */
   public static MessagesModel parseJoinAsObserverEvent(ObserverJoinEvent observerJoinEvent) {
-    conversationActionMessage = IsometrikUiSdk.getInstance()
+    conversationActionMessage = IsometrikChatSdk.getInstance()
         .getContext()
         .getString(R.string.ism_member_observer_joined, observerJoinEvent.getUserName());
     messageModel =
@@ -402,7 +402,7 @@ int size= members.size();
    * @return the messages model
    */
   public static MessagesModel parseLeaveAsObserverEvent(ObserverLeaveEvent observerLeaveEvent) {
-    conversationActionMessage = IsometrikUiSdk.getInstance()
+    conversationActionMessage = IsometrikChatSdk.getInstance()
         .getContext()
         .getString(R.string.ism_member_observer_left, observerLeaveEvent.getUserName());
     messageModel =
@@ -448,7 +448,7 @@ int size= members.size();
     messageModel = null;
     if (sendMessageEvent.getCustomType() != null) {
       boolean selfMessage = sendMessageEvent.getSenderId()
-          .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId());
+          .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId());
 
       switch (sendMessageEvent.getCustomType()) {
 
@@ -692,48 +692,48 @@ int size= members.size();
       }
       case "AttachmentMessage:Image": {
         messagePlaceHolderImage = R.drawable.ism_ic_picture;
-        messageText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_photo);
+        messageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_photo);
         break;
       }
       case "AttachmentMessage:Video": {
         messagePlaceHolderImage = R.drawable.ism_ic_video;
-        messageText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_video);
+        messageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_video);
         break;
       }
       case "AttachmentMessage:Audio": {
         messagePlaceHolderImage = R.drawable.ism_ic_mic;
         messageText =
-            IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_audio_recording);
+            IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_audio_recording);
         break;
       }
       case "AttachmentMessage:File": {
         messagePlaceHolderImage = R.drawable.ism_ic_file;
-        messageText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_file);
+        messageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_file);
         break;
       }
       case "AttachmentMessage:Sticker": {
         messagePlaceHolderImage = R.drawable.ism_ic_sticker;
-        messageText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_sticker);
+        messageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_sticker);
         break;
       }
       case "AttachmentMessage:Gif": {
         messagePlaceHolderImage = R.drawable.ism_ic_gif;
-        messageText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_gif);
+        messageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_gif);
         break;
       }
       case "AttachmentMessage:Whiteboard": {
         messagePlaceHolderImage = R.drawable.ism_ic_whiteboard;
-        messageText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_whiteboard);
+        messageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_whiteboard);
         break;
       }
       case "AttachmentMessage:Location": {
         messagePlaceHolderImage = R.drawable.ism_ic_location;
-        messageText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_location);
+        messageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_location);
         break;
       }
       case "AttachmentMessage:Contact": {
         messagePlaceHolderImage = R.drawable.ism_ic_contact;
-        messageText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_contact);
+        messageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_contact);
         break;
       }
       case "AttachmentMessage:Reply":{

@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmActivityUserDetailsBinding;
 import io.isometrik.ui.users.edit.EditUserActivity;
@@ -53,7 +53,7 @@ public class UserDetailsActivity extends AppCompatActivity implements UserDetail
     userDetailsPresenter = new UserDetailsPresenter(this);
     alertProgress = new AlertProgress();
 
-    userSession = IsometrikUiSdk.getInstance().getUserSession();
+    userSession = IsometrikChatSdk.getInstance().getUserSession();
 
     updateUserDetails(false, userSession.getUserName(), userSession.getUserIdentifier(),
         userSession.getUserProfilePic(), userSession.getUserMetadata(),

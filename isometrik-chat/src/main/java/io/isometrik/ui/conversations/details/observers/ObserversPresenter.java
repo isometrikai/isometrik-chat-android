@@ -3,7 +3,7 @@ package io.isometrik.ui.conversations.details.observers;
 import io.isometrik.chat.Isometrik;
 import io.isometrik.chat.builder.membershipcontrol.FetchObserversQuery;
 import io.isometrik.chat.response.membershipcontrol.FetchObserversResult;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.utils.Constants;
 import java.util.ArrayList;
 
@@ -13,8 +13,8 @@ import java.util.ArrayList;
 public class ObserversPresenter implements ObserversContract.Presenter {
 
   private final ObserversContract.View observersView;
-  private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
-  private final String userToken = IsometrikUiSdk.getInstance().getUserSession().getUserToken();
+  private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
+  private final String userToken = IsometrikChatSdk.getInstance().getUserSession().getUserToken();
 
   private int offset;
   private boolean isLastPage;

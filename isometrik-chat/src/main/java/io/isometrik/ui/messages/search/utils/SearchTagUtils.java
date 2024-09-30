@@ -2,7 +2,7 @@ package io.isometrik.ui.messages.search.utils;
 
 import android.content.Context;
 import io.isometrik.chat.response.message.utils.schemas.Attachment;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.messages.chat.MessagesModel;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class SearchTagUtils {
    */
   public static List<String> generateSearchTags(MessagesModel messagesModel, String mediaName) {
     List<String> searchableTags = new ArrayList<>();
-    Context context = IsometrikUiSdk.getInstance().getContext();
+    Context context = IsometrikChatSdk.getInstance().getContext();
     switch (messagesModel.getCustomMessageType()) {
       case TextSent: {
         searchableTags.add(context.getString(R.string.ism_search_tag_text));
@@ -101,7 +101,7 @@ public class SearchTagUtils {
   public static List<String> generateSearchTags(Attachment attachment, boolean isWhiteboard) {
     List<String> searchableTags = new ArrayList<>();
 
-    Context context = IsometrikUiSdk.getInstance().getContext();
+    Context context = IsometrikChatSdk.getInstance().getContext();
     switch (attachment.getAttachmentType()) {
 
       case Image: {

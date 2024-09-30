@@ -3,7 +3,7 @@ package io.isometrik.ui.messages.chat;
 import android.text.SpannableString;
 
 import io.isometrik.chat.R;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.ui.messages.chat.utils.enums.MessageTypesForUI;
 import io.isometrik.ui.messages.chat.utils.enums.RemoteMessageTypes;
 import io.isometrik.ui.messages.chat.utils.messageutils.OriginalReplyMessageUtil;
@@ -384,7 +384,7 @@ public class MessagesModel implements Serializable {
             this.gifMainUrl = gifOrStickerMainUrl;
         }
         if (senderName == null || senderName.isEmpty()) {
-            senderName = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
+            senderName = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
             senderDeleted = true;
         }
         this.senderName = senderName;
@@ -487,7 +487,7 @@ public class MessagesModel implements Serializable {
             this.fileName = audioOrFileName;
         }
         if (senderName == null || senderName.isEmpty()) {
-            senderName = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
+            senderName = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
             senderDeleted = true;
         }
         this.senderName = senderName;
@@ -1199,7 +1199,7 @@ public class MessagesModel implements Serializable {
         this.longitude = longitude;
         this.locationDescription = locationDescription;
         if (senderName == null || senderName.isEmpty()) {
-            senderName = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
+            senderName = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
             senderDeleted = true;
         }
         this.senderName = senderName;
@@ -1280,7 +1280,7 @@ public class MessagesModel implements Serializable {
         this.contactIdentifier = contactIdentifier;
         this.contactImageUrl = contactImageUrl;
         if (senderName == null || senderName.isEmpty()) {
-            senderName = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
+            senderName = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
             senderDeleted = true;
         }
         this.senderName = senderName;
@@ -1400,7 +1400,7 @@ public class MessagesModel implements Serializable {
             }
         }
         if (senderName == null || senderName.isEmpty()) {
-            senderName = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
+            senderName = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
             senderDeleted = true;
         }
         this.senderName = senderName;
@@ -1482,7 +1482,7 @@ public class MessagesModel implements Serializable {
         }
         this.textMessage = textMessage;
         if (senderName == null || senderName.isEmpty()) {
-            senderName = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
+            senderName = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
             senderDeleted = true;
         }
         this.senderName = senderName;

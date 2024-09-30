@@ -4,7 +4,7 @@ import android.content.Context;
 
 import org.json.JSONException;
 
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.messages.chat.MessagesModel;
 
@@ -22,7 +22,7 @@ public class NotificationBodyUtils {
      */
     public static String getNotificationBody(MessagesModel messagesModel, String mediaName) {
         String notificationBody = "";
-        Context context = IsometrikUiSdk.getInstance().getContext();
+        Context context = IsometrikChatSdk.getInstance().getContext();
         switch (messagesModel.getCustomMessageType()) {
             case TextSent: {
                 notificationBody = messagesModel.getTextMessage().toString();

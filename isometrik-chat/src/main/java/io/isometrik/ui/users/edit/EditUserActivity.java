@@ -25,7 +25,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
 
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.camera.CameraActivity;
 import io.isometrik.chat.databinding.IsmActivityEditUserBinding;
@@ -78,7 +78,7 @@ public class EditUserActivity extends AppCompatActivity implements EditUserContr
         editUserPresenter = new EditUserPresenter(this);
         alertProgress = new AlertProgress();
 
-        userSession = IsometrikUiSdk.getInstance().getUserSession();
+        userSession = IsometrikChatSdk.getInstance().getUserSession();
         addUserDetails();
 
         ismActivityEditUserBinding.btSave.setOnClickListener(v -> {
@@ -309,7 +309,7 @@ public class EditUserActivity extends AppCompatActivity implements EditUserContr
 
         if (userMetadataUpdated) {
             intent.putExtra("userMetadata",
-                    IsometrikUiSdk.getInstance().getUserSession().getUserMetadata().toString());
+                    IsometrikChatSdk.getInstance().getUserSession().getUserMetadata().toString());
         } else {
             JSONObject metadata = new JSONObject();
             try {

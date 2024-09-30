@@ -9,7 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 import androidx.core.content.ContextCompat;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 
 /**
@@ -52,7 +52,7 @@ public class PlaceholderUtils {
     String initials = "";
     if (firstName != null) {
       if (firstName.equals(
-          IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_deleted_user))) {
+          IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_deleted_user))) {
         firstName = firstName.substring(1);
       }
       if (firstName.length() >= 2) {
@@ -92,7 +92,7 @@ public class PlaceholderUtils {
     String initials = "";
     if (firstName != null) {
       if (firstName.equals(
-          IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_deleted_user))) {
+          IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_deleted_user))) {
         firstName = firstName.substring(1);
       }
       if (firstName.length() >= 2) {

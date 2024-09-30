@@ -3,7 +3,7 @@ package io.isometrik.samples.chat;
 import android.app.Application;
 
 
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 
 public class MyApplication extends Application {
 
@@ -11,10 +11,10 @@ public class MyApplication extends Application {
   public void onCreate() {
     super.onCreate();
 
-    IsometrikUiSdk.getInstance().sdkInitialize(this);
+    IsometrikChatSdk.getInstance().sdkInitialize(this);
     String userName = "2" + getString(R.string.accountId) + getString(R.string.projectId);
     String password = getString(R.string.license_key) + getString(R.string.keysetId);
-    IsometrikUiSdk.getInstance()
+    IsometrikChatSdk.getInstance()
         .createConfiguration(getString(R.string.app_secret), getString(R.string.user_secret),
             getString(R.string.accountId),getString(R.string.projectId),getString(R.string.keysetId),
                 userName,password ,getString(R.string.license_key),
@@ -24,7 +24,7 @@ public class MyApplication extends Application {
 
   @Override
   public void onTerminate() {
-    IsometrikUiSdk.getInstance().onTerminate();
+    IsometrikChatSdk.getInstance().onTerminate();
     super.onTerminate();
   }
 }

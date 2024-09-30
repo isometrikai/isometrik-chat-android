@@ -1,7 +1,7 @@
 package io.isometrik.ui.conversations.details.participants;
 
 import io.isometrik.chat.response.conversation.utils.ConversationMember;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 
 /**
@@ -35,7 +35,7 @@ public class MembersWatchersModel {
 
     if (memberId == null) {
       isDeletedUser = true;
-      memberName = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
+      memberName = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
     } else {
       isDeletedUser = false;
     }

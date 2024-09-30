@@ -10,7 +10,7 @@ import android.provider.MediaStore;
 import java.io.File;
 import java.util.ArrayList;
 
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 
 /**
  * The helper class for gallery intents to return intents based on mimetype for photos/videos/files
@@ -58,7 +58,7 @@ public class GalleryIntentsUtil {
     // special intent for Samsung file manager
     Intent samsungIntent = new Intent("com.sec.android.app.myfiles.PICK_DATA");
 
-    if (IsometrikUiSdk.getInstance()
+    if (IsometrikChatSdk.getInstance()
         .getContext()
         .getPackageManager()
         .resolveActivity(samsungIntent, 0) == null) {

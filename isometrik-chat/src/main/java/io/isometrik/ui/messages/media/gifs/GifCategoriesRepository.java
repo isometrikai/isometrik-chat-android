@@ -1,6 +1,6 @@
 package io.isometrik.ui.messages.media.gifs;
 
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import java.util.ArrayList;
 
@@ -14,19 +14,19 @@ public class GifCategoriesRepository {
     ArrayList<GifsModel> gifsModels = new ArrayList<>();
     int i = 0;
     gifsModels.add(new GifsModel(ClassicGifsEnum.GIFS_URL_GIF1.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++),
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++),
         ClassicGifStillsEnum.GIF_STILL_URL_GIF1.getValue()));
     gifsModels.add(new GifsModel(ClassicGifsEnum.GIFS_URL_GIF2.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++),
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++),
         ClassicGifStillsEnum.GIF_STILL_URL_GIF2.getValue()));
     gifsModels.add(new GifsModel(ClassicGifsEnum.GIFS_URL_GIF3.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++),
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++),
         ClassicGifStillsEnum.GIF_STILL_URL_GIF3.getValue()));
     gifsModels.add(new GifsModel(ClassicGifsEnum.GIFS_URL_GIF4.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++),
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i++),
         ClassicGifStillsEnum.GIF_STILL_URL_GIF4.getValue()));
     gifsModels.add(new GifsModel(ClassicGifsEnum.GIFS_URL_GIF5.getValue(),
-        IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i),
+        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_classic_gif_name, i),
         ClassicGifStillsEnum.GIF_STILL_URL_GIF5.getValue()));
 
     return gifsModels;

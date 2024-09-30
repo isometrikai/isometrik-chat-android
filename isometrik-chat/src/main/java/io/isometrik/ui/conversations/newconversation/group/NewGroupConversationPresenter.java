@@ -7,7 +7,7 @@ import io.isometrik.chat.builder.upload.CancelConversationImageUploadQuery;
 import io.isometrik.chat.builder.upload.UploadConversationImageQuery;
 import io.isometrik.chat.builder.user.block.FetchNonBlockedUsersQuery;
 import io.isometrik.chat.response.user.utils.NonBlockedUser;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.chat.utils.Constants;
 import io.isometrik.chat.utils.AttachmentMetadata;
@@ -31,8 +31,8 @@ public class NewGroupConversationPresenter implements NewGroupConversationContra
   }
 
   private final NewGroupConversationContract.View newGroupConversationView;
-  private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
-  private final String userToken = IsometrikUiSdk.getInstance().getUserSession().getUserToken();
+  private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
+  private final String userToken = IsometrikChatSdk.getInstance().getUserSession().getUserToken();
 
   private int offset;
   private boolean isLastPage;
@@ -51,7 +51,7 @@ public class NewGroupConversationPresenter implements NewGroupConversationContra
     String errorMessage = null;
 
     if (conversationTitle.isEmpty()) {
-      errorMessage = IsometrikUiSdk.getInstance()
+      errorMessage = IsometrikChatSdk.getInstance()
           .getContext()
           .getString(R.string.ism_conversation_title_missing);
     }
@@ -62,7 +62,7 @@ public class NewGroupConversationPresenter implements NewGroupConversationContra
     //}
     else if (selectedUsers.size() < 1) {
       errorMessage =
-          IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_no_participant_added);
+          IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_no_participant_added);
     }
     newGroupConversationView.conversationDetailsValidationResult(errorMessage);
   }
@@ -208,7 +208,7 @@ public class NewGroupConversationPresenter implements NewGroupConversationContra
     uploadRequestId = requestId;
     FetchConversationPresignedUrlQuery.Builder builder =
         new FetchConversationPresignedUrlQuery.Builder().setUserToken(
-            IsometrikUiSdk.getInstance().getUserSession().getUserToken())
+            IsometrikChatSdk.getInstance().getUserSession().getUserToken())
             .setConversationTitle(conversationTitle)
             .setNewConversation(true)
             .setMediaExtension(new AttachmentMetadata(mediaPath).getExtension());

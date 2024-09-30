@@ -4,7 +4,7 @@ import io.isometrik.chat.Isometrik;
 import io.isometrik.chat.builder.conversation.FetchUnreadConversationsCountQuery;
 import io.isometrik.chat.builder.message.FetchUserMessagesQuery;
 import io.isometrik.chat.builder.user.FetchUserDetailsQuery;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.utils.Constants;
 import java.util.Collections;
 
@@ -16,8 +16,8 @@ public class ConversationsPresenter implements ConversationsContract.Presenter {
 
   private final ConversationsContract.View conversationsView;
 
-  private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
-  private final String userToken = IsometrikUiSdk.getInstance().getUserSession().getUserToken();
+  private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
+  private final String userToken = IsometrikChatSdk.getInstance().getUserSession().getUserToken();
 
   /**
    * Instantiates a new Conversations presenter.
@@ -56,16 +56,16 @@ public class ConversationsPresenter implements ConversationsContract.Presenter {
         .fetchUserDetails(new FetchUserDetailsQuery.Builder().setUserToken(userToken).build(),
             (var1, var2) -> {
               if (var1 != null) {
-                IsometrikUiSdk.getInstance()
+                IsometrikChatSdk.getInstance()
                     .getUserSession()
-                    .switchUser(IsometrikUiSdk.getInstance().getUserSession().getUserId(),
+                    .switchUser(IsometrikChatSdk.getInstance().getUserSession().getUserId(),
                         userToken, var1.getUserName(), var1.getUserIdentifier(),
                         var1.getUserProfileImageUrl(),
-                        IsometrikUiSdk.getInstance().getUserSession().getUserSelected(),
+                        IsometrikChatSdk.getInstance().getUserSession().getUserSelected(),
                         var1.getMetaData(), var1.isNotification(), -1);
               } else {
                 if (var2.getHttpResponseCode() == 404 && var2.getRemoteErrorCode() == 1) {
-                  IsometrikUiSdk.getInstance().getUserSession().clear();
+                  IsometrikChatSdk.getInstance().getUserSession().clear();
                   conversationsView.onUserDeleted();
                 }
               }
@@ -84,12 +84,12 @@ public class ConversationsPresenter implements ConversationsContract.Presenter {
                   .setDeliveredToMe(false)
                   .setSenderIdsExclusive(true)
                   .setSenderIds(Collections.singletonList(
-                      IsometrikUiSdk.getInstance().getUserSession().getUserId()))
+                      IsometrikChatSdk.getInstance().getUserSession().getUserId()))
                   .setConversationStatusMessage(false)
                   .setUserToken(userToken)
                   .setMarkMessageAsDelivered(true)
                   .setLastMessageTimestamp(
-                      IsometrikUiSdk.getInstance().getUserSession().getDeliveryStatusUpdatedUpto())
+                      IsometrikChatSdk.getInstance().getUserSession().getDeliveryStatusUpdatedUpto())
                   .build(), (var1, var2) -> {
                 if (var1 != null
                     && var1.getMessages().size() == Constants.USER_MESSAGES_PAGE_SIZE) {

@@ -3,7 +3,7 @@ package io.isometrik.ui.conversations.gallery;
 import io.isometrik.chat.Isometrik;
 import io.isometrik.chat.builder.message.FetchMessagesQuery;
 import io.isometrik.chat.response.message.utils.fetchmessages.Message;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.utils.Constants;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,8 +24,8 @@ public class GalleryMediaItemsPresenter implements GalleryMediaItemsContract.Pre
   }
 
   private final GalleryMediaItemsContract.View galleryMediaItemsView;
-  private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
-  private final String userToken = IsometrikUiSdk.getInstance().getUserSession().getUserToken();
+  private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
+  private final String userToken = IsometrikChatSdk.getInstance().getUserSession().getUserToken();
   private String conversationId;
   private int offset;
   private boolean isLastPage;

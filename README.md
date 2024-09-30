@@ -26,7 +26,7 @@ Open your build.gradle file (app-level) and add the following line in the depend
 
 ```groovy
 dependencies {
-    implementation 'com.github.isometrikai:isometrik-chat-android:1.1.4'
+    implementation 'com.github.isometrikai:isometrik-chat-android:1.1.5'
 }
 ```
 ### Step 3: Sync Your Project
@@ -43,7 +43,7 @@ Follow the steps below to integrate and configure the Isometrik UI SDK in your A
 Initialize the SDK in your project's `Application` class, specifically within the `onCreate()` method.
 
 ```java
-IsometrikUiSdk.getInstance().sdkInitialize(this);
+IsometrikChatSdk.getInstance().sdkInitialize(this);
 ```
 
 ## Step 2: SDK Configuration
@@ -62,7 +62,7 @@ Configure the SDK in the first method called in your app, typically within the `
 Provide these details using the parameters in the method below:
 
 ```java
-IsometrikUiSdk.getInstance()
+IsometrikChatSdk.getInstance()
         .createConfiguration(
             getString(R.string.app_secret),
             getString(R.string.user_secret),
@@ -77,11 +77,17 @@ IsometrikUiSdk.getInstance()
             getString(R.string.google_places_api_key),
             getString(R.string.giphy_api_key)
         );
+
+        IsometrikChatSdk.getInstance()
+                            .getUserSession()
+                            .switchUser(isoMetricUserId, isoMetricToken, userName, userIdentifier,
+                                    userProfilePic, false, new JSONObject(),true,0);
+
 ```
 To handle SDK termination, call the following method, usually in the onTerminate() method of the Application class:
 
 ```java
-IsometrikUiSdk.getInstance().onTerminate();
+IsometrikChatSdk.getInstance().onTerminate();
 ```
 
 ## Step 3: Create a Connection
@@ -94,7 +100,7 @@ Establish a connection on the base screen of your app (e.g., `MainActivity` or `
 Use the following method to create a connection:
 
 ```java
-IsometrikUiSdk.getInstance().getIsometrik().createConnection(userClientId, userIsometrikToken);
+IsometrikChatSdk.getInstance().getIsometrik().createConnection(userClientId, userIsometrikToken);
 ```
 
 ### Step 4: Start a Conversation
@@ -157,7 +163,7 @@ To open a new screen for creating a new conversation when clicking the "+" (plus
 
 ```kotlin
 
-  IsometrikUiSdk.getInstance().addClickListeners(object : ChatActionsClickListener{
+  IsometrikChatSdk.getInstance().addClickListeners(object : ChatActionsClickListener{
             override fun onNewChatIconClicked() {
                val i = Intent(this,NewChatActivity::class.java)
                 startActivity(i)

@@ -4,7 +4,7 @@ import io.isometrik.chat.Isometrik;
 import io.isometrik.chat.builder.reaction.FetchReactionsQuery;
 import io.isometrik.chat.builder.reaction.RemoveReactionQuery;
 import io.isometrik.chat.response.reaction.FetchReactionsResult;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.ui.messages.reaction.add.ReactionModel;
 import io.isometrik.ui.messages.reaction.util.ReactionUtil;
 import io.isometrik.chat.utils.Constants;
@@ -31,8 +31,8 @@ public class FetchReactionUsersPresenter implements FetchReactionUsersContract.P
   }
 
   private FetchReactionUsersContract.View fetchReactionUsersView;
-  private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
-  private final String userToken = IsometrikUiSdk.getInstance().getUserSession().getUserToken();
+  private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
+  private final String userToken = IsometrikChatSdk.getInstance().getUserSession().getUserToken();
   private final String conversationId, messageId, reactionType;
 
   private int offset;
@@ -75,7 +75,7 @@ public class FetchReactionUsersPresenter implements FetchReactionUsersContract.P
         ArrayList<ReactionUsersModel> reactionUsersModels = new ArrayList<>();
         ArrayList<FetchReactionsResult.UserReaction> userReactions = var1.getUserReactions();
         int size = userReactions.size();
-        String userId = IsometrikUiSdk.getInstance().getUserSession().getUserId();
+        String userId = IsometrikChatSdk.getInstance().getUserSession().getUserId();
         for (int i = 0; i < size; i++) {
           FetchReactionsResult.UserReaction userReaction = userReactions.get(i);
           reactionUsersModels.add(new ReactionUsersModel(userId.equals(userReaction.getUserId()),

@@ -51,7 +51,7 @@ import io.isometrik.chat.response.conversation.utils.Conversation;
 import io.isometrik.chat.response.error.IsometrikError;
 import io.isometrik.chat.response.message.utils.fetchmessages.Config;
 import io.isometrik.chat.response.message.utils.fetchmessages.Details;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.messages.reaction.util.ReactionPlaceHolderIconHelper;
 import io.isometrik.chat.utils.Constants;
@@ -71,9 +71,9 @@ import org.jetbrains.annotations.NotNull;
 public class ConversationsListPresenter implements ConversationsListContract.Presenter {
 
   private ConversationsListContract.View conversationsListView;
-  private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
-  private final String userToken = IsometrikUiSdk.getInstance().getUserSession().getUserToken();
-  private final String userId = IsometrikUiSdk.getInstance().getUserSession().getUserId();
+  private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
+  private final String userToken = IsometrikChatSdk.getInstance().getUserSession().getUserToken();
+  private final String userId = IsometrikChatSdk.getInstance().getUserSession().getUserId();
 
   private int offset;
   private boolean isLastPage;
@@ -135,7 +135,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
             @NotNull ClearConversationEvent clearConversationEvent) {
           if (conversationsListView != null) {
             conversationsListView.onConversationCleared(clearConversationEvent.getConversationId(),
-                IsometrikUiSdk.getInstance()
+                IsometrikChatSdk.getInstance()
                     .getContext()
                     .getString(R.string.ism_cleared_conversation),
                 TimeUtil.formatTimestampToOnlyDate(clearConversationEvent.getSentAt()));
@@ -161,7 +161,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
                 updateConversationImageEvent.getConversationImageUrl());
 
             conversationsListView.updateLastMessageInConversation(
-                updateConversationImageEvent.getConversationId(), IsometrikUiSdk.getInstance()
+                updateConversationImageEvent.getConversationId(), IsometrikChatSdk.getInstance()
                     .getContext()
                     .getString(R.string.ism_updated_conversation_image,
                         updateConversationImageEvent.getUserName()),
@@ -180,17 +180,17 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
 
             String settingsUpdated = "";
             if (config.getTypingEvents() != null) {
-              settingsUpdated = settingsUpdated + ", " + IsometrikUiSdk.getInstance()
+              settingsUpdated = settingsUpdated + ", " + IsometrikChatSdk.getInstance()
                   .getContext()
                   .getString(R.string.ism_settings_typing);
             }
             if (config.getReadEvents() != null) {
-              settingsUpdated = settingsUpdated + ", " + IsometrikUiSdk.getInstance()
+              settingsUpdated = settingsUpdated + ", " + IsometrikChatSdk.getInstance()
                   .getContext()
                   .getString(R.string.ism_settings_read_delivery_events);
             }
             if (config.getPushNotifications() != null) {
-              settingsUpdated = settingsUpdated + ", " + IsometrikUiSdk.getInstance()
+              settingsUpdated = settingsUpdated + ", " + IsometrikChatSdk.getInstance()
                   .getContext()
                   .getString(R.string.ism_settings_notifications);
             }
@@ -202,7 +202,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
             }
 
             conversationsListView.updateLastMessageInConversation(
-                updateConversationSettingsEvent.getConversationId(), IsometrikUiSdk.getInstance()
+                updateConversationSettingsEvent.getConversationId(), IsometrikChatSdk.getInstance()
                     .getContext()
                     .getString(R.string.ism_updated_settings,
                         updateConversationSettingsEvent.getUserName(),
@@ -222,23 +222,23 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
 
             String detailsUpdated = "";
             if (details.getCustomType() != null) {
-              detailsUpdated = detailsUpdated + ", " + IsometrikUiSdk.getInstance()
+              detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
                   .getContext()
                   .getString(R.string.ism_details_custom_type);
             }
             if (details.getMetadata() != null && details.getMetadata().length() > 0) {
-              detailsUpdated = detailsUpdated + ", " + IsometrikUiSdk.getInstance()
+              detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
                   .getContext()
                   .getString(R.string.ism_details_metadata);
             }
             if (details.getSearchableTags() != null) {
-              detailsUpdated = detailsUpdated + ", " + IsometrikUiSdk.getInstance()
+              detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
                   .getContext()
                   .getString(R.string.ism_details_searchable_tags);
             }
 
             conversationsListView.updateLastMessageInConversation(
-                updateConversationDetailsEvent.getConversationId(), IsometrikUiSdk.getInstance()
+                updateConversationDetailsEvent.getConversationId(), IsometrikChatSdk.getInstance()
                     .getContext()
                     .getString(R.string.ism_updated_conversation_details,
                         updateConversationDetailsEvent.getUserName(), detailsUpdated.substring(2)),
@@ -258,7 +258,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
                 updateConversationTitleEvent.getConversationTitle());
 
             conversationsListView.updateLastMessageInConversation(
-                updateConversationTitleEvent.getConversationId(), IsometrikUiSdk.getInstance()
+                updateConversationTitleEvent.getConversationId(), IsometrikChatSdk.getInstance()
                     .getContext()
                     .getString(R.string.ism_updated_conversation_title,
                         updateConversationTitleEvent.getUserName(),
@@ -469,9 +469,9 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
     public void userUpdated(@NotNull Isometrik isometrik,
         @NotNull UpdateUserEvent updateUserEvent) {
       if (updateUserEvent.getUserId()
-          .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+          .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
-        UserSession userSession = IsometrikUiSdk.getInstance().getUserSession();
+        UserSession userSession = IsometrikChatSdk.getInstance().getUserSession();
 
         if (updateUserEvent.getUserName() != null) {
           userSession.setUserName(updateUserEvent.getUserName());
@@ -516,7 +516,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
             @NotNull ObserverJoinEvent observerJoinEvent) {
           if (conversationsListView != null) {
             conversationsListView.updateLastMessageInConversation(
-                observerJoinEvent.getConversationId(), IsometrikUiSdk.getInstance()
+                observerJoinEvent.getConversationId(), IsometrikChatSdk.getInstance()
                     .getContext()
                     .getString(R.string.ism_member_observer_joined,
                         observerJoinEvent.getUserName()),
@@ -532,7 +532,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
             @NotNull ObserverLeaveEvent observerLeaveEvent) {
           if (conversationsListView != null) {
             conversationsListView.updateLastMessageInConversation(
-                observerLeaveEvent.getConversationId(), IsometrikUiSdk.getInstance()
+                observerLeaveEvent.getConversationId(), IsometrikChatSdk.getInstance()
                     .getContext()
                     .getString(R.string.ism_member_observer_left, observerLeaveEvent.getUserName()),
                 observerLeaveEvent.getUserProfileImageUrl(),
@@ -546,7 +546,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
         public void adminAdded(@NotNull Isometrik isometrik, @NotNull AddAdminEvent addAdminEvent) {
           if (conversationsListView != null) {
             conversationsListView.updateLastMessageInConversation(addAdminEvent.getConversationId(),
-                IsometrikUiSdk.getInstance()
+                IsometrikChatSdk.getInstance()
                     .getContext()
                     .getString(R.string.ism_made_admin, addAdminEvent.getMemberName(),
                         addAdminEvent.getInitiatorName()),
@@ -569,7 +569,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
             }
 
             conversationsListView.updateLastMessageInConversation(
-                addMembersEvent.getConversationId(), IsometrikUiSdk.getInstance()
+                addMembersEvent.getConversationId(), IsometrikChatSdk.getInstance()
                     .getContext()
                     .getString(R.string.ism_members_added, addMembersEvent.getUserName(),
                         membersAdded.substring(2)), addMembersEvent.getUserProfileImageUrl(),
@@ -592,7 +592,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
               fetchConversationDetailsById(joinConversationEvent.getConversationId());
             } else {
               conversationsListView.updateLastMessageInConversation(
-                  joinConversationEvent.getConversationId(), IsometrikUiSdk.getInstance()
+                  joinConversationEvent.getConversationId(), IsometrikChatSdk.getInstance()
                       .getContext()
                       .getString(R.string.ism_member_joined_public,
                           joinConversationEvent.getUserName()),
@@ -618,7 +618,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
             } else {
 
               conversationsListView.updateLastMessageInConversation(
-                  leaveConversationEvent.getConversationId(), IsometrikUiSdk.getInstance()
+                  leaveConversationEvent.getConversationId(), IsometrikChatSdk.getInstance()
                       .getContext()
                       .getString(R.string.ism_member_left, leaveConversationEvent.getUserName()),
                   leaveConversationEvent.getUserProfileImageUrl(),
@@ -639,7 +639,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
             @NotNull RemoveAdminEvent removeAdminEvent) {
           if (conversationsListView != null) {
             conversationsListView.updateLastMessageInConversation(
-                removeAdminEvent.getConversationId(), IsometrikUiSdk.getInstance()
+                removeAdminEvent.getConversationId(), IsometrikChatSdk.getInstance()
                     .getContext()
                     .getString(R.string.ism_removed_admin, removeAdminEvent.getMemberName(),
                         removeAdminEvent.getInitiatorName()),
@@ -673,7 +673,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
             } else {
 
               conversationsListView.updateLastMessageInConversation(
-                  removeMembersEvent.getConversationId(), IsometrikUiSdk.getInstance()
+                  removeMembersEvent.getConversationId(), IsometrikChatSdk.getInstance()
                       .getContext()
                       .getString(R.string.ism_members_removed, removeMembersEvent.getUserName(),
                           membersRemoved.substring(2)), removeMembersEvent.getUserProfileImageUrl(),
@@ -697,27 +697,27 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
 
       String detailsUpdated = "";
       if (details.getCustomType() != null) {
-        detailsUpdated = detailsUpdated + ", " + IsometrikUiSdk.getInstance()
+        detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
             .getContext()
             .getString(R.string.ism_details_custom_type);
       }
       if (details.getMetadata() != null && details.getMetadata().length() > 0) {
-        detailsUpdated = detailsUpdated + ", " + IsometrikUiSdk.getInstance()
+        detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
             .getContext()
             .getString(R.string.ism_details_metadata);
       }
       if (details.getSearchableTags() != null) {
-        detailsUpdated = detailsUpdated + ", " + IsometrikUiSdk.getInstance()
+        detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
             .getContext()
             .getString(R.string.ism_details_searchable_tags);
       }
       if (details.getBody() != null) {
-        detailsUpdated = detailsUpdated + ", " + IsometrikUiSdk.getInstance()
+        detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
             .getContext()
             .getString(R.string.ism_details_body);
       }
       conversationsListView.updateLastMessageInConversation(
-          updateMessageDetailsEvent.getConversationId(), IsometrikUiSdk.getInstance()
+          updateMessageDetailsEvent.getConversationId(), IsometrikChatSdk.getInstance()
               .getContext()
               .getString(R.string.ism_updated_message_details,
                   updateMessageDetailsEvent.getUserName(), detailsUpdated.substring(2)),
@@ -744,7 +744,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
         @NotNull RemoveMessagesForEveryoneEvent removeMessagesForEveryoneEvent) {
       if (conversationsListView != null) {
         conversationsListView.updateLastMessageInConversation(
-            removeMessagesForEveryoneEvent.getConversationId(), IsometrikUiSdk.getInstance()
+            removeMessagesForEveryoneEvent.getConversationId(), IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_message_deleted_for_all,
                     removeMessagesForEveryoneEvent.getUserName()),
@@ -753,7 +753,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
             false, false, removeMessagesForEveryoneEvent.getUserName(), true);
 
         if (!removeMessagesForEveryoneEvent.getUserId()
-            .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+            .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
           conversationsListView.fetchUnreadConversationsCount();
           fetchUnreadMessagesInConversationCount(
               removeMessagesForEveryoneEvent.getConversationId());
@@ -766,7 +766,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
         @NotNull RemoveMessagesForSelfEvent removeMessagesForSelfEvent) {
       if (conversationsListView != null) {
         conversationsListView.updateLastMessageInConversation(
-            removeMessagesForSelfEvent.getConversationId(), IsometrikUiSdk.getInstance()
+            removeMessagesForSelfEvent.getConversationId(), IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_message_deleted_locally,
                     removeMessagesForSelfEvent.getUserName()),
@@ -835,54 +835,54 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
           case "AttachmentMessage:Image": {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_picture;
             lastMessageText =
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_photo);
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_photo);
             break;
           }
           case "AttachmentMessage:Video": {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_video;
             lastMessageText =
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_video);
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_video);
             break;
           }
           case "AttachmentMessage:Audio": {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_mic;
             lastMessageText =
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_audio_recording);
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_audio_recording);
             break;
           }
           case "AttachmentMessage:File": {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_file;
             lastMessageText =
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_file);
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_file);
             break;
           }
           case "AttachmentMessage:Sticker": {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_sticker;
             lastMessageText =
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_sticker);
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_sticker);
             break;
           }
           case "AttachmentMessage:Gif": {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_gif;
-            lastMessageText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_gif);
+            lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_gif);
             break;
           }
           case "AttachmentMessage:Whiteboard": {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_whiteboard;
             lastMessageText =
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_whiteboard);
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_whiteboard);
             break;
           }
           case "AttachmentMessage:Location": {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_location;
             lastMessageText =
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_location);
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_location);
             break;
           }
           case "AttachmentMessage:Contact": {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_contact;
             lastMessageText =
-                IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_contact);
+                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_contact);
             break;
           }
           case "AttachmentMessage:Reply": {
@@ -909,9 +909,9 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
         @NotNull SendTypingMessageEvent sendTypingMessageEvent) {
       if (conversationsListView != null) {
         if (!sendTypingMessageEvent.getUserId()
-            .equals(IsometrikUiSdk.getInstance().getUserSession().getUserId())) {
+            .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
           conversationsListView.onRemoteUserTypingEvent(sendTypingMessageEvent.getConversationId(),
-              IsometrikUiSdk.getInstance()
+              IsometrikChatSdk.getInstance()
                   .getContext()
                   .getString(R.string.ism_typing, sendTypingMessageEvent.getUserName()));
         }
@@ -924,7 +924,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
       if (conversationsListView != null) {
 
         conversationsListView.updateLastMessageInConversation(
-            blockUserInConversationEvent.getConversationId(), IsometrikUiSdk.getInstance()
+            blockUserInConversationEvent.getConversationId(), IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_blocked_user,
                     blockUserInConversationEvent.getOpponentName(),
@@ -944,7 +944,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
         @NotNull UnblockUserInConversationEvent unblockUserInConversationEvent) {
       if (conversationsListView != null) {
         conversationsListView.updateLastMessageInConversation(
-            unblockUserInConversationEvent.getConversationId(), IsometrikUiSdk.getInstance()
+            unblockUserInConversationEvent.getConversationId(), IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_unblocked_user,
                     unblockUserInConversationEvent.getOpponentName(),
@@ -966,7 +966,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
         @NotNull AddReactionEvent addReactionEvent) {
       if (conversationsListView != null) {
         conversationsListView.updateLastMessageInConversation(addReactionEvent.getConversationId(),
-            IsometrikUiSdk.getInstance()
+            IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_reaction_added, addReactionEvent.getUserName()),
             addReactionEvent.getUserProfileImageUrl(),
@@ -982,7 +982,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
         @NotNull RemoveReactionEvent removeReactionEvent) {
       if (conversationsListView != null) {
         conversationsListView.updateLastMessageInConversation(
-            removeReactionEvent.getConversationId(), IsometrikUiSdk.getInstance()
+            removeReactionEvent.getConversationId(), IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_reaction_removed, removeReactionEvent.getUserName()),
             removeReactionEvent.getUserProfileImageUrl(),

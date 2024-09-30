@@ -5,7 +5,7 @@ import io.isometrik.chat.builder.message.broadcastforward.ForwardMessageQuery;
 import io.isometrik.chat.enums.AttachmentMessageType;
 import io.isometrik.chat.response.message.utils.schemas.Attachment;
 import io.isometrik.chat.response.message.utils.schemas.EventForMessage;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.ui.messages.chat.MessagesModel;
 import io.isometrik.ui.messages.chat.utils.attachmentutils.PrepareAttachmentHelper;
 import io.isometrik.ui.messages.chat.utils.enums.RemoteMessageTypes;
@@ -24,8 +24,8 @@ import org.json.JSONObject;
  */
 public class ForwardMessagePresenter implements ForwardMessageContract.Presenter {
 
-  private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
-  private final String userToken = IsometrikUiSdk.getInstance().getUserSession().getUserToken();
+  private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
+  private final String userToken = IsometrikChatSdk.getInstance().getUserSession().getUserToken();
 
   private final ForwardMessageContract.View forwardMessageView;
 
@@ -184,7 +184,7 @@ public class ForwardMessagePresenter implements ForwardMessageContract.Presenter
             .setEventForMessage(new EventForMessage(true, true))
             .setUserIds(userIds)
             .setConversationIds(conversationIds)
-            .setDeviceId(IsometrikUiSdk.getInstance().getUserSession().getDeviceId());
+            .setDeviceId(IsometrikChatSdk.getInstance().getUserSession().getDeviceId());
 
     String mediaName = null;
     if (mediaAttachment != null) {

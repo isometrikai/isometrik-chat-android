@@ -2,7 +2,7 @@ package io.isometrik.ui.messages.chat.utils.messageutils;
 
 import io.isometrik.chat.response.message.utils.fetchmessages.Message;
 import io.isometrik.chat.response.message.utils.schemas.Attachment;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.ui.messages.chat.MessagesModel;
 import io.isometrik.ui.messages.chat.utils.enums.MessageTypesForUI;
 import io.isometrik.ui.messages.reaction.util.ReactionUtil;
@@ -30,7 +30,7 @@ public class ConversationAttachmentMessageUtil {
     MessagesModel messagesModel = null;
 
     if (message.getCustomType() != null) {
-      boolean selfMessage = IsometrikUiSdk.getInstance()
+      boolean selfMessage = IsometrikChatSdk.getInstance()
           .getUserSession()
           .getUserId()
           .equals(message.getSenderInfo().getUserId());

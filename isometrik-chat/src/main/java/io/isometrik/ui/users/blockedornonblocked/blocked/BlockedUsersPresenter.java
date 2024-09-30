@@ -4,7 +4,7 @@ import io.isometrik.chat.Isometrik;
 import io.isometrik.chat.builder.user.block.FetchBlockedUsersQuery;
 import io.isometrik.chat.builder.user.block.UnblockUserQuery;
 import io.isometrik.chat.response.user.utils.BlockedUser;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.ui.users.blockedornonblocked.BlockedOrNonBlockedUsersModel;
 import io.isometrik.chat.utils.Constants;
 
@@ -17,8 +17,8 @@ import java.util.ArrayList;
 public class BlockedUsersPresenter implements BlockedUsersContract.Presenter {
 
   private BlockedUsersContract.View blockedUsersView;
-  private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
-  private final String userToken = IsometrikUiSdk.getInstance().getUserSession().getUserToken();
+  private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
+  private final String userToken = IsometrikChatSdk.getInstance().getUserSession().getUserToken();
   private int offset;
   private boolean isLastPage;
   private boolean isLoading;

@@ -1,7 +1,7 @@
 package io.isometrik.ui.conversations.gallery;
 
 import io.isometrik.chat.response.message.utils.fetchmessages.Message;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.chat.utils.Constants;
 import io.isometrik.chat.utils.TimeUtil;
@@ -42,7 +42,7 @@ public class GalleryModel {
     switch (customType) {
 
       case "AttachmentMessage:Image": {
-        mediaTypeText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_photo);
+        mediaTypeText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_photo);
         mediaTypeIcon = R.drawable.ism_ic_picture;
 
         mediaUrl = message.getAttachments().get(0).getMediaUrl();
@@ -53,7 +53,7 @@ public class GalleryModel {
         break;
       }
       case "AttachmentMessage:Video": {
-        mediaTypeText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_video);
+        mediaTypeText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_video);
         mediaTypeIcon = R.drawable.ism_ic_video;
 
         mediaUrl = message.getAttachments().get(0).getMediaUrl();
@@ -66,7 +66,7 @@ public class GalleryModel {
       }
       case "AttachmentMessage:Audio": {
         mediaTypeText =
-            IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_audio_recording);
+            IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_audio_recording);
         mediaTypeIcon = R.drawable.ism_ic_mic;
         mediaDescription = message.getAttachments().get(0).getName();
         mediaSize = FileUtils.getSizeOfFile(message.getAttachments().get(0).getSize());
@@ -78,7 +78,7 @@ public class GalleryModel {
         break;
       }
       case "AttachmentMessage:File": {
-        mediaTypeText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_file);
+        mediaTypeText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_file);
         mediaTypeIcon = R.drawable.ism_ic_file;
         mediaDescription = message.getAttachments().get(0).getName();
         mediaSize = FileUtils.getSizeOfFile(message.getAttachments().get(0).getSize());
@@ -90,7 +90,7 @@ public class GalleryModel {
         break;
       }
       case "AttachmentMessage:Sticker": {
-        mediaTypeText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_sticker);
+        mediaTypeText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_sticker);
         mediaTypeIcon = R.drawable.ism_ic_sticker;
 
         mediaUrl = message.getAttachments().get(0).getMediaUrl();
@@ -100,7 +100,7 @@ public class GalleryModel {
         break;
       }
       case "AttachmentMessage:Gif": {
-        mediaTypeText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_gif);
+        mediaTypeText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_gif);
         mediaTypeIcon = R.drawable.ism_ic_gif;
 
         mediaUrl = message.getAttachments().get(0).getMediaUrl();
@@ -111,7 +111,7 @@ public class GalleryModel {
       }
       case "AttachmentMessage:Whiteboard": {
         mediaTypeText =
-            IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_whiteboard);
+            IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_whiteboard);
         mediaTypeIcon = R.drawable.ism_ic_whiteboard;
 
         mediaUrl = message.getAttachments().get(0).getMediaUrl();
@@ -122,7 +122,7 @@ public class GalleryModel {
         break;
       }
       case "AttachmentMessage:Location": {
-        mediaTypeText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_location);
+        mediaTypeText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_location);
         mediaTypeIcon = R.drawable.ism_ic_location;
         mediaDescription = message.getAttachments().get(0).getTitle()
             + System.getProperty("line.separator")
@@ -133,7 +133,7 @@ public class GalleryModel {
         break;
       }
       case "AttachmentMessage:Contact": {
-        mediaTypeText = IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_contact);
+        mediaTypeText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_contact);
         mediaTypeIcon = R.drawable.ism_ic_contact;
         try {
           contactList =  message.getMetaData().getJSONArray("contacts");
@@ -145,7 +145,7 @@ public class GalleryModel {
 
         } catch (JSONException e) {
           mediaDescription =
-              IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_contact);
+              IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_contact);
           contactName = "";
           contactIdentifier = "";
         } break;

@@ -5,7 +5,7 @@ import io.isometrik.chat.builder.upload.CancelUserImageUploadQuery;
 import io.isometrik.chat.builder.upload.UploadUserImageQuery;
 import io.isometrik.chat.builder.user.CreateUserQuery;
 import io.isometrik.chat.builder.user.FetchCreateUserPresignedUrlQuery;
-import io.isometrik.ui.IsometrikUiSdk;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.chat.utils.AttachmentMetadata;
 import io.isometrik.chat.utils.PasswordRegex;
@@ -35,7 +35,7 @@ public class CreateUserPresenter implements CreateUserContract.Presenter {
   private final CreateUserContract.View createUserView;
   private boolean creatingUser;
   private String uploadRequestId;
-  private final Isometrik isometrik = IsometrikUiSdk.getInstance().getIsometrik();
+  private final Isometrik isometrik = IsometrikChatSdk.getInstance().getIsometrik();
 
   /**
    * {@link CreateUserContract.Presenter#requestCreateUser(String, String, String, String, String)}
@@ -63,7 +63,7 @@ public class CreateUserPresenter implements CreateUserContract.Presenter {
         creatingUser = false;
         if (var1 != null) {
 
-          IsometrikUiSdk.getInstance()
+          IsometrikChatSdk.getInstance()
               .getUserSession()
               .switchUser(var1.getUserId(), var1.getUserToken(), userName, userIdentifier,
                   userProfilePicUrl, false, finalMetadata, true,0);
@@ -88,16 +88,16 @@ public class CreateUserPresenter implements CreateUserContract.Presenter {
 
     if (userName.isEmpty()) {
       errorMessage =
-          IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_invalid_username);
+          IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_invalid_username);
     } else if (userIdentifier.isEmpty()) {
       errorMessage =
-          IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_invalid_user_identifier);
+          IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_invalid_user_identifier);
     } else if (userPassword.isEmpty()) {
       errorMessage =
-          IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_missing_user_password);
+          IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_missing_user_password);
     } else if (!PasswordRegex.isValidPassword(userPassword)) {
       errorMessage =
-          IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_invalid_user_password);
+          IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_invalid_user_password);
     }
     //else if (file == null || !file.exists()) {
     //  errorMessage =
