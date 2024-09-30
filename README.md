@@ -101,6 +101,7 @@ Use the following method to create a connection:
 
 ```java
 IsometrikChatSdk.getInstance().getIsometrik().createConnection(userClientId, userIsometrikToken);
+
 ```
 
 ### Step 4: Start a Conversation
