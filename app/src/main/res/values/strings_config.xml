@@ -2,14 +2,14 @@
 
 <resources>
 
-  <string name="app_secret">SFMyNTY.g3QAAAACZAAEZGF0YXQAAAADbQAAAAlhY2NvdW50SWRtAAAAGDVlYjNkYjliYTkyNTIwMDAwMTRmODJmZm0AAAAIa2V5c2V0SWRtAAAAJDQwMDYzYWJiLTVhZjEtNGZkNC1hN2YwLWFkYzQ3Njc4MTBiMW0AAAAJcHJvamVjdElkbQAAACRlMTI0MTAzOS0yZmVmLTQ4MzAtYjkyNy01YmIzNDI0ZjE3NjRkAAZzaWduZWRuBgAyRZTfiQE.Cd8oTBl0_bylLMQ45YXxUYqyIhbxstGEwCRIgLlQC3Y</string>
-  <string name="user_secret">SFMyNTY.g3QAAAACZAAEZGF0YXQAAAADbQAAAAlhY2NvdW50SWRtAAAAGDVlYjNkYjliYTkyNTIwMDAwMTRmODJmZm0AAAAIa2V5c2V0SWRtAAAAJDQwMDYzYWJiLTVhZjEtNGZkNC1hN2YwLWFkYzQ3Njc4MTBiMW0AAAAJcHJvamVjdElkbQAAACRlMTI0MTAzOS0yZmVmLTQ4MzAtYjkyNy01YmIzNDI0ZjE3NjRkAAZzaWduZWRuBgA2RZTfiQE.ci4LzhsWp_E8bTTFVymYqWrCfCBm92uJ1QlczU1PvbY</string>
-  <string name="license_key">lic-IMKPioj9hM3hMCh5eoeRC+d+l2TuxWOyPK3</string>
-  <string name="google_places_api_key">AIzaSyC_GvpTJaCP6gMW_D7hAp9iKxIm-ZI_uAI</string>
-  <string name="giphy_api_key">R4fhsZqFGmTTkW2DDVchwIjVRZSDvUrU</string>
-  <string name="accountId">5eb3db9ba9252000014f82ff</string>
-  <string name="projectId">e1241039-2fef-4830-b927-5bb3424f1764</string>
-  <string name="keysetId">40063abb-5af1-4fd4-a7f0-adc4767810b1</string>
+  <string name="app_secret">YOUR_PROJECT_APP_SECRET</string>
+  <string name="user_secret">YOUR_PROJECT_USER_SECRET</string>
+  <string name="license_key">YOUR_PROJECT_LICENSE_KEY</string>
+  <string name="google_places_api_key">YOUR_PROJECT_GOOGLE_PLACE_API_KEY</string>
+  <string name="giphy_api_key">YOUR_PROJECT_GIPHY_API_KEY</string>
+  <string name="accountId">YOUR_PROJECT_ACCOUNT_ID</string>
+  <string name="projectId">YOUR_PROJECT_PROJECT_ID</string>
+  <string name="keysetId">YOUR_PROJECT_KEYSET_ID</string>
 
 </resources>
 
