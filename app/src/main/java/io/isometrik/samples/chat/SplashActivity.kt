@@ -25,6 +25,10 @@ class SplashActivity : AppCompatActivity() {
                 startActivity(i)
             }
 
+            override fun onBlockStatusUpdate(isBlocked: Boolean, userId: String) {
+
+            }
+
             override fun onCallClicked(
                 isAudio: Boolean,
                 userId: String,

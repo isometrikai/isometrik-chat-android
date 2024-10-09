@@ -2170,7 +2170,6 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
 
     @Override
     public void blockUser(String userId,boolean isBlocked,String personalUserId) {
-//        blockProfileuser(personalUserId,isBlocked); //this will be used for blocking/unblocking user profile (NODE api)
         isometrik.getRemoteUseCases()
                 .getUserUseCases()
                 .blockUser(
@@ -2184,7 +2183,6 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
     }
     @Override
     public void unBlockUser(String userId,boolean isBlocked,String personalUserId) {
-//        blockProfileuser(personalUserId,isBlocked); //this will be used for blocking user profile (NODE api)
         isometrik.getRemoteUseCases()
                 .getUserUseCases()
                 .unblockUser(new UnblockUserQuery.Builder().setUserToken(userToken)

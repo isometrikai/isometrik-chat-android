@@ -2157,12 +2157,14 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
 
     @Override
     public void onUserBlocked() {
+        IsometrikChatSdk.getInstance().getChatActionsClickListener().onBlockStatusUpdate(true,userPersonalUserId);
         hideProgressDialog();
         onMessagingStatusChanged(true);
     }
 
     @Override
     public void onUserUnBlocked() {
+        IsometrikChatSdk.getInstance().getChatActionsClickListener().onBlockStatusUpdate(false,userPersonalUserId);
         hideProgressDialog();
         onMessagingStatusChanged(false);
     }
