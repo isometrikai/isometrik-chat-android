@@ -138,7 +138,13 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
     private EditMessageFragment editMessageFragment;
 
     private boolean unregisteredListeners, scrollToMessageNeeded;
-    private String conversationId,isometrikUserId,conversationUserImageUrl,userPersonalUserId,conversationUserFullName,conversationImageUrl,conversationTitle;
+    private static String conversationId;
+    private String isometrikUserId;
+    private String conversationUserImageUrl;
+    private String userPersonalUserId;
+    private String conversationUserFullName;
+    private String conversationImageUrl;
+    private String conversationTitle;
 
     private static final int DOWNLOAD_MEDIA_PERMISSIONS_REQUEST_CODE = 0;
     private static final int SHARE_LOCATION_PERMISSIONS_REQUEST_CODE = 1;
@@ -1820,6 +1826,7 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
 
     @Override
     protected void onDestroy() {
+        conversationId = null;
         unregisterListeners();
         super.onDestroy();
     }
