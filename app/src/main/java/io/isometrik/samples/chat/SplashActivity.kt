@@ -26,7 +26,6 @@ class SplashActivity : AppCompatActivity() {
             }
 
             override fun onBlockStatusUpdate(isBlocked: Boolean, userId: String) {
-
             }
 
             override fun onCallClicked(

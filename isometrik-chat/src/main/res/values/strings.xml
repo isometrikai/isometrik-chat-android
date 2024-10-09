@@ -284,6 +284,7 @@
     <string name="ism_attachments_cancel">Cancel</string>
     <string name="ism_audio_recording">Audio recording</string>
     <string name="ism_photo">Photo</string>
+    <string name="ism_post">Post</string>
     <string name="ism_video">Video</string>
     <string name="ism_voice_message">Voice Message</string>
     <string name="ism_sending">Sending…</string>
