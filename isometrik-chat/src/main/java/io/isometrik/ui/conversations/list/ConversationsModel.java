@@ -20,7 +20,7 @@ import org.json.JSONObject;
 public class ConversationsModel {
 
   private boolean privateOneToOneConversation;
-  private String conversationId, opponentId;
+  private String conversationId, opponentId,opponentIdentifier;
   private boolean remoteUserTyping;
   private boolean online, lastMessageWasReactionMessage;
   private boolean messageDeliveryReadEventsEnabled, typingEventsEnabled;
@@ -101,6 +101,7 @@ public class ConversationsModel {
 
             ConversationMember conversationMember = members.get(i);
             opponentId = conversationMember.getUserId();
+            opponentIdentifier = conversationMember.getUserIdentifier();
             conversationImageUrl = conversationMember.getUserProfileImageUrl();
             conversationTitle = conversationMember.getUserName();
             online = true;
@@ -113,6 +114,7 @@ public class ConversationsModel {
 
         opponentId =
             createConversationEvent.getConversationDetails().getOpponentDetails().getUserId();
+        opponentIdentifier = createConversationEvent.getConversationDetails().getOpponentDetails().getUserIdentifier();
         conversationImageUrl = createConversationEvent.getConversationDetails()
             .getOpponentDetails()
             .getUserProfileImageUrl();
@@ -594,6 +596,7 @@ public class ConversationsModel {
       conversationTitle = conversation.getOpponentDetails().getUserName();
       online = conversation.getOpponentDetails().isOnline();
       opponentId = conversation.getOpponentDetails().getUserId();
+      opponentIdentifier = conversation.getOpponentDetails().getUserIdentifier();
 
       lastSeenAt = conversation.getOpponentDetails().getLastSeen();
       if (opponentId == null) {
@@ -950,5 +953,12 @@ public class ConversationsModel {
    */
   public void setMessagingDisabled(boolean messagingDisabled) {
     this.messagingDisabled = messagingDisabled;
+  }
+
+  /**
+   * Gets remote user identifier
+   */
+  public String getOpponentIdentifier() {
+    return opponentIdentifier;
   }
 }

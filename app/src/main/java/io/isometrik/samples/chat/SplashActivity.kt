@@ -24,6 +24,16 @@ class SplashActivity : AppCompatActivity() {
                val i = Intent(this@SplashActivity,NewChatActivity::class.java)
                 startActivity(i)
             }
+
+            override fun onCallClicked(
+                isAudio: Boolean,
+                userId: String,
+                meetingDescription: String,
+                opponentName: String,
+                opponentImageUrl: String
+            ) {
+
+            }
         })
 
         finish()

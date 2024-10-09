@@ -33,20 +33,20 @@ android {
 
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'String', 'DEFAULT_SUBDOMAIN', '"apis"'
-            buildConfigField 'String', 'DEFAULT_BASE_PATH', '"isometrik.io"'
-            buildConfigField 'String', 'CONNECTIONS_BASE_PATH', '"isometrik.io"'
+            buildConfigField 'String', 'DEFAULT_BASE_PATH', '"isometrik.ai"'
+            buildConfigField 'String', 'CONNECTIONS_BASE_PATH', '"isometrik.ai"'
             buildConfigField 'String', 'CONNECTIONS_DEFAULT_SUBDOMAIN', '"connections"'
-            buildConfigField 'Integer', 'PORT', '2052'
+            buildConfigField 'Integer', 'PORT', '2086'
         }
         debug {
             minifyEnabled false
 
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'String', 'DEFAULT_SUBDOMAIN', '"apis"'
-            buildConfigField 'String', 'DEFAULT_BASE_PATH', '"isometrik.io"'
-            buildConfigField 'String', 'CONNECTIONS_BASE_PATH', '"isometrik.io"'
+            buildConfigField 'String', 'DEFAULT_BASE_PATH', '"isometrik.ai"'
+            buildConfigField 'String', 'CONNECTIONS_BASE_PATH', '"isometrik.ai"'
             buildConfigField 'String', 'CONNECTIONS_DEFAULT_SUBDOMAIN', '"connections"'
-            buildConfigField 'Integer', 'PORT', '2052'
+            buildConfigField 'Integer', 'PORT', '2086'
         }
     }
     compileOptions {

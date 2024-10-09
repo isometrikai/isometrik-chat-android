@@ -576,6 +576,7 @@ public class ConversationsListFragment extends Fragment implements Conversations
         intent.putExtra("lastSeenAt", conversationsModel.getLastSeenAt());
       }
       intent.putExtra("userId", conversationsModel.getOpponentId());
+      intent.putExtra("identifier", conversationsModel.getOpponentIdentifier());
 
       if (conversationsModel.isMessagingDisabled()) {
         intent.putExtra("messagingDisabled", true);

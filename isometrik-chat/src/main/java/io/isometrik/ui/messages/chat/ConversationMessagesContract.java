@@ -348,6 +348,13 @@ public interface ConversationMessagesContract {
      * @param userId the user id
      */
     void unBlockUser(String userId,boolean isBlocked,String personalUserId);
+
+    /**
+     * Clear conversation.
+     *
+     * @param conversationId the conversation id
+     */
+    void clearConversation(String conversationId);
   }
 
   /**
@@ -636,5 +643,19 @@ public interface ConversationMessagesContract {
      * Update visibility of observers icon.
      */
     void updateVisibilityOfObserversIcon();
+
+    /**
+     * On user blocked.
+     */
+    void onUserBlocked();
+    /**
+     * On user unBlocked.
+     */
+    void onUserUnBlocked();
+
+    /**
+     * On conversation cleared successfully.
+     */
+    void onConversationClearedSuccessfully();
   }
 }

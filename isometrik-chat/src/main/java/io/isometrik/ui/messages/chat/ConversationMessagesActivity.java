@@ -138,7 +138,7 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
     private EditMessageFragment editMessageFragment;
 
     private boolean unregisteredListeners, scrollToMessageNeeded;
-    private String conversationId;
+    private String conversationId,isometrikUserId,conversationUserImageUrl,userPersonalUserId,conversationUserFullName,conversationImageUrl,conversationTitle;
 
     private static final int DOWNLOAD_MEDIA_PERMISSIONS_REQUEST_CODE = 0;
     private static final int SHARE_LOCATION_PERMISSIONS_REQUEST_CODE = 1;
@@ -192,6 +192,11 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
         ismActivityMessagesBinding.vTagUsers.rvUsers.setAdapter(tagUserAdapter);
 
         conversationId = getIntent().getExtras().getString("conversationId");
+        conversationUserImageUrl = getIntent().getExtras().getString("userImageUrl");
+        conversationImageUrl = getIntent().getExtras().getString("conversationImageUrl");
+        conversationTitle = getIntent().getExtras().getString("conversationTitle");
+        isometrikUserId = getIntent().getExtras().getString("userId"); // isometrikUserId
+        userPersonalUserId = getIntent().getExtras().getString("identifier"); //personalUserId
 
         boolean isPrivateOneToOne = getIntent().getExtras().getBoolean("isPrivateOneToOne");
 
@@ -684,34 +689,42 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
                     inflater.inflate(R.menu.ism_block_menu, popup.getMenu());
                 }
                 popup.setOnMenuItemClickListener(item -> {
-//                    if (item.getItemId() == R.id.blockOrUnBlockUser) {
-//                        if (messagingDisabled) {
-//                            showProgressDialog(getString(R.string.ism_unblocking_user, conversationUserFullName));
-//                            conversationMessagesPresenter.unBlockUser(userIsometrikUserId, false, userPersonalUserId);
-//                        } else {
-//                            showProgressDialog(getString(R.string.ism_blocking_user, conversationUserFullName));
-//                            conversationMessagesPresenter.blockUser(userIsometrikUserId, true, userPersonalUserId);
-//                        }
-//                        return true;
-//                    }
-//                    if (item.getItemId() == R.id.clearChat) {
-//                        // implement clear chat feature
-//                        new androidx.appcompat.app.AlertDialog.Builder(this).setTitle(getString(R.string.ism_clear_conversation))
-//                                .setMessage(getString(R.string.ism_clear_conversation_alert))
-//                                .setCancelable(true)
-//                                .setPositiveButton(getString(R.string.ism_continue), (dialog, id) -> {
-//                                    dialog.cancel();
-//                                    showProgressDialog(getString(R.string.ism_clearing_conversation));
-//                                    conversationMessagesPresenter.clearConversation(conversationId);
-//                                })
-//                                .setNegativeButton(getString(R.string.ism_cancel), (dialog, id) -> dialog.cancel())
-//                                .create()
-//                                .show();
-//                    }
+                    if (item.getItemId() == R.id.blockOrUnBlockUser) {
+                        if (messagingDisabled) {
+                            showProgressDialog(getString(R.string.ism_unblocking_user, conversationUserFullName));
+                            conversationMessagesPresenter.unBlockUser(isometrikUserId, false, userPersonalUserId);
+                        } else {
+                            showProgressDialog(getString(R.string.ism_blocking_user, conversationUserFullName));
+                            conversationMessagesPresenter.blockUser(isometrikUserId, true, userPersonalUserId);
+                        }
+                        return true;
+                    }
+                    if (item.getItemId() == R.id.clearChat) {
+                        // implement clear chat feature
+                        new androidx.appcompat.app.AlertDialog.Builder(this).setTitle(getString(R.string.ism_clear_conversation))
+                                .setMessage(getString(R.string.ism_clear_conversation_alert))
+                                .setCancelable(true)
+                                .setPositiveButton(getString(R.string.ism_continue), (dialog, id) -> {
+                                    dialog.cancel();
+                                    showProgressDialog(getString(R.string.ism_clearing_conversation));
+                                    conversationMessagesPresenter.clearConversation(conversationId);
+                                })
+                                .setNegativeButton(getString(R.string.ism_cancel), (dialog, id) -> dialog.cancel())
+                                .create()
+                                .show();
+                    }
                     return false;
                 });
                 popup.show();
             }
+        });
+
+        ismActivityMessagesBinding.ivAudioCall.setOnClickListener(v -> {
+            IsometrikChatSdk.getInstance().getChatActionsClickListener().onCallClicked(true, isometrikUserId, conversationUserFullName + IsometrikChatSdk.getInstance().getUserSession().getUserName(), conversationUserFullName, conversationUserImageUrl);
+        });
+
+        ismActivityMessagesBinding.ivVideoCall.setOnClickListener(v -> {
+            IsometrikChatSdk.getInstance().getChatActionsClickListener().onCallClicked(false, isometrikUserId, conversationUserFullName + IsometrikChatSdk.getInstance().getUserSession().getUserName(), conversationUserFullName, conversationUserImageUrl);
         });
     }
 
@@ -1669,6 +1682,7 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
     @Override
     public void onConversationTitleUpdated(String newTitle) {
         runOnUiThread(() -> {
+            conversationUserFullName = newTitle;
             ismActivityMessagesBinding.tvConversationOrUserName.setText(newTitle);
             ismActivityMessagesBinding.vSelectMultipleMessagesHeader.tvConversationTitle.setText(newTitle);
         });
@@ -1934,7 +1948,7 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
                     userName = "";
                 }
             }
-
+            conversationUserFullName = userName;
             ismActivityMessagesBinding.vSelectMultipleMessagesHeader.tvConversationTitle.setText(userName);
             ismActivityMessagesBinding.ivOnlineStatus.setVisibility(View.VISIBLE);
 //            ismActivityMessagesBinding.ivRefreshOnlineStatus.setVisibility(messagingDisabled ? View.GONE : View.VISIBLE);
@@ -2139,6 +2153,28 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
     @Override
     public void updateVisibilityOfObserversIcon() {
         runOnUiThread(() -> ismActivityMessagesBinding.ivObservers.setVisibility(View.VISIBLE));
+    }
+
+    @Override
+    public void onUserBlocked() {
+        hideProgressDialog();
+        onMessagingStatusChanged(true);
+    }
+
+    @Override
+    public void onUserUnBlocked() {
+        hideProgressDialog();
+        onMessagingStatusChanged(false);
+    }
+
+    private void hideProgressDialog() {
+        if (alertDialog != null && alertDialog.isShowing()) alertDialog.dismiss();
+    }
+
+    @Override
+    public void onConversationClearedSuccessfully() {
+        onConversationCleared();
+        hideProgressDialog();
     }
 
     @Override
