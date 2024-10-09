@@ -199,6 +199,12 @@ public class IsometrikChatSdk {
     isometrik.destroy();
   }
 
+  public void dropConnection(){
+    if (isometrik != null) {
+      isometrik.dropConnection();
+    }
+  }
+
   /**
    * Gets application id.
    *
