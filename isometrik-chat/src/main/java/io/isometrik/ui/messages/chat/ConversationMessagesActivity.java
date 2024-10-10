@@ -138,7 +138,7 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
     private EditMessageFragment editMessageFragment;
 
     private boolean unregisteredListeners, scrollToMessageNeeded;
-    private static String conversationId;
+    public static String conversationId;
     private String isometrikUserId;
     private String conversationUserImageUrl;
     private String userPersonalUserId;
