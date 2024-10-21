@@ -588,13 +588,13 @@ public class ConversationMessagesAdapter extends RecyclerView.Adapter<RecyclerVi
           textMessageSentViewHolder.ismSentMessageTextBinding.dividerReply.setVisibility(
               View.VISIBLE);
 
-          if (message.getOriginalMessagePlaceholderImage() == null) {
+          if (message.getOriginalMessageAttachmentUrl() == null) {
             textMessageSentViewHolder.ismSentMessageTextBinding.vParentMessage.ivMessageImage.setVisibility(
                 View.GONE);
           } else {
             try {
               Glide.with(mContext)
-                  .load(message.getOriginalMessagePlaceholderImage())
+                  .load(message.getOriginalMessageAttachmentUrl())
                   .diskCacheStrategy(DiskCacheStrategy.NONE)
                   .into(
                       textMessageSentViewHolder.ismSentMessageTextBinding.vParentMessage.ivMessageImage);
@@ -2537,13 +2537,13 @@ public class ConversationMessagesAdapter extends RecyclerView.Adapter<RecyclerVi
           textMessageReceivedViewHolder.ismReceivedMessageTextBinding.dividerReply.setVisibility(
               View.VISIBLE);
 
-          if (message.getOriginalMessagePlaceholderImage() == null) {
+          if (message.getOriginalMessageAttachmentUrl() == null) {
             textMessageReceivedViewHolder.ismReceivedMessageTextBinding.vParentMessage.ivMessageImage
                 .setVisibility(View.GONE);
           } else {
             try {
               Glide.with(mContext)
-                  .load(message.getOriginalMessagePlaceholderImage())
+                      .load(message.getOriginalMessageAttachmentUrl())
                   .diskCacheStrategy(DiskCacheStrategy.NONE)
                   .into(
                       textMessageReceivedViewHolder.ismReceivedMessageTextBinding.vParentMessage.ivMessageImage);

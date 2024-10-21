@@ -374,6 +374,8 @@ public class MessagesModel implements Serializable {
             originalMessageTime = originalReplyMessageUtil.getGetOriginalMessageTime();
             originalMessagePlaceholderImage =
                     originalReplyMessageUtil.getOriginalMessagePlaceholderImage();
+            originalMessageAttachmentUrl =
+                    originalReplyMessageUtil.getOriginalMessageAttachmentUrl();
         }
 
         if (sticker) {
@@ -707,6 +709,7 @@ public class MessagesModel implements Serializable {
     private String originalMessage;
     private String originalMessageTime;
     private Integer originalMessagePlaceholderImage;
+    private String originalMessageAttachmentUrl;
 
     /**
      * Is quoted message boolean.
@@ -751,6 +754,10 @@ public class MessagesModel implements Serializable {
      */
     public Integer getOriginalMessagePlaceholderImage() {
         return originalMessagePlaceholderImage;
+    }
+
+    public String getOriginalMessageAttachmentUrl() {
+        return originalMessageAttachmentUrl;
     }
 
     ////Attachment details
@@ -1373,6 +1380,8 @@ public class MessagesModel implements Serializable {
             originalMessageTime = originalReplyMessageUtil.getGetOriginalMessageTime();
             originalMessagePlaceholderImage =
                     originalReplyMessageUtil.getOriginalMessagePlaceholderImage();
+            originalMessageAttachmentUrl =
+                    originalReplyMessageUtil.getOriginalMessageAttachmentUrl();
         }
         this.mediaSizeInMB = mediaSizeInMB;
         this.isDownloaded = isDownloaded;
@@ -1479,6 +1488,7 @@ public class MessagesModel implements Serializable {
             originalMessageTime = originalReplyMessageUtil.getGetOriginalMessageTime();
             originalMessagePlaceholderImage =
                     originalReplyMessageUtil.getOriginalMessagePlaceholderImage();
+            originalMessageAttachmentUrl = originalReplyMessageUtil.getOriginalMessageAttachmentUrl();
         }
         this.textMessage = textMessage;
         if (senderName == null || senderName.isEmpty()) {

@@ -15,6 +15,7 @@ public class OriginalReplyMessageUtil {
   private String originalMessage;
   private String getOriginalMessageTime;
   private Integer originalMessagePlaceholderImage;
+  private String originalMessageAttachmentUrl;
 
   /**
    * Instantiates a new Original reply message util.
@@ -30,10 +31,17 @@ public class OriginalReplyMessageUtil {
         JSONObject replyMessageDetails = replyMessage.getJSONObject("replyMessage");
         originalMessageSenderName = replyMessageDetails.getString("parentMessageUserName");
         originalMessage = replyMessageDetails.getString("parentMessageBody");
-        getOriginalMessageTime = TimeUtil.formatTimestampToBothDateAndTime(
-            replyMessageDetails.getLong("parentMessageSentAt"));
-        originalMessagePlaceholderImage =
-            replyMessageDetails.getInt("originalMessagePlaceHolderImage");
+        if(replyMessageDetails.has("parentMessageSentAt")){
+          getOriginalMessageTime = TimeUtil.formatTimestampToBothDateAndTime(
+                  replyMessageDetails.getLong("parentMessageSentAt"));
+        }
+        if(replyMessageDetails.has("originalMessagePlaceHolderImage")) {
+          originalMessagePlaceholderImage =
+                  replyMessageDetails.getInt("originalMessagePlaceHolderImage");
+        }
+        if(replyMessageDetails.has("parentMessageAttachmentUrl")){
+          originalMessageAttachmentUrl = replyMessageDetails.getString("parentMessageAttachmentUrl");
+        }
       } catch (JSONException ignore) {
       }
     }
@@ -82,5 +90,14 @@ public class OriginalReplyMessageUtil {
    */
   public Integer getOriginalMessagePlaceholderImage() {
     return originalMessagePlaceholderImage;
+  }
+
+  /**
+   * Gets original message AttachmentUrl .
+   *
+   * @return the original message AttachmentUrl
+   */
+  public String getOriginalMessageAttachmentUrl() {
+    return originalMessageAttachmentUrl;
   }
 }
