@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
@@ -51,6 +53,7 @@ import io.isometrik.chat.utils.FileUriUtils;
 import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.camera.CameraActivity;
+import io.isometrik.ui.camera.VideoRecordingActivity;
 import io.isometrik.ui.conversations.details.observers.ObserversActivity;
 import io.isometrik.chat.databinding.IsmActivityMessagesBinding;
 import io.isometrik.ui.messages.action.MessageActionCallback;
@@ -97,6 +100,7 @@ import io.isometrik.chat.utils.Utilities;
 import io.isometrik.chat.utils.enums.CustomMessageTypes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -117,7 +121,7 @@ import org.json.JSONObject;
  * message or various actions in conversation, initiate/cancel of upload/download media message,
  * copy text messages, send typing message.
  */
-public class ConversationMessagesActivity extends AppCompatActivity implements ConversationMessagesContract.View, ReactionClickListener, MediaTypeToBeSharedCallback, MediaSelectedToBeShared, MessageActionCallback, TaggedUserCallback {
+public class ConversationMessagesActivity extends AppCompatActivity implements ConversationMessagesContract.View, ReactionClickListener, MediaTypeToBeSharedCallback, MediaSelectedToBeShared, MessageActionCallback, TaggedUserCallback, ConversationMessagesAdapter.OnScrollToMessageListener {
 
     private ConversationMessagesContract.Presenter conversationMessagesPresenter;
     private IsmActivityMessagesBinding ismActivityMessagesBinding;
@@ -174,6 +178,11 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
     private androidx.appcompat.app.AlertDialog alertDialog;
     private AlertProgress alertProgress;
 
+    // Request code for permissions
+    private static final int PERMISSION_REQUEST_CODE = 123;
+    private static final int VIDEO_RECORD_PERMISSIONS_REQUEST_CODE = 9;
+    private static final int VIDEO_PREVIEW_REQUEST_CODE = 8; // New request code for video preview
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -189,7 +198,7 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
 
         messagesLayoutManager = new LinearLayoutManager(this);
         ismActivityMessagesBinding.rvMessages.setLayoutManager(messagesLayoutManager);
-        conversationMessagesAdapter = new ConversationMessagesAdapter(this, messages, this, messagingDisabled, joiningAsObserver);
+        conversationMessagesAdapter = new ConversationMessagesAdapter(this, messages, this, messagingDisabled, joiningAsObserver,this);
         ismActivityMessagesBinding.rvMessages.setAdapter(conversationMessagesAdapter);
         ismActivityMessagesBinding.rvMessages.addOnScrollListener(messagesRecyclerViewOnScrollListener);
 
@@ -421,7 +430,7 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
             }
         });
 
-        ismActivityMessagesBinding.ivCaptureImage.setOnClickListener(v -> checkImageCapturePermissions());
+        ismActivityMessagesBinding.ivCaptureImage.setOnClickListener(v -> checkImageCapturePermissions(false));
 
         ismActivityMessagesBinding.rlConversationDetails.setOnClickListener(v -> {
             if (ismActivityMessagesBinding.vSelectMultipleMessagesHeader.getRoot().getVisibility() == View.GONE && clickActionsNotBlocked()) {
@@ -986,6 +995,17 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
 
         switch (mediaTypeSelected) {
 
+            case CameraPhoto: {
+                //Capture Image
+                checkImageCapturePermissions(true);
+                break;
+            }
+            case RecordVideo: {
+                //RecordVideo
+                onRecordVideoRequested();
+                break;
+            }
+
             case PhotoSent: {
                 //Photos
                 checkAccessStoragePermissions(SHARE_PHOTOS_PERMISSIONS_REQUEST_CODE, getString(R.string.ism_permission_photos_share));
@@ -1192,20 +1212,44 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
         }
     }
 
-    private void checkImageCapturePermissions() {
+    /**
+     * Checking permissions for accessing media files
+     */
+    private void checkImageCapturePermissions(boolean requestPermissions) {
+        List<String> permissionRequired = new ArrayList<>();
+        permissionRequired.add(Manifest.permission.RECORD_AUDIO);
+        permissionRequired.add(Manifest.permission.CAMERA);
 
-        if ((ContextCompat.checkSelfPermission(ConversationMessagesActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) || !Utilities.checkSelfExternalStoragePermissionIsGranted(ConversationMessagesActivity.this, true) || (ContextCompat.checkSelfPermission(ConversationMessagesActivity.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED)) {
+        // Add permissions for media access based on Android version
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // Android 13+
+            permissionRequired.add(Manifest.permission.READ_MEDIA_IMAGES);
+            permissionRequired.add(Manifest.permission.READ_MEDIA_VIDEO);
+            permissionRequired.add(Manifest.permission.READ_MEDIA_AUDIO);
+        } else {
+            permissionRequired.addAll(Arrays.asList(Utilities.getStoragePermissions()));
+        }
 
-            if ((ActivityCompat.shouldShowRequestPermissionRationale(ConversationMessagesActivity.this, Manifest.permission.CAMERA)) || Utilities.shouldShowExternalPermissionStorageRational(ConversationMessagesActivity.this, true) || (ActivityCompat.shouldShowRequestPermissionRationale(ConversationMessagesActivity.this, Manifest.permission.RECORD_AUDIO))) {
-                Snackbar snackbar = Snackbar.make(ismActivityMessagesBinding.getRoot(), R.string.ism_permission_image_capture, Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.ism_ok), view -> requestCameraPermissions());
+        // List to hold permissions that are not yet granted
+        List<String> permissionsNotGranted = new ArrayList<>();
 
-                snackbar.show();
+        // Check each permission and add to list if not granted
+        for (String permission : permissionRequired) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                permissionsNotGranted.add(permission);
+            }
+        }
 
-                ((TextView) snackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text)).setGravity(Gravity.CENTER_HORIZONTAL);
-            } else {
-                requestCameraPermissions();
+        // If there are any permissions not granted, request them
+        if (!permissionsNotGranted.isEmpty()) {
+            if (requestPermissions) {
+                ActivityCompat.requestPermissions(
+                        this,
+                        permissionsNotGranted.toArray(new String[0]),
+                        PERMISSION_REQUEST_CODE // Use the new request code
+                );
             }
         } else {
+            // All permissions are granted, proceed with the action
             requestImageCapture();
         }
     }
@@ -1637,6 +1681,7 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
 
     @Override
     public void sendReplyMessage(String messageId, String replyMessage, JSONObject replyMessageDetails) {
+
 
         conversationMessagesPresenter.shareMessage(RemoteMessageTypes.ReplyMessage, messageId, new OriginalReplyMessageUtil(messageId, replyMessageDetails),
 
@@ -2186,6 +2231,39 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
         hideProgressDialog();
     }
 
+    // Check the necessary permissions for recording video
+    private boolean checkRecordVideoPermissions() {
+        List<String> requiredPermissions = new ArrayList<>();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            requiredPermissions.add(Manifest.permission.CAMERA);
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            requiredPermissions.add(Manifest.permission.RECORD_AUDIO);
+        }
+
+        if (!requiredPermissions.isEmpty()) {
+            ActivityCompat.requestPermissions(this,
+                    requiredPermissions.toArray(new String[0]), VIDEO_RECORD_PERMISSIONS_REQUEST_CODE);
+            return false;
+        }
+        return true;
+    }
+
+    private void startRecording() {
+        KeyboardUtil.hideKeyboard(this);
+        ismActivityMessagesBinding.rlBottomLayout.setVisibility(View.INVISIBLE);
+        conversationMessagesPresenter.startAudioRecording(this);
+    }
+
+    public void onRecordVideoRequested() {
+        if (checkRecordVideoPermissions()) {
+            // When you want to start VideoRecordingActivity
+            Intent videoRecordingIntent = new Intent(this, VideoRecordingActivity.class);
+            startActivityForResult(videoRecordingIntent, VIDEO_PREVIEW_REQUEST_CODE);
+        }
+    }
+
+
     @Override
     public void onJoinedAsObserverSuccessfully() {
         runOnUiThread(() -> {
@@ -2217,5 +2295,58 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
     protected void onPause() {
         super.onPause();
         conversationMessagesPresenter.setActiveInConversation(false);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == VIDEO_PREVIEW_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            String videoUriString = data.getStringExtra("videoUri");
+            if (videoUriString != null) {
+                handleRecordedVideo(Uri.parse(videoUriString));
+            }
+        }
+    }
+
+    private void handleRecordedVideo(Uri videoUri) {
+        ArrayList<String> videoPaths = new ArrayList<>(Collections.singletonList(videoUri.getPath()));
+
+        conversationMessagesPresenter.shareMessage(
+                RemoteMessageTypes.NormalMessage,
+                null,
+                null,
+                CustomMessageTypes.Video.getValue(),
+                CustomMessageTypes.Video.getValue(),
+                false,
+                true,
+                true,
+                true,
+                null,
+                null,
+                null,
+                MessageTypesForUI.VideoSent,
+                videoPaths,
+                true,
+                PresignedUrlMediaTypes.Video,
+                AttachmentMessageType.Video
+        );
+    }
+
+    @Override
+    public void onScrollToParentMessage(String messageId) {
+        int position = getPositionById(messageId);
+        if (position != -1) {
+            ismActivityMessagesBinding.rvMessages.smoothScrollToPosition(position);
+        }
+    }
+
+    private int getPositionById(String messageId) {
+        for (int i = 0; i < messages.size(); i++) {
+            if (messages.get(i).getMessageId().equals(messageId)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

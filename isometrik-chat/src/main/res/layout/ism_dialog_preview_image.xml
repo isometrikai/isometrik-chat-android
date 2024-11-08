@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/ism_preview_image_background_grey"
+    android:background="@color/ism_black"
     >
   <io.isometrik.ui.messages.preview.image.utils.touchview.TouchImageView
       android:id="@+id/ivPreview"
@@ -17,6 +17,7 @@
       android:layout_height="wrap_content"
       android:background="@android:color/transparent"
       android:padding="@dimen/ism_dp_16"
+      android:tint="@color/ism_icon_gray"
       app:srcCompat="@drawable/ism_ic_close"
       />
 </RelativeLayout>

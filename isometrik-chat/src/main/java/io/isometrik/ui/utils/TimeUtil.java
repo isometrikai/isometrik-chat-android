@@ -2,6 +2,8 @@ package io.isometrik.ui.utils;
 
 import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
@@ -175,6 +177,32 @@ public class TimeUtil {
       }
     }
   }
+
+  public static String convert24to12hourformat(String d) {
+    String datein12hour = null;
+
+    try {
+      // Check if the string contains "Today at"
+      if (d.startsWith("Today at")) {
+        d = d.replace("Today at ", ""); // Remove "Today at"
+        SimpleDateFormat sdf = new SimpleDateFormat("H:mm", Locale.US);
+        Date dateObj = sdf.parse(d);
+        assert dateObj != null;
+        datein12hour = new SimpleDateFormat("h:mm a", Locale.US).format(dateObj);
+      } else {
+        // Handle other cases as needed
+        SimpleDateFormat sdf = new SimpleDateFormat("H:mm", Locale.US);
+        Date dateObj = sdf.parse(d);
+        assert dateObj != null;
+        datein12hour = new SimpleDateFormat("h:mm a", Locale.US).format(dateObj);
+      }
+    } catch (ParseException e) {
+      e.printStackTrace();
+    }
+
+    return datein12hour;
+  }
+
 
   //private static String getTimeAfterFormatting(String dateAfterFormat) {
   //  return convert24To12HourFormat(dateAfterFormat.substring(0, 9));

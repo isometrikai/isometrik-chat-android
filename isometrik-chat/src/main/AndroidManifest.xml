@@ -190,6 +190,12 @@
         android:windowSoftInputMode="stateAlwaysHidden"
         tools:ignore="LockedOrientationActivity" />
     <activity
+        android:name="io.isometrik.ui.messages.preview.image.PreviewImageActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
         android:name="io.isometrik.ui.messages.preview.audio.PreviewAudioActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:screenOrientation="portrait"
@@ -218,6 +224,14 @@
     <!-- android:configChanges="orientation|keyboardHidden|screenSize" -->
     <!-- android:windowSoftInputMode="adjustPan" -->
     <!-- /> -->
+
+    <activity
+        android:name="io.isometrik.ui.camera.VideoRecordingActivity"
+        android:exported="false" />
+
+    <activity
+        android:name="io.isometrik.ui.camera.VideoPreviewActivity"
+        android:exported="false" />
     <provider
         android:name="androidx.core.content.FileProvider"
         android:authorities="${applicationId}.provider"

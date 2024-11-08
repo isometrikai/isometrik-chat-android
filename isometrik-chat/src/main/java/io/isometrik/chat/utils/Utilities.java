@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -101,5 +102,24 @@ public class Utilities {
             }
         }
         return allPermissionsGranted;
+    }
+
+    //permission array for storage in android build below 13
+    public static String[] storagePermissions = {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+    };
+
+    //permission array for storage in android build above 12
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
+    public static String[] storagePermissions33 = {
+            Manifest.permission.READ_MEDIA_IMAGES,
+            Manifest.permission.READ_MEDIA_AUDIO,
+            Manifest.permission.READ_MEDIA_VIDEO
+    };
+
+    //to get array of storage pemission
+    public static String[] getStoragePermissions() {
+        return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) ? storagePermissions33 : storagePermissions;
     }
 }

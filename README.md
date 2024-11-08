@@ -26,7 +26,7 @@ Open your build.gradle file (app-level) and add the following line in the depend
 
 ```groovy
 dependencies {
-    implementation 'com.github.isometrikai:isometrik-chat-android:1.1.7'
+    implementation 'com.github.isometrikai:isometrik-chat-android:1.2.3'
 }
 ```
 ### Step 3: Sync Your Project
@@ -157,18 +157,54 @@ start new conversation from any action in your project
 
 # Customization
 
-## Open a Custom Activity from Your Module
+## Handle a Custom Activity from Your Module
 
-To open a new screen for creating a new conversation when clicking the "+" (plus) icon, you can add addClickListeners(). Below is an example of how to add ClickListener:
+To open a new screen for app module used below click listeners.
 
 ```kotlin
 
-  IsometrikChatSdk.getInstance().addClickListeners(object : ChatActionsClickListener{
-            override fun onNewChatIconClicked() {
-               val i = Intent(this,NewChatActivity::class.java)
-                startActivity(i)
-            }
-        })
+  IsometrikChatSdk.getInstance().addClickListeners(object : ChatActionsClickListener {
+
+              override fun onCreateChatIconClicked(isGroup: Boolean) {
+              // here default screen mentioned from SDK. We can respected screen from here.
+                  if (isGroup) {
+                        val i = Intent(
+                          this,
+                          io.isometrik.ui.conversations.newconversation.group.NewGroupConversationActivity::class.java
+                      )
+                      i.putExtra("conversationType", ConversationType.PrivateConversation.value)
+                      startActivity(i)
+                  } else {
+                      val i = Intent(
+                          this,
+                          io.isometrik.ui.conversations.newconversation.onetoone.NewOneToOneConversationActivity::class.java
+                      )
+                      startActivity(i)
+                  }
+
+              }
+
+              override fun onBlockStatusUpdate(isBlocked: Boolean, userId: String) {
+              }
+
+              override fun onCallClicked(
+                  isAudio: Boolean,
+                  userId: String,
+                  meetingDescription: String,
+                  opponentName: String,
+                  opponentImageUrl: String
+              ) {
+
+              }
+
+              override fun onSharedPostClick(postId: String) {
+
+              }
+
+              override fun onViewSocialProfileClick(userId: String) {
+
+              }
+          })
 
 ```
 ### Change the Base Color

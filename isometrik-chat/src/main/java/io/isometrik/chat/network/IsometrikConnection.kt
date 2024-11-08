@@ -117,7 +117,9 @@ class IsometrikConnection(private var isometrikInstance: Isometrik) {
                 if (throwable != null) {
                     // handle failure
                     Log.d(ISOMETRIK_MQTT_TAG, "Connection failed due to $throwable")
-                    scheduleReconnect(username, password)
+                    if(throwable.message?.contains("already connected") != true){
+                        scheduleReconnect(username, password)
+                    }
                 } else {
                     // matt connected
                     if (isometrikInstance.configuration.realtimeEventsVerbosity

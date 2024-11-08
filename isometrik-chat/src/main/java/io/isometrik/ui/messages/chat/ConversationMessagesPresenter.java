@@ -277,6 +277,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
 
         MessagesModel messageModel = null;
 
+
         if (uploadMediaRequired) {
             Map<String, Map<String, String>> mediaDetailsMap = new HashMap<>();
             for (int i = 0; i < mediaPaths.size(); i++) {

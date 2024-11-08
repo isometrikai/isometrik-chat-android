@@ -57,7 +57,7 @@ public class MessagesModel implements Serializable {
     }
 
     //For messages search
-    private boolean online, privateOneToOne, messagingDisabled;
+    private boolean online, privateOneToOne, messagingDisabled, highlight;
     private String conversationTitle, conversationImageUrl, conversationId;
 
     /**
@@ -308,6 +308,7 @@ public class MessagesModel implements Serializable {
     private String attachmentName;
     private boolean forwardedMessage;
     private String forwardedMessageNotes;
+    private JSONObject metaData;
 
     /**
      * Is forwarded message boolean.
@@ -376,6 +377,7 @@ public class MessagesModel implements Serializable {
                     originalReplyMessageUtil.getOriginalMessagePlaceholderImage();
             originalMessageAttachmentUrl =
                     originalReplyMessageUtil.getOriginalMessageAttachmentUrl();
+            parentMessageId = originalReplyMessageUtil.getParentMessageId();
         }
 
         if (sticker) {
@@ -475,6 +477,7 @@ public class MessagesModel implements Serializable {
             originalMessageTime = originalReplyMessageUtil.getGetOriginalMessageTime();
             originalMessagePlaceholderImage =
                     originalReplyMessageUtil.getOriginalMessagePlaceholderImage();
+            parentMessageId = originalReplyMessageUtil.getParentMessageId();
         }
         this.mediaSizeInMB = mediaSizeInMB;
         this.isDownloaded = isDownloaded;
@@ -710,6 +713,7 @@ public class MessagesModel implements Serializable {
     private String originalMessageTime;
     private Integer originalMessagePlaceholderImage;
     private String originalMessageAttachmentUrl;
+    private String parentMessageId;
 
     /**
      * Is quoted message boolean.
@@ -758,6 +762,14 @@ public class MessagesModel implements Serializable {
 
     public String getOriginalMessageAttachmentUrl() {
         return originalMessageAttachmentUrl;
+    }
+
+    public String getParentMessageId() {
+        return parentMessageId;
+    }
+
+    public void setParentMessageId(String parentMessageId) {
+        this.parentMessageId = parentMessageId;
     }
 
     ////Attachment details
@@ -1199,6 +1211,7 @@ public class MessagesModel implements Serializable {
             originalMessageTime = originalReplyMessageUtil.getGetOriginalMessageTime();
             originalMessagePlaceholderImage =
                     originalReplyMessageUtil.getOriginalMessagePlaceholderImage();
+            parentMessageId = originalReplyMessageUtil.getParentMessageId();
         }
 
         this.latitude = latitude;
@@ -1282,6 +1295,7 @@ public class MessagesModel implements Serializable {
             originalMessageTime = originalReplyMessageUtil.getGetOriginalMessageTime();
             originalMessagePlaceholderImage =
                     originalReplyMessageUtil.getOriginalMessagePlaceholderImage();
+            parentMessageId = originalReplyMessageUtil.getParentMessageId();
         }
         this.contactName = contactName;
         this.contactIdentifier = contactIdentifier;
@@ -1321,6 +1335,13 @@ public class MessagesModel implements Serializable {
         } catch (JSONException e) {
             this.contactList = new JSONArray();
         }
+    }
+
+    /**
+     * get Metadata
+     * */
+    public JSONObject getMetaData() {
+        return metaData;
     }
 
     /**
@@ -1373,6 +1394,7 @@ public class MessagesModel implements Serializable {
         this.sentAt = messageTime;
         this.messageTime = TimeUtil.formatTimestampToBothDateAndTime(messageTime);
         this.isQuotedMessage = isQuotedMessage;
+        this.metaData = messageMetadata;
 
         if (isQuotedMessage) {
             originalMessageSenderName = originalReplyMessageUtil.getOriginalMessageSenderName();
@@ -1382,6 +1404,7 @@ public class MessagesModel implements Serializable {
                     originalReplyMessageUtil.getOriginalMessagePlaceholderImage();
             originalMessageAttachmentUrl =
                     originalReplyMessageUtil.getOriginalMessageAttachmentUrl();
+            parentMessageId = originalReplyMessageUtil.getParentMessageId();
         }
         this.mediaSizeInMB = mediaSizeInMB;
         this.isDownloaded = isDownloaded;
@@ -1390,7 +1413,7 @@ public class MessagesModel implements Serializable {
         this.isUploading = isUploading;
         switch (customMessageType) {
             case PhotoReceived:
-            case PhotoSent: {
+            case PhotoSent, PostReceived, PostSent: {
                 this.photoThumbnailUrl = thumbnailUrl;
                 this.photoMainUrl = mainUrl;
                 break;
@@ -1489,6 +1512,7 @@ public class MessagesModel implements Serializable {
             originalMessagePlaceholderImage =
                     originalReplyMessageUtil.getOriginalMessagePlaceholderImage();
             originalMessageAttachmentUrl = originalReplyMessageUtil.getOriginalMessageAttachmentUrl();
+            parentMessageId = originalReplyMessageUtil.getParentMessageId();
         }
         this.textMessage = textMessage;
         if (senderName == null || senderName.isEmpty()) {

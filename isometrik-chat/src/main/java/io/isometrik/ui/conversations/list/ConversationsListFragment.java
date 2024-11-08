@@ -18,6 +18,7 @@ import io.isometrik.chat.enums.ConversationType;
 import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmFragmentConversationsBinding;
 import io.isometrik.ui.IsometrikChatSdk;
+import io.isometrik.ui.conversations.newconversation.type.SelectConversationTypeBottomSheet;
 import io.isometrik.ui.messages.chat.ConversationMessagesActivity;
 import io.isometrik.chat.utils.AlertProgress;
 import io.isometrik.chat.utils.RecyclerItemClickListener;
@@ -155,8 +156,9 @@ public class ConversationsListFragment extends Fragment implements Conversations
     ismFragmentConversationsBinding.refresh.setOnRefreshListener(
         () -> fetchConversations(false, null, true, true));
     ismFragmentConversationsBinding.ivAdd.setOnClickListener(v -> {
+      SelectConversationTypeBottomSheet bottomSheet = new SelectConversationTypeBottomSheet();
+      bottomSheet.show(requireActivity().getSupportFragmentManager(), "SelectConversationTypeBottomSheet");
 
-      IsometrikChatSdk.getInstance().getChatActionsClickListener().onNewChatIconClicked();
     });
 
 

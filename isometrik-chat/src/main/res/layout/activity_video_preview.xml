@@ -1,0 +1,43 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivNext"
+        android:layout_width="@dimen/ism_dp_60"
+        android:layout_height="@dimen/ism_dp_60"
+        android:layout_margin="@dimen/ism_dp_30"
+        android:background="@drawable/ism_create_conversation_circle"
+        app:srcCompat="@drawable/ism_ic_arrow_back"
+        android:padding="@dimen/ism_dp_18"
+        android:rotation="180"
+        android:clickable="true"
+        android:focusable="true"
+        android:tint="@color/ism_white"
+        android:elevation="@dimen/ism_dp_5"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        />
+
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/ibBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:background="@android:color/transparent"
+        android:padding="@dimen/ism_dp_16"
+        android:tint="@color/ism_black"
+        app:srcCompat="@drawable/ism_ic_arrow_back"
+        />
+</RelativeLayout>
