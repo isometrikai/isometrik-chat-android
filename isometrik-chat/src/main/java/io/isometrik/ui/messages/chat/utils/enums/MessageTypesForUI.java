@@ -117,7 +117,27 @@ public enum MessageTypesForUI {
   /**
    * Replay received message types for ui.
    */
-  ReplayReceived(22);
+  ReplayReceived(22),
+  /**
+   * post sent message types for ui.
+   */
+  PostSent(23),
+  /**
+   * post received message types for ui.
+   */
+  PostReceived(24),
+  /**
+   * post sent record types for ui.
+   */
+  PostRecord(25),
+  /**
+   * Camera photo sent message types for ui.
+   */
+  CameraPhoto(26),
+  /**
+   * Record Video sent message types for ui.
+   */
+  RecordVideo(27);
 
   private final int value;
 

@@ -117,7 +117,7 @@ import org.json.JSONObject;
  * message or various actions in conversation, initiate/cancel of upload/download media message,
  * copy text messages, send typing message.
  */
-public class ConversationMessagesActivity extends AppCompatActivity implements ConversationMessagesContract.View, ReactionClickListener, MediaTypeToBeSharedCallback, MediaSelectedToBeShared, MessageActionCallback, TaggedUserCallback {
+public class ConversationMessagesActivity extends AppCompatActivity implements ConversationMessagesContract.View, ReactionClickListener, MediaTypeToBeSharedCallback, MediaSelectedToBeShared, MessageActionCallback, TaggedUserCallback, ConversationMessagesAdapter.OnScrollToMessageListener {
 
     private ConversationMessagesContract.Presenter conversationMessagesPresenter;
     private IsmActivityMessagesBinding ismActivityMessagesBinding;
@@ -189,7 +189,7 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
 
         messagesLayoutManager = new LinearLayoutManager(this);
         ismActivityMessagesBinding.rvMessages.setLayoutManager(messagesLayoutManager);
-        conversationMessagesAdapter = new ConversationMessagesAdapter(this, messages, this, messagingDisabled, joiningAsObserver);
+        conversationMessagesAdapter = new ConversationMessagesAdapter(this, messages, this, messagingDisabled, joiningAsObserver,this);
         ismActivityMessagesBinding.rvMessages.setAdapter(conversationMessagesAdapter);
         ismActivityMessagesBinding.rvMessages.addOnScrollListener(messagesRecyclerViewOnScrollListener);
 
@@ -1638,6 +1638,7 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
     @Override
     public void sendReplyMessage(String messageId, String replyMessage, JSONObject replyMessageDetails) {
 
+
         conversationMessagesPresenter.shareMessage(RemoteMessageTypes.ReplyMessage, messageId, new OriginalReplyMessageUtil(messageId, replyMessageDetails),
 
                 CustomMessageTypes.Replay.getValue(), replyMessage, false, true, true, true, null, replyMessageDetails, null, MessageTypesForUI.ReplaySent, null, false, null, null);
@@ -2217,5 +2218,22 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
     protected void onPause() {
         super.onPause();
         conversationMessagesPresenter.setActiveInConversation(false);
+    }
+
+    @Override
+    public void onScrollToParentMessage(String messageId) {
+        int position = getPositionById(messageId);
+        if (position != -1) {
+            ismActivityMessagesBinding.rvMessages.smoothScrollToPosition(position);
+        }
+    }
+
+    private int getPositionById(String messageId) {
+        for (int i = 0; i < messages.size(); i++) {
+            if (messages.get(i).getMessageId().equals(messageId)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

@@ -19,7 +19,7 @@ class SplashActivity : AppCompatActivity() {
         }
         startActivity(intent)
 
-        IsometrikChatSdk.getInstance().addClickListeners(object : ChatActionsClickListener{
+        IsometrikChatSdk.getInstance().addClickListeners(object : ChatActionsClickListener {
             override fun onNewChatIconClicked() {
                val i = Intent(this@SplashActivity,NewChatActivity::class.java)
                 startActivity(i)
@@ -36,6 +36,10 @@ class SplashActivity : AppCompatActivity() {
                 opponentImageUrl: String
             ) {
 
+            }
+
+            override fun onSharedPostClick(postId: String) {
+                TODO("Not yet implemented")
             }
         })
 
