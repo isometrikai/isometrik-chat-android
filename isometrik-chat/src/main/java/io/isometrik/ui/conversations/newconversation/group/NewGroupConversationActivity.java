@@ -2,10 +2,16 @@ package io.isometrik.ui.conversations.newconversation.group;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
@@ -41,6 +47,9 @@ import io.isometrik.chat.utils.RecyclerItemClickListener;
 import io.isometrik.chat.utils.Utilities;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import org.jetbrains.annotations.NotNull;
 
@@ -193,32 +202,7 @@ public class NewGroupConversationActivity extends AppCompatActivity
             }));
 
     ismActivityNewGroupConversationBinding.ivConversationImage.setOnClickListener(v -> {
-      if ((ContextCompat.checkSelfPermission(NewGroupConversationActivity.this,
-          Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-              || !Utilities.checkSelfExternalStoragePermissionIsGranted(NewGroupConversationActivity.this, false)
-         ) {
-
-        if ((ActivityCompat.shouldShowRequestPermissionRationale(NewGroupConversationActivity.this,
-            Manifest.permission.CAMERA))
-                || Utilities.shouldShowExternalPermissionStorageRational(NewGroupConversationActivity.this,false)
-        ) {
-          Snackbar snackbar = Snackbar.make(ismActivityNewGroupConversationBinding.rlParent,
-              R.string.ism_permission_image_capture, Snackbar.LENGTH_INDEFINITE)
-              .setAction(getString(R.string.ism_ok), view1 -> requestPermissions());
-
-          snackbar.show();
-
-          ((TextView) snackbar.getView()
-              .findViewById(com.google.android.material.R.id.snackbar_text)).setGravity(
-              Gravity.CENTER_HORIZONTAL);
-        } else {
-
-          requestPermissions();
-        }
-      } else {
-
-        requestImageCapture();
-      }
+      showImageSelectionDialog();
     });
 
     ismActivityNewGroupConversationBinding.ivNext.setOnClickListener(v -> {
@@ -731,4 +715,132 @@ public class NewGroupConversationActivity extends AppCompatActivity
       });
     }
   }
+
+  private void showImageSelectionDialog() {
+    final CharSequence[] items = {getString(R.string.ism_take_photo), getString(R.string.ism_choose_from_library), getString(R.string.ism_attachments_cancel)};
+    AlertDialog.Builder builder = new AlertDialog.Builder(NewGroupConversationActivity.this);
+    builder.setTitle(getString(R.string.ism_add_photo));
+    builder.setItems(items, (dialog, item) -> {
+      if (items[item].equals(getString(R.string.ism_take_photo))) {
+        checkCameraPermissionAndCapture();
+      } else if (items[item].equals(getString(R.string.ism_choose_from_library))) {
+        checkGalleryPermissionAndPick();
+      } else if (items[item].equals(getString(R.string.ism_cancel))) {
+        dialog.dismiss();
+      }
+    });
+    builder.show();
+  }
+
+  private void checkCameraPermissionAndCapture() {
+    if ((ContextCompat.checkSelfPermission(NewGroupConversationActivity.this,
+            Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+            || !Utilities.checkSelfExternalStoragePermissionIsGranted(NewGroupConversationActivity.this, false)
+    ) {
+      requestPermissions();
+    } else {
+      requestImageCapture();
+    }
+  }
+
+  private void checkGalleryPermissionAndPick() {
+    if (!Utilities.checkSelfExternalStoragePermissionIsGranted(NewGroupConversationActivity.this, false)) {
+      requestPermissions();
+    } else {
+      pickImageFromGallery();
+    }
+  }
+
+  private void pickImageFromGallery() {
+    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+    galleryActivityLauncher.launch(intent);
+  }
+
+  // Add this new ActivityResultLauncher
+  private ActivityResultLauncher<Intent> galleryActivityLauncher = registerForActivityResult(
+          new ActivityResultContracts.StartActivityForResult(),
+          result -> {
+            if (result.getResultCode() == Activity.RESULT_OK) {
+              if (result.getData() != null) {
+                Uri selectedImageUri = result.getData().getData();
+                handleSelectedImage(selectedImageUri);
+              }
+            }
+          }
+  );
+
+  private void handleSelectedImage(Uri imageUri) {
+    try {
+      String imagePath = getRealPathFromURI(imageUri);
+      imageFile = new File(imagePath);
+      displaySelectedImage();
+    } catch (Exception e) {
+      e.printStackTrace();
+      Toast.makeText(this, "Something went wrong!", Toast.LENGTH_LONG).show();
+    }
+  }
+
+  private String getRealPathFromURI(Uri uri) {
+    Context context = getApplicationContext();
+    ContentResolver contentResolver = context.getContentResolver();
+
+    // Try to get the display name
+    String displayName = getDisplayNameFromUri(uri, contentResolver);
+    if (displayName != null) {
+      // Create a file in the app's cache directory
+      File file = new File(context.getCacheDir(), displayName);
+      try {
+        // Copy the content from the URI to the file
+        InputStream inputStream = contentResolver.openInputStream(uri);
+        if (inputStream != null) {
+          try (FileOutputStream outputStream = new FileOutputStream(file)) {
+            byte[] buffer = new byte[4 * 1024]; // 4k buffer
+            int read;
+            while ((read = inputStream.read(buffer)) != -1) {
+              outputStream.write(buffer, 0, read);
+            }
+            outputStream.flush();
+          }
+          inputStream.close();
+        }
+        return file.getAbsolutePath();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+    return null;
+  }
+
+  private String getDisplayNameFromUri(Uri uri, ContentResolver contentResolver) {
+    String displayName = null;
+    Cursor cursor = null;
+    try {
+      cursor = contentResolver.query(uri, null, null, null, null);
+      if (cursor != null && cursor.moveToFirst()) {
+        int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+        if (nameIndex != -1) {
+          displayName = cursor.getString(nameIndex);
+        }
+      }
+    } finally {
+      if (cursor != null) {
+        cursor.close();
+      }
+    }
+    return displayName != null ? displayName : "temp_" + System.currentTimeMillis();
+  }
+
+  private void displaySelectedImage() {
+    ismActivityNewGroupConversationBinding.ivConversationImage.setPadding(0, 0, 0, 0);
+    try {
+      Glide.with(this)
+              .load(imageFile.getAbsolutePath())
+              .transform(new CircleCrop())
+              .into(ismActivityNewGroupConversationBinding.ivConversationImage);
+    } catch (IllegalArgumentException | NullPointerException ignore) {
+    }
+    ismActivityNewGroupConversationBinding.ivRemoveConversationImage.setVisibility(View.VISIBLE);
+  }
+
+
 }

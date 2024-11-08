@@ -38,21 +38,22 @@
             android:background="@drawable/ism_background_attachment_icons"
             android:padding="@dimen/ism_dp_10"
             app:srcCompat="@drawable/ism_ic_private_onetoone"
+            android:visibility="invisible"
             />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvPrivateOneToOne"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/ivPrivateOneToOne"
             android:ellipsize="end"
             android:maxLines="1"
+            android:layout_centerInParent="true"
             android:paddingStart="@dimen/ism_dp_5"
             android:singleLine="true"
             android:text="@string/ism_new_private_onetoone_conversation"
             android:textColor="@color/ism_black"
             android:textStyle="bold"
+            android:gravity="center"
             tools:ignore="RtlSymmetry"
             />
       </RelativeLayout>
@@ -81,14 +82,14 @@
             android:background="@drawable/ism_background_attachment_icons"
             android:padding="@dimen/ism_dp_10"
             app:srcCompat="@drawable/ism_ic_private_group"
+            android:visibility="invisible"
             />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvPrivateGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/ivPrivateGroup"
+            android:layout_centerInParent="true"
             android:ellipsize="end"
             android:maxLines="1"
             android:paddingStart="@dimen/ism_dp_5"
@@ -105,6 +106,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_below="@+id/rlPrivateGroup"
+          android:visibility="gone"
           >
         <!--  PublicGroup-->
         <View
@@ -148,6 +150,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_below="@+id/rlPublicGroup"
+          android:visibility="gone"
           >
         <!--  Open-->
         <View
@@ -192,6 +195,7 @@
       android:layout_width="match_parent"
       android:layout_height="?attr/actionBarSize"
       style="@style/ThemeOverlay.AppCompat.ActionBar"
+      android:visibility="gone"
       >
     <RelativeLayout
         android:layout_width="match_parent"

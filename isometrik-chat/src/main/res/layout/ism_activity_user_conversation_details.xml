@@ -149,11 +149,36 @@
         android:layout_height="match_parent">
 
       <RelativeLayout
-          android:id="@+id/rlSendMessage"
+          android:id="@+id/rlViewSocialProfile"
           android:layout_width="match_parent"
           android:layout_height="@dimen/ism_dp_48"
           android:layout_marginStart="@dimen/ism_dp_8"
           android:layout_marginTop="@dimen/ism_dp_13"
+          >
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ism_view_social_profile"
+            android:textStyle="bold"
+            android:textColor="@color/ism_black"
+            android:layout_centerVertical="true"
+            android:drawableStart="@drawable/ism_ic_send_message"
+            android:drawablePadding="@dimen/ism_dp_13"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ism_dp_1"
+            android:layout_alignParentBottom="true"
+            android:background="@color/ism_line_gray"
+            />
+      </RelativeLayout>
+      <RelativeLayout
+          android:id="@+id/rlSendMessage"
+          android:layout_width="match_parent"
+          android:layout_below="@+id/rlViewSocialProfile"
+          android:layout_height="@dimen/ism_dp_48"
+          android:layout_marginStart="@dimen/ism_dp_8"
           >
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -204,6 +229,7 @@
           android:id="@+id/rlNewPrivateGroupConversation"
           android:layout_below="@+id/rlSearchInConversation"
           android:layout_width="match_parent"
+          android:visibility="gone"
           android:layout_height="@dimen/ism_dp_48"
           android:layout_marginStart="@dimen/ism_dp_8"
           >
@@ -234,6 +260,7 @@
           android:id="@+id/rlNewPublicConversation"
           android:layout_below="@+id/rlNewPrivateGroupConversation"
           android:layout_width="match_parent"
+          android:visibility="gone"
           android:layout_height="@dimen/ism_dp_48"
           android:layout_marginStart="@dimen/ism_dp_8"
           >
@@ -264,6 +291,7 @@
           android:id="@+id/rlNewOpenConversation"
           android:layout_below="@+id/rlNewPublicConversation"
           android:layout_width="match_parent"
+          android:visibility="gone"
           android:layout_height="@dimen/ism_dp_48"
           android:layout_marginStart="@dimen/ism_dp_8"
           >

@@ -37,22 +37,6 @@ public class PreviewVideoActivity extends AppCompatActivity {
     } catch (IllegalArgumentException | NullPointerException ignore) {
     }
 
-    ////Creating MediaController
-    //MediaController mediaController = new MediaController(this);
-    //mediaController.setAnchorView(ismActivityPreviewVideoBinding.vvPreviewVideo);
-    //
-    ////specify the location of media file
-    //Uri uri = Uri.parse(getIntent().getStringExtra("videoMainUrl"));
-    //
-    ////Setting MediaController and URI, then starting the videoView
-    //ismActivityPreviewVideoBinding.vvPreviewVideo.setMediaController(mediaController);
-    //ismActivityPreviewVideoBinding.vvPreviewVideo.setVideoURI(uri);
-    //ismActivityPreviewVideoBinding.vvPreviewVideo.requestFocus();
-    //ismActivityPreviewVideoBinding.vvPreviewVideo.setOnPreparedListener(mp -> {
-    //  ismActivityPreviewVideoBinding.vvPreviewVideo.start();
-    //  ismActivityPreviewVideoBinding.ivCoverImage.setVisibility(View.GONE);
-    //});
-
     ismActivityPreviewVideoBinding.ibClose.setOnClickListener(v -> supportFinishAfterTransition());
   }
 

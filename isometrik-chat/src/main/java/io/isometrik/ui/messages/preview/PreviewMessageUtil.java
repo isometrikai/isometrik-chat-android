@@ -19,6 +19,7 @@ import io.isometrik.ui.conversations.gallery.GalleryModel;
 import io.isometrik.ui.messages.chat.contactList.ContactsListActivity;
 import io.isometrik.ui.messages.chat.MessagesModel;
 import io.isometrik.ui.messages.preview.audio.PreviewAudioActivity;
+import io.isometrik.ui.messages.preview.image.PreviewImageActivity;
 import io.isometrik.ui.messages.preview.image.PreviewImagePopup;
 import io.isometrik.ui.messages.preview.video.PreviewVideoActivity;
 
@@ -221,9 +222,11 @@ public class PreviewMessageUtil {
                 .setMessage(activity.getString(R.string.ism_open_media_alert_message))
                 .setCancelable(true)
                 .setPositiveButton(activity.getString(R.string.ism_open_in_app), (dialog, id) -> {
-
                     dialog.cancel();
-                    new PreviewImagePopup().show(activity, mediaUrl);
+                    Intent intent = new Intent(activity, PreviewImageActivity.class);
+                    intent.putExtra("imageUrl", mediaUrl);
+
+                    activity.startActivity(intent);
                 })
                 .setNegativeButton(activity.getString(R.string.ism_open_in_other_apps), (dialog, id) -> {
                     dialog.cancel();

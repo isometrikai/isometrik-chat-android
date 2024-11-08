@@ -33,11 +33,19 @@ public class ShareMediaFragment extends BottomSheetDialogFragment {
   @Nullable
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
+                           @Nullable Bundle savedInstanceState) {
 
     ismBottomsheetAttachmentsBinding =
-        IsmBottomsheetAttachmentsBinding.inflate(inflater, container, false);
+            IsmBottomsheetAttachmentsBinding.inflate(inflater, container, false);
 
+    ismBottomsheetAttachmentsBinding.rlCamera.setOnClickListener(v -> {
+      dismissDialog();
+      mediaTypeToBeSharedCallback.onMediaTypeToBeSharedSelected(MessageTypesForUI.CameraPhoto);
+    });
+    ismBottomsheetAttachmentsBinding.rlVideoRecord.setOnClickListener(v -> {
+      dismissDialog();
+      mediaTypeToBeSharedCallback.onMediaTypeToBeSharedSelected(MessageTypesForUI.RecordVideo);
+    });
     ismBottomsheetAttachmentsBinding.rlPhotos.setOnClickListener(v -> {
       dismissDialog();
       mediaTypeToBeSharedCallback.onMediaTypeToBeSharedSelected(MessageTypesForUI.PhotoSent);

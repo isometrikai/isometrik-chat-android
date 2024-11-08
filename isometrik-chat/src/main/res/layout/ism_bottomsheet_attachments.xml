@@ -52,12 +52,121 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
+
+      <!--  Camera -->
+      <RelativeLayout
+          android:id="@+id/rlCamera"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          >
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ism_dp_1"
+            android:layout_alignStart="@+id/tvCameraDescription"
+            android:layout_below="@id/tvCameraDescription"
+            android:layout_marginTop="@dimen/ism_dp_15"
+            android:background="@color/ism_line_gray"
+            />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivCamera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/ism_dp_13"
+            android:background="@drawable/ism_background_attachment_icons"
+            android:padding="@dimen/ism_dp_10"
+            app:srcCompat="@drawable/ism_ic_camera"
+            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCameraDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvCameraHeading"
+            android:layout_toEndOf="@+id/ivCamera"
+            android:paddingStart="@dimen/ism_dp_5"
+            android:text="@string/ism_open_camera"
+            tools:ignore="RtlSymmetry"
+            android:textColor="@color/ism_attachment_gray"
+            android:maxLines="1"
+            android:ellipsize="end"
+            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCameraHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ism_dp_14"
+            android:layout_toEndOf="@+id/ivCamera"
+            android:paddingStart="@dimen/ism_dp_5"
+            android:text="@string/ism_camera"
+            android:textColor="@color/ism_black"
+            android:textStyle="bold"
+            tools:ignore="RtlSymmetry"
+            android:maxLines="1"
+            android:ellipsize="end"
+            />
+      </RelativeLayout>
+
+      <!--  Video -->
+      <RelativeLayout
+          android:id="@+id/rlVideoRecord"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/rlCamera"
+          >
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ism_dp_1"
+            android:layout_alignStart="@+id/tvRecordVideoDescription"
+            android:layout_below="@id/tvRecordVideoDescription"
+            android:layout_marginTop="@dimen/ism_dp_15"
+            android:background="@color/ism_line_gray"
+            />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivRecordVideo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/ism_dp_13"
+            android:background="@drawable/ism_background_attachment_icons"
+            android:padding="@dimen/ism_dp_10"
+            app:srcCompat="@drawable/ism_ic_video"
+            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvRecordVideoDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvRecordVideoHeading"
+            android:layout_toEndOf="@+id/ivRecordVideo"
+            android:paddingStart="@dimen/ism_dp_5"
+            android:text="@string/ism_open_camera"
+            tools:ignore="RtlSymmetry"
+            android:textColor="@color/ism_attachment_gray"
+            android:maxLines="1"
+            android:ellipsize="end"
+            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvRecordVideoHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ism_dp_14"
+            android:layout_toEndOf="@+id/ivRecordVideo"
+            android:paddingStart="@dimen/ism_dp_5"
+            android:text="@string/ism_record_video"
+            android:textColor="@color/ism_black"
+            android:textStyle="bold"
+            tools:ignore="RtlSymmetry"
+            android:maxLines="1"
+            android:ellipsize="end"
+            />
+      </RelativeLayout>
+
       <!--  Photos-->
       <RelativeLayout
           android:id="@+id/rlPhotos"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          >
+          android:layout_below="@+id/rlVideoRecord">
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/ism_dp_1"
@@ -160,10 +269,66 @@
       </RelativeLayout>
 
       <RelativeLayout
-          android:id="@+id/rlFiles"
+          android:id="@+id/rlRecordAudio"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_below="@+id/rlVideos"
+          android:visibility="gone"
+          >
+        <!--  Record-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ism_dp_1"
+            android:layout_alignStart="@+id/tvRecordDescription"
+            android:layout_below="@id/tvRecordDescription"
+            android:layout_marginTop="@dimen/ism_dp_15"
+            android:background="@color/ism_line_gray"
+            />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivRecord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/ism_dp_13"
+            android:background="@drawable/ism_background_attachment_icons"
+            android:padding="@dimen/ism_dp_10"
+            app:srcCompat="@drawable/ism_ic_recording"
+            app:tint="@color/ism_black"
+            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvRecordDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvRecordHeading"
+            android:layout_toEndOf="@+id/ivRecord"
+            android:paddingStart="@dimen/ism_dp_5"
+            android:text="@string/ism_share_recording"
+            tools:ignore="RtlSymmetry"
+            android:textColor="@color/ism_attachment_gray"
+            android:maxLines="1"
+            android:ellipsize="end"
+            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvRecordHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ism_dp_14"
+            android:layout_toEndOf="@+id/ivRecord"
+            android:paddingStart="@dimen/ism_dp_5"
+            android:text="@string/ism_audio_recording"
+            android:textColor="@color/ism_black"
+            android:textStyle="bold"
+            tools:ignore="RtlSymmetry"
+            android:maxLines="1"
+            android:ellipsize="end"
+            />
+      </RelativeLayout>
+
+      <RelativeLayout
+          android:id="@+id/rlFiles"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/rlRecordAudio"
           >
         <!--  File-->
         <View
@@ -326,6 +491,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_below="@+id/rlContact"
+          android:visibility="gone"
           >
         <!--  Whiteboard-->
         <View

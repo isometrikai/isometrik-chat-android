@@ -85,12 +85,16 @@
     <string name="ism_share_sticker">Share sticker</string>
     <string name="ism_share_gif">Share gif</string>
     <string name="ism_attachments_title">Attachments</string>
+    <string name="ism_open_camera">Open camera</string>
+    <string name="ism_camera">Camera</string>
+    <string name="ism_record_video">Record Video</string>
+    <string name="ism_share_recording">Share recording</string>
 
     <!-- New conversation activity -->
 
     <string name="ism_new_conversation_title">New Conversation</string>
-    <string name="ism_new_private_onetoone_conversation">New Private 1-to-1 Conversation</string>
-    <string name="ism_new_private_group_conversation">New Private Group Conversation</string>
+    <string name="ism_new_private_onetoone_conversation">One to One Conversation</string>
+    <string name="ism_new_private_group_conversation">Group Conversation</string>
     <string name="ism_new_public_group_conversation">New Public Conversation</string>
     <string name="ism_new_open_conversation">New Open Conversation</string>
 
@@ -615,5 +619,15 @@
 
     <string name="image_picker_provider_authority_suffix">.io.isometrik.samples.chat.provider</string>
     <string name="chats">Chats</string>
+    <string name="ism_view_social_profile">View Social Profile</string>
+    <string name="ism_take_photo">Take Photo</string>
+    <string name="ism_remove_photo">Remove photo</string>
+    <string name="ism_change_conversation_image">Change conversation image</string>
+    <string name="ism_choose_from_library">Choose from Library</string>
+    <string name="ism_invalid_image">Invalid image</string>
+    <string name="ism_image_selection_canceled">Image selection canceled</string>
+    <string name="ism_add_photo">Add Photo</string>
+    <string name="ism_remove_conversation_image">Remove conversation image</string>
+    <string name="ism_remove_conversation_image_confirm">Are you sure you want to remove the conversation image?</string>
 
 </resources>

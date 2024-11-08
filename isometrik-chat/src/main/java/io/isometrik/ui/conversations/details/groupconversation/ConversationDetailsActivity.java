@@ -4,7 +4,10 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -434,75 +437,9 @@ public class ConversationDetailsActivity extends AppCompatActivity
                 ismActivityConversationDetailsBinding.ivEditConversationImage.setOnClickListener(v -> {
 
                     if (editingImage) {
-                        if (imageFile != null && imageFile.exists()) {
-
-                            new AlertDialog.Builder(this).setTitle(
-                                            getString(R.string.ism_update_conversation_image_alert_heading))
-                                    .setMessage(getString(R.string.ism_update_conversation_image_alert_message))
-                                    .setCancelable(true)
-                                    .setPositiveButton(getString(R.string.ism_continue), (dialog, id) -> {
-
-                                        dialog.cancel();
-                                        conversationDetailsPresenter.requestImageUpload(
-                                                String.valueOf(System.currentTimeMillis()), conversationId,
-                                                imageFile.getAbsolutePath());
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                                        LayoutInflater inflater = getLayoutInflater();
-
-                                        //builder.setTitle(getString(R.string.ism_upload));
-                                        builder.setCancelable(false);
-                                        View dialogView = inflater.inflate(R.layout.ism_dialog_uploading_image, null);
-
-                                        builder.setView(dialogView);
-
-                                        uploadProgressDialog = builder.create();
-                                        circularProgressIndicator = dialogView.findViewById(R.id.pbUpload);
-
-                                        AppCompatButton btCancel = dialogView.findViewById(R.id.btCancel);
-
-                                        btCancel.setOnClickListener(v1 -> {
-                                            conversationDetailsPresenter.cancelConversationImageUpload();
-                                            uploadProgressDialog.dismiss();
-                                            circularProgressIndicator = null;
-                                        });
-
-                                        uploadProgressDialog.show();
-                                    })
-                                    .setNegativeButton(getString(R.string.ism_cancel),
-                                            (dialog, id) -> dialog.cancel())
-                                    .create()
-                                    .show();
-                        } else {
-                            Toast.makeText(this, R.string.ism_invalid_conversation_image, Toast.LENGTH_SHORT)
-                                    .show();
-                        }
+                        showImageUploadConfirmationDialog();
                     } else {
-                        if ((ContextCompat.checkSelfPermission(ConversationDetailsActivity.this,
-                                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-                                || !Utilities.checkSelfExternalStoragePermissionIsGranted(ConversationDetailsActivity.this, false)
-                        ) {
-
-                            if ((ActivityCompat.shouldShowRequestPermissionRationale(
-                                    ConversationDetailsActivity.this, Manifest.permission.CAMERA))
-                                    || Utilities.shouldShowExternalPermissionStorageRational(ConversationDetailsActivity.this,false)
-                                    ) {
-                                Snackbar snackbar = Snackbar.make(ismActivityConversationDetailsBinding.rlParent,
-                                                R.string.ism_permission_image_capture, Snackbar.LENGTH_INDEFINITE)
-                                        .setAction(getString(R.string.ism_ok), view1 -> requestPermissions());
-
-                                snackbar.show();
-
-                                ((TextView) snackbar.getView()
-                                        .findViewById(com.google.android.material.R.id.snackbar_text)).setGravity(
-                                        Gravity.CENTER_HORIZONTAL);
-                            } else {
-
-                                requestPermissions();
-                            }
-                        } else {
-
-                            requestImageCapture();
-                        }
+                        showImageOptionsDialog();
                     }
                 });
                 ismActivityConversationDetailsBinding.ivRemoveConversationImage.setOnClickListener(v -> {
@@ -918,6 +855,85 @@ public class ConversationDetailsActivity extends AppCompatActivity
         }
     }
 
+    private boolean checkAndRequestPermissions() {
+        ArrayList<String> permissionsRequired = new ArrayList<>();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            permissionsRequired.add(Manifest.permission.CAMERA);
+        }
+        if (!Utilities.checkSelfExternalStoragePermissionIsGranted(this, true)) {
+            permissionsRequired.addAll(Utilities.getPermissionsListForExternalStorage(true));
+        }
+
+        if (!permissionsRequired.isEmpty()) {
+            ActivityCompat.requestPermissions(this, permissionsRequired.toArray(new String[0]), 0);
+            return false;
+        }
+        return true;
+    }
+
+    private void openGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        galleryActivityLauncher.launch(intent);
+    }
+    // Add this ActivityResultLauncher for gallery
+    private ActivityResultLauncher<Intent> galleryActivityLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    if (result.getData() != null) {
+                        Uri selectedImage = result.getData().getData();
+                        String imagePath = getPathFromUri(selectedImage);
+                        if (imagePath != null) {
+                            imageFile = new File(imagePath);
+                            handleSelectedImage();
+                        } else {
+                            Toast.makeText(this, R.string.ism_invalid_image, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } else {
+                    Toast.makeText(this, R.string.ism_image_selection_canceled, Toast.LENGTH_SHORT).show();
+                }
+            }
+    );
+
+    private void requestImageUpload() {
+        conversationDetailsPresenter.requestImageUpload(
+                String.valueOf(System.currentTimeMillis()), conversationId,
+                imageFile.getAbsolutePath());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.ism_dialog_uploading_image, null);
+        builder.setView(dialogView);
+        builder.setCancelable(false);
+
+        uploadProgressDialog = builder.create();
+        circularProgressIndicator = dialogView.findViewById(R.id.pbUpload);
+
+        AppCompatButton btCancel = dialogView.findViewById(R.id.btCancel);
+        btCancel.setOnClickListener(v1 -> {
+            conversationDetailsPresenter.cancelConversationImageUpload();
+            uploadProgressDialog.dismiss();
+            circularProgressIndicator = null;
+        });
+
+        uploadProgressDialog.show();
+    }
+
+    private void removeConversationImage() {
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.ism_remove_conversation_image))
+                .setMessage(getString(R.string.ism_remove_conversation_image_confirm))
+                .setCancelable(true)
+                .setPositiveButton(getString(R.string.ism_continue), (dialog, id) -> {
+                    dialog.cancel();
+                    showProgressDialog(getString(R.string.ism_updating_conversation_image));
+                    conversationDetailsPresenter.updateConversationImage(conversationId, "");
+                })
+                .setNegativeButton(getString(R.string.ism_cancel), (dialog, id) -> dialog.cancel())
+                .create()
+                .show();
+    }
+
     private void deleteImage() {
 
         conversationDetailsPresenter.deleteImage(imageFile);
@@ -998,5 +1014,83 @@ public class ConversationDetailsActivity extends AppCompatActivity
                 }
             });
         }
+    }
+
+    private void showImageOptionsDialog() {
+        ArrayList<String> options = new ArrayList<>();
+        options.add(getString(R.string.ism_take_photo));
+        options.add(getString(R.string.ism_choose_from_library));
+        if (conversationImageUrl != null && !conversationImageUrl.isEmpty()) {
+            options.add(getString(R.string.ism_remove_photo));
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.ism_change_conversation_image));
+        builder.setItems(options.toArray(new String[0]), (dialog, which) -> {
+            switch (which) {
+                case 0: // Take a photo
+                    if (checkAndRequestPermissions()) {
+                        requestImageCapture();
+                    }
+                    break;
+                case 1: // Choose from library
+                    if (checkAndRequestPermissions()) {
+                        openGallery();
+                    }
+                    break;
+                case 2: // Remove photo
+                    if (conversationImageUrl != null && !conversationImageUrl.isEmpty()) {
+                        removeConversationImage();
+                    }
+                    break;
+            }
+        });
+        builder.show();
+    }
+
+    private void showImageUploadConfirmationDialog() {
+        if (imageFile != null && imageFile.exists()) {
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.ism_update_conversation_image_alert_heading))
+                    .setMessage(getString(R.string.ism_update_conversation_image_alert_message))
+                    .setCancelable(true)
+                    .setPositiveButton(getString(R.string.ism_continue), (dialog, id) -> {
+                        dialog.cancel();
+                        requestImageUpload();
+                    })
+                    .setNegativeButton(getString(R.string.ism_cancel), (dialog, id) -> dialog.cancel())
+                    .create()
+                    .show();
+        } else {
+            Toast.makeText(this, R.string.ism_invalid_conversation_image, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private String getPathFromUri(Uri uri) {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        if (cursor != null) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            String path = cursor.getString(column_index);
+            cursor.close();
+            return path;
+        }
+        return null;
+    }
+
+    private void handleSelectedImage() {
+        ismActivityConversationDetailsBinding.ivConversationImage.setPadding(0, 0, 0, 0);
+        try {
+            Glide.with(this)
+                    .load(imageFile.getAbsolutePath())
+                    .transform(new CircleCrop())
+                    .into(ismActivityConversationDetailsBinding.ivConversationImage);
+        } catch (IllegalArgumentException | NullPointerException ignore) {
+        }
+        ismActivityConversationDetailsBinding.ivEditConversationImage.setImageDrawable(
+                ContextCompat.getDrawable(this, R.drawable.ism_ic_done));
+        editingImage = true;
+        ismActivityConversationDetailsBinding.ivRemoveConversationImage.setVisibility(View.VISIBLE);
     }
 }
