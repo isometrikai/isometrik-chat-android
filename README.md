@@ -3,6 +3,11 @@
 
 A simple chat library for Android applications.
 
+<p float="left">
+  <img src="docs/1.png" width="200" />
+  <img src="docs/2.png" width="200" />
+</p>
+
 ## Adding it to your project
 
 To use this library in your Android project, follow the steps below to add the required dependency.
@@ -210,6 +215,8 @@ To open a new screen for app module used below click listeners.
 
 ## Add custom view in ChatList Screen
 
+Check default view [here](isometrik-chat/src/main/java/io/isometrik/ui/conversations/list/DefaultChatListItemBinder.kt)
+
 ```kotlin
 
      val customBinder = object : ChatListItemBinder<ConversationsModel, ChatItemBinding> {
@@ -256,8 +263,4 @@ Replace #YOUR_COLOR_HEX with your desired color value.
 * Kotlin version 1.9.23
 * One Signal version 5.1.21
 
-<p float="left">
-  <img src="docs/1.png" width="200" />
-  <img src="docs/2.png" width="200" />
-</p>
 
