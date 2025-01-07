@@ -26,7 +26,7 @@ Open your build.gradle file (app-level) and add the following line in the depend
 
 ```groovy
 dependencies {
-    implementation 'com.github.isometrikai:isometrik-chat-android:1.2.3'
+    implementation 'com.github.isometrikai:isometrik-chat-android:1.2.5'
 }
 ```
 ### Step 3: Sync Your Project
@@ -207,6 +207,31 @@ To open a new screen for app module used below click listeners.
           })
 
 ```
+
+## Add custom view in ChatList Screen
+
+```kotlin
+
+     val customBinder = object : ChatListItemBinder<ConversationsModel, ChatItemBinding> {
+            override fun createBinding(parent: ViewGroup): ChatItemBinding {
+                return ChatItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            }
+
+            override fun bindData(context: Context, binding: ChatItemBinding, data: ConversationsModel) {
+                binding.chatName.text = data.conversationTitle
+                binding.chatLastMessage.text = data.lastMessageSenderName
+
+            }
+        }
+
+        val chatFragment = ConversationsListFragment.newInstance(customBinder)
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, chatFragment)
+            .commit()
+
+```
+
 ### Change the Base Color
 
 To change the theme color of the module, add the following color name to your module's colors.xml file:
@@ -230,4 +255,9 @@ Replace #YOUR_COLOR_HEX with your desired color value.
 * JDK version 17
 * Kotlin version 1.9.23
 * One Signal version 5.1.21
+
+<p float="left">
+  <img src="docs/1.png" width="200" />
+  <img src="docs/2.png" width="200" />
+</p>
 
