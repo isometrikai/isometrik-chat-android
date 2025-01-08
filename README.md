@@ -3,6 +3,11 @@
 
 A simple chat library for Android applications.
 
+<p float="left">
+  <img src="docs/1.png" width="200" />
+  <img src="docs/2.png" width="200" />
+</p>
+
 ## Adding it to your project
 
 To use this library in your Android project, follow the steps below to add the required dependency.
@@ -26,7 +31,7 @@ Open your build.gradle file (app-level) and add the following line in the depend
 
 ```groovy
 dependencies {
-    implementation 'com.github.isometrikai:isometrik-chat-android:1.2.5'
+    implementation 'com.github.isometrikai:isometrik-chat-android:1.2.6'
 }
 ```
 ### Step 3: Sync Your Project
@@ -210,6 +215,8 @@ To open a new screen for app module used below click listeners.
 
 ## Add custom view in ChatList Screen
 
+Check default view [here](isometrik-chat/src/main/java/io/isometrik/ui/conversations/list/DefaultChatListItemBinder.kt)
+
 ```kotlin
 
      val customBinder = object : ChatListItemBinder<ConversationsModel, ChatItemBinding> {
@@ -229,6 +236,24 @@ To open a new screen for app module used below click listeners.
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, chatFragment)
             .commit()
+
+```
+
+## Add custom view for any type of Message in Chat Screen
+
+Check total message type of UI [here](isometrik-chat/src/main/java/io/isometrik/chat/utils/enums/MessageTypeUi.kt)
+
+```kotlin
+
+        MessageBinderRegistry.registerBinder(
+            ConversationMessagesAdapter.TEXT_MESSAGE_SENT,
+            CustomTextSentBinder()
+        )
+
+        MessageBinderRegistry.registerBinder(
+            ConversationMessagesAdapter.TEXT_MESSAGE_RECEIVED,
+            CustomTextSentBinder()
+        )
 
 ```
 
@@ -256,8 +281,4 @@ Replace #YOUR_COLOR_HEX with your desired color value.
 * Kotlin version 1.9.23
 * One Signal version 5.1.21
 
-<p float="left">
-  <img src="docs/1.png" width="200" />
-  <img src="docs/2.png" width="200" />
-</p>
 

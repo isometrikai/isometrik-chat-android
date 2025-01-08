@@ -1,0 +1,39 @@
+package io.isometrik.chat.utils.enums
+
+
+/**
+ * The enum MessageType for UI in conversation Screen.
+ */
+
+enum class MessageTypeUi(val value: Int) {
+    TEXT_MESSAGE_SENT(0),
+    PHOTO_MESSAGE_SENT(1),
+    VIDEO_MESSAGE_SENT(2),
+    AUDIO_MESSAGE_SENT(3),
+    FILE_MESSAGE_SENT(4),
+    STICKER_MESSAGE_SENT(5),
+    GIF_MESSAGE_SENT(6),
+    WHITEBOARD_MESSAGE_SENT(7),
+    LOCATION_MESSAGE_SENT(8),
+    CONTACT_MESSAGE_SENT(9),
+    TEXT_MESSAGE_RECEIVED(10),
+    PHOTO_MESSAGE_RECEIVED(11),
+    VIDEO_MESSAGE_RECEIVED(12),
+    AUDIO_MESSAGE_RECEIVED(13),
+    FILE_MESSAGE_RECEIVED(14),
+    STICKER_MESSAGE_RECEIVED(15),
+    GIF_MESSAGE_RECEIVED(16),
+    WHITEBOARD_MESSAGE_RECEIVED(17),
+    LOCATION_MESSAGE_RECEIVED(18),
+    CONTACT_MESSAGE_RECEIVED(19),
+    CONVERSATION_ACTION_MESSAGE(20),
+    REPLAY_MESSAGE_SENT (21),
+    POST_MESSAGE_SENT(23),
+    POST_MESSAGE_RECEIVED(24);
+
+    companion object {
+        fun fromValue(value: Int): MessageTypeUi {
+            return values().find { it.value == value }?:CONVERSATION_ACTION_MESSAGE
+        }
+    }
+}

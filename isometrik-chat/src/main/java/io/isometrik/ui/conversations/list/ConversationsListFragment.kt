@@ -440,7 +440,7 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
     override fun updateLastMessageInConversation(
         conversationId: String, lastMessageText: String,
         lastMessageSendersProfileImageUrl: String, lastMessageTime: String,
-        lastMessagePlaceHolderImage: Int, lastMessageWasReactionMessage: Boolean,
+        lastMessagePlaceHolderImage: Int?, lastMessageWasReactionMessage: Boolean,
         updateUnreadMessagesCount: Boolean, lastMessageSendersName: String,
         fetchRemoteConversationIfNotFoundLocally: Boolean
     ) {
@@ -480,7 +480,7 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
     }
 
     override fun onConversationSettingsUpdated(
-        conversationId: String, typingEvents: Boolean?,
+        conversationId: String, typingEvents: Boolean,
         readEvents: Boolean?
     ) {
         val position =
