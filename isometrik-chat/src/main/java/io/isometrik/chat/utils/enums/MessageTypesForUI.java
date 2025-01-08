@@ -1,4 +1,4 @@
-package io.isometrik.ui.messages.chat.utils.enums;
+package io.isometrik.chat.utils.enums;
 
 /**
  * The enum Message types for ui.

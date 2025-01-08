@@ -1,112 +1,126 @@
-package io.isometrik.ui.messages.chat;
+package io.isometrik.ui.messages.chat
 
-import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.PorterDuff;
-import android.graphics.Typeface;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.provider.ContactsContract;
-import android.provider.Settings;
-import android.text.Editable;
-import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.TextWatcher;
-import android.text.style.StyleSpan;
-import android.view.Gravity;
-import android.view.MenuInflater;
-import android.view.View;
-import android.widget.PopupMenu;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.material.snackbar.Snackbar;
-
-import io.isometrik.chat.enums.AttachmentMessageType;
-import io.isometrik.chat.enums.PresignedUrlMediaTypes;
-import io.isometrik.chat.response.message.utils.schemas.Attachment;
-import io.isometrik.chat.utils.AlertProgress;
-import io.isometrik.chat.utils.FileUriUtils;
-import io.isometrik.ui.IsometrikChatSdk;
-import io.isometrik.chat.R;
-import io.isometrik.ui.camera.CameraActivity;
-import io.isometrik.ui.camera.VideoRecordingActivity;
-import io.isometrik.ui.conversations.details.observers.ObserversActivity;
-import io.isometrik.chat.databinding.IsmActivityMessagesBinding;
-import io.isometrik.ui.messages.action.MessageActionCallback;
-import io.isometrik.ui.messages.action.MessageActionFragment;
-import io.isometrik.ui.messages.action.edit.EditMessageFragment;
-import io.isometrik.ui.messages.action.replies.SendMessageReplyFragment;
-import io.isometrik.ui.messages.chat.utils.attachmentutils.PrepareAttachmentHelper;
-import io.isometrik.ui.messages.chat.utils.enums.MessageTypesForUI;
-import io.isometrik.ui.messages.chat.utils.enums.RemoteMessageTypes;
-import io.isometrik.ui.messages.chat.utils.messageutils.ContactUtil;
-import io.isometrik.ui.messages.chat.utils.messageutils.MultipleMessagesUtil;
-import io.isometrik.ui.messages.chat.utils.messageutils.OriginalReplyMessageUtil;
-import io.isometrik.ui.messages.deliverystatus.MessageDeliveryStatusActivity;
-import io.isometrik.ui.messages.forward.ForwardMessageActivity;
-import io.isometrik.ui.messages.media.MediaSelectedToBeShared;
-import io.isometrik.ui.messages.media.MediaTypeToBeSharedCallback;
-import io.isometrik.ui.messages.media.ShareMediaFragment;
-import io.isometrik.ui.messages.media.audio.record.listeners.OnRecordListener;
-import io.isometrik.ui.messages.media.audio.util.AudioFileUtil;
-import io.isometrik.ui.messages.media.gifs.GifsFragment;
-import io.isometrik.ui.messages.media.location.LocationUtils;
-import io.isometrik.ui.messages.media.location.ShareLocationActivity;
-import io.isometrik.ui.messages.media.stickers.StickersFragment;
-import io.isometrik.ui.messages.media.whiteboard.WhiteboardFragment;
-import io.isometrik.ui.messages.preview.PreviewMessageUtil;
-import io.isometrik.ui.messages.reaction.add.AddReactionFragment;
-import io.isometrik.ui.messages.reaction.add.ReactionModel;
-import io.isometrik.ui.messages.reaction.list.FetchReactionUsersFragment;
-import io.isometrik.ui.messages.reaction.util.ReactionClickListener;
-import io.isometrik.ui.messages.tag.MemberDetailsFragment;
-import io.isometrik.ui.messages.tag.TagUserAdapter;
-import io.isometrik.ui.messages.tag.TagUserModel;
-import io.isometrik.ui.messages.tag.TaggedUserCallback;
-import io.isometrik.chat.utils.Constants;
-import io.isometrik.chat.utils.GalleryIntentsUtil;
-import com.bumptech.glide.Glide;
-import io.isometrik.chat.utils.KeyboardUtil;
-import io.isometrik.chat.utils.MentionedUserSpan;
-import io.isometrik.chat.utils.PlaceholderUtils;
-import io.isometrik.chat.utils.RecyclerItemClickListener;
-import io.isometrik.chat.utils.TagUserUtil;
-import io.isometrik.chat.utils.TimeUtil;
-import io.isometrik.chat.utils.Utilities;
-import io.isometrik.chat.utils.enums.CustomMessageTypes;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
-import org.jetbrains.annotations.NotNull;
-import org.json.JSONObject;
+import android.Manifest
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.DialogInterface
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.PorterDuff
+import android.graphics.Typeface
+import android.net.Uri
+import android.os.Build
+import android.os.Bundle
+import android.os.Handler
+import android.provider.ContactsContract
+import android.provider.Settings
+import android.text.Editable
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.TextWatcher
+import android.text.style.StyleSpan
+import android.view.Gravity
+import android.view.MenuItem
+import android.view.View
+import android.widget.PopupMenu
+import android.widget.RelativeLayout
+import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.material.snackbar.Snackbar
+import io.isometrik.chat.R
+import io.isometrik.chat.databinding.IsmActivityMessagesBinding
+import io.isometrik.chat.enums.AttachmentMessageType
+import io.isometrik.chat.enums.PresignedUrlMediaTypes
+import io.isometrik.chat.utils.AlertProgress
+import io.isometrik.chat.utils.Constants
+import io.isometrik.chat.utils.FileUriUtils.getRealPath
+import io.isometrik.chat.utils.GalleryIntentsUtil
+import io.isometrik.chat.utils.KeyboardUtil
+import io.isometrik.chat.utils.MentionedUserSpan
+import io.isometrik.chat.utils.PlaceholderUtils
+import io.isometrik.chat.utils.RecyclerItemClickListener
+import io.isometrik.chat.utils.TagUserUtil
+import io.isometrik.chat.utils.TimeUtil
+import io.isometrik.chat.utils.Utilities
+import io.isometrik.chat.utils.enums.CustomMessageTypes
+import io.isometrik.chat.utils.enums.MessageTypeUi
+import io.isometrik.ui.IsometrikChatSdk
+import io.isometrik.ui.camera.CameraActivity
+import io.isometrik.ui.camera.VideoRecordingActivity
+import io.isometrik.ui.conversations.details.observers.ObserversActivity
+import io.isometrik.ui.messages.action.MessageActionCallback
+import io.isometrik.ui.messages.action.MessageActionFragment
+import io.isometrik.ui.messages.action.edit.EditMessageFragment
+import io.isometrik.ui.messages.action.replies.SendMessageReplyFragment
+import io.isometrik.ui.messages.chat.ConversationMessagesAdapter.OnScrollToMessageListener
+import io.isometrik.ui.messages.chat.messageBinders.AudioReceivedBinder
+import io.isometrik.ui.messages.chat.messageBinders.AudioSentBinder
+import io.isometrik.ui.messages.chat.messageBinders.ContactReceivedBinder
+import io.isometrik.ui.messages.chat.messageBinders.ContactSentBinder
+import io.isometrik.ui.messages.chat.messageBinders.ConversationActionBinder
+import io.isometrik.ui.messages.chat.messageBinders.FileReceivedBinder
+import io.isometrik.ui.messages.chat.messageBinders.FileSentBinder
+import io.isometrik.ui.messages.chat.messageBinders.GifReceivedBinder
+import io.isometrik.ui.messages.chat.messageBinders.GifSentBinder
+import io.isometrik.ui.messages.chat.messageBinders.LocationReceivedBinder
+import io.isometrik.ui.messages.chat.messageBinders.LocationSentBinder
+import io.isometrik.ui.messages.chat.messageBinders.PhotoReceivedBinder
+import io.isometrik.ui.messages.chat.messageBinders.PhotoSentBinder
+import io.isometrik.ui.messages.chat.messageBinders.PostReceivedBinder
+import io.isometrik.ui.messages.chat.messageBinders.PostSentBinder
+import io.isometrik.ui.messages.chat.messageBinders.StickerReceivedBinder
+import io.isometrik.ui.messages.chat.messageBinders.StickerSentBinder
+import io.isometrik.ui.messages.chat.messageBinders.TextReceivedBinder
+import io.isometrik.ui.messages.chat.messageBinders.TextSentBinder
+import io.isometrik.ui.messages.chat.messageBinders.VideoReceivedBinder
+import io.isometrik.ui.messages.chat.messageBinders.VideoSentBinder
+import io.isometrik.ui.messages.chat.messageBinders.WhiteboardReceivedBinder
+import io.isometrik.ui.messages.chat.messageBinders.WhiteboardSentBinder
+import io.isometrik.ui.messages.chat.utils.attachmentutils.PrepareAttachmentHelper
+import io.isometrik.chat.utils.enums.MessageTypesForUI
+import io.isometrik.ui.messages.chat.utils.enums.RemoteMessageTypes
+import io.isometrik.ui.messages.chat.utils.messageutils.ContactUtil
+import io.isometrik.ui.messages.chat.utils.messageutils.MultipleMessagesUtil
+import io.isometrik.ui.messages.chat.utils.messageutils.OriginalReplyMessageUtil
+import io.isometrik.ui.messages.deliverystatus.MessageDeliveryStatusActivity
+import io.isometrik.ui.messages.forward.ForwardMessageActivity
+import io.isometrik.ui.messages.media.MediaSelectedToBeShared
+import io.isometrik.ui.messages.media.MediaTypeToBeSharedCallback
+import io.isometrik.ui.messages.media.ShareMediaFragment
+import io.isometrik.ui.messages.media.audio.record.listeners.OnRecordListener
+import io.isometrik.ui.messages.media.audio.util.AudioFileUtil
+import io.isometrik.ui.messages.media.gifs.GifsFragment
+import io.isometrik.ui.messages.media.location.LocationUtils
+import io.isometrik.ui.messages.media.location.ShareLocationActivity
+import io.isometrik.ui.messages.media.stickers.StickersFragment
+import io.isometrik.ui.messages.media.whiteboard.WhiteboardFragment
+import io.isometrik.ui.messages.preview.PreviewMessageUtil
+import io.isometrik.ui.messages.reaction.add.AddReactionFragment
+import io.isometrik.ui.messages.reaction.add.ReactionModel
+import io.isometrik.ui.messages.reaction.list.FetchReactionUsersFragment
+import io.isometrik.ui.messages.reaction.util.ReactionClickListener
+import io.isometrik.ui.messages.tag.MemberDetailsFragment
+import io.isometrik.ui.messages.tag.TagUserAdapter
+import io.isometrik.ui.messages.tag.TagUserModel
+import io.isometrik.ui.messages.tag.TaggedUserCallback
+import org.json.JSONObject
+import java.util.Arrays
+import java.util.concurrent.CopyOnWriteArrayList
 
 /**
  * The activity to send/receive messages in realtime of type- image/video/file/contact/location/whiteboard/sticker/gif/audio/text,
@@ -121,1014 +135,1666 @@ import org.json.JSONObject;
  * message or various actions in conversation, initiate/cancel of upload/download media message,
  * copy text messages, send typing message.
  */
-public class ConversationMessagesActivity extends AppCompatActivity implements ConversationMessagesContract.View, ReactionClickListener, MediaTypeToBeSharedCallback, MediaSelectedToBeShared, MessageActionCallback, TaggedUserCallback, ConversationMessagesAdapter.OnScrollToMessageListener {
+class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesContract.View,
+    ReactionClickListener, MediaTypeToBeSharedCallback, MediaSelectedToBeShared,
+    MessageActionCallback, TaggedUserCallback, OnScrollToMessageListener {
+    private lateinit var conversationMessagesPresenter: ConversationMessagesContract.Presenter
+    private var ismActivityMessagesBinding: IsmActivityMessagesBinding? = null
+    private val messages = ArrayList<MessagesModel>()
+    private lateinit var conversationMessagesAdapter: ConversationMessagesAdapter<MessagesModel, ViewBinding>
+    private val tagUserModels = ArrayList<TagUserModel>()
+    private var tagUserAdapter: TagUserAdapter? = null
 
-    private ConversationMessagesContract.Presenter conversationMessagesPresenter;
-    private IsmActivityMessagesBinding ismActivityMessagesBinding;
-    private final ArrayList<MessagesModel> messages = new ArrayList<>();
-    private ConversationMessagesAdapter conversationMessagesAdapter;
-    private final ArrayList<TagUserModel> tagUserModels = new ArrayList<>();
-    private TagUserAdapter tagUserAdapter;
+    private var addReactionFragment: AddReactionFragment? = null
+    private var fetchReactionUsersFragment: FetchReactionUsersFragment? = null
+    private var gifsFragment: GifsFragment? = null
+    private var stickersFragment: StickersFragment? = null
+    private var shareMediaFragment: ShareMediaFragment? = null
+    private var whiteboardFragment: WhiteboardFragment? = null
+    private var sendMessageReplyFragment: SendMessageReplyFragment? = null
+    private var messageActionFragment: MessageActionFragment? = null
+    private var memberDetailsFragment: MemberDetailsFragment? = null
+    private var editMessageFragment: EditMessageFragment? = null
 
-    private AddReactionFragment addReactionFragment;
-    private FetchReactionUsersFragment fetchReactionUsersFragment;
-    private GifsFragment gifsFragment;
-    private StickersFragment stickersFragment;
-    private ShareMediaFragment shareMediaFragment;
-    private WhiteboardFragment whiteboardFragment;
-    private SendMessageReplyFragment sendMessageReplyFragment;
-    private MessageActionFragment messageActionFragment;
-    private MemberDetailsFragment memberDetailsFragment;
-    private EditMessageFragment editMessageFragment;
+    private var unregisteredListeners = false
+    private var scrollToMessageNeeded = false
+    private var isometrikUserId: String? = null
+    private var conversationUserImageUrl: String? = null
+    private var userPersonalUserId: String? = null
+    private var conversationUserFullName: String? = null
+    private var conversationImageUrl: String? = null
+    private var conversationTitle: String? = null
 
-    private boolean unregisteredListeners, scrollToMessageNeeded;
-    public static String conversationId;
-    private String isometrikUserId;
-    private String conversationUserImageUrl;
-    private String userPersonalUserId;
-    private String conversationUserFullName;
-    private String conversationImageUrl;
-    private String conversationTitle;
+    private var conversationDetailsActivityLauncher: ActivityResultLauncher<Intent>? = null
+    private var userDetailsActivityLauncher: ActivityResultLauncher<Intent>? = null
+    private var cameraActivityLauncher: ActivityResultLauncher<Intent>? = null
+    private var multiplePhotosPicker: ActivityResultLauncher<Intent>? = null
+    private var multipleVideosPicker: ActivityResultLauncher<Intent>? = null
+    private var multipleFilesPicker: ActivityResultLauncher<Intent>? = null
+    private var shareLocationActivityLauncher: ActivityResultLauncher<Intent>? = null
+    private var contactPicker: ActivityResultLauncher<Intent>? = null
 
-    private static final int DOWNLOAD_MEDIA_PERMISSIONS_REQUEST_CODE = 0;
-    private static final int SHARE_LOCATION_PERMISSIONS_REQUEST_CODE = 1;
-    private static final int RECORD_AUDIO_PERMISSIONS_REQUEST_CODE = 2;
-    private static final int CAPTURE_IMAGE_PERMISSIONS_REQUEST_CODE = 3;
-    private static final int SHARE_PHOTOS_PERMISSIONS_REQUEST_CODE = 4;
-    private static final int SHARE_VIDEOS_PERMISSIONS_REQUEST_CODE = 5;
-    private static final int SHARE_FILES_PERMISSIONS_REQUEST_CODE = 6;
-    private static final int SHARE_CONTACT_PERMISSIONS_REQUEST_CODE = 7;
+    private var messagesLayoutManager: LinearLayoutManager? = null
+    private val handler = Handler()
+    private val spansToRemove: MutableList<MentionedUserSpan> = CopyOnWriteArrayList()
 
-    private ActivityResultLauncher<Intent> conversationDetailsActivityLauncher;
-    private ActivityResultLauncher<Intent> userDetailsActivityLauncher;
-    private ActivityResultLauncher<Intent> cameraActivityLauncher;
-    private ActivityResultLauncher<Intent> multiplePhotosPicker;
-    private ActivityResultLauncher<Intent> multipleVideosPicker;
-    private ActivityResultLauncher<Intent> multipleFilesPicker;
-    private ActivityResultLauncher<Intent> shareLocationActivityLauncher;
-    private ActivityResultLauncher<Intent> contactPicker;
+    private var messagingDisabled = false
+    private var joiningAsObserver = false
+    private var firstResume = true
 
-    private LinearLayoutManager messagesLayoutManager;
-    private final Handler handler = new Handler();
-    private final List<MentionedUserSpan> spansToRemove = new CopyOnWriteArrayList<>();
+    private var alertDialog: AlertDialog? = null
+    private var alertProgress: AlertProgress? = null
 
-    private boolean messagingDisabled, joiningAsObserver;
-    private boolean firstResume = true;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        ismActivityMessagesBinding = IsmActivityMessagesBinding.inflate(
+            layoutInflater
+        )
+        val view: View = ismActivityMessagesBinding!!.root
+        setContentView(view)
+        updateShimmerVisibility(true)
+        alertProgress = AlertProgress()
+        conversationMessagesPresenter = ConversationMessagesPresenter(this, this)
 
-    private androidx.appcompat.app.AlertDialog alertDialog;
-    private AlertProgress alertProgress;
+        messagingDisabled = intent.extras!!.containsKey("messagingDisabled")
+        joiningAsObserver = intent.extras!!.getBoolean("joinAsObserver", false)
 
-    // Request code for permissions
-    private static final int PERMISSION_REQUEST_CODE = 123;
-    private static final int VIDEO_RECORD_PERMISSIONS_REQUEST_CODE = 9;
-    private static final int VIDEO_PREVIEW_REQUEST_CODE = 8; // New request code for video preview
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ismActivityMessagesBinding = IsmActivityMessagesBinding.inflate(getLayoutInflater());
-        View view = ismActivityMessagesBinding.getRoot();
-        setContentView(view);
-        updateShimmerVisibility(true);
-        alertProgress = new AlertProgress();
-        conversationMessagesPresenter = new ConversationMessagesPresenter(this, this);
+        val itemBinders  = mapOf(
+            MessageTypeUi.TEXT_MESSAGE_SENT to TextSentBinder(),
+            MessageTypeUi.PHOTO_MESSAGE_SENT to PhotoSentBinder(),
+            MessageTypeUi.VIDEO_MESSAGE_SENT to VideoSentBinder(),
+            MessageTypeUi.AUDIO_MESSAGE_SENT to AudioSentBinder(),
+            MessageTypeUi.FILE_MESSAGE_SENT to FileSentBinder(),
+            MessageTypeUi.STICKER_MESSAGE_SENT to StickerSentBinder(),
+            MessageTypeUi.GIF_MESSAGE_SENT to GifSentBinder(),
+            MessageTypeUi.WHITEBOARD_MESSAGE_SENT to WhiteboardSentBinder(),
+            MessageTypeUi.LOCATION_MESSAGE_SENT to LocationSentBinder(),
+            MessageTypeUi.CONTACT_MESSAGE_SENT to ContactSentBinder(),
 
-        messagingDisabled = getIntent().getExtras().containsKey("messagingDisabled");
-        joiningAsObserver = getIntent().getExtras().getBoolean("joinAsObserver", false);
+            MessageTypeUi.TEXT_MESSAGE_RECEIVED to TextReceivedBinder(),
+            MessageTypeUi.PHOTO_MESSAGE_RECEIVED to PhotoReceivedBinder(),
+            MessageTypeUi.VIDEO_MESSAGE_RECEIVED to VideoReceivedBinder(),
+            MessageTypeUi.AUDIO_MESSAGE_RECEIVED to AudioReceivedBinder(),
+            MessageTypeUi.FILE_MESSAGE_RECEIVED to FileReceivedBinder(),
+            MessageTypeUi.STICKER_MESSAGE_RECEIVED to StickerReceivedBinder(),
+            MessageTypeUi.GIF_MESSAGE_RECEIVED to GifReceivedBinder(),
+            MessageTypeUi.WHITEBOARD_MESSAGE_RECEIVED to WhiteboardReceivedBinder(),
+            MessageTypeUi.LOCATION_MESSAGE_RECEIVED to LocationReceivedBinder(),
+            MessageTypeUi.CONTACT_MESSAGE_RECEIVED to ContactReceivedBinder(),
+            MessageTypeUi.CONVERSATION_ACTION_MESSAGE to ConversationActionBinder(),
+            MessageTypeUi.POST_MESSAGE_SENT to PostSentBinder(),
+            MessageTypeUi.POST_MESSAGE_RECEIVED to PostReceivedBinder(),
+        )
 
-        messagesLayoutManager = new LinearLayoutManager(this);
-        ismActivityMessagesBinding.rvMessages.setLayoutManager(messagesLayoutManager);
-        conversationMessagesAdapter = new ConversationMessagesAdapter(this, messages, this, messagingDisabled, joiningAsObserver,this);
-        ismActivityMessagesBinding.rvMessages.setAdapter(conversationMessagesAdapter);
-        ismActivityMessagesBinding.rvMessages.addOnScrollListener(messagesRecyclerViewOnScrollListener);
+        messagesLayoutManager = LinearLayoutManager(this)
+        ismActivityMessagesBinding!!.rvMessages.layoutManager = messagesLayoutManager
+        conversationMessagesAdapter = ConversationMessagesAdapter(
+             messages,
+            itemBinders,
+            ConversationActionBinder(),
+            messagingDisabled,
+            joiningAsObserver,
+            this
+        )
+        ismActivityMessagesBinding!!.rvMessages.adapter = conversationMessagesAdapter
+        ismActivityMessagesBinding!!.rvMessages.addOnScrollListener(
+            messagesRecyclerViewOnScrollListener
+        )
 
-        ismActivityMessagesBinding.vTagUsers.rvUsers.setLayoutManager(new LinearLayoutManager(this));
-        tagUserAdapter = new TagUserAdapter(this, tagUserModels);
-        ismActivityMessagesBinding.vTagUsers.rvUsers.setAdapter(tagUserAdapter);
+        ismActivityMessagesBinding!!.vTagUsers.rvUsers.layoutManager = LinearLayoutManager(
+            this
+        )
+        tagUserAdapter = TagUserAdapter(this, tagUserModels)
+        ismActivityMessagesBinding!!.vTagUsers.rvUsers.adapter = tagUserAdapter
 
-        conversationId = getIntent().getExtras().getString("conversationId");
-        conversationUserImageUrl = getIntent().getExtras().getString("userImageUrl");
-        conversationImageUrl = getIntent().getExtras().getString("conversationImageUrl");
-        conversationTitle = getIntent().getExtras().getString("conversationTitle");
-        isometrikUserId = getIntent().getExtras().getString("userId"); // isometrikUserId
-        userPersonalUserId = getIntent().getExtras().getString("identifier"); //personalUserId
+        conversationId = intent.extras!!.getString("conversationId")
+        conversationUserImageUrl = intent.extras!!.getString("userImageUrl")
+        conversationImageUrl = intent.extras!!.getString("conversationImageUrl")
+        conversationTitle = intent.extras!!.getString("conversationTitle")
+        isometrikUserId = intent.extras!!.getString("userId") // isometrikUserId
+        userPersonalUserId = intent.extras!!.getString("identifier") //personalUserId
 
-        boolean isPrivateOneToOne = getIntent().getExtras().getBoolean("isPrivateOneToOne");
+        val isPrivateOneToOne = intent.extras!!.getBoolean("isPrivateOneToOne")
 
-        conversationMessagesPresenter.initializeConversation(conversationId, getIntent().getExtras().getBoolean("messageDeliveryReadEventsEnabled"), getIntent().getExtras().getBoolean("typingEventsEnabled"), isPrivateOneToOne, getIntent().getExtras(), joiningAsObserver);
+        conversationMessagesPresenter.initializeConversation(
+            conversationId,
+            intent.extras!!
+                .getBoolean("messageDeliveryReadEventsEnabled"),
+            intent.extras!!.getBoolean("typingEventsEnabled"),
+            isPrivateOneToOne,
+            intent.extras,
+            joiningAsObserver
+        )
 
         if (messagingDisabled) {
-            onMessagingStatusChanged(true);
+            onMessagingStatusChanged(true)
         }
-        updateConversationDetailsInHeader(true, isPrivateOneToOne, null, false, 0, null, 0);
+        updateConversationDetailsInHeader(true, isPrivateOneToOne, null, false, 0, null, 0)
 
-        scrollToMessageNeeded = getIntent().getBooleanExtra("scrollToMessageNeeded", false);
+        scrollToMessageNeeded = intent.getBooleanExtra("scrollToMessageNeeded", false)
         if (scrollToMessageNeeded) {
 //            ismActivityMessagesBinding.ivSearch.setVisibility(View.GONE);
-            ismActivityMessagesBinding.vLoadingOverlay.getRoot().setVisibility(View.VISIBLE);
+            ismActivityMessagesBinding!!.vLoadingOverlay.root.visibility = View.VISIBLE
         }
 
         if (joiningAsObserver) {
 //            ismActivityMessagesBinding.ivSearch.setVisibility(View.GONE);
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) ismActivityMessagesBinding.ivObservers.getLayoutParams();
-            params.addRule(RelativeLayout.ALIGN_PARENT_END);
+            val params =
+                ismActivityMessagesBinding!!.ivObservers.layoutParams as RelativeLayout.LayoutParams
+            params.addRule(RelativeLayout.ALIGN_PARENT_END)
 
-            ismActivityMessagesBinding.ivObservers.setLayoutParams(params);
-            conversationMessagesPresenter.joinAsObserver();
+            ismActivityMessagesBinding!!.ivObservers.layoutParams = params
+            conversationMessagesPresenter.joinAsObserver()
         } else {
-            fetchMessages(false, null, false);
+            fetchMessages(false, null, false)
         }
-        conversationMessagesPresenter.registerConnectionEventListener();
-        conversationMessagesPresenter.registerConversationEventListener();
-        conversationMessagesPresenter.registerMessageEventListener();
-        conversationMessagesPresenter.registerMembershipControlEventListener();
-        conversationMessagesPresenter.registerReactionEventListener();
-        conversationMessagesPresenter.registerUserEventListener();
+        conversationMessagesPresenter.registerConnectionEventListener()
+        conversationMessagesPresenter.registerConversationEventListener()
+        conversationMessagesPresenter.registerMessageEventListener()
+        conversationMessagesPresenter.registerMembershipControlEventListener()
+        conversationMessagesPresenter.registerReactionEventListener()
+        conversationMessagesPresenter.registerUserEventListener()
 
-        if (!joiningAsObserver && !getIntent().getExtras().getBoolean("newConversation", false)) {
-            conversationMessagesPresenter.markMessagesAsRead();
+        if (!joiningAsObserver && !intent.extras!!.getBoolean("newConversation", false)) {
+            conversationMessagesPresenter.markMessagesAsRead()
         }
-        ismActivityMessagesBinding.refresh.setOnRefreshListener(() -> {
+        ismActivityMessagesBinding!!.refresh.setOnRefreshListener {
             if (joiningAsObserver) {
-                ismActivityMessagesBinding.refresh.setRefreshing(false);
+                ismActivityMessagesBinding!!.refresh.isRefreshing = false
             } else {
-                fetchMessages(false, null, true);
+                fetchMessages(false, null, true)
             }
-        });
-        addReactionFragment = new AddReactionFragment();
-        fetchReactionUsersFragment = new FetchReactionUsersFragment();
-        gifsFragment = new GifsFragment();
-        stickersFragment = new StickersFragment();
-        shareMediaFragment = new ShareMediaFragment();
-        whiteboardFragment = new WhiteboardFragment();
-        sendMessageReplyFragment = new SendMessageReplyFragment();
-        messageActionFragment = new MessageActionFragment();
-        memberDetailsFragment = new MemberDetailsFragment();
-        editMessageFragment = new EditMessageFragment();
+        }
+        addReactionFragment = AddReactionFragment()
+        fetchReactionUsersFragment = FetchReactionUsersFragment()
+        gifsFragment = GifsFragment()
+        stickersFragment = StickersFragment()
+        shareMediaFragment = ShareMediaFragment()
+        whiteboardFragment = WhiteboardFragment()
+        sendMessageReplyFragment = SendMessageReplyFragment()
+        messageActionFragment = MessageActionFragment()
+        memberDetailsFragment = MemberDetailsFragment()
+        editMessageFragment = EditMessageFragment()
 
-        ismActivityMessagesBinding.ibBack.setOnClickListener(v -> onBackPressed());
+        ismActivityMessagesBinding!!.ibBack.setOnClickListener { v: View? -> onBackPressed() }
 
-        ismActivityMessagesBinding.ivAddAttachment.setOnClickListener(v -> {
-            if (!isFinishing() && !shareMediaFragment.isAdded()) {
-                dismissAllDialogs();
-                shareMediaFragment.updateParameters(this);
-                shareMediaFragment.show(getSupportFragmentManager(), ShareMediaFragment.TAG);
+        ismActivityMessagesBinding!!.ivAddAttachment.setOnClickListener { v: View? ->
+            if (!isFinishing && !shareMediaFragment!!.isAdded) {
+                dismissAllDialogs()
+                shareMediaFragment!!.updateParameters(this)
+                shareMediaFragment!!.show(supportFragmentManager, ShareMediaFragment.TAG)
             }
-        });
+        }
 
-        conversationDetailsActivityLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == Activity.RESULT_OK) {
-                if (result.getData() != null) {
-                    if (result.getData().getBooleanExtra("conversationLeftOrDeleted", false)) {
-                        onBackPressed();
-                    } else if (result.getData().getBooleanExtra("searchMessageRequested", false)) {
-                        if (ismActivityMessagesBinding.rlSearch.getVisibility() == View.GONE) {
-                            ismActivityMessagesBinding.rlSearch.setVisibility(View.VISIBLE);
+        conversationDetailsActivityLauncher = registerForActivityResult<Intent, ActivityResult>(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result: ActivityResult ->
+            if (result.resultCode == RESULT_OK) {
+                if (result.data != null) {
+                    if (result.data!!.getBooleanExtra("conversationLeftOrDeleted", false)) {
+                        onBackPressed()
+                    } else if (result.data!!.getBooleanExtra("searchMessageRequested", false)) {
+                        if (ismActivityMessagesBinding!!.rlSearch.visibility == View.GONE) {
+                            ismActivityMessagesBinding!!.rlSearch.visibility =
+                                View.VISIBLE
                         }
-                        KeyboardUtil.showSoftKeyboard(this, ismActivityMessagesBinding.etSearch);
+                        KeyboardUtil.showSoftKeyboard(
+                            this,
+                            ismActivityMessagesBinding!!.etSearch
+                        )
                     }
                 }
             }
-        });
+        }
 
-        userDetailsActivityLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == Activity.RESULT_OK) {
-                if (result.getData() != null) {
-                    if (result.getData().getBooleanExtra("conversationLeftOrDeleted", false)) {
-                        onBackPressed();
-                    } else if (result.getData().getBooleanExtra("messagingBlocked", false)) {
-                        onMessagingStatusChanged(true);
-                    } else if (result.getData().getBooleanExtra("searchMessageRequested", false)) {
-                        if (ismActivityMessagesBinding.rlSearch.getVisibility() == View.GONE) {
-                            ismActivityMessagesBinding.rlSearch.setVisibility(View.VISIBLE);
+        userDetailsActivityLauncher = registerForActivityResult<Intent, ActivityResult>(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result: ActivityResult ->
+            if (result.resultCode == RESULT_OK) {
+                if (result.data != null) {
+                    if (result.data!!.getBooleanExtra("conversationLeftOrDeleted", false)) {
+                        onBackPressed()
+                    } else if (result.data!!.getBooleanExtra("messagingBlocked", false)) {
+                        onMessagingStatusChanged(true)
+                    } else if (result.data!!.getBooleanExtra("searchMessageRequested", false)) {
+                        if (ismActivityMessagesBinding!!.rlSearch.visibility == View.GONE) {
+                            ismActivityMessagesBinding!!.rlSearch.visibility =
+                                View.VISIBLE
                         }
-                        KeyboardUtil.showSoftKeyboard(this, ismActivityMessagesBinding.etSearch);
+                        KeyboardUtil.showSoftKeyboard(
+                            this,
+                            ismActivityMessagesBinding!!.etSearch
+                        )
                     }
                 }
             }
-        });
+        }
 
-        cameraActivityLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == Activity.RESULT_OK) {
-                if (result.getData() != null) {
-
-                    conversationMessagesPresenter.shareMessage(RemoteMessageTypes.NormalMessage, null, null, CustomMessageTypes.Image.getValue(), CustomMessageTypes.Image.getValue(), false, true, true, true, null, null, null, MessageTypesForUI.PhotoSent, new ArrayList<>(Collections.singletonList(result.getData().getStringExtra("capturedImagePath"))), true, PresignedUrlMediaTypes.Photo, AttachmentMessageType.Image);
+        cameraActivityLauncher = registerForActivityResult<Intent, ActivityResult>(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result: ActivityResult ->
+            if (result.resultCode == RESULT_OK) {
+                if (result.data != null) {
+                    conversationMessagesPresenter.shareMessage(
+                        RemoteMessageTypes.NormalMessage,
+                        null,
+                        null,
+                        CustomMessageTypes.Image.value,
+                        CustomMessageTypes.Image.value,
+                        false,
+                        true,
+                        true,
+                        true,
+                        null,
+                        null,
+                        null,
+                        MessageTypesForUI.PhotoSent,
+                        ArrayList(
+                            listOf(
+                                result.data!!.getStringExtra("capturedImagePath")
+                            )
+                        ),
+                        true,
+                        PresignedUrlMediaTypes.Photo,
+                        AttachmentMessageType.Image
+                    )
                 }
             } else {
-                Toast.makeText(this, R.string.ism_image_capture_canceled, Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                    this,
+                    R.string.ism_image_capture_canceled,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        });
+        }
 
-        multiplePhotosPicker = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == Activity.RESULT_OK) {
-                if (result.getData() != null) {
-                    ArrayList<String> photoPaths = GalleryIntentsUtil.getFilePaths(result.getData(), this);
+        multiplePhotosPicker = registerForActivityResult<Intent, ActivityResult>(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result: ActivityResult ->
+            if (result.resultCode == RESULT_OK) {
+                if (result.data != null) {
+                    val photoPaths = GalleryIntentsUtil.getFilePaths(
+                        result.data,
+                        this
+                    )
 
                     if (photoPaths == null) {
-                        Toast.makeText(this, getString(R.string.ism_photos_selection_limit_exceeded, Constants.MAXIMUM_MEDIA_SELECTION_COUNT_AT_ONCE), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(
+                            this,
+                            getString(
+                                R.string.ism_photos_selection_limit_exceeded,
+                                Constants.MAXIMUM_MEDIA_SELECTION_COUNT_AT_ONCE
+                            ),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     } else {
-
                         if (photoPaths.isEmpty()) {
-                            Toast.makeText(this, R.string.ism_photos_selected_deleted, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(
+                                this,
+                                R.string.ism_photos_selected_deleted,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         } else {
-                            conversationMessagesPresenter.shareMessage(RemoteMessageTypes.NormalMessage, null, null, CustomMessageTypes.Image.getValue(), CustomMessageTypes.Image.getValue(), false, true, true, true, null, null, null, MessageTypesForUI.PhotoSent, photoPaths, true, PresignedUrlMediaTypes.Photo, AttachmentMessageType.Image);
+                            conversationMessagesPresenter.shareMessage(
+                                RemoteMessageTypes.NormalMessage,
+                                null,
+                                null,
+                                CustomMessageTypes.Image.value,
+                                CustomMessageTypes.Image.value,
+                                false,
+                                true,
+                                true,
+                                true,
+                                null,
+                                null,
+                                null,
+                                MessageTypesForUI.PhotoSent,
+                                photoPaths,
+                                true,
+                                PresignedUrlMediaTypes.Photo,
+                                AttachmentMessageType.Image
+                            )
                         }
                     }
                 } else {
-                    Toast.makeText(this, R.string.ism_photos_selection_failed, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                        this,
+                        R.string.ism_photos_selection_failed,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } else {
-                Toast.makeText(this, R.string.ism_photos_selection_canceled, Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                    this,
+                    R.string.ism_photos_selection_canceled,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        });
+        }
 
-        multipleVideosPicker = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == Activity.RESULT_OK) {
-                if (result.getData() != null) {
-                    ArrayList<String> videoPaths = GalleryIntentsUtil.getFilePaths(result.getData(), this);
+        multipleVideosPicker = registerForActivityResult<Intent, ActivityResult>(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result: ActivityResult ->
+            if (result.resultCode == RESULT_OK) {
+                if (result.data != null) {
+                    val videoPaths = GalleryIntentsUtil.getFilePaths(
+                        result.data,
+                        this
+                    )
                     if (videoPaths == null) {
-                        Toast.makeText(this, getString(R.string.ism_videos_selection_limit_exceeded, Constants.MAXIMUM_MEDIA_SELECTION_COUNT_AT_ONCE), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(
+                            this,
+                            getString(
+                                R.string.ism_videos_selection_limit_exceeded,
+                                Constants.MAXIMUM_MEDIA_SELECTION_COUNT_AT_ONCE
+                            ),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     } else {
                         if (videoPaths.isEmpty()) {
-                            Toast.makeText(this, R.string.ism_videos_selected_deleted, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(
+                                this,
+                                R.string.ism_videos_selected_deleted,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         } else {
-                            conversationMessagesPresenter.shareMessage(RemoteMessageTypes.NormalMessage, null, null, CustomMessageTypes.Video.getValue(), CustomMessageTypes.Video.getValue(), false, true, true, true, null, null, null, MessageTypesForUI.VideoSent, videoPaths, true, PresignedUrlMediaTypes.Video, AttachmentMessageType.Video);
+                            conversationMessagesPresenter.shareMessage(
+                                RemoteMessageTypes.NormalMessage,
+                                null,
+                                null,
+                                CustomMessageTypes.Video.value,
+                                CustomMessageTypes.Video.value,
+                                false,
+                                true,
+                                true,
+                                true,
+                                null,
+                                null,
+                                null,
+                                MessageTypesForUI.VideoSent,
+                                videoPaths,
+                                true,
+                                PresignedUrlMediaTypes.Video,
+                                AttachmentMessageType.Video
+                            )
                         }
                     }
                 } else {
-                    Toast.makeText(this, R.string.ism_videos_selection_failed, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                        this,
+                        R.string.ism_videos_selection_failed,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } else {
-                Toast.makeText(this, R.string.ism_videos_selection_canceled, Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                    this,
+                    R.string.ism_videos_selection_canceled,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        });
+        }
 
-        multipleFilesPicker = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == Activity.RESULT_OK) {
-                if (result.getData() != null) {
-
-                    String path =  FileUriUtils.INSTANCE.getRealPath(this,result.getData().getData());
-//                    ArrayList<String> filePaths = GalleryIntentsUtil.getFilePaths(result.getData(), this);
-                    ArrayList<String> filePaths = new ArrayList<>();
-                    filePaths.add(path);
+        multipleFilesPicker = registerForActivityResult<Intent, ActivityResult>(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result: ActivityResult ->
+            if (result.resultCode == RESULT_OK) {
+                if (result.data != null) {
+                    val path = getRealPath(
+                        this, result.data!!
+                            .data!!
+                    )
+                    //                    ArrayList<String> filePaths = GalleryIntentsUtil.getFilePaths(result.getData(), this);
+                    val filePaths =
+                        ArrayList<String?>()
+                    filePaths.add(path)
                     if (filePaths == null) {
-                        Toast.makeText(this, getString(R.string.ism_files_selection_limit_exceeded, Constants.MAXIMUM_MEDIA_SELECTION_COUNT_AT_ONCE), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(
+                            this,
+                            getString(
+                                R.string.ism_files_selection_limit_exceeded,
+                                Constants.MAXIMUM_MEDIA_SELECTION_COUNT_AT_ONCE
+                            ),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     } else {
                         if (filePaths.isEmpty()) {
-                            Toast.makeText(this, R.string.ism_files_selected_deleted, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(
+                                this,
+                                R.string.ism_files_selected_deleted,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         } else {
-                            conversationMessagesPresenter.shareMessage(RemoteMessageTypes.NormalMessage, null, null, CustomMessageTypes.File.getValue(), CustomMessageTypes.File.getValue(), false, true, true, true, null, null, null, MessageTypesForUI.FileSent, filePaths, true, PresignedUrlMediaTypes.File, AttachmentMessageType.File);
+                            conversationMessagesPresenter.shareMessage(
+                                RemoteMessageTypes.NormalMessage,
+                                null,
+                                null,
+                                CustomMessageTypes.File.value,
+                                CustomMessageTypes.File.value,
+                                false,
+                                true,
+                                true,
+                                true,
+                                null,
+                                null,
+                                null,
+                                MessageTypesForUI.FileSent,
+                                filePaths,
+                                true,
+                                PresignedUrlMediaTypes.File,
+                                AttachmentMessageType.File
+                            )
                         }
                     }
                 } else {
-                    Toast.makeText(this, R.string.ism_files_selection_failed, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                        this,
+                        R.string.ism_files_selection_failed,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } else {
-                Toast.makeText(this, R.string.ism_files_selection_canceled, Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                    this,
+                    R.string.ism_files_selection_canceled,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        });
+        }
 
-        shareLocationActivityLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                Intent data = result.getData();
+        shareLocationActivityLauncher = registerForActivityResult<Intent, ActivityResult>(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result: ActivityResult ->
+            if (result.resultCode == RESULT_OK && result.data != null) {
+                val data = result.data
 
                 //Location data received
-                String locationName = data.getStringExtra("locationName");
-                String locationAddress = data.getStringExtra("locationAddress");
-                double latitude = Double.parseDouble(data.getStringExtra("latitude"));
-                double longitude = Double.parseDouble(data.getStringExtra("longitude"));
+                val locationName = data!!.getStringExtra("locationName")
+                val locationAddress = data.getStringExtra("locationAddress")
+                val latitude = data.getStringExtra("latitude")!!.toDouble()
+                val longitude = data.getStringExtra("longitude")!!.toDouble()
 
                 //Log.d("log1", locationName + "*" + locationAddress + "*" + latitude + "*" + longitude);
-                Attachment locationAttachment = PrepareAttachmentHelper.prepareLocationAttachment(locationName, locationAddress, latitude, longitude);
+                val locationAttachment = PrepareAttachmentHelper.prepareLocationAttachment(
+                    locationName,
+                    locationAddress,
+                    latitude,
+                    longitude
+                )
 
                 if (locationAttachment == null) {
-                    Toast.makeText(this, R.string.ism_location_share_failed, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                        this,
+                        R.string.ism_location_share_failed,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
-                    conversationMessagesPresenter.shareMessage(RemoteMessageTypes.NormalMessage, null, null, CustomMessageTypes.Location.getValue(), CustomMessageTypes.Location.getValue(), false, true, true, true, new ArrayList<>(Collections.singletonList(locationAttachment)), null, null, MessageTypesForUI.LocationSent, null, false, null, null);
+                    conversationMessagesPresenter.shareMessage(
+                        RemoteMessageTypes.NormalMessage,
+                        null,
+                        null,
+                        CustomMessageTypes.Location.value,
+                        CustomMessageTypes.Location.value,
+                        false,
+                        true,
+                        true,
+                        true,
+                        ArrayList(
+                            listOf(locationAttachment)
+                        ),
+                        null,
+                        null,
+                        MessageTypesForUI.LocationSent,
+                        null,
+                        false,
+                        null,
+                        null
+                    )
                 }
             } else {
-                Toast.makeText(this, R.string.ism_location_selection_canceled, Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                    this,
+                    R.string.ism_location_selection_canceled,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        });
+        }
 
-        contactPicker = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == Activity.RESULT_OK) {
-                if (result.getData() != null) {
-
-                    JSONObject messageMetadata = ContactUtil.parseContactsData(result.getData(), getContentResolver());
+        contactPicker = registerForActivityResult<Intent, ActivityResult>(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result: ActivityResult ->
+            if (result.resultCode == RESULT_OK) {
+                if (result.data != null) {
+                    val messageMetadata = ContactUtil.parseContactsData(
+                        result.data,
+                        contentResolver
+                    )
 
                     if (messageMetadata == null) {
-                        Toast.makeText(this, R.string.ism_contact_selection_failed, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(
+                            this,
+                            R.string.ism_contact_selection_failed,
+                            Toast.LENGTH_SHORT
+                        ).show()
                     } else {
-                        conversationMessagesPresenter.shareMessage(RemoteMessageTypes.NormalMessage, null, null, CustomMessageTypes.Contact.getValue(), CustomMessageTypes.Contact.getValue(), false, true, true, true, null, messageMetadata, null, MessageTypesForUI.ContactSent, null, false, null, null);
+                        conversationMessagesPresenter.shareMessage(
+                            RemoteMessageTypes.NormalMessage,
+                            null,
+                            null,
+                            CustomMessageTypes.Contact.value,
+                            CustomMessageTypes.Contact.value,
+                            false,
+                            true,
+                            true,
+                            true,
+                            null,
+                            messageMetadata,
+                            null,
+                            MessageTypesForUI.ContactSent,
+                            null,
+                            false,
+                            null,
+                            null
+                        )
                     }
                 } else {
-                    Toast.makeText(this, R.string.ism_contact_selection_failed, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                        this,
+                        R.string.ism_contact_selection_failed,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } else {
-                Toast.makeText(this, R.string.ism_contact_selection_canceled, Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                    this,
+                    R.string.ism_contact_selection_canceled,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        });
+        }
 
-        ismActivityMessagesBinding.ivCaptureImage.setOnClickListener(v -> checkImageCapturePermissions(false));
+        ismActivityMessagesBinding!!.ivCaptureImage.setOnClickListener { v: View? ->
+            checkImageCapturePermissions(
+                false
+            )
+        }
 
-        ismActivityMessagesBinding.rlConversationDetails.setOnClickListener(v -> {
-            if (ismActivityMessagesBinding.vSelectMultipleMessagesHeader.getRoot().getVisibility() == View.GONE && clickActionsNotBlocked()) {
-                KeyboardUtil.hideKeyboard(this);
+        ismActivityMessagesBinding!!.rlConversationDetails.setOnClickListener { v: View? ->
+            if (ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility == View.GONE && clickActionsNotBlocked()) {
+                KeyboardUtil.hideKeyboard(this)
 
-                Intent intent = conversationMessagesPresenter.getConversationDetailsIntent(this, isPrivateOneToOne);
+                val intent =
+                    conversationMessagesPresenter.getConversationDetailsIntent(
+                        this,
+                        isPrivateOneToOne
+                    )
                 if (isPrivateOneToOne) {
-                    if (!messagingDisabled) userDetailsActivityLauncher.launch(intent);
+                    if (!messagingDisabled) userDetailsActivityLauncher!!.launch(intent)
                 } else {
-                    if (!joiningAsObserver) conversationDetailsActivityLauncher.launch(intent);
+                    if (!joiningAsObserver) conversationDetailsActivityLauncher!!.launch(intent)
                 }
             }
-        });
-        ismActivityMessagesBinding.etSendMessage.addTextChangedListener(sendMessageTextWatcher);
+        }
+        ismActivityMessagesBinding!!.etSendMessage.addTextChangedListener(sendMessageTextWatcher)
 
-        ismActivityMessagesBinding.vTagUsers.rvUsers.addOnItemTouchListener(new RecyclerItemClickListener(this, ismActivityMessagesBinding.vTagUsers.rvUsers, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
+        ismActivityMessagesBinding!!.vTagUsers.rvUsers.addOnItemTouchListener(
+            RecyclerItemClickListener(
+                this,
+                ismActivityMessagesBinding!!.vTagUsers.rvUsers,
+                object : RecyclerItemClickListener.OnItemClickListener {
+                    override fun onItemClick(view: View, position: Int) {
+                        if (position >= 0) {
+                            if (ismActivityMessagesBinding!!.etSendMessage.text != null) {
+                                ismActivityMessagesBinding!!.etSendMessage.removeTextChangedListener(
+                                    sendMessageTextWatcher
+                                )
 
-                if (position >= 0) {
+                                ismActivityMessagesBinding!!.etSendMessage.setText(
+                                    SpannableString(
+                                        TagUserUtil.addTaggedUsername(
+                                            ismActivityMessagesBinding!!.etSendMessage.text as SpannableStringBuilder?,
+                                            ismActivityMessagesBinding!!.etSendMessage.selectionStart,
+                                            tagUserModels[position],
+                                            this@ConversationMessagesActivity
+                                        )
+                                    )
+                                )
 
-                    if (ismActivityMessagesBinding.etSendMessage.getText() != null) {
-                        ismActivityMessagesBinding.etSendMessage.removeTextChangedListener(sendMessageTextWatcher);
-
-                        ismActivityMessagesBinding.etSendMessage.setText(new SpannableString(TagUserUtil.addTaggedUsername((SpannableStringBuilder) ismActivityMessagesBinding.etSendMessage.getText(), ismActivityMessagesBinding.etSendMessage.getSelectionStart(), tagUserModels.get(position), ConversationMessagesActivity.this)));
-
-                        ismActivityMessagesBinding.vTagUsers.getRoot().setVisibility(View.GONE);
-                        ismActivityMessagesBinding.etSendMessage.addTextChangedListener(sendMessageTextWatcher);
-                        ismActivityMessagesBinding.etSendMessage.setSelection(ismActivityMessagesBinding.etSendMessage.getText().length());
-                    }
-                }
-            }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-            }
-        }));
-
-        ismActivityMessagesBinding.ivSendMessage.setOnClickListener(v -> {
-            if (ismActivityMessagesBinding.etSendMessage.getText() != null && ismActivityMessagesBinding.etSendMessage.getText().length() > 0) {
-                conversationMessagesPresenter.shareMessage(RemoteMessageTypes.NormalMessage, null, null, CustomMessageTypes.Text.getValue(), ismActivityMessagesBinding.etSendMessage.getText().toString(), false, true, true, true, null, null, TagUserUtil.prepareMentionedUsers(ismActivityMessagesBinding.etSendMessage.getEditableText()), MessageTypesForUI.TextSent, null, false, null, null);
-                ismActivityMessagesBinding.etSendMessage.setText(null);
-            } else {
-                Toast.makeText(ConversationMessagesActivity.this, getString(R.string.ism_type_something), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        ismActivityMessagesBinding.rvMessages.addOnItemTouchListener(new RecyclerItemClickListener(this, ismActivityMessagesBinding.rvMessages, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                if (position >= 0) {
-                    if (ismActivityMessagesBinding.vSelectMultipleMessagesHeader.getRoot().getVisibility() == View.VISIBLE) {
-
-                        if (!messages.get(position).getCustomMessageType().equals(MessageTypesForUI.ConversationActionMessage)) {
-                            MessagesModel messagesModel = messages.get(position);
-                            boolean selected = !messagesModel.isSelected();
-                            messagesModel.setSelected(selected);
-                            conversationMessagesPresenter.updateMessageSelectionStatus(messagesModel, selected);
-                            messages.set(position, messagesModel);
-                            conversationMessagesAdapter.notifyItemChanged(position);
+                                ismActivityMessagesBinding!!.vTagUsers.root.visibility = View.GONE
+                                ismActivityMessagesBinding!!.etSendMessage.addTextChangedListener(
+                                    sendMessageTextWatcher
+                                )
+                                ismActivityMessagesBinding!!.etSendMessage.setSelection(
+                                    ismActivityMessagesBinding!!.etSendMessage.text?.length ?: 0
+                                )
+                            }
                         }
                     }
-                }
+
+                    override fun onItemLongClick(view: View, position: Int) {
+                    }
+                })
+        )
+
+        ismActivityMessagesBinding!!.ivSendMessage.setOnClickListener { v: View? ->
+            if (ismActivityMessagesBinding!!.etSendMessage.text != null && ismActivityMessagesBinding!!.etSendMessage.text!!.length > 0) {
+                conversationMessagesPresenter.shareMessage(
+                    RemoteMessageTypes.NormalMessage,
+                    null,
+                    null,
+                    CustomMessageTypes.Text.value,
+                    ismActivityMessagesBinding!!.etSendMessage.text.toString(),
+                    false,
+                    true,
+                    true,
+                    true,
+                    null,
+                    null,
+                    TagUserUtil.prepareMentionedUsers(
+                        ismActivityMessagesBinding!!.etSendMessage.editableText
+                    ),
+                    MessageTypesForUI.TextSent,
+                    null,
+                    false,
+                    null,
+                    null
+                )
+                ismActivityMessagesBinding!!.etSendMessage.setText(null)
+            } else {
+                Toast.makeText(
+                    this@ConversationMessagesActivity,
+                    getString(R.string.ism_type_something),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
+        }
 
-            @Override
-            public void onItemLongClick(View view, int position) {
+        ismActivityMessagesBinding!!.rvMessages.addOnItemTouchListener(
+            RecyclerItemClickListener(
+                this,
+                ismActivityMessagesBinding!!.rvMessages,
+                object : RecyclerItemClickListener.OnItemClickListener {
+                    override fun onItemClick(view: View, position: Int) {
+                        if (position >= 0) {
+                            if (ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility == View.VISIBLE) {
+                                if (messages[position].customMessageType != MessageTypesForUI.ConversationActionMessage) {
+                                    val messagesModel = messages[position]
+                                    val selected = !messagesModel.isSelected
+                                    messagesModel.isSelected = selected
+                                    conversationMessagesPresenter.updateMessageSelectionStatus(
+                                        messagesModel,
+                                        selected
+                                    )
+                                    messages[position] = messagesModel
+                                    conversationMessagesAdapter!!.notifyItemChanged(position)
+                                }
+                            }
+                        }
+                    }
 
-                if (position >= 0) {
-                    if (!messagingDisabled) {
-                        if (!messages.get(position).getCustomMessageType().equals(MessageTypesForUI.ConversationActionMessage)) {
-                            if (ismActivityMessagesBinding.vSelectMultipleMessagesHeader.getRoot().getVisibility() == View.VISIBLE) {
-                                MessagesModel messagesModel = messages.get(position);
-                                boolean selected = !messagesModel.isSelected();
-                                messagesModel.setSelected(selected);
-                                conversationMessagesPresenter.updateMessageSelectionStatus(messagesModel, selected);
-                                messages.set(position, messagesModel);
-                                conversationMessagesAdapter.notifyItemChanged(position);
-                            } else {
-
-                                MessagesModel messagesModel = messages.get(position);
-                                if (!messagesModel.isSentMessage() || messagesModel.isMessageSentSuccessfully()) {
-                                    if (!joiningAsObserver && clickActionsNotBlocked()) {
-                                        if (!isFinishing() && !messageActionFragment.isAdded()) {
-                                            dismissAllDialogs();
-                                            messageActionFragment.updateParameters(messages.get(position), ConversationMessagesActivity.this, position);
-                                            messageActionFragment.show(getSupportFragmentManager(), MessageActionFragment.TAG);
+                    override fun onItemLongClick(view: View, position: Int) {
+                        if (position >= 0) {
+                            if (!messagingDisabled) {
+                                if (messages[position].customMessageType != MessageTypesForUI.ConversationActionMessage) {
+                                    if (ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility == View.VISIBLE) {
+                                        val messagesModel = messages[position]
+                                        val selected = !messagesModel.isSelected
+                                        messagesModel.isSelected = selected
+                                        conversationMessagesPresenter.updateMessageSelectionStatus(
+                                            messagesModel,
+                                            selected
+                                        )
+                                        messages[position] = messagesModel
+                                        conversationMessagesAdapter!!.notifyItemChanged(position)
+                                    } else {
+                                        val messagesModel = messages[position]
+                                        if (!messagesModel.isSentMessage || messagesModel.isMessageSentSuccessfully) {
+                                            if (!joiningAsObserver && clickActionsNotBlocked()) {
+                                                if (!isFinishing && !messageActionFragment!!.isAdded) {
+                                                    dismissAllDialogs()
+                                                    messageActionFragment!!.updateParameters(
+                                                        messages[position],
+                                                        this@ConversationMessagesActivity, position
+                                                    )
+                                                    messageActionFragment!!.show(
+                                                        supportFragmentManager,
+                                                        MessageActionFragment.TAG
+                                                    )
+                                                }
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
                     }
+                })
+        )
+
+        ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.ibClose.setOnClickListener { v: View? ->
+            ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility =
+                View.GONE
+            ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.root.visibility =
+                View.GONE
+
+            val size = messages.size
+            var messagesModel: MessagesModel
+            conversationMessagesPresenter.cleanupSelectedMessages()
+            conversationMessagesAdapter!!.setMultipleMessagesSelectModeOn(false)
+            for (i in 0 until size) {
+                if (messages[i].isSelected) {
+                    messagesModel = messages[i]
+                    messagesModel.isSelected = false
+                    messages[i] = messagesModel
                 }
             }
-        }));
+            conversationMessagesAdapter!!.notifyDataSetChanged()
+        }
 
-        ismActivityMessagesBinding.vSelectMultipleMessagesHeader.ibClose.setOnClickListener(v -> {
-            ismActivityMessagesBinding.vSelectMultipleMessagesHeader.getRoot().setVisibility(View.GONE);
-            ismActivityMessagesBinding.vSelectMultipleMessagesFooter.getRoot().setVisibility(View.GONE);
-
-            int size = messages.size();
-            MessagesModel messagesModel;
-            conversationMessagesPresenter.cleanupSelectedMessages();
-            conversationMessagesAdapter.setMultipleMessagesSelectModeOn(false);
-            for (int i = 0; i < size; i++) {
-
-                if (messages.get(i).isSelected()) {
-                    messagesModel = messages.get(i);
-                    messagesModel.setSelected(false);
-                    messages.set(i, messagesModel);
-                }
+        ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.rlDeleteForMe.setOnClickListener { v: View? ->
+            if (ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.ivDeleteForMe.isSelected) {
+                deleteMessageForSelf(null, true)
             }
-            conversationMessagesAdapter.notifyDataSetChanged();
-        });
+        }
 
-        ismActivityMessagesBinding.vSelectMultipleMessagesFooter.rlDeleteForMe.setOnClickListener(v -> {
-            if (ismActivityMessagesBinding.vSelectMultipleMessagesFooter.ivDeleteForMe.isSelected()) {
-                deleteMessageForSelf(null, true);
+        ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.rlDeleteForAll.setOnClickListener { v: View? ->
+            if (ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.ivDeleteForAll.isSelected) {
+                deleteMessageForEveryone(null, true)
             }
-        });
+        }
 
-        ismActivityMessagesBinding.vSelectMultipleMessagesFooter.rlDeleteForAll.setOnClickListener(v -> {
-            if (ismActivityMessagesBinding.vSelectMultipleMessagesFooter.ivDeleteForAll.isSelected()) {
-                deleteMessageForEveryone(null, true);
+        ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.rlCopy.setOnClickListener { v: View? ->
+            if (ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.ivCopy.isSelected) {
+                conversationMessagesPresenter.copyText()
             }
-        });
+        }
 
-        ismActivityMessagesBinding.vSelectMultipleMessagesFooter.rlCopy.setOnClickListener(v -> {
-            if (ismActivityMessagesBinding.vSelectMultipleMessagesFooter.ivCopy.isSelected()) {
-                conversationMessagesPresenter.copyText();
-            }
-        });
+        ismActivityMessagesBinding!!.btRecord.setRecordView(ismActivityMessagesBinding!!.vRecordView)
+        ismActivityMessagesBinding!!.vRecordView.setLockEnabled(true)
+        ismActivityMessagesBinding!!.vRecordView.setRecordLockImageView(ismActivityMessagesBinding!!.vRecordLock)
+        ismActivityMessagesBinding!!.vRecordView.timeLimit =
+            Constants.MAXIMUM_AUDIO_RECORDING_DURATION_MILLISECONDS
+        ismActivityMessagesBinding!!.vRecordView.setActivityContext(this)
 
-        ismActivityMessagesBinding.btRecord.setRecordView(ismActivityMessagesBinding.vRecordView);
-        ismActivityMessagesBinding.vRecordView.setLockEnabled(true);
-        ismActivityMessagesBinding.vRecordView.setRecordLockImageView(ismActivityMessagesBinding.vRecordLock);
-        ismActivityMessagesBinding.vRecordView.setTimeLimit(Constants.MAXIMUM_AUDIO_RECORDING_DURATION_MILLISECONDS);
-        ismActivityMessagesBinding.vRecordView.setActivityContext(this);
-
-        ismActivityMessagesBinding.vRecordView.setOnRecordListener(new OnRecordListener() {
-            @Override
-            public void onStart(boolean hasRecordingPermission) {
+        ismActivityMessagesBinding!!.vRecordView.setOnRecordListener(object : OnRecordListener {
+            override fun onStart(hasRecordingPermission: Boolean) {
                 //KeyboardUtil.hideKeyboard(ConversationMessagesActivity.this);
                 if (hasRecordingPermission) {
-                    ismActivityMessagesBinding.rlBottomLayout.setVisibility(View.INVISIBLE);
-                    conversationMessagesPresenter.startAudioRecording(ConversationMessagesActivity.this);
+                    ismActivityMessagesBinding!!.rlBottomLayout.visibility = View.INVISIBLE
+                    conversationMessagesPresenter.startAudioRecording(this@ConversationMessagesActivity)
                 } else {
-                    if (ActivityCompat.checkSelfPermission(ConversationMessagesActivity.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(
+                            this@ConversationMessagesActivity,
+                            Manifest.permission.RECORD_AUDIO
+                        ) != PackageManager.PERMISSION_GRANTED
+                    ) {
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                                this@ConversationMessagesActivity,
+                                Manifest.permission.RECORD_AUDIO
+                            )
+                        ) {
+                            val snackbar = Snackbar.make(
+                                ismActivityMessagesBinding!!.root,
+                                getString(R.string.ism_request_record_audio_permission),
+                                Snackbar.LENGTH_INDEFINITE
+                            ).setAction(
+                                getString(R.string.ism_ok)
+                            ) { view1: View? ->
+                                ActivityCompat.requestPermissions(
+                                    this@ConversationMessagesActivity,
+                                    arrayOf(Manifest.permission.RECORD_AUDIO),
+                                    RECORD_AUDIO_PERMISSIONS_REQUEST_CODE
+                                )
+                            }
 
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(ConversationMessagesActivity.this, Manifest.permission.RECORD_AUDIO)) {
-                            Snackbar snackbar = Snackbar.make(ismActivityMessagesBinding.getRoot(), getString(R.string.ism_request_record_audio_permission), Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.ism_ok), view1 -> ActivityCompat.requestPermissions(ConversationMessagesActivity.this, new String[]{Manifest.permission.RECORD_AUDIO}, RECORD_AUDIO_PERMISSIONS_REQUEST_CODE));
-
-                            snackbar.show();
+                            snackbar.show()
                         } else {
-                            ActivityCompat.requestPermissions(ConversationMessagesActivity.this, new String[]{Manifest.permission.RECORD_AUDIO}, RECORD_AUDIO_PERMISSIONS_REQUEST_CODE);
+                            ActivityCompat.requestPermissions(
+                                this@ConversationMessagesActivity, arrayOf(
+                                    Manifest.permission.RECORD_AUDIO
+                                ), RECORD_AUDIO_PERMISSIONS_REQUEST_CODE
+                            )
                         }
                     }
                 }
             }
 
-            @Override
-            public void onCancel() {
+            override fun onCancel() {
                 //On Swipe To Cancel
-                conversationMessagesPresenter.stopAudioRecording(true);
+                conversationMessagesPresenter.stopAudioRecording(true)
             }
 
-            @Override
-            public void onFinish(long recordTime, boolean limitReached) {
+            override fun onFinish(recordTime: Long, limitReached: Boolean) {
                 //Stop Recording..
                 //limitReached to determine if the Record was finished when time limit reached.
-                ismActivityMessagesBinding.rlBottomLayout.setVisibility(View.VISIBLE);
-                ismActivityMessagesBinding.btRecord.setVisibility(View.VISIBLE);
-                conversationMessagesPresenter.stopAudioRecording(false);
+                ismActivityMessagesBinding!!.rlBottomLayout.visibility = View.VISIBLE
+                ismActivityMessagesBinding!!.btRecord.visibility = View.VISIBLE
+                conversationMessagesPresenter.stopAudioRecording(false)
             }
 
-            @Override
-            public void onLessThanSecond() {
+            override fun onLessThanSecond() {
                 //When the record time is less than One Second
-                ismActivityMessagesBinding.rlBottomLayout.setVisibility(View.VISIBLE);
-                ismActivityMessagesBinding.btRecord.setVisibility(View.VISIBLE);
-                conversationMessagesPresenter.stopAudioRecording(true);
+                ismActivityMessagesBinding!!.rlBottomLayout.visibility = View.VISIBLE
+                ismActivityMessagesBinding!!.btRecord.visibility = View.VISIBLE
+                conversationMessagesPresenter.stopAudioRecording(true)
             }
 
-            @Override
-            public void switchedToLockedMode() {
-                ismActivityMessagesBinding.btRecord.setVisibility(View.GONE);
+            override fun switchedToLockedMode() {
+                ismActivityMessagesBinding!!.btRecord.visibility = View.GONE
             }
-        });
+        })
 
-        ismActivityMessagesBinding.vRecordView.setOnBasketAnimationEndListener(() -> {
-            ismActivityMessagesBinding.rlBottomLayout.setVisibility(View.VISIBLE);
-            ismActivityMessagesBinding.btRecord.setVisibility(View.VISIBLE);
-        });
+        ismActivityMessagesBinding!!.vRecordView.setOnBasketAnimationEndListener {
+            ismActivityMessagesBinding!!.rlBottomLayout.visibility = View.VISIBLE
+            ismActivityMessagesBinding!!.btRecord.visibility = View.VISIBLE
+        }
 
-        ismActivityMessagesBinding.ivSearch.setOnClickListener(v -> {
-            if (ismActivityMessagesBinding.vSelectMultipleMessagesHeader.getRoot().getVisibility() == View.GONE && clickActionsNotBlocked()) {
-                if (ismActivityMessagesBinding.rlSearch.getVisibility() == View.VISIBLE) {
-
-                    KeyboardUtil.hideKeyboard(this);
-                    ismActivityMessagesBinding.rlSearch.setVisibility(View.GONE);
+        ismActivityMessagesBinding!!.ivSearch.setOnClickListener { v: View? ->
+            if (ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility == View.GONE && clickActionsNotBlocked()) {
+                if (ismActivityMessagesBinding!!.rlSearch.visibility == View.VISIBLE) {
+                    KeyboardUtil.hideKeyboard(this)
+                    ismActivityMessagesBinding!!.rlSearch.visibility = View.GONE
                 } else {
-                    ismActivityMessagesBinding.rlSearch.setVisibility(View.VISIBLE);
-                    KeyboardUtil.showSoftKeyboard(this, ismActivityMessagesBinding.etSearch);
+                    ismActivityMessagesBinding!!.rlSearch.visibility = View.VISIBLE
+                    KeyboardUtil.showSoftKeyboard(
+                        this,
+                        ismActivityMessagesBinding!!.etSearch
+                    )
                 }
             }
-        });
+        }
 
-        ismActivityMessagesBinding.etSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+        ismActivityMessagesBinding!!.etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 if (!joiningAsObserver) {
-                    if (s.length() > 0) {
-                        fetchMessages(true, s.toString(), false);
+                    if (s.length > 0) {
+                        fetchMessages(true, s.toString(), false)
                     } else {
-
-                        fetchMessages(false, null, false);
+                        fetchMessages(false, null, false)
                     }
                 }
             }
 
-            @Override
-            public void afterTextChanged(Editable s) {
-
+            override fun afterTextChanged(s: Editable) {
             }
-        });
-        ismActivityMessagesBinding.rlDeleteConversation.setOnClickListener(v -> {
+        })
+        ismActivityMessagesBinding!!.rlDeleteConversation.setOnClickListener { v: View? ->
+            AlertDialog.Builder(this)
+                .setTitle(getString(R.string.ism_delete_conversation))
+                .setMessage(getString(R.string.ism_delete_conversation_alert)).setCancelable(true)
+                .setPositiveButton(
+                    getString(R.string.ism_continue)
+                ) { dialog: DialogInterface, id: Int ->
+                    dialog.cancel()
+                    conversationMessagesPresenter.deleteConversation()
+                }.setNegativeButton(
+                    getString(R.string.ism_cancel)
+                ) { dialog: DialogInterface, id: Int -> dialog.cancel() }.create().show()
+        }
 
-            new androidx.appcompat.app.AlertDialog.Builder(this).setTitle(getString(R.string.ism_delete_conversation)).setMessage(getString(R.string.ism_delete_conversation_alert)).setCancelable(true).setPositiveButton(getString(R.string.ism_continue), (dialog, id) -> {
-
-                dialog.cancel();
-                conversationMessagesPresenter.deleteConversation();
-            }).setNegativeButton(getString(R.string.ism_cancel), (dialog, id) -> dialog.cancel()).create().show();
-        });
-
-        if (getIntent().getBooleanExtra("fromNotification", false)) {
-
+        if (intent.getBooleanExtra("fromNotification", false)) {
             try {
-                IsometrikChatSdk.getInstance().getIsometrik().getExecutor().execute(() -> IsometrikChatSdk.getInstance().getIsometrik().createConnection(IsometrikChatSdk.getInstance().getUserSession().getUserId() + IsometrikChatSdk.getInstance().getUserSession().getDeviceId(), IsometrikChatSdk.getInstance().getUserSession().getUserToken()));
-            } catch (Exception ignore) {
-
+                IsometrikChatSdk.getInstance().isometrik.executor.execute {
+                    IsometrikChatSdk.getInstance().isometrik.createConnection(
+                        IsometrikChatSdk.getInstance().userSession.userId + IsometrikChatSdk.getInstance().userSession.deviceId,
+                        IsometrikChatSdk.getInstance().userSession.userToken
+                    )
+                }
+            } catch (ignore: Exception) {
             }
         }
 
-        ismActivityMessagesBinding.ivRefreshOnlineStatus.setOnClickListener(v -> {
-
-            if (ismActivityMessagesBinding.vSelectMultipleMessagesHeader.getRoot().getVisibility() == View.GONE && clickActionsNotBlocked()) {
-                conversationMessagesPresenter.requestConversationDetails();
+        ismActivityMessagesBinding!!.ivRefreshOnlineStatus.setOnClickListener { v: View? ->
+            if (ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility == View.GONE && clickActionsNotBlocked()) {
+                conversationMessagesPresenter.requestConversationDetails()
             }
-        });
+        }
 
-        ismActivityMessagesBinding.ivObservers.setOnClickListener(v -> {
-            Intent intent = new Intent(ConversationMessagesActivity.this, ObserversActivity.class);
-            intent.putExtra("conversationId", conversationId);
-            startActivity(intent);
-        });
+        ismActivityMessagesBinding!!.ivObservers.setOnClickListener { v: View? ->
+            val intent = Intent(
+                this@ConversationMessagesActivity,
+                ObserversActivity::class.java
+            )
+            intent.putExtra("conversationId", conversationId)
+            startActivity(intent)
+        }
 
-        ismActivityMessagesBinding.ivMore.setOnClickListener(v -> {
-            if (ismActivityMessagesBinding.vSelectMultipleMessagesHeader.getRoot().getVisibility()
-                    == View.GONE && clickActionsNotBlocked()) {
-                PopupMenu popup = new PopupMenu(this, v);
-                MenuInflater inflater = popup.getMenuInflater();
+        ismActivityMessagesBinding!!.ivMore.setOnClickListener { v: View? ->
+            if ((ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility
+                        == View.GONE) && clickActionsNotBlocked()
+            ) {
+                val popup = PopupMenu(this, v)
+                val inflater = popup.menuInflater
                 if (messagingDisabled) {
-                    inflater.inflate(R.menu.ism_unblock_menu, popup.getMenu());
+                    inflater.inflate(R.menu.ism_unblock_menu, popup.menu)
                 } else {
-                    inflater.inflate(R.menu.ism_block_menu, popup.getMenu());
+                    inflater.inflate(R.menu.ism_block_menu, popup.menu)
                 }
-                popup.setOnMenuItemClickListener(item -> {
-                    if (item.getItemId() == R.id.blockOrUnBlockUser) {
+                popup.setOnMenuItemClickListener { item: MenuItem ->
+                    if (item.itemId == R.id.blockOrUnBlockUser) {
                         if (messagingDisabled) {
-                            showProgressDialog(getString(R.string.ism_unblocking_user, conversationUserFullName));
-                            conversationMessagesPresenter.unBlockUser(isometrikUserId, false, userPersonalUserId);
+                            showProgressDialog(
+                                getString(
+                                    R.string.ism_unblocking_user,
+                                    conversationUserFullName
+                                )
+                            )
+                            conversationMessagesPresenter.unBlockUser(
+                                isometrikUserId,
+                                false,
+                                userPersonalUserId
+                            )
                         } else {
-                            showProgressDialog(getString(R.string.ism_blocking_user, conversationUserFullName));
-                            conversationMessagesPresenter.blockUser(isometrikUserId, true, userPersonalUserId);
+                            showProgressDialog(
+                                getString(
+                                    R.string.ism_blocking_user,
+                                    conversationUserFullName
+                                )
+                            )
+                            conversationMessagesPresenter.blockUser(
+                                isometrikUserId,
+                                true,
+                                userPersonalUserId
+                            )
                         }
-                        return true;
+                        return@setOnMenuItemClickListener true
                     }
-                    if (item.getItemId() == R.id.clearChat) {
+                    if (item.itemId == R.id.clearChat) {
                         // implement clear chat feature
-                        new androidx.appcompat.app.AlertDialog.Builder(this).setTitle(getString(R.string.ism_clear_conversation))
-                                .setMessage(getString(R.string.ism_clear_conversation_alert))
-                                .setCancelable(true)
-                                .setPositiveButton(getString(R.string.ism_continue), (dialog, id) -> {
-                                    dialog.cancel();
-                                    showProgressDialog(getString(R.string.ism_clearing_conversation));
-                                    conversationMessagesPresenter.clearConversation(conversationId);
-                                })
-                                .setNegativeButton(getString(R.string.ism_cancel), (dialog, id) -> dialog.cancel())
-                                .create()
-                                .show();
+                        AlertDialog.Builder(this)
+                            .setTitle(getString(R.string.ism_clear_conversation))
+                            .setMessage(getString(R.string.ism_clear_conversation_alert))
+                            .setCancelable(true)
+                            .setPositiveButton(getString(R.string.ism_continue)) { dialog: DialogInterface, id: Int ->
+                                dialog.cancel()
+                                showProgressDialog(getString(R.string.ism_clearing_conversation))
+                                conversationMessagesPresenter.clearConversation(
+                                    conversationId
+                                )
+                            }
+                            .setNegativeButton(
+                                getString(R.string.ism_cancel)
+                            ) { dialog: DialogInterface, id: Int -> dialog.cancel() }
+                            .create()
+                            .show()
                     }
-                    return false;
-                });
-                popup.show();
+                    false
+                }
+                popup.show()
             }
-        });
+        }
 
-        ismActivityMessagesBinding.ivAudioCall.setOnClickListener(v -> {
-            IsometrikChatSdk.getInstance().getChatActionsClickListener().onCallClicked(true, isometrikUserId, conversationUserFullName + IsometrikChatSdk.getInstance().getUserSession().getUserName(), conversationUserFullName, conversationUserImageUrl);
-        });
+        ismActivityMessagesBinding!!.ivAudioCall.setOnClickListener { v: View? ->
+            IsometrikChatSdk.getInstance().chatActionsClickListener.onCallClicked(
+                true,
+                isometrikUserId!!,
+                conversationUserFullName + IsometrikChatSdk.getInstance().userSession.userName,
+                conversationUserFullName!!,
+                conversationUserImageUrl!!
+            )
+        }
 
-        ismActivityMessagesBinding.ivVideoCall.setOnClickListener(v -> {
-            IsometrikChatSdk.getInstance().getChatActionsClickListener().onCallClicked(false, isometrikUserId, conversationUserFullName + IsometrikChatSdk.getInstance().getUserSession().getUserName(), conversationUserFullName, conversationUserImageUrl);
-        });
+        ismActivityMessagesBinding!!.ivVideoCall.setOnClickListener { v: View? ->
+            IsometrikChatSdk.getInstance().chatActionsClickListener.onCallClicked(
+                false,
+                isometrikUserId!!,
+                conversationUserFullName + IsometrikChatSdk.getInstance().userSession.userName,
+                conversationUserFullName!!,
+                conversationUserImageUrl!!
+            )
+        }
     }
 
-    private void showProgressDialog(String message) {
-        alertDialog = alertProgress.getProgressDialog(this, message);
-        if (!isFinishing()) alertDialog.show();
+    private fun showProgressDialog(message: String) {
+        alertDialog = alertProgress!!.getProgressDialog(this, message)
+        if (!isFinishing) alertDialog?.show()
     }
 
 
-    private final TextWatcher sendMessageTextWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    private val sendMessageTextWatcher: TextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             if (count > 0) {
-                int end = start + count;
-                Editable message = ismActivityMessagesBinding.etSendMessage.getEditableText();
-                MentionedUserSpan[] list = message.getSpans(start, end, MentionedUserSpan.class);
+                val end = start + count
+                val message = ismActivityMessagesBinding!!.etSendMessage.editableText
+                val list = message.getSpans(
+                    start, end,
+                    MentionedUserSpan::class.java
+                )
 
-                for (MentionedUserSpan span : list) {
-                    int spanStart = message.getSpanStart(span);
-                    int spanEnd = message.getSpanEnd(span);
+                for (span in list) {
+                    val spanStart = message.getSpanStart(span)
+                    val spanEnd = message.getSpanEnd(span)
                     if ((spanStart < end) && (spanEnd > start)) {
-
-                        spansToRemove.add(span);
+                        spansToRemove.add(span)
                     }
                 }
             }
         }
 
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            if (s.length() > 0) {
-                ismActivityMessagesBinding.rlRecordAudio.setVisibility(View.GONE);
-                ismActivityMessagesBinding.ivCaptureImage.setVisibility(View.INVISIBLE);
-                ismActivityMessagesBinding.ivSendMessage.setVisibility(View.VISIBLE);
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            if (s.length > 0) {
+                ismActivityMessagesBinding!!.rlRecordAudio.visibility = View.GONE
+                ismActivityMessagesBinding!!.ivCaptureImage.visibility = View.INVISIBLE
+                ismActivityMessagesBinding!!.ivSendMessage.visibility = View.VISIBLE
             } else {
-                ismActivityMessagesBinding.ivSendMessage.setVisibility(View.GONE);
-                ismActivityMessagesBinding.ivCaptureImage.setVisibility(View.VISIBLE);
-                ismActivityMessagesBinding.rlRecordAudio.setVisibility(View.VISIBLE);
+                ismActivityMessagesBinding!!.ivSendMessage.visibility = View.GONE
+                ismActivityMessagesBinding!!.ivCaptureImage.visibility = View.VISIBLE
+                ismActivityMessagesBinding!!.rlRecordAudio.visibility = View.VISIBLE
             }
-            if (!joiningAsObserver) conversationMessagesPresenter.sendTypingMessage();
+            if (!joiningAsObserver) conversationMessagesPresenter!!.sendTypingMessage()
         }
 
-        @Override
-        public void afterTextChanged(Editable s) {
+        override fun afterTextChanged(s: Editable) {
             if (!joiningAsObserver) {
-                if (s.length() > 0) {
-                    String searchTag = TagUserUtil.getTaggedUsernameToSearch(s.toString(), ismActivityMessagesBinding.etSendMessage.getSelectionStart());
+                if (s.length > 0) {
+                    val searchTag = TagUserUtil.getTaggedUsernameToSearch(
+                        s.toString(),
+                        ismActivityMessagesBinding!!.etSendMessage.selectionStart
+                    )
 
                     if (searchTag != null) {
-                        conversationMessagesPresenter.searchUserToTag(searchTag);
+                        conversationMessagesPresenter!!.searchUserToTag(searchTag)
                     } else {
-                        ismActivityMessagesBinding.vTagUsers.getRoot().setVisibility(View.GONE);
+                        ismActivityMessagesBinding!!.vTagUsers.root.visibility =
+                            View.GONE
                     }
                 } else {
-                    ismActivityMessagesBinding.vTagUsers.getRoot().setVisibility(View.GONE);
+                    ismActivityMessagesBinding!!.vTagUsers.root.visibility = View.GONE
                 }
 
-                Editable message = ismActivityMessagesBinding.etSendMessage.getEditableText();
+                val message = ismActivityMessagesBinding!!.etSendMessage.editableText
 
-                for (MentionedUserSpan span : spansToRemove) {
+                for (span in spansToRemove) {
+                    val start = message.getSpanStart(span)
+                    val end = message.getSpanEnd(span)
 
-                    int start = message.getSpanStart(span);
-                    int end = message.getSpanEnd(span);
-
-                    message.removeSpan(span);
+                    message.removeSpan(span)
                     if (start != end) {
-                        message.delete(start, end);
+                        message.delete(start, end)
                     }
                 }
-                spansToRemove.clear();
+                spansToRemove.clear()
             }
         }
-    };
+    }
 
-    @Override
-    public void onMediaDownloadedComplete(boolean successfullyCompleted, String messageId, String mediaTypeDownloadedMessage, int messagePosition, String downloadedMediaPath) {
-        runOnUiThread(() -> {
-
+    override fun onMediaDownloadedComplete(
+        successfullyCompleted: Boolean,
+        messageId: String,
+        mediaTypeDownloadedMessage: String,
+        messagePosition: Int,
+        downloadedMediaPath: String?
+    ) {
+        runOnUiThread {
             if (!successfullyCompleted) {
-                Snackbar snackbar = Snackbar.make(ismActivityMessagesBinding.getRoot(), mediaTypeDownloadedMessage, Snackbar.LENGTH_SHORT);
-                snackbar.show();
+                val snackbar = Snackbar.make(
+                    ismActivityMessagesBinding!!.root,
+                    mediaTypeDownloadedMessage,
+                    Snackbar.LENGTH_SHORT
+                )
+                snackbar.show()
             }
-            int position = conversationMessagesPresenter.verifyMessagePositionInList(messageId, messagePosition, messages);
+            val position = conversationMessagesPresenter!!.verifyMessagePositionInList(
+                messageId,
+                messagePosition,
+                messages
+            )
             if (position != -1) {
-                conversationMessagesAdapter.updateMessageStatusOnMediaDownloadFinished(position, successfullyCompleted, downloadedMediaPath);
-            }
-        });
-    }
-
-    @Override
-    public void onMediaDownloadCanceled(boolean successfullyCanceled, String messageId, String mediaTypeDownloadCanceledMessage, int messagePosition) {
-        runOnUiThread(() -> {
-            if (!successfullyCanceled) {
-                Snackbar snackbar = Snackbar.make(ismActivityMessagesBinding.getRoot(), mediaTypeDownloadCanceledMessage, Snackbar.LENGTH_SHORT);
-                snackbar.show();
-            }
-            int position = conversationMessagesPresenter.verifyMessagePositionInList(messageId, messagePosition, messages);
-            if (position != -1) {
-                conversationMessagesAdapter.updateMessageStatusOnDownloadingStateChanged(position, false);
-            }
-        });
-    }
-
-    @Override
-    public void onMediaUploadCanceled(boolean successfullyCanceled, String localMessageId, String mediaTypeUploadCanceledMessage, int messagePosition) {
-        runOnUiThread(() -> {
-            if (!successfullyCanceled) {
-                Snackbar snackbar = Snackbar.make(ismActivityMessagesBinding.getRoot(), mediaTypeUploadCanceledMessage, Snackbar.LENGTH_SHORT);
-                snackbar.show();
-            }
-            int position = conversationMessagesPresenter.verifyUnsentMessagePositionInList(localMessageId, messagePosition, messages);
-            if (position != -1) {
-                MessagesModel messagesModel = messages.get(position);
-                messagesModel.setUploading(false);
-                messages.set(position, messagesModel);
-                conversationMessagesAdapter.notifyItemChanged(position);
-            }
-        });
-    }
-
-    @Override
-    public void onDownloadProgressUpdate(String messageId, int messagePosition, int progress) {
-        runOnUiThread(() -> {
-
-            int position = conversationMessagesPresenter.verifyMessagePositionInList(messageId, messagePosition, messages);
-            if (position != -1) {
-                conversationMessagesAdapter.updateProgressStatusOfMessage(true, position, ismActivityMessagesBinding.rvMessages, progress);
-            }
-        });
-    }
-
-    @Override
-    public void onUploadProgressUpdate(String localMessageId, String mediaId, int messagePosition, int progress) {
-        runOnUiThread(() -> {
-            int position = conversationMessagesPresenter.verifyUnsentMessagePositionInList(localMessageId, messagePosition, messages);
-            if (position != -1) {
-                conversationMessagesAdapter.updateProgressStatusOfMessage(false, position, ismActivityMessagesBinding.rvMessages, progress);
-            }
-        });
-    }
-
-    @Override
-    public void onFailedToSendMessage(String localMessageId, String error) {
-        runOnUiThread(() -> {
-            int position = conversationMessagesPresenter.verifyUnsentMessagePositionInList(localMessageId, messages.size() - 1, messages);
-            if (position != -1) {
-                MessagesModel messagesModel = messages.get(position);
-                messagesModel.setSendingMessageFailed(true);
-                messages.set(position, messagesModel);
-                conversationMessagesAdapter.notifyItemChanged(position);
-            }
-        });
-    }
-
-    @Override
-    public void onMessageReactionClicked(String messageId, ReactionModel reactionModel) {
-        if (!isFinishing() && !fetchReactionUsersFragment.isAdded()) {
-            dismissAllDialogs();
-            fetchReactionUsersFragment.updateParameters(conversationId, messageId, reactionModel, this, messagingDisabled);
-            fetchReactionUsersFragment.show(getSupportFragmentManager(), FetchReactionUsersFragment.TAG);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-
-            case CAPTURE_IMAGE_PERMISSIONS_REQUEST_CODE: {
-                if (Utilities.isAllPermissionGranted(grantResults)) {
-                    requestImageCapture();
-                } else {
-                    Snackbar snackbar = Snackbar.make(ismActivityMessagesBinding.getRoot(), R.string.ism_permission_image_capture_denied, Snackbar.LENGTH_SHORT);
-                    snackbar.show();
-                }
-                break;
-            }
-
-            case DOWNLOAD_MEDIA_PERMISSIONS_REQUEST_CODE: {
-                if (Utilities.isAllPermissionGranted(grantResults)) {
-                    Snackbar snackbar = Snackbar.make(ismActivityMessagesBinding.getRoot(), R.string.ism_storage_permission_to_download_granted, Snackbar.LENGTH_SHORT);
-                    snackbar.show();
-                } else {
-                    Snackbar snackbar = Snackbar.make(ismActivityMessagesBinding.getRoot(), R.string.ism_storage_permission_to_download_denied, Snackbar.LENGTH_SHORT);
-                    snackbar.show();
-                }
-
-                break;
-            }
-            case SHARE_LOCATION_PERMISSIONS_REQUEST_CODE: {
-                if (Utilities.isAllPermissionGranted(grantResults)) {
-                    requestLocationShare();
-                } else {
-
-                    Snackbar snackbar = Snackbar.make(ismActivityMessagesBinding.getRoot(), R.string.ism_location_permission_denied, Snackbar.LENGTH_SHORT);
-                    snackbar.show();
-                }
-                break;
-            }
-            case RECORD_AUDIO_PERMISSIONS_REQUEST_CODE: {
-                if (Utilities.isAllPermissionGranted(grantResults)) {
-                    Snackbar snackbar = Snackbar.make(ismActivityMessagesBinding.getRoot(), R.string.ism_press_hold_to_record_audio, Snackbar.LENGTH_SHORT);
-                    snackbar.show();
-                } else {
-                    Snackbar snackbar = Snackbar.make(ismActivityMessagesBinding.getRoot(), R.string.ism_record_audio_denied, Snackbar.LENGTH_SHORT);
-                    snackbar.show();
-                }
-                break;
-            }
-            case SHARE_PHOTOS_PERMISSIONS_REQUEST_CODE: {
-                if (Utilities.isAllPermissionGranted(grantResults)) {
-                    requestMediaShareFromStorage(SHARE_PHOTOS_PERMISSIONS_REQUEST_CODE);
-                } else {
-                    Snackbar snackbar = Snackbar.make(ismActivityMessagesBinding.getRoot(), R.string.ism_permission_photos_share_denied, Snackbar.LENGTH_SHORT);
-                    snackbar.show();
-                }
-                break;
-            }
-            case SHARE_VIDEOS_PERMISSIONS_REQUEST_CODE: {
-                if (Utilities.isAllPermissionGranted(grantResults)) {
-                    requestMediaShareFromStorage(SHARE_VIDEOS_PERMISSIONS_REQUEST_CODE);
-                } else {
-                    Snackbar snackbar = Snackbar.make(ismActivityMessagesBinding.getRoot(), R.string.ism_permission_videos_share_denied, Snackbar.LENGTH_SHORT);
-                    snackbar.show();
-                }
-                break;
-            }
-            case SHARE_FILES_PERMISSIONS_REQUEST_CODE: {
-                if (Utilities.isAllPermissionGranted(grantResults)) {
-                    requestMediaShareFromStorage(SHARE_FILES_PERMISSIONS_REQUEST_CODE);
-                } else {
-                    Snackbar snackbar = Snackbar.make(ismActivityMessagesBinding.getRoot(), R.string.ism_permission_files_share_denied, Snackbar.LENGTH_SHORT);
-                    snackbar.show();
-                }
-                break;
-            }
-            case SHARE_CONTACT_PERMISSIONS_REQUEST_CODE: {
-                if (Utilities.isAllPermissionGranted(grantResults)) {
-                    requestContactShare();
-                } else {
-                    Snackbar snackbar = Snackbar.make(ismActivityMessagesBinding.getRoot(), R.string.ism_permission_contact_share_denied, Snackbar.LENGTH_SHORT);
-                    snackbar.show();
-                }
-                break;
+                conversationMessagesAdapter!!.updateMessageStatusOnMediaDownloadFinished(
+                    position,
+                    successfullyCompleted,
+                    downloadedMediaPath
+                )
             }
         }
     }
 
-    @Override
-    public void onMediaTypeToBeSharedSelected(MessageTypesForUI mediaTypeSelected) {
+    override fun onMediaDownloadCanceled(
+        successfullyCanceled: Boolean,
+        messageId: String,
+        mediaTypeDownloadCanceledMessage: String,
+        messagePosition: Int
+    ) {
+        runOnUiThread {
+            if (!successfullyCanceled) {
+                val snackbar = Snackbar.make(
+                    ismActivityMessagesBinding!!.root,
+                    mediaTypeDownloadCanceledMessage,
+                    Snackbar.LENGTH_SHORT
+                )
+                snackbar.show()
+            }
+            val position = conversationMessagesPresenter!!.verifyMessagePositionInList(
+                messageId,
+                messagePosition,
+                messages
+            )
+            if (position != -1) {
+                conversationMessagesAdapter!!.updateMessageStatusOnDownloadingStateChanged(
+                    position,
+                    false
+                )
+            }
+        }
+    }
 
-        switch (mediaTypeSelected) {
+    override fun onMediaUploadCanceled(
+        successfullyCanceled: Boolean,
+        localMessageId: String,
+        mediaTypeUploadCanceledMessage: String,
+        messagePosition: Int
+    ) {
+        runOnUiThread {
+            if (!successfullyCanceled) {
+                val snackbar = Snackbar.make(
+                    ismActivityMessagesBinding!!.root,
+                    mediaTypeUploadCanceledMessage,
+                    Snackbar.LENGTH_SHORT
+                )
+                snackbar.show()
+            }
+            val position = conversationMessagesPresenter!!.verifyUnsentMessagePositionInList(
+                localMessageId,
+                messagePosition,
+                messages
+            )
+            if (position != -1) {
+                val messagesModel = messages[position]
+                messagesModel.isUploading = false
+                messages[position] = messagesModel
+                conversationMessagesAdapter!!.notifyItemChanged(position)
+            }
+        }
+    }
 
-            case CameraPhoto: {
+    override fun onDownloadProgressUpdate(messageId: String, messagePosition: Int, progress: Int) {
+        runOnUiThread {
+            val position = conversationMessagesPresenter!!.verifyMessagePositionInList(
+                messageId,
+                messagePosition,
+                messages
+            )
+            if (position != -1) {
+                conversationMessagesAdapter!!.updateProgressStatusOfMessage(
+                    true,
+                    position,
+                    ismActivityMessagesBinding!!.rvMessages,
+                    progress
+                )
+            }
+        }
+    }
+
+    override fun onUploadProgressUpdate(
+        localMessageId: String,
+        mediaId: String,
+        messagePosition: Int,
+        progress: Int
+    ) {
+        runOnUiThread {
+            val position = conversationMessagesPresenter!!.verifyUnsentMessagePositionInList(
+                localMessageId,
+                messagePosition,
+                messages
+            )
+            if (position != -1) {
+                conversationMessagesAdapter!!.updateProgressStatusOfMessage(
+                    false,
+                    position,
+                    ismActivityMessagesBinding!!.rvMessages,
+                    progress
+                )
+            }
+        }
+    }
+
+    override fun onFailedToSendMessage(localMessageId: String, error: String?) {
+        runOnUiThread {
+            val position = conversationMessagesPresenter!!.verifyUnsentMessagePositionInList(
+                localMessageId,
+                messages.size - 1,
+                messages
+            )
+            if (position != -1) {
+                val messagesModel = messages[position]
+                messagesModel.isSendingMessageFailed = true
+                messages[position] = messagesModel
+                conversationMessagesAdapter!!.notifyItemChanged(position)
+            }
+        }
+    }
+
+    override fun onMessageReactionClicked(messageId: String, reactionModel: ReactionModel) {
+        if (!isFinishing && !fetchReactionUsersFragment!!.isAdded) {
+            dismissAllDialogs()
+            fetchReactionUsersFragment!!.updateParameters(
+                conversationId, messageId, reactionModel,
+                this, messagingDisabled
+            )
+            fetchReactionUsersFragment!!.show(
+                supportFragmentManager,
+                FetchReactionUsersFragment.TAG
+            )
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            CAPTURE_IMAGE_PERMISSIONS_REQUEST_CODE -> {
+                if (Utilities.isAllPermissionGranted(grantResults)) {
+                    requestImageCapture()
+                } else {
+                    val snackbar = Snackbar.make(
+                        ismActivityMessagesBinding!!.root,
+                        R.string.ism_permission_image_capture_denied,
+                        Snackbar.LENGTH_SHORT
+                    )
+                    snackbar.show()
+                }
+            }
+
+            DOWNLOAD_MEDIA_PERMISSIONS_REQUEST_CODE -> {
+                if (Utilities.isAllPermissionGranted(grantResults)) {
+                    val snackbar = Snackbar.make(
+                        ismActivityMessagesBinding!!.root,
+                        R.string.ism_storage_permission_to_download_granted,
+                        Snackbar.LENGTH_SHORT
+                    )
+                    snackbar.show()
+                } else {
+                    val snackbar = Snackbar.make(
+                        ismActivityMessagesBinding!!.root,
+                        R.string.ism_storage_permission_to_download_denied,
+                        Snackbar.LENGTH_SHORT
+                    )
+                    snackbar.show()
+                }
+            }
+
+            SHARE_LOCATION_PERMISSIONS_REQUEST_CODE -> {
+                if (Utilities.isAllPermissionGranted(grantResults)) {
+                    requestLocationShare()
+                } else {
+                    val snackbar = Snackbar.make(
+                        ismActivityMessagesBinding!!.root,
+                        R.string.ism_location_permission_denied,
+                        Snackbar.LENGTH_SHORT
+                    )
+                    snackbar.show()
+                }
+            }
+
+            RECORD_AUDIO_PERMISSIONS_REQUEST_CODE -> {
+                if (Utilities.isAllPermissionGranted(grantResults)) {
+                    val snackbar = Snackbar.make(
+                        ismActivityMessagesBinding!!.root,
+                        R.string.ism_press_hold_to_record_audio,
+                        Snackbar.LENGTH_SHORT
+                    )
+                    snackbar.show()
+                } else {
+                    val snackbar = Snackbar.make(
+                        ismActivityMessagesBinding!!.root,
+                        R.string.ism_record_audio_denied,
+                        Snackbar.LENGTH_SHORT
+                    )
+                    snackbar.show()
+                }
+            }
+
+            SHARE_PHOTOS_PERMISSIONS_REQUEST_CODE -> {
+                if (Utilities.isAllPermissionGranted(grantResults)) {
+                    requestMediaShareFromStorage(SHARE_PHOTOS_PERMISSIONS_REQUEST_CODE)
+                } else {
+                    val snackbar = Snackbar.make(
+                        ismActivityMessagesBinding!!.root,
+                        R.string.ism_permission_photos_share_denied,
+                        Snackbar.LENGTH_SHORT
+                    )
+                    snackbar.show()
+                }
+            }
+
+            SHARE_VIDEOS_PERMISSIONS_REQUEST_CODE -> {
+                if (Utilities.isAllPermissionGranted(grantResults)) {
+                    requestMediaShareFromStorage(SHARE_VIDEOS_PERMISSIONS_REQUEST_CODE)
+                } else {
+                    val snackbar = Snackbar.make(
+                        ismActivityMessagesBinding!!.root,
+                        R.string.ism_permission_videos_share_denied,
+                        Snackbar.LENGTH_SHORT
+                    )
+                    snackbar.show()
+                }
+            }
+
+            SHARE_FILES_PERMISSIONS_REQUEST_CODE -> {
+                if (Utilities.isAllPermissionGranted(grantResults)) {
+                    requestMediaShareFromStorage(SHARE_FILES_PERMISSIONS_REQUEST_CODE)
+                } else {
+                    val snackbar = Snackbar.make(
+                        ismActivityMessagesBinding!!.root,
+                        R.string.ism_permission_files_share_denied,
+                        Snackbar.LENGTH_SHORT
+                    )
+                    snackbar.show()
+                }
+            }
+
+            SHARE_CONTACT_PERMISSIONS_REQUEST_CODE -> {
+                if (Utilities.isAllPermissionGranted(grantResults)) {
+                    requestContactShare()
+                } else {
+                    val snackbar = Snackbar.make(
+                        ismActivityMessagesBinding!!.root,
+                        R.string.ism_permission_contact_share_denied,
+                        Snackbar.LENGTH_SHORT
+                    )
+                    snackbar.show()
+                }
+            }
+        }
+    }
+
+    override fun onMediaTypeToBeSharedSelected(mediaTypeSelected: MessageTypesForUI) {
+        when (mediaTypeSelected) {
+            MessageTypesForUI.CameraPhoto -> {
                 //Capture Image
-                checkImageCapturePermissions(true);
-                break;
+                checkImageCapturePermissions(true)
             }
-            case RecordVideo: {
+
+            MessageTypesForUI.RecordVideo -> {
                 //RecordVideo
-                onRecordVideoRequested();
-                break;
+                onRecordVideoRequested()
             }
 
-            case PhotoSent: {
+            MessageTypesForUI.PhotoSent -> {
                 //Photos
-                checkAccessStoragePermissions(SHARE_PHOTOS_PERMISSIONS_REQUEST_CODE, getString(R.string.ism_permission_photos_share));
-                break;
+                checkAccessStoragePermissions(
+                    SHARE_PHOTOS_PERMISSIONS_REQUEST_CODE,
+                    getString(R.string.ism_permission_photos_share)
+                )
             }
-            case VideoSent: {
+
+            MessageTypesForUI.VideoSent -> {
                 //Videos
-                checkAccessStoragePermissions(SHARE_VIDEOS_PERMISSIONS_REQUEST_CODE, getString(R.string.ism_permission_videos_share));
-                break;
+                checkAccessStoragePermissions(
+                    SHARE_VIDEOS_PERMISSIONS_REQUEST_CODE,
+                    getString(R.string.ism_permission_videos_share)
+                )
             }
-            case FileSent: {
+
+            MessageTypesForUI.FileSent -> {
                 //Files
-                checkAccessStoragePermissions(SHARE_FILES_PERMISSIONS_REQUEST_CODE, getString(R.string.ism_permission_files_share));
-                break;
+                checkAccessStoragePermissions(
+                    SHARE_FILES_PERMISSIONS_REQUEST_CODE,
+                    getString(R.string.ism_permission_files_share)
+                )
             }
 
-            case StickerSent: {
+            MessageTypesForUI.StickerSent -> {
                 //Sticker
-                if (!isFinishing() && !stickersFragment.isAdded()) {
-                    dismissAllDialogs();
-                    stickersFragment.updateParameters(this);
-                    stickersFragment.show(getSupportFragmentManager(), StickersFragment.TAG);
+                if (!isFinishing && !stickersFragment!!.isAdded) {
+                    dismissAllDialogs()
+                    stickersFragment!!.updateParameters(this)
+                    stickersFragment!!.show(supportFragmentManager, StickersFragment.TAG)
                 }
-                break;
             }
-            case GifSent: {
+
+            MessageTypesForUI.GifSent -> {
                 //Gif
-                if (!isFinishing() && !gifsFragment.isAdded()) {
-                    dismissAllDialogs();
-                    gifsFragment.updateParameters(this);
-                    gifsFragment.show(getSupportFragmentManager(), GifsFragment.TAG);
+                if (!isFinishing && !gifsFragment!!.isAdded) {
+                    dismissAllDialogs()
+                    gifsFragment!!.updateParameters(this)
+                    gifsFragment!!.show(supportFragmentManager, GifsFragment.TAG)
                 }
-                break;
             }
-            case WhiteboardSent: {
+
+            MessageTypesForUI.WhiteboardSent -> {
                 //Whiteboard
-                if (!isFinishing() && !whiteboardFragment.isAdded()) {
-                    dismissAllDialogs();
-                    whiteboardFragment.updateParameters(this);
-                    whiteboardFragment.show(getSupportFragmentManager(), WhiteboardFragment.TAG);
+                if (!isFinishing && !whiteboardFragment!!.isAdded) {
+                    dismissAllDialogs()
+                    whiteboardFragment!!.updateParameters(this)
+                    whiteboardFragment!!.show(supportFragmentManager, WhiteboardFragment.TAG)
                 }
-                break;
             }
-            case LocationSent: {
+
+            MessageTypesForUI.LocationSent -> {
                 //Location
-                if (ActivityCompat.checkSelfPermission(ConversationMessagesActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    requestLocationShare();
+                if (ActivityCompat.checkSelfPermission(
+                        this@ConversationMessagesActivity,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    requestLocationShare()
                 } else {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+                            this@ConversationMessagesActivity,
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                        )
+                    ) {
+                        val snackbar = Snackbar.make(
+                            ismActivityMessagesBinding!!.root,
+                            getString(R.string.ism_request_location_permission),
+                            Snackbar.LENGTH_INDEFINITE
+                        ).setAction(
+                            getString(R.string.ism_ok)
+                        ) { view: View? ->
+                            ActivityCompat.requestPermissions(
+                                this@ConversationMessagesActivity,
+                                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                                SHARE_LOCATION_PERMISSIONS_REQUEST_CODE
+                            )
+                        }
 
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(ConversationMessagesActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                        Snackbar snackbar = Snackbar.make(ismActivityMessagesBinding.getRoot(), getString(R.string.ism_request_location_permission), Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.ism_ok), view -> ActivityCompat.requestPermissions(ConversationMessagesActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, SHARE_LOCATION_PERMISSIONS_REQUEST_CODE));
-
-                        snackbar.show();
+                        snackbar.show()
                     } else {
-                        ActivityCompat.requestPermissions(ConversationMessagesActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, SHARE_LOCATION_PERMISSIONS_REQUEST_CODE);
+                        ActivityCompat.requestPermissions(
+                            this@ConversationMessagesActivity, arrayOf(
+                                Manifest.permission.ACCESS_FINE_LOCATION
+                            ), SHARE_LOCATION_PERMISSIONS_REQUEST_CODE
+                        )
                     }
                 }
-                break;
             }
-            case ContactSent: {
+
+            MessageTypesForUI.ContactSent -> {
                 //Contact
-                if (ActivityCompat.checkSelfPermission(ConversationMessagesActivity.this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-                    requestContactShare();
+                if (ActivityCompat.checkSelfPermission(
+                        this@ConversationMessagesActivity,
+                        Manifest.permission.READ_CONTACTS
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    requestContactShare()
                 } else {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+                            this@ConversationMessagesActivity,
+                            Manifest.permission.READ_CONTACTS
+                        )
+                    ) {
+                        val snackbar = Snackbar.make(
+                            ismActivityMessagesBinding!!.root,
+                            getString(R.string.ism_permission_contact_share),
+                            Snackbar.LENGTH_INDEFINITE
+                        ).setAction(
+                            getString(R.string.ism_ok)
+                        ) { view: View? ->
+                            ActivityCompat.requestPermissions(
+                                this@ConversationMessagesActivity,
+                                arrayOf(Manifest.permission.READ_CONTACTS),
+                                SHARE_CONTACT_PERMISSIONS_REQUEST_CODE
+                            )
+                        }
 
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(ConversationMessagesActivity.this, Manifest.permission.READ_CONTACTS)) {
-                        Snackbar snackbar = Snackbar.make(ismActivityMessagesBinding.getRoot(), getString(R.string.ism_permission_contact_share), Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.ism_ok), view -> ActivityCompat.requestPermissions(ConversationMessagesActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, SHARE_CONTACT_PERMISSIONS_REQUEST_CODE));
-
-                        snackbar.show();
+                        snackbar.show()
                     } else {
-                        ActivityCompat.requestPermissions(ConversationMessagesActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, SHARE_CONTACT_PERMISSIONS_REQUEST_CODE);
+                        ActivityCompat.requestPermissions(
+                            this@ConversationMessagesActivity, arrayOf(
+                                Manifest.permission.READ_CONTACTS
+                            ), SHARE_CONTACT_PERMISSIONS_REQUEST_CODE
+                        )
                     }
                 }
-                break;
+            }
+            else ->{
+
             }
         }
     }
 
-    @Override
-    public void gifShareRequested(String gifName, String gifImageUrl, String gifStillUrl) {
-        Attachment gifAttachment = PrepareAttachmentHelper.prepareGifAttachment(gifName, gifImageUrl, gifStillUrl, gifStillUrl);
-        dismissAllDialogs();
+    override fun gifShareRequested(gifName: String, gifImageUrl: String, gifStillUrl: String) {
+        val gifAttachment = PrepareAttachmentHelper.prepareGifAttachment(
+            gifName,
+            gifImageUrl,
+            gifStillUrl,
+            gifStillUrl
+        )
+        dismissAllDialogs()
         if (gifAttachment == null) {
-            Toast.makeText(this, R.string.ism_gif_share_failed, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.ism_gif_share_failed, Toast.LENGTH_SHORT).show()
         } else {
-            conversationMessagesPresenter.shareMessage(RemoteMessageTypes.NormalMessage, null, null, CustomMessageTypes.Gif.getValue(), CustomMessageTypes.Gif.getValue(), false, true, true, true, new ArrayList<>(Collections.singletonList(gifAttachment)), null, null, MessageTypesForUI.GifSent, null, false, null, null);
+            conversationMessagesPresenter!!.shareMessage(
+                RemoteMessageTypes.NormalMessage,
+                null,
+                null,
+                CustomMessageTypes.Gif.value,
+                CustomMessageTypes.Gif.value,
+                false,
+                true,
+                true,
+                true,
+                ArrayList(
+                    listOf(gifAttachment)
+                ),
+                null,
+                null,
+                MessageTypesForUI.GifSent,
+                null,
+                false,
+                null,
+                null
+            )
         }
     }
 
-    @Override
-    public void stickerShareRequested(String stickerName, String stickerImageUrl) {
-        Attachment stickerAttachment = PrepareAttachmentHelper.prepareStickerAttachment(stickerName, stickerImageUrl, stickerImageUrl, stickerImageUrl);
+    override fun stickerShareRequested(stickerName: String, stickerImageUrl: String) {
+        val stickerAttachment = PrepareAttachmentHelper.prepareStickerAttachment(
+            stickerName,
+            stickerImageUrl,
+            stickerImageUrl,
+            stickerImageUrl
+        )
 
-        dismissAllDialogs();
+        dismissAllDialogs()
         if (stickerAttachment == null) {
-            Toast.makeText(this, R.string.ism_sticker_share_failed, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.ism_sticker_share_failed, Toast.LENGTH_SHORT).show()
         } else {
-            conversationMessagesPresenter.shareMessage(RemoteMessageTypes.NormalMessage, null, null, CustomMessageTypes.Sticker.getValue(), CustomMessageTypes.Sticker.getValue(), false, true, true, true, new ArrayList<>(Collections.singletonList(stickerAttachment)), null, null, MessageTypesForUI.StickerSent, null, false, null, null);
+            conversationMessagesPresenter!!.shareMessage(
+                RemoteMessageTypes.NormalMessage,
+                null,
+                null,
+                CustomMessageTypes.Sticker.value,
+                CustomMessageTypes.Sticker.value,
+                false,
+                true,
+                true,
+                true,
+                ArrayList(
+                    listOf(stickerAttachment)
+                ),
+                null,
+                null,
+                MessageTypesForUI.StickerSent,
+                null,
+                false,
+                null,
+                null
+            )
         }
     }
 
-    @Override
-    public void whiteboardShareRequested(String whiteboardImageUrl) {
-
-        conversationMessagesPresenter.shareMessage(RemoteMessageTypes.NormalMessage, null, null, CustomMessageTypes.Whiteboard.getValue(), CustomMessageTypes.Whiteboard.getValue(), false, true, true, true, null, null, null, MessageTypesForUI.WhiteboardSent, new ArrayList<>(Collections.singletonList(whiteboardImageUrl)), true, PresignedUrlMediaTypes.Photo, AttachmentMessageType.Image);
+    override fun whiteboardShareRequested(whiteboardImageUrl: String) {
+        conversationMessagesPresenter!!.shareMessage(
+            RemoteMessageTypes.NormalMessage,
+            null,
+            null,
+            CustomMessageTypes.Whiteboard.value,
+            CustomMessageTypes.Whiteboard.value,
+            false,
+            true,
+            true,
+            true,
+            null,
+            null,
+            null,
+            MessageTypesForUI.WhiteboardSent,
+            ArrayList(
+                listOf(whiteboardImageUrl)
+            ),
+            true,
+            PresignedUrlMediaTypes.Photo,
+            AttachmentMessageType.Image
+        )
     }
 
-    public void downloadMedia(MessagesModel messagesModel, String mediaType, int messagePosition) {
-        if (Utilities.checkSelfExternalStoragePermissionIsGranted(ConversationMessagesActivity.this, false)) {
-
-            int position = conversationMessagesPresenter.verifyMessagePositionInList(messagesModel.getMessageId(), messagePosition, messages);
+    override fun downloadMedia(
+        messagesModel: MessagesModel,
+        mediaType: String,
+        messagePosition: Int
+    ) {
+        if (Utilities.checkSelfExternalStoragePermissionIsGranted(
+                this@ConversationMessagesActivity,
+                false
+            )
+        ) {
+            val position = conversationMessagesPresenter!!.verifyMessagePositionInList(
+                messagesModel.messageId,
+                messagePosition,
+                messages
+            )
             if (position != -1) {
-                conversationMessagesAdapter.updateMessageStatusOnDownloadingStateChanged(position, true);
+                conversationMessagesAdapter!!.updateMessageStatusOnDownloadingStateChanged(
+                    position,
+                    true
+                )
             }
-            conversationMessagesPresenter.downloadMedia(messagesModel, messagePosition);
+            conversationMessagesPresenter!!.downloadMedia(messagesModel, messagePosition)
         } else {
-            if (Utilities.shouldShowExternalPermissionStorageRational(ConversationMessagesActivity.this, false)) {
-                Snackbar snackbar = Snackbar.make(ismActivityMessagesBinding.getRoot(), getString(R.string.ism_request_storage_permission_to_download, mediaType), Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.ism_ok), view -> Utilities.requestExternalStoragePermission(ConversationMessagesActivity.this, DOWNLOAD_MEDIA_PERMISSIONS_REQUEST_CODE, false));
+            if (Utilities.shouldShowExternalPermissionStorageRational(
+                    this@ConversationMessagesActivity,
+                    false
+                )
+            ) {
+                val snackbar = Snackbar.make(
+                    ismActivityMessagesBinding!!.root,
+                    getString(R.string.ism_request_storage_permission_to_download, mediaType),
+                    Snackbar.LENGTH_INDEFINITE
+                ).setAction(
+                    getString(R.string.ism_ok)
+                ) { view: View? ->
+                    Utilities.requestExternalStoragePermission(
+                        this@ConversationMessagesActivity,
+                        DOWNLOAD_MEDIA_PERMISSIONS_REQUEST_CODE,
+                        false
+                    )
+                }
 
-                snackbar.show();
+                snackbar.show()
             } else {
-                Utilities.requestExternalStoragePermission(ConversationMessagesActivity.this, DOWNLOAD_MEDIA_PERMISSIONS_REQUEST_CODE, false);
-
+                Utilities.requestExternalStoragePermission(
+                    this@ConversationMessagesActivity,
+                    DOWNLOAD_MEDIA_PERMISSIONS_REQUEST_CODE,
+                    false
+                )
             }
         }
     }
@@ -1139,8 +1805,8 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
      * @param messagesModel   the messages model
      * @param messagePosition the message position
      */
-    public void cancelMediaDownload(MessagesModel messagesModel, int messagePosition) {
-        conversationMessagesPresenter.cancelMediaDownload(messagesModel, messagePosition);
+    override fun cancelMediaDownload(messagesModel: MessagesModel, messagePosition: Int) {
+        conversationMessagesPresenter!!.cancelMediaDownload(messagesModel, messagePosition)
     }
 
     /**
@@ -1149,8 +1815,8 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
      * @param messagesModel   the messages model
      * @param messagePosition the message position
      */
-    public void cancelMediaUpload(MessagesModel messagesModel, int messagePosition) {
-        conversationMessagesPresenter.cancelMediaUpload(messagesModel, messagePosition);
+    override fun cancelMediaUpload(messagesModel: MessagesModel, messagePosition: Int) {
+        conversationMessagesPresenter!!.cancelMediaUpload(messagesModel, messagePosition)
     }
 
     /**
@@ -1159,83 +1825,98 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
      * @param localMessageId  the local message id
      * @param messagePosition the message position
      */
-    public void removeCanceledMessage(String localMessageId, int messagePosition) {
-        int position = conversationMessagesPresenter.verifyUnsentMessagePositionInList(localMessageId, messagePosition, messages);
+    override fun removeCanceledMessage(localMessageId: String, messagePosition: Int) {
+        val position = conversationMessagesPresenter!!.verifyUnsentMessagePositionInList(
+            localMessageId,
+            messagePosition,
+            messages
+        )
         if (position != -1) {
-            messages.remove(position);
-            conversationMessagesAdapter.notifyItemRemoved(position);
-            if (messages.size() == 0) {
-                if (ismActivityMessagesBinding.tvNoMessages.getVisibility() == View.GONE) {
-                    ismActivityMessagesBinding.tvNoMessages.setVisibility(View.VISIBLE);
+            messages.removeAt(position)
+            conversationMessagesAdapter!!.notifyItemRemoved(position)
+            if (messages.size == 0) {
+                if (ismActivityMessagesBinding!!.tvNoMessages.visibility == View.GONE) {
+                    ismActivityMessagesBinding!!.tvNoMessages.visibility = View.VISIBLE
                 }
             }
         }
     }
 
-    @Override
-    public void addReactionForMessage(String messageId) {
+    override fun addReactionForMessage(messageId: String) {
         if (clickActionsNotBlocked()) {
-            if (!isFinishing() && !addReactionFragment.isAdded()) {
-                dismissAllDialogs();
-                addReactionFragment.updateParameters(conversationId, messageId, this);
-                addReactionFragment.show(getSupportFragmentManager(), AddReactionFragment.TAG);
+            if (!isFinishing && !addReactionFragment!!.isAdded) {
+                dismissAllDialogs()
+                addReactionFragment!!.updateParameters(
+                    conversationId, messageId,
+                    this
+                )
+                addReactionFragment!!.show(supportFragmentManager, AddReactionFragment.TAG)
             }
         }
     }
 
-    @Override
-    public void editMessageRequested(MessagesModel messagesModel) {
-
-        if (!isFinishing() && !editMessageFragment.isAdded()) {
-            dismissAllDialogs();
-            editMessageFragment.updateParameters(messagesModel, this);
-            editMessageFragment.show(getSupportFragmentManager(), EditMessageFragment.TAG);
+    override fun editMessageRequested(messagesModel: MessagesModel) {
+        if (!isFinishing && !editMessageFragment!!.isAdded) {
+            dismissAllDialogs()
+            editMessageFragment!!.updateParameters(messagesModel, this)
+            editMessageFragment!!.show(supportFragmentManager, EditMessageFragment.TAG)
         }
     }
 
-    private void requestLocationShare() {
-
-        if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS) {
+    private fun requestLocationShare() {
+        if (GoogleApiAvailability.getInstance()
+                .isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS
+        ) {
             if (LocationUtils.isLocationEnabled(this)) {
-                shareLocationActivityLauncher.launch(new Intent(ConversationMessagesActivity.this, ShareLocationActivity.class));
+                shareLocationActivityLauncher!!.launch(
+                    Intent(
+                        this@ConversationMessagesActivity,
+                        ShareLocationActivity::class.java
+                    )
+                )
             } else {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                dialog.setMessage(getString(R.string.ism_location_not_enabled));
-                dialog.setPositiveButton(getString(R.string.ism_location_enable), (paramDialogInterface, paramInt) -> {
-                    Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    startActivity(myIntent);
-                });
-                dialog.show();
+                val dialog = android.app.AlertDialog.Builder(this)
+                dialog.setMessage(getString(R.string.ism_location_not_enabled))
+                dialog.setPositiveButton(getString(R.string.ism_location_enable)) { paramDialogInterface: DialogInterface?, paramInt: Int ->
+                    val myIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                    startActivity(myIntent)
+                }
+                dialog.show()
             }
         } else {
-            Toast.makeText(this, getString(R.string.ism_location_not_supported), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.ism_location_not_supported), Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
     /**
      * Checking permissions for accessing media files
      */
-    private void checkImageCapturePermissions(boolean requestPermissions) {
-        List<String> permissionRequired = new ArrayList<>();
-        permissionRequired.add(Manifest.permission.RECORD_AUDIO);
-        permissionRequired.add(Manifest.permission.CAMERA);
+    private fun checkImageCapturePermissions(requestPermissions: Boolean) {
+        val permissionRequired: MutableList<String> = ArrayList()
+        permissionRequired.add(Manifest.permission.RECORD_AUDIO)
+        permissionRequired.add(Manifest.permission.CAMERA)
 
         // Add permissions for media access based on Android version
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // Android 13+
-            permissionRequired.add(Manifest.permission.READ_MEDIA_IMAGES);
-            permissionRequired.add(Manifest.permission.READ_MEDIA_VIDEO);
-            permissionRequired.add(Manifest.permission.READ_MEDIA_AUDIO);
+            permissionRequired.add(Manifest.permission.READ_MEDIA_IMAGES)
+            permissionRequired.add(Manifest.permission.READ_MEDIA_VIDEO)
+            permissionRequired.add(Manifest.permission.READ_MEDIA_AUDIO)
         } else {
-            permissionRequired.addAll(Arrays.asList(Utilities.getStoragePermissions()));
+            permissionRequired.addAll(Arrays.asList(*Utilities.getStoragePermissions()))
         }
 
         // List to hold permissions that are not yet granted
-        List<String> permissionsNotGranted = new ArrayList<>();
+        val permissionsNotGranted: MutableList<String> = ArrayList()
 
         // Check each permission and add to list if not granted
-        for (String permission : permissionRequired) {
-            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-                permissionsNotGranted.add(permission);
+        for (permission in permissionRequired) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    permission
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                permissionsNotGranted.add(permission)
             }
         }
 
@@ -1243,735 +1924,860 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
         if (!permissionsNotGranted.isEmpty()) {
             if (requestPermissions) {
                 ActivityCompat.requestPermissions(
-                        this,
-                        permissionsNotGranted.toArray(new String[0]),
-                        PERMISSION_REQUEST_CODE // Use the new request code
-                );
+                    this,
+                    permissionsNotGranted.toTypedArray<String>(),
+                    PERMISSION_REQUEST_CODE // Use the new request code
+                )
             }
         } else {
             // All permissions are granted, proceed with the action
-            requestImageCapture();
+            requestImageCapture()
         }
     }
 
-    private void requestCameraPermissions() {
+    private fun requestCameraPermissions() {
+        val permissionsRequired = ArrayList<String>()
 
-        ArrayList<String> permissionsRequired = new ArrayList<>();
-
-        if (ActivityCompat.checkSelfPermission(ConversationMessagesActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-
-            permissionsRequired.add(Manifest.permission.CAMERA);
+        if (ActivityCompat.checkSelfPermission(
+                this@ConversationMessagesActivity,
+                Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            permissionsRequired.add(Manifest.permission.CAMERA)
         }
-        if (ActivityCompat.checkSelfPermission(ConversationMessagesActivity.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-
-            permissionsRequired.add(Manifest.permission.RECORD_AUDIO);
+        if (ActivityCompat.checkSelfPermission(
+                this@ConversationMessagesActivity,
+                Manifest.permission.RECORD_AUDIO
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            permissionsRequired.add(Manifest.permission.RECORD_AUDIO)
         }
 
-        if (!Utilities.checkSelfExternalStoragePermissionIsGranted(ConversationMessagesActivity.this, true)) {
-            permissionsRequired.addAll(Utilities.getPermissionsListForExternalStorage(true));
+        if (!Utilities.checkSelfExternalStoragePermissionIsGranted(
+                this@ConversationMessagesActivity,
+                true
+            )
+        ) {
+            permissionsRequired.addAll(Utilities.getPermissionsListForExternalStorage(true))
         }
 
-        ActivityCompat.requestPermissions(ConversationMessagesActivity.this, permissionsRequired.toArray(new String[permissionsRequired.size()]), CAPTURE_IMAGE_PERMISSIONS_REQUEST_CODE);
-
+        ActivityCompat.requestPermissions(
+            this@ConversationMessagesActivity,
+            permissionsRequired.toTypedArray<String>(),
+            CAPTURE_IMAGE_PERMISSIONS_REQUEST_CODE
+        )
     }
 
-    private void checkAccessStoragePermissions(int permissionsRequestCode, String permissionRationale) {
+    private fun checkAccessStoragePermissions(
+        permissionsRequestCode: Int,
+        permissionRationale: String
+    ) {
         if (Utilities.checkSelfExternalStoragePermissionIsGranted(this, true)) {
             // Permission already granted
-            requestMediaShareFromStorage(permissionsRequestCode);
+            requestMediaShareFromStorage(permissionsRequestCode)
         } else {
             //not granted
             if (Utilities.shouldShowExternalPermissionStorageRational(this, true)) {
-                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), permissionRationale, Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.ism_ok), view -> Utilities.requestExternalStoragePermission(this, permissionsRequestCode, true));
-                snackbar.show();
-                ((TextView) snackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text)).setGravity(Gravity.CENTER_HORIZONTAL);
-            }else{
-                Utilities.requestExternalStoragePermission(this, permissionsRequestCode, true);
+                val snackbar = Snackbar.make(
+                    findViewById(android.R.id.content),
+                    permissionRationale,
+                    Snackbar.LENGTH_INDEFINITE
+                ).setAction(
+                    getString(R.string.ism_ok)
+                ) { view: View? ->
+                    Utilities.requestExternalStoragePermission(
+                        this,
+                        permissionsRequestCode,
+                        true
+                    )
+                }
+                snackbar.show()
+                (snackbar.view.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView).gravity =
+                    Gravity.CENTER_HORIZONTAL
+            } else {
+                Utilities.requestExternalStoragePermission(this, permissionsRequestCode, true)
             }
         }
     }
 
-    private void requestImageCapture() {
-        KeyboardUtil.hideKeyboard(this);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            cameraActivityLauncher.launch(new Intent(this, CameraActivity.class));
+    private fun requestImageCapture() {
+        KeyboardUtil.hideKeyboard(this)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            cameraActivityLauncher!!.launch(Intent(this, CameraActivity::class.java))
         } else {
-            Toast.makeText(ConversationMessagesActivity.this, R.string.ism_image_capture_not_supported, Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                this@ConversationMessagesActivity,
+                R.string.ism_image_capture_not_supported,
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
-    private void requestContactShare() {
-        Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        contactPicker.launch(intent);
+    private fun requestContactShare() {
+        val intent = Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI)
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        contactPicker!!.launch(intent)
     }
 
-    private void requestMediaShareFromStorage(int permissionsRequestCode) {
-
-        switch (permissionsRequestCode) {
-            case SHARE_PHOTOS_PERMISSIONS_REQUEST_CODE: {
-
-                multiplePhotosPicker.launch(GalleryIntentsUtil.getPhotosIntent(true));
-                break;
+    private fun requestMediaShareFromStorage(permissionsRequestCode: Int) {
+        when (permissionsRequestCode) {
+            SHARE_PHOTOS_PERMISSIONS_REQUEST_CODE -> {
+                multiplePhotosPicker!!.launch(GalleryIntentsUtil.getPhotosIntent(true))
             }
-            case SHARE_VIDEOS_PERMISSIONS_REQUEST_CODE: {
 
-                multipleVideosPicker.launch(GalleryIntentsUtil.getVideosIntent(true));
-                break;
+            SHARE_VIDEOS_PERMISSIONS_REQUEST_CODE -> {
+                multipleVideosPicker!!.launch(GalleryIntentsUtil.getVideosIntent(true))
             }
-            case SHARE_FILES_PERMISSIONS_REQUEST_CODE: {
 
-                multipleFilesPicker.launch(GalleryIntentsUtil.getFilesIntent(true));
-                break;
+            SHARE_FILES_PERMISSIONS_REQUEST_CODE -> {
+                multipleFilesPicker!!.launch(GalleryIntentsUtil.getFilesIntent(true))
             }
         }
     }
 
-    @Override
-    public void onMessageSentSuccessfully(String localMessageId, String messageId, String mediaUrl, String thumbnailUrl) {
-
-        runOnUiThread(() -> {
-
-            int position = conversationMessagesPresenter.verifyUnsentMessagePositionInList(localMessageId, messages.size() - 1, messages);
+    override fun onMessageSentSuccessfully(
+        localMessageId: String,
+        messageId: String,
+        mediaUrl: String?,
+        thumbnailUrl: String?
+    ) {
+        runOnUiThread {
+            val position = conversationMessagesPresenter!!.verifyUnsentMessagePositionInList(
+                localMessageId,
+                messages.size - 1,
+                messages
+            )
             if (position != -1) {
-
-                MessagesModel messagesModel = messages.get(position);
-                messagesModel.setMessageSentSuccessfully(true);
-                messagesModel.setMessageId(messageId);
-                messagesModel.setUploaded(true);
-                messagesModel.setUploading(false);
+                val messagesModel = messages[position]
+                messagesModel.isMessageSentSuccessfully = true
+                messagesModel.messageId = messageId
+                messagesModel.isUploaded = true
+                messagesModel.isUploading = false
                 if (mediaUrl != null) {
-                    switch (messagesModel.getCustomMessageType()) {
+                    when (messagesModel.customMessageType) {
+                        MessageTypesForUI.PhotoSent -> {
+                            messagesModel.photoMainUrl = mediaUrl
+                            messagesModel.photoThumbnailUrl = thumbnailUrl
+                        }
 
-                        case PhotoSent: {
-                            messagesModel.setPhotoMainUrl(mediaUrl);
-                            messagesModel.setPhotoThumbnailUrl(thumbnailUrl);
-                            break;
+                        MessageTypesForUI.VideoSent -> {
+                            messagesModel.videoMainUrl = mediaUrl
+                            messagesModel.videoThumbnailUrl = thumbnailUrl
                         }
-                        case VideoSent: {
-                            messagesModel.setVideoMainUrl(mediaUrl);
-                            messagesModel.setVideoThumbnailUrl(thumbnailUrl);
-                            break;
+
+                        MessageTypesForUI.WhiteboardSent -> {
+                            messagesModel.whiteboardMainUrl = mediaUrl
+                            messagesModel.whiteboardThumbnailUrl = thumbnailUrl
                         }
-                        case WhiteboardSent: {
-                            messagesModel.setWhiteboardMainUrl(mediaUrl);
-                            messagesModel.setWhiteboardThumbnailUrl(thumbnailUrl);
-                            break;
+
+                        MessageTypesForUI.FileSent -> {
+                            messagesModel.fileUrl = mediaUrl
                         }
-                        case FileSent: {
-                            messagesModel.setFileUrl(mediaUrl);
-                            break;
+
+                        MessageTypesForUI.AudioSent -> {
+                            messagesModel.audioUrl = mediaUrl
                         }
-                        case AudioSent: {
-                            messagesModel.setAudioUrl(mediaUrl);
-                            break;
-                        }
+
+                        else -> {}
                     }
                 }
 
-                messages.set(position, messagesModel);
-                conversationMessagesAdapter.notifyItemChanged(position);
+                messages[position] = messagesModel
+                conversationMessagesAdapter!!.notifyItemChanged(position)
             }
-        });
-    }
-
-    @Override
-    public void onError(String errorMessage) {
-        if (ismActivityMessagesBinding.refresh.isRefreshing()) {
-            ismActivityMessagesBinding.refresh.setRefreshing(false);
         }
-        updateShimmerVisibility(false);
-        runOnUiThread(() -> {
+    }
+
+    override fun onError(errorMessage: String?) {
+        if (ismActivityMessagesBinding!!.refresh.isRefreshing) {
+            ismActivityMessagesBinding!!.refresh.isRefreshing = false
+        }
+        updateShimmerVisibility(false)
+        runOnUiThread {
             if (errorMessage != null) {
-                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, getString(R.string.ism_error), Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                    this,
+                    getString(R.string.ism_error),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        });
+        }
     }
 
-    @Override
-    public void addSentMessageInUILocally(MessagesModel messagesModel, boolean uploadRequired) {
-        runOnUiThread(() -> {
-            if (ismActivityMessagesBinding.tvNoMessages.getVisibility() == View.VISIBLE) {
-                ismActivityMessagesBinding.tvNoMessages.setVisibility(View.GONE);
+    override fun addSentMessageInUILocally(messagesModel: MessagesModel, uploadRequired: Boolean) {
+        runOnUiThread {
+            if (ismActivityMessagesBinding!!.tvNoMessages.visibility == View.VISIBLE) {
+                ismActivityMessagesBinding!!.tvNoMessages.visibility = View.GONE
             }
-
-            messages.add(messagesModel);
-            conversationMessagesAdapter.notifyItemInserted(messages.size() - 1);
-            scrollToLastMessage();
+            messages.add(messagesModel)
+            conversationMessagesAdapter!!.notifyItemInserted(messages.size - 1)
+            scrollToLastMessage()
             if (uploadRequired) {
-                conversationMessagesPresenter.saveUploadingMessagePosition(messagesModel.getLocalMessageId(), messages.size() - 1);
+                conversationMessagesPresenter!!.saveUploadingMessagePosition(
+                    messagesModel.localMessageId,
+                    messages.size - 1
+                )
             }
-        });
+        }
     }
 
-    @Override
-    public void addMessageInUI(MessagesModel messagesModel) {
-        runOnUiThread(() -> {
-            if (ismActivityMessagesBinding.tvNoMessages.getVisibility() == View.VISIBLE) {
-                ismActivityMessagesBinding.tvNoMessages.setVisibility(View.GONE);
+    override fun addMessageInUI(messagesModel: MessagesModel) {
+        runOnUiThread {
+            if (ismActivityMessagesBinding!!.tvNoMessages.visibility == View.VISIBLE) {
+                ismActivityMessagesBinding!!.tvNoMessages.visibility = View.GONE
             }
-
-            messages.add(messagesModel);
-            conversationMessagesAdapter.notifyItemInserted(messages.size() - 1);
-            scrollToLastMessage();
-        });
+            messages.add(messagesModel)
+            conversationMessagesAdapter!!.notifyItemInserted(messages.size - 1)
+            scrollToLastMessage()
+        }
     }
 
-    @Override
-    public void addMessagesInUI(ArrayList<MessagesModel> messagesModel, boolean refreshRequest, boolean hideSearchingMessageOverlay, boolean messageFound, boolean onReconnect) {
-        runOnUiThread(() -> {
-
+    override fun addMessagesInUI(
+        messagesModel: ArrayList<MessagesModel>,
+        refreshRequest: Boolean,
+        hideSearchingMessageOverlay: Boolean,
+        messageFound: Boolean,
+        onReconnect: Boolean
+    ) {
+        runOnUiThread {
             if (onReconnect) {
                 try {
-                    if (messagesModel.get(messagesModel.size() - 1).getMessageId().equals(messages.get(messages.size() - 1).getMessageId())) {
-                        return;
+                    if (messagesModel[messagesModel.size - 1].messageId == messages[messages.size - 1].messageId) {
+                        return@runOnUiThread
                     }
-                } catch (Exception ignore) {
+                } catch (ignore: Exception) {
                 }
             }
-
             if (refreshRequest) {
-                messages.clear();
-                messages.addAll(0, messagesModel);
-                conversationMessagesAdapter.notifyDataSetChanged();
-                ismActivityMessagesBinding.refresh.setRefreshing(false);
+                messages.clear()
+                messages.addAll(0, messagesModel)
+                conversationMessagesAdapter!!.notifyDataSetChanged()
+                ismActivityMessagesBinding!!.refresh.isRefreshing = false
 
                 if (!scrollToMessageNeeded) {
-                    scrollToLastMessage();
+                    scrollToLastMessage()
                 }
             } else {
-                messages.addAll(0, messagesModel);
-                conversationMessagesAdapter.notifyItemRangeInserted(0, messagesModel.size());
+                messages.addAll(0, messagesModel)
+                conversationMessagesAdapter!!.notifyItemRangeInserted(0, messagesModel.size)
             }
 
             if (scrollToMessageNeeded) {
-
                 if (hideSearchingMessageOverlay) {
-                    scrollToMessageNeeded = false;
+                    scrollToMessageNeeded = false
 
                     if (messageFound) {
-                        String messageIdToScrollTo = getIntent().getExtras().getString("messageId");
-                        for (int i = 0; i < messages.size(); i++) {
-                            if (messages.get(i).getMessageId() != null && messages.get(i).getMessageId().equals(messageIdToScrollTo)) {
+                        val messageIdToScrollTo =
+                            intent.extras!!.getString("messageId")
+                        for (i in messages.indices) {
+                            if (messages[i].messageId != null && messages[i].messageId == messageIdToScrollTo) {
                                 try {
-
-                                    int finalI = i;
-                                    handler.postDelayed(() -> {
-                                        messagesLayoutManager.scrollToPositionWithOffset(finalI, 0);
-//                                        ismActivityMessagesBinding.ivSearch.setVisibility(View.VISIBLE);
-                                        ismActivityMessagesBinding.vLoadingOverlay.getRoot().setVisibility(View.GONE);
-                                        updateShimmerVisibility(false);
-                                    }, 100);
-                                } catch (IndexOutOfBoundsException | NullPointerException ignore) {
+                                    val finalI = i
+                                    handler.postDelayed({
+                                        messagesLayoutManager!!.scrollToPositionWithOffset(
+                                            finalI,
+                                            0
+                                        )
+                                        //                                        ismActivityMessagesBinding.ivSearch.setVisibility(View.VISIBLE);
+                                        ismActivityMessagesBinding!!.vLoadingOverlay.root.visibility =
+                                            View.GONE
+                                        updateShimmerVisibility(false)
+                                    }, 100)
+                                } catch (ignore: IndexOutOfBoundsException) {
 //                                    ismActivityMessagesBinding.ivSearch.setVisibility(View.VISIBLE);
-                                    ismActivityMessagesBinding.vLoadingOverlay.getRoot().setVisibility(View.GONE);
-                                    updateShimmerVisibility(false);
+                                    ismActivityMessagesBinding!!.vLoadingOverlay.root.visibility =
+                                        View.GONE
+                                    updateShimmerVisibility(false)
+                                } catch (ignore: NullPointerException) {
+                                    ismActivityMessagesBinding!!.vLoadingOverlay.root.visibility =
+                                        View.GONE
+                                    updateShimmerVisibility(false)
                                 }
-                                break;
+                                break
                             }
                         }
                     } else {
 //                        ismActivityMessagesBinding.ivSearch.setVisibility(View.VISIBLE);
-                        ismActivityMessagesBinding.vLoadingOverlay.getRoot().setVisibility(View.GONE);
-                        scrollToLastMessage();
-                        Toast.makeText(this, getString(R.string.ism_message_not_found), Toast.LENGTH_SHORT).show();
+                        ismActivityMessagesBinding!!.vLoadingOverlay.root.visibility =
+                            View.GONE
+                        scrollToLastMessage()
+                        Toast.makeText(
+                            this,
+                            getString(R.string.ism_message_not_found),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
-            if (messages.size() == 0) {
-                if (ismActivityMessagesBinding.tvNoMessages.getVisibility() == View.GONE) {
-                    ismActivityMessagesBinding.tvNoMessages.setVisibility(View.VISIBLE);
+            if (messages.size == 0) {
+                if (ismActivityMessagesBinding!!.tvNoMessages.visibility == View.GONE) {
+                    ismActivityMessagesBinding!!.tvNoMessages.visibility = View.VISIBLE
                 }
             } else {
-                if (ismActivityMessagesBinding.tvNoMessages.getVisibility() == View.VISIBLE) {
-                    ismActivityMessagesBinding.tvNoMessages.setVisibility(View.GONE);
+                if (ismActivityMessagesBinding!!.tvNoMessages.visibility == View.VISIBLE) {
+                    ismActivityMessagesBinding!!.tvNoMessages.visibility = View.GONE
                 }
             }
-        });
+        }
     }
 
     /**
      * Scrolls message list to last message on receipt of new message
      */
-    private void scrollToLastMessage() {
-        runOnUiThread(() -> {
+    private fun scrollToLastMessage() {
+        runOnUiThread {
             try {
-
-                handler.postDelayed(() -> {
-                    messagesLayoutManager.scrollToPositionWithOffset(conversationMessagesAdapter.getItemCount() - 1, 0);
-                    updateShimmerVisibility(false);
-                }, 100);
-            } catch (IndexOutOfBoundsException | NullPointerException ignore) {
-                updateShimmerVisibility(false);
+                handler.postDelayed({
+                    messagesLayoutManager!!.scrollToPositionWithOffset(
+                        conversationMessagesAdapter!!.itemCount - 1,
+                        0
+                    )
+                    updateShimmerVisibility(false)
+                }, 100)
+            } catch (ignore: IndexOutOfBoundsException) {
+                updateShimmerVisibility(false)
+            } catch (ignore: NullPointerException) {
+                updateShimmerVisibility(false)
             }
-        });
+        }
     }
 
-    private final RecyclerView.OnScrollListener messagesRecyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
-        @Override
-        public void onScrollStateChanged(@NotNull RecyclerView recyclerView, int newState) {
-            super.onScrollStateChanged(recyclerView, newState);
-        }
+    private val messagesRecyclerViewOnScrollListener: RecyclerView.OnScrollListener =
+        object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+            }
 
-        @Override
-        public void onScrolled(@NotNull RecyclerView recyclerView, int dx, int dy) {
-            super.onScrolled(recyclerView, dx, dy);
-            if (!joiningAsObserver) {
-                if (dy != 0 && messagesLayoutManager.findFirstVisibleItemPosition() == 0) {
-                    conversationMessagesPresenter.fetchMessagesOnScroll();
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (!joiningAsObserver) {
+                    if (dy != 0 && messagesLayoutManager!!.findFirstVisibleItemPosition() == 0) {
+                        conversationMessagesPresenter!!.fetchMessagesOnScroll()
+                    }
                 }
             }
         }
-    };
 
-    private void fetchMessages(boolean isSearchRequest, String searchTag, boolean showProgressDialog) {
+    private fun fetchMessages(
+        isSearchRequest: Boolean,
+        searchTag: String?,
+        showProgressDialog: Boolean
+    ) {
         //Have to disable refresh if downloading/uploading media
 
-        if (ismActivityMessagesBinding.vSelectMultipleMessagesHeader.getRoot().getVisibility() == View.VISIBLE) {
-            ismActivityMessagesBinding.vSelectMultipleMessagesHeader.ibClose.performClick();
+        if (ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility == View.VISIBLE) {
+            ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.ibClose.performClick()
         }
         //if(showProgressDialog) {
         //showProgressDialog(getString(R.string.ism_fetching_conversations));
         //}
-        conversationMessagesPresenter.fetchMessages(0, true, isSearchRequest, searchTag, false);
+        conversationMessagesPresenter!!.fetchMessages(0, true, isSearchRequest, searchTag, false)
     }
 
-    private void dismissAllDialogs() {
-
-        if (!isFinishing()) {
+    private fun dismissAllDialogs() {
+        if (!isFinishing) {
             try {
-                if (addReactionFragment.getDialog() != null && addReactionFragment.getDialog().isShowing() && !addReactionFragment.isRemoving()) {
-                    addReactionFragment.dismiss();
-                } else if (fetchReactionUsersFragment.getDialog() != null && fetchReactionUsersFragment.getDialog().isShowing() && !fetchReactionUsersFragment.isRemoving()) {
-                    fetchReactionUsersFragment.dismiss();
-                } else if (gifsFragment.getDialog() != null && gifsFragment.getDialog().isShowing() && !gifsFragment.isRemoving()) {
-                    gifsFragment.dismiss();
-                } else if (stickersFragment.getDialog() != null && stickersFragment.getDialog().isShowing() && !stickersFragment.isRemoving()) {
-                    stickersFragment.dismiss();
-                } else if (shareMediaFragment.getDialog() != null && shareMediaFragment.getDialog().isShowing() && !shareMediaFragment.isRemoving()) {
-                    shareMediaFragment.dismiss();
-                } else if (whiteboardFragment.getDialog() != null && whiteboardFragment.getDialog().isShowing() && !whiteboardFragment.isRemoving()) {
-                    whiteboardFragment.dismiss();
-                } else if (sendMessageReplyFragment.getDialog() != null && sendMessageReplyFragment.getDialog().isShowing() && !sendMessageReplyFragment.isRemoving()) {
-                    sendMessageReplyFragment.dismiss();
-                } else if (messageActionFragment.getDialog() != null && messageActionFragment.getDialog().isShowing() && !messageActionFragment.isRemoving()) {
-                    messageActionFragment.dismiss();
-                } else if (memberDetailsFragment.getDialog() != null && memberDetailsFragment.getDialog().isShowing() && !memberDetailsFragment.isRemoving()) {
-                    memberDetailsFragment.dismiss();
-                } else if (editMessageFragment.getDialog() != null && editMessageFragment.getDialog().isShowing() && !editMessageFragment.isRemoving()) {
-                    editMessageFragment.dismiss();
+                if (addReactionFragment!!.dialog != null && addReactionFragment!!.dialog!!
+                        .isShowing && !addReactionFragment!!.isRemoving
+                ) {
+                    addReactionFragment!!.dismiss()
+                } else if (fetchReactionUsersFragment!!.dialog != null && fetchReactionUsersFragment!!.dialog!!
+                        .isShowing && !fetchReactionUsersFragment!!.isRemoving
+                ) {
+                    fetchReactionUsersFragment!!.dismiss()
+                } else if (gifsFragment!!.dialog != null && gifsFragment!!.dialog!!.isShowing && !gifsFragment!!.isRemoving) {
+                    gifsFragment!!.dismiss()
+                } else if (stickersFragment!!.dialog != null && stickersFragment!!.dialog!!
+                        .isShowing && !stickersFragment!!.isRemoving
+                ) {
+                    stickersFragment!!.dismiss()
+                } else if (shareMediaFragment!!.dialog != null && shareMediaFragment!!.dialog!!
+                        .isShowing && !shareMediaFragment!!.isRemoving
+                ) {
+                    shareMediaFragment!!.dismiss()
+                } else if (whiteboardFragment!!.dialog != null && whiteboardFragment!!.dialog!!
+                        .isShowing && !whiteboardFragment!!.isRemoving
+                ) {
+                    whiteboardFragment!!.dismiss()
+                } else if (sendMessageReplyFragment!!.dialog != null && sendMessageReplyFragment!!.dialog!!
+                        .isShowing && !sendMessageReplyFragment!!.isRemoving
+                ) {
+                    sendMessageReplyFragment!!.dismiss()
+                } else if (messageActionFragment!!.dialog != null && messageActionFragment!!.dialog!!
+                        .isShowing && !messageActionFragment!!.isRemoving
+                ) {
+                    messageActionFragment!!.dismiss()
+                } else if (memberDetailsFragment!!.dialog != null && memberDetailsFragment!!.dialog!!
+                        .isShowing && !memberDetailsFragment!!.isRemoving
+                ) {
+                    memberDetailsFragment!!.dismiss()
+                } else if (editMessageFragment!!.dialog != null && editMessageFragment!!.dialog!!
+                        .isShowing && !editMessageFragment!!.isRemoving
+                ) {
+                    editMessageFragment!!.dismiss()
                 }
-                KeyboardUtil.hideKeyboard(this);
-            } catch (Exception ignore) {
+                KeyboardUtil.hideKeyboard(this)
+            } catch (ignore: Exception) {
             }
         }
     }
 
-    @Override
-    public void replyMessageRequested(MessagesModel messagesModel) {
-        if (!isFinishing() && !sendMessageReplyFragment.isAdded()) {
-            dismissAllDialogs();
-            sendMessageReplyFragment.updateParameters(messagesModel, this);
-            sendMessageReplyFragment.show(getSupportFragmentManager(), SendMessageReplyFragment.TAG);
+    override fun replyMessageRequested(messagesModel: MessagesModel) {
+        if (!isFinishing && !sendMessageReplyFragment!!.isAdded) {
+            dismissAllDialogs()
+            sendMessageReplyFragment!!.updateParameters(messagesModel, this)
+            sendMessageReplyFragment!!.show(supportFragmentManager, SendMessageReplyFragment.TAG)
         }
     }
 
-    @Override
-    public void deleteMessageForSelf(String messageId, boolean multipleMessagesSelected) {
-
-        new androidx.appcompat.app.AlertDialog.Builder(this).setTitle(getString(R.string.ism_delete_for_me_heading)).setMessage(getString(R.string.ism_delete_for_me_alert_message)).setCancelable(true).setPositiveButton(getString(R.string.ism_continue), (dialog, id) -> {
-
-            dialog.cancel();
-            if (multipleMessagesSelected) {
-                conversationMessagesPresenter.deleteMessageForSelf(null, true);
-            } else {
-                conversationMessagesPresenter.deleteMessageForSelf(new ArrayList<>(Collections.singletonList(messageId)), false);
-            }
-        }).setNegativeButton(getString(R.string.ism_cancel), (dialog, id) -> dialog.cancel()).create().show();
+    override fun deleteMessageForSelf(messageId: String?, multipleMessagesSelected: Boolean) {
+        AlertDialog.Builder(this).setTitle(getString(R.string.ism_delete_for_me_heading))
+            .setMessage(getString(R.string.ism_delete_for_me_alert_message)).setCancelable(true)
+            .setPositiveButton(
+                getString(R.string.ism_continue)
+            ) { dialog: DialogInterface, id: Int ->
+                dialog.cancel()
+                if (multipleMessagesSelected) {
+                    conversationMessagesPresenter!!.deleteMessageForSelf(null, true)
+                } else {
+                    messageId?.let {
+                        conversationMessagesPresenter!!.deleteMessageForSelf(
+                            ArrayList(
+                                listOf(it)
+                            ), false
+                        )
+                    }
+                }
+            }.setNegativeButton(
+                getString(R.string.ism_cancel)
+            ) { dialog: DialogInterface, id: Int -> dialog.cancel() }.create().show()
     }
 
-    @Override
-    public void deleteMessageForEveryone(String messageId, boolean multipleMessagesSelected) {
-
-        new androidx.appcompat.app.AlertDialog.Builder(this).setTitle(getString(R.string.ism_delete_for_all_heading)).setMessage(getString(R.string.ism_delete_for_all_alert_message)).setCancelable(true).setPositiveButton(getString(R.string.ism_continue), (dialog, id) -> {
-
-            dialog.cancel();
-            if (multipleMessagesSelected) {
-                conversationMessagesPresenter.deleteMessageForEveryone(null, true);
-            } else {
-                conversationMessagesPresenter.deleteMessageForEveryone(new ArrayList<>(Collections.singletonList(messageId)), false);
-            }
-        }).setNegativeButton(getString(R.string.ism_cancel), (dialog, id) -> dialog.cancel()).create().show();
+    override fun deleteMessageForEveryone(messageId: String?, multipleMessagesSelected: Boolean) {
+        AlertDialog.Builder(this).setTitle(getString(R.string.ism_delete_for_all_heading))
+            .setMessage(getString(R.string.ism_delete_for_all_alert_message)).setCancelable(true)
+            .setPositiveButton(
+                getString(R.string.ism_continue)
+            ) { dialog: DialogInterface, id: Int ->
+                dialog.cancel()
+                if (multipleMessagesSelected) {
+                    conversationMessagesPresenter!!.deleteMessageForEveryone(null, true)
+                } else {
+                    messageId?.let {
+                        conversationMessagesPresenter!!.deleteMessageForEveryone(
+                            ArrayList(
+                                listOf(it)
+                            ), false
+                        )
+                    }
+                }
+            }.setNegativeButton(
+                getString(R.string.ism_cancel)
+            ) { dialog: DialogInterface, id: Int -> dialog.cancel() }.create().show()
     }
 
-    @Override
-    public void selectMultipleMessagesRequested() {
+    override fun selectMultipleMessagesRequested() {
+        ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility =
+            View.VISIBLE
+        ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.root.visibility =
+            View.VISIBLE
 
-        ismActivityMessagesBinding.vSelectMultipleMessagesHeader.getRoot().setVisibility(View.VISIBLE);
-        ismActivityMessagesBinding.vSelectMultipleMessagesFooter.getRoot().setVisibility(View.VISIBLE);
+        conversationMessagesAdapter!!.setMultipleMessagesSelectModeOn(true)
+        ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.tvSelectedMessagesCount.text =
+            getString(R.string.ism_number_of_messages_selected, 0)
+        ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.ivCopy.isSelected = false
+        ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.tvCopy.isSelected = false
+        ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.ivDeleteForMe.isSelected = false
+        ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.ivDeleteForAll.isSelected = false
+        ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.tvDeleteForMe.isSelected = false
+        ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.tvDeleteForAll.isSelected = false
 
-        conversationMessagesAdapter.setMultipleMessagesSelectModeOn(true);
-        ismActivityMessagesBinding.vSelectMultipleMessagesHeader.tvSelectedMessagesCount.setText(getString(R.string.ism_number_of_messages_selected, 0));
-        ismActivityMessagesBinding.vSelectMultipleMessagesFooter.ivCopy.setSelected(false);
-        ismActivityMessagesBinding.vSelectMultipleMessagesFooter.tvCopy.setSelected(false);
-        ismActivityMessagesBinding.vSelectMultipleMessagesFooter.ivDeleteForMe.setSelected(false);
-        ismActivityMessagesBinding.vSelectMultipleMessagesFooter.ivDeleteForAll.setSelected(false);
-        ismActivityMessagesBinding.vSelectMultipleMessagesFooter.tvDeleteForMe.setSelected(false);
-        ismActivityMessagesBinding.vSelectMultipleMessagesFooter.tvDeleteForAll.setSelected(false);
-
-        conversationMessagesAdapter.notifyDataSetChanged();
+        conversationMessagesAdapter!!.notifyDataSetChanged()
     }
 
-    @Override
-    public void fetchMessagesInfoRequest(MessagesModel messagesModel) {
-        if (messagesModel.getCustomMessageType() == MessageTypesForUI.TextSent || messagesModel.getCustomMessageType() == MessageTypesForUI.TextReceived) {
+    override fun fetchMessagesInfoRequest(messagesModel: MessagesModel) {
+        if (messagesModel.customMessageType == MessageTypesForUI.TextSent || messagesModel.customMessageType == MessageTypesForUI.TextReceived) {
             //To handle  java.lang.IllegalArgumentException: class android.widget.ListView declares multiple JSON fields named mPendingCheckForTap for tagged users
-            messagesModel.setTextMessage(new SpannableString(messagesModel.getTextMessage().toString()));
+            messagesModel.textMessage = SpannableString(messagesModel.textMessage.toString())
         }
-        Intent intent = new Intent(this, MessageDeliveryStatusActivity.class);
-        intent.putExtra("message", IsometrikChatSdk.getInstance().getIsometrik().getGson().toJson(messagesModel));
-        intent.putExtra("conversationId", conversationId);
-        intent.putExtra("messageId", messagesModel.getMessageId());
-        intent.putExtra("sentAt", messagesModel.getSentAt());
-        startActivity(intent);
+        val intent = Intent(this, MessageDeliveryStatusActivity::class.java)
+        intent.putExtra(
+            "message",
+            IsometrikChatSdk.getInstance().isometrik.gson.toJson(messagesModel)
+        )
+        intent.putExtra("conversationId", conversationId)
+        intent.putExtra("messageId", messagesModel.messageId)
+        intent.putExtra("sentAt", messagesModel.sentAt)
+        startActivity(intent)
     }
 
-    @Override
-    public void forwardMessageRequest(MessagesModel messagesModel) {
-
+    override fun forwardMessageRequest(messagesModel: MessagesModel) {
         if (clickActionsNotBlocked()) {
-            if (messagesModel.getCustomMessageType() == MessageTypesForUI.TextSent || messagesModel.getCustomMessageType() == MessageTypesForUI.TextReceived) {
+            if (messagesModel.customMessageType == MessageTypesForUI.TextSent || messagesModel.customMessageType == MessageTypesForUI.TextReceived) {
                 //To handle  java.lang.IllegalArgumentException: class android.widget.ListView declares multiple JSON fields named mPendingCheckForTap for tagged users
-                messagesModel.setTextMessage(new SpannableString(messagesModel.getTextMessage().toString()));
+                messagesModel.textMessage = SpannableString(messagesModel.textMessage.toString())
             }
-            KeyboardUtil.hideKeyboard(this);
+            KeyboardUtil.hideKeyboard(this)
 
-            Intent intent = new Intent(this, ForwardMessageActivity.class);
-            intent.putExtra("message", IsometrikChatSdk.getInstance().getIsometrik().getGson().toJson(messagesModel));
-            startActivity(intent);
+            val intent = Intent(this, ForwardMessageActivity::class.java)
+            intent.putExtra(
+                "message",
+                IsometrikChatSdk.getInstance().isometrik.gson.toJson(messagesModel)
+            )
+            startActivity(intent)
         }
     }
 
-    @Override
-    public void onMessageSelectionStatus(MultipleMessagesUtil multipleMessagesUtil) {
-        ismActivityMessagesBinding.vSelectMultipleMessagesHeader.tvSelectedMessagesCount.setText(getString(R.string.ism_number_of_messages_selected, multipleMessagesUtil.getSelectedMessagesCount()));
+    override fun onMessageSelectionStatus(multipleMessagesUtil: MultipleMessagesUtil) {
+        ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.tvSelectedMessagesCount.text =
+            getString(
+                R.string.ism_number_of_messages_selected,
+                multipleMessagesUtil.selectedMessagesCount
+            )
 
-        if (multipleMessagesUtil.isCopyEnabled()) {
-            ismActivityMessagesBinding.vSelectMultipleMessagesFooter.ivCopy.setSelected(true);
-            ismActivityMessagesBinding.vSelectMultipleMessagesFooter.tvCopy.setSelected(true);
+        if (multipleMessagesUtil.isCopyEnabled) {
+            ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.ivCopy.isSelected = true
+            ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.tvCopy.isSelected = true
         } else {
-            ismActivityMessagesBinding.vSelectMultipleMessagesFooter.ivCopy.setSelected(false);
-            ismActivityMessagesBinding.vSelectMultipleMessagesFooter.tvCopy.setSelected(false);
+            ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.ivCopy.isSelected = false
+            ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.tvCopy.isSelected = false
         }
 
-        if (multipleMessagesUtil.isDeleteEnabled()) {
-            ismActivityMessagesBinding.vSelectMultipleMessagesFooter.ivDeleteForMe.setSelected(true);
-            ismActivityMessagesBinding.vSelectMultipleMessagesFooter.ivDeleteForAll.setSelected(true);
-            ismActivityMessagesBinding.vSelectMultipleMessagesFooter.tvDeleteForMe.setSelected(true);
-            ismActivityMessagesBinding.vSelectMultipleMessagesFooter.tvDeleteForAll.setSelected(true);
+        if (multipleMessagesUtil.isDeleteEnabled) {
+            ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.ivDeleteForMe.isSelected =
+                true
+            ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.ivDeleteForAll.isSelected =
+                true
+            ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.tvDeleteForMe.isSelected =
+                true
+            ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.tvDeleteForAll.isSelected =
+                true
         } else {
-            ismActivityMessagesBinding.vSelectMultipleMessagesFooter.ivDeleteForMe.setSelected(false);
-            ismActivityMessagesBinding.vSelectMultipleMessagesFooter.ivDeleteForAll.setSelected(false);
-            ismActivityMessagesBinding.vSelectMultipleMessagesFooter.tvDeleteForMe.setSelected(false);
-            ismActivityMessagesBinding.vSelectMultipleMessagesFooter.tvDeleteForAll.setSelected(false);
+            ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.ivDeleteForMe.isSelected =
+                false
+            ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.ivDeleteForAll.isSelected =
+                false
+            ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.tvDeleteForMe.isSelected =
+                false
+            ismActivityMessagesBinding!!.vSelectMultipleMessagesFooter.tvDeleteForAll.isSelected =
+                false
         }
     }
 
-    @Override
-    public void sendReplyMessage(String messageId, String replyMessage, JSONObject replyMessageDetails) {
+    override fun sendReplyMessage(
+        messageId: String,
+        replyMessage: String,
+        replyMessageDetails: JSONObject
+    ) {
+        conversationMessagesPresenter!!.shareMessage(
+            RemoteMessageTypes.ReplyMessage,
+            messageId,
+            OriginalReplyMessageUtil(messageId, replyMessageDetails),
 
-
-        conversationMessagesPresenter.shareMessage(RemoteMessageTypes.ReplyMessage, messageId, new OriginalReplyMessageUtil(messageId, replyMessageDetails),
-
-                CustomMessageTypes.Replay.getValue(), replyMessage, false, true, true, true, null, replyMessageDetails, null, MessageTypesForUI.ReplaySent, null, false, null, null);
+            CustomMessageTypes.Replay.value,
+            replyMessage,
+            false,
+            true,
+            true,
+            true,
+            null,
+            replyMessageDetails,
+            null,
+            MessageTypesForUI.ReplaySent,
+            null,
+            false,
+            null,
+            null
+        )
     }
 
-    @Override
-    public void onTextCopyRequest(String text) {
-        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText("label", text);
-        clipboard.setPrimaryClip(clip);
-        Toast.makeText(this, getString(R.string.ism_text_copied), Toast.LENGTH_SHORT).show();
+    override fun onTextCopyRequest(text: String) {
+        val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("label", text)
+        clipboard.setPrimaryClip(clip)
+        Toast.makeText(this, getString(R.string.ism_text_copied), Toast.LENGTH_SHORT).show()
     }
 
-    @Override
-    public void onMessageDeletedSuccessfully(List<String> messageIds) {
-        int size = messageIds.size();
-        runOnUiThread(() -> {
-            String messageId;
-            for (int j = 0; j < size; j++) {
-
-                messageId = messageIds.get(j);
-                for (int i = messages.size() - 1; i >= 0; i--) {
-
-                    if (messages.get(i).getMessageId() != null && messages.get(i).getMessageId().equals(messageId)) {
-
-                        messages.remove(i);
-                        conversationMessagesAdapter.notifyItemRemoved(i);
-                        if (messages.size() == 0) {
-                            if (ismActivityMessagesBinding.tvNoMessages.getVisibility() == View.GONE) {
-                                ismActivityMessagesBinding.tvNoMessages.setVisibility(View.VISIBLE);
+    override fun onMessageDeletedSuccessfully(messageIds: List<String>) {
+        val size = messageIds.size
+        runOnUiThread {
+            var messageId: String
+            for (j in 0 until size) {
+                messageId = messageIds[j]
+                for (i in messages.indices.reversed()) {
+                    if (messages[i].messageId != null && messages[i].messageId == messageId) {
+                        messages.removeAt(i)
+                        conversationMessagesAdapter!!.notifyItemRemoved(i)
+                        if (messages.size == 0) {
+                            if (ismActivityMessagesBinding!!.tvNoMessages.visibility == View.GONE) {
+                                ismActivityMessagesBinding!!.tvNoMessages.visibility =
+                                    View.VISIBLE
                             }
                         }
-                        break;
+                        break
                     }
                 }
             }
-        });
+        }
     }
 
-    @Override
-    public void onConversationCleared() {
-        runOnUiThread(() -> {
-            messages.clear();
-            conversationMessagesAdapter.notifyDataSetChanged();
-        });
+    override fun onConversationCleared() {
+        runOnUiThread {
+            messages.clear()
+            conversationMessagesAdapter!!.notifyDataSetChanged()
+        }
     }
 
-    @Override
-    public void onConversationTitleUpdated(String newTitle) {
-        runOnUiThread(() -> {
-            conversationUserFullName = newTitle;
-            ismActivityMessagesBinding.tvConversationOrUserName.setText(newTitle);
-            ismActivityMessagesBinding.vSelectMultipleMessagesHeader.tvConversationTitle.setText(newTitle);
-        });
+    override fun onConversationTitleUpdated(newTitle: String) {
+        runOnUiThread {
+            conversationUserFullName = newTitle
+            ismActivityMessagesBinding!!.tvConversationOrUserName.text = newTitle
+            ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.tvConversationTitle.text =
+                newTitle
+        }
     }
 
-    @Override
-    public void onRemoteUserTypingEvent(String message) {
-        runOnUiThread(() -> {
-            ismActivityMessagesBinding.tvTyping.setText(message);
-            ismActivityMessagesBinding.tvTyping.setVisibility(View.VISIBLE);
+    override fun onRemoteUserTypingEvent(message: String) {
+        runOnUiThread {
+            ismActivityMessagesBinding!!.tvTyping.text = message
+            ismActivityMessagesBinding!!.tvTyping.visibility = View.VISIBLE
             try {
-                handler.postDelayed(typingMessageRunnable, Constants.TYPING_MESSAGE_VISIBILITY_DURATION_IN_MS);
-            } catch (Exception ignore) {
-
-            }
-        });
-    }
-
-    private final Runnable typingMessageRunnable = new Runnable() {
-        public void run() {
-            try {
-                ismActivityMessagesBinding.tvTyping.setVisibility(View.GONE);
-            } catch (Exception ignore) {
-
+                handler.postDelayed(
+                    typingMessageRunnable,
+                    Constants.TYPING_MESSAGE_VISIBILITY_DURATION_IN_MS.toLong()
+                )
+            } catch (ignore: Exception) {
             }
         }
-    };
+    }
 
-    @Override
-    public void markMessageAsDeliveredToAll(String messageId) {
-        runOnUiThread(() -> {
-            for (int i = messages.size() - 1; i >= 0; i--) {
+    private val typingMessageRunnable = Runnable {
+        try {
+            ismActivityMessagesBinding!!.tvTyping.visibility = View.GONE
+        } catch (ignore: Exception) {
+        }
+    }
 
-                if (messages.get(i).getMessageId() != null && messages.get(i).getMessageId().equals(messageId)) {
-
-                    MessagesModel messagesModel = messages.get(i);
-                    messagesModel.setDeliveredToAll(true);
-                    messages.set(i, messagesModel);
-                    conversationMessagesAdapter.notifyItemChanged(i);
-                    break;
+    override fun markMessageAsDeliveredToAll(messageId: String) {
+        runOnUiThread {
+            for (i in messages.indices.reversed()) {
+                if (messages[i].messageId != null && messages[i].messageId == messageId) {
+                    val messagesModel = messages[i]
+                    messagesModel.isDeliveredToAll = true
+                    messages[i] = messagesModel
+                    conversationMessagesAdapter!!.notifyItemChanged(i)
+                    break
                 }
             }
-        });
+        }
     }
 
-    @Override
-    public void markMessageAsReadByAll(String messageId) {
-        runOnUiThread(() -> {
+    override fun markMessageAsReadByAll(messageId: String) {
+        runOnUiThread {
+            for (i in messages.indices.reversed()) {
+                if (messages[i].messageId != null && messages[i].messageId == messageId) {
+                    val messagesModel = messages[i]
+                    messagesModel.isDeliveredToAll = true
+                    messagesModel.isReadByAll = true
 
-            for (int i = messages.size() - 1; i >= 0; i--) {
-
-                if (messages.get(i).getMessageId() != null && messages.get(i).getMessageId().equals(messageId)) {
-
-                    MessagesModel messagesModel = messages.get(i);
-                    messagesModel.setDeliveredToAll(true);
-                    messagesModel.setReadByAll(true);
-
-                    messages.set(i, messagesModel);
-                    conversationMessagesAdapter.notifyItemChanged(i);
-                    break;
+                    messages[i] = messagesModel
+                    conversationMessagesAdapter!!.notifyItemChanged(i)
+                    break
                 }
             }
-        });
+        }
     }
 
-    @Override
-    public void onMultipleMessagesMarkedAsReadEvent() {
-        conversationMessagesPresenter.fetchMessageDeliveryReadStatusOnMultipleMessagesMarkedAsReadEvent(messages);
+    override fun onMultipleMessagesMarkedAsReadEvent() {
+        conversationMessagesPresenter!!.fetchMessageDeliveryReadStatusOnMultipleMessagesMarkedAsReadEvent(
+            messages
+        )
     }
 
-    @Override
-    public void updateMessageReaction(String messageId, ReactionModel reactionModel, boolean reactionAdded) {
-        runOnUiThread(() -> {
-            for (int i = messages.size() - 1; i >= 0; i--) {
-
-                if (messages.get(i).getMessageId() != null && messages.get(i).getMessageId().equals(messageId)) {
-
-                    MessagesModel messagesModel = messages.get(i);
+    override fun updateMessageReaction(
+        messageId: String,
+        reactionModel: ReactionModel,
+        reactionAdded: Boolean
+    ) {
+        runOnUiThread {
+            for (i in messages.indices.reversed()) {
+                if (messages[i].messageId != null && messages[i].messageId == messageId) {
+                    val messagesModel = messages[i]
 
                     if (messagesModel.hasReactions()) {
-                        ArrayList<ReactionModel> reactions = messagesModel.getReactions();
+                        val reactions = messagesModel.reactions
 
-                        boolean reactionAlreadyExists = false;
-                        for (int j = reactions.size() - 1; j >= 0; j--) {
-                            if (reactions.get(j).getReactionType().equals(reactionModel.getReactionType())) {
-
+                        var reactionAlreadyExists = false
+                        for (j in reactions.indices.reversed()) {
+                            if (reactions[j].reactionType == reactionModel.reactionType) {
                                 if (reactionAdded) {
-                                    reactions.set(j, reactionModel);
+                                    reactions[j] = reactionModel
                                 } else {
-                                    if (reactionModel.getReactionCount() == 0) {
-                                        reactions.remove(j);
+                                    if (reactionModel.reactionCount == 0) {
+                                        reactions.removeAt(j)
                                     } else {
-                                        reactions.set(j, reactionModel);
+                                        reactions[j] = reactionModel
                                     }
                                 }
-                                reactionAlreadyExists = true;
-                                break;
+                                reactionAlreadyExists = true
+                                break
                             }
                         }
-                        if (!reactionAlreadyExists && (reactionAdded || reactionModel.getReactionCount() > 0)) {
-                            reactions.add(0, reactionModel);
+                        if (!reactionAlreadyExists && (reactionAdded || reactionModel.reactionCount > 0)) {
+                            reactions.add(0, reactionModel)
                         }
-                        messagesModel.setReactions(reactions);
+                        messagesModel.reactions = reactions
                     } else {
-
-                        if (reactionAdded || reactionModel.getReactionCount() > 0) {
-                            messagesModel.setReactions(new ArrayList<>(Collections.singletonList(reactionModel)));
+                        if (reactionAdded || reactionModel.reactionCount > 0) {
+                            messagesModel.reactions =
+                                ArrayList(
+                                    listOf(
+                                        reactionModel
+                                    )
+                                )
                         }
                     }
 
-                    messages.set(i, messagesModel);
-                    conversationMessagesAdapter.notifyItemChanged(i);
-                    break;
+                    messages[i] = messagesModel
+                    conversationMessagesAdapter!!.notifyItemChanged(i)
+                    break
                 }
-            }
-        });
-    }
-
-    @Override
-    public void closeConversation() {
-        onBackPressed();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (clickActionsNotBlocked()) {
-            unregisterListeners();
-            KeyboardUtil.hideKeyboard(this);
-            try {
-                super.onBackPressed();
-            } catch (Exception ignore) {
             }
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        conversationId = null;
-        unregisterListeners();
-        super.onDestroy();
+    override fun closeConversation() {
+        onBackPressed()
+    }
+
+    override fun onBackPressed() {
+        if (clickActionsNotBlocked()) {
+            unregisterListeners()
+            KeyboardUtil.hideKeyboard(this)
+            try {
+                super.onBackPressed()
+            } catch (ignore: Exception) {
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        conversationId = null
+        unregisterListeners()
+        super.onDestroy()
     }
 
     /**
      * Cleanup all realtime isometrik event listeners that were added at time of exit
      */
-    private void unregisterListeners() {
-
+    private fun unregisterListeners() {
         if (!unregisteredListeners) {
-
             if (joiningAsObserver) {
-
-                conversationMessagesPresenter.leaveAsObserver();
+                conversationMessagesPresenter!!.leaveAsObserver()
             }
-            handler.removeCallbacksAndMessages(null);
-            dismissAllDialogs();
-            unregisteredListeners = true;
-            conversationMessagesPresenter.unregisterConnectionEventListener();
-            conversationMessagesPresenter.unregisterConversationEventListener();
-            conversationMessagesPresenter.unregisterMessageEventListener();
-            conversationMessagesPresenter.unregisterMembershipControlEventListener();
-            conversationMessagesPresenter.unregisterReactionEventListener();
-            conversationMessagesPresenter.unregisterUserEventListener();
+            handler.removeCallbacksAndMessages(null)
+            dismissAllDialogs()
+            unregisteredListeners = true
+            conversationMessagesPresenter!!.unregisterConnectionEventListener()
+            conversationMessagesPresenter!!.unregisterConversationEventListener()
+            conversationMessagesPresenter!!.unregisterMessageEventListener()
+            conversationMessagesPresenter!!.unregisterMembershipControlEventListener()
+            conversationMessagesPresenter!!.unregisterReactionEventListener()
+            conversationMessagesPresenter!!.unregisterUserEventListener()
         }
     }
 
-    @Override
-    public void onAudioRecordedSuccessfully(String audioFilePath) {
-
-        new androidx.appcompat.app.AlertDialog.Builder(this).setTitle(getString(R.string.ism_audio_recordings_alert_heading)).setMessage(getString(R.string.ism_audio_recordings_alert_message)).setCancelable(true).setPositiveButton(getString(R.string.ism_send), (dialog, id) -> {
-
-            dialog.cancel();
-            conversationMessagesPresenter.shareMessage(RemoteMessageTypes.NormalMessage, null, null, CustomMessageTypes.Audio.getValue(), CustomMessageTypes.Audio.getValue(), false, true, true, true, null, null, null, MessageTypesForUI.AudioSent, new ArrayList<>(Collections.singletonList(audioFilePath)), true, PresignedUrlMediaTypes.Audio, AttachmentMessageType.Audio);
-        }).setNegativeButton(getString(R.string.ism_discard), (dialog, id) -> {
-            dialog.cancel();
-            AudioFileUtil.deleteRecordingFile(audioFilePath);
-        }).setCancelable(false).create().show();
+    override fun onAudioRecordedSuccessfully(audioFilePath: String) {
+        AlertDialog.Builder(this).setTitle(getString(R.string.ism_audio_recordings_alert_heading))
+            .setMessage(getString(R.string.ism_audio_recordings_alert_message)).setCancelable(true)
+            .setPositiveButton(
+                getString(R.string.ism_send)
+            ) { dialog: DialogInterface, id: Int ->
+                dialog.cancel()
+                conversationMessagesPresenter!!.shareMessage(
+                    RemoteMessageTypes.NormalMessage,
+                    null,
+                    null,
+                    CustomMessageTypes.Audio.value,
+                    CustomMessageTypes.Audio.value,
+                    false,
+                    true,
+                    true,
+                    true,
+                    null,
+                    null,
+                    null,
+                    MessageTypesForUI.AudioSent,
+                    ArrayList(
+                        listOf(audioFilePath)
+                    ),
+                    true,
+                    PresignedUrlMediaTypes.Audio,
+                    AttachmentMessageType.Audio
+                )
+            }
+            .setNegativeButton(getString(R.string.ism_discard)) { dialog: DialogInterface, id: Int ->
+                dialog.cancel()
+                AudioFileUtil.deleteRecordingFile(audioFilePath)
+            }.setCancelable(false).create().show()
     }
 
-    @Override
-    public void onMessageUpdatedSuccessfully(String messageId, String updatedMessage) {
-        runOnUiThread(() -> {
-            for (int i = messages.size() - 1; i >= 0; i--) {
-                if (messages.get(i).getMessageId() != null && messages.get(i).getMessageId().equals(messageId)) {
-                    MessagesModel messagesModel = messages.get(i);
-                    messagesModel.setEditedMessage(true);
-                    messagesModel.setTextMessage(new SpannableString(updatedMessage));
-                    messages.set(i, messagesModel);
-                    conversationMessagesAdapter.notifyItemChanged(i);
-                    break;
+    override fun onMessageUpdatedSuccessfully(messageId: String, updatedMessage: String) {
+        runOnUiThread {
+            for (i in messages.indices.reversed()) {
+                if (messages[i].messageId != null && messages[i].messageId == messageId) {
+                    val messagesModel = messages[i]
+                    messagesModel.isEditedMessage = true
+                    messagesModel.textMessage = SpannableString(updatedMessage)
+                    messages[i] = messagesModel
+                    conversationMessagesAdapter!!.notifyItemChanged(i)
+                    break
                 }
             }
-        });
-    }
-
-    @Override
-    public void updateMessage(String messageId, String updatedMessage, String originalMessage) {
-
-        conversationMessagesPresenter.updateMessage(messageId, updatedMessage, originalMessage);
-    }
-
-    @Override
-    public void updateParticipantsCount(int participantsCount) {
-        runOnUiThread(() -> ismActivityMessagesBinding.tvParticipantsCountOrOnlineStatus.setText(getString(R.string.ism_participants_count, participantsCount)));
-    }
-
-    @Override
-    public void onSearchedUsersFetched(ArrayList<TagUserModel> usersModels) {
-
-        if (usersModels.size() > 0) {
-            tagUserModels.clear();
-            tagUserModels.addAll(usersModels);
-            tagUserAdapter.notifyDataSetChanged();
-
-            ismActivityMessagesBinding.vTagUsers.getRoot().setVisibility(View.VISIBLE);
-        } else {
-            ismActivityMessagesBinding.vTagUsers.getRoot().setVisibility(View.GONE);
         }
     }
 
-    @Override
-    public void onTaggedUserClicked(String memberId) {
+    override fun updateMessage(messageId: String, updatedMessage: String, originalMessage: String) {
+        conversationMessagesPresenter!!.updateMessage(messageId, updatedMessage, originalMessage)
+    }
 
+    override fun updateParticipantsCount(participantsCount: Int) {
+        runOnUiThread {
+            ismActivityMessagesBinding!!.tvParticipantsCountOrOnlineStatus.text =
+                getString(R.string.ism_participants_count, participantsCount)
+        }
+    }
+
+    override fun onSearchedUsersFetched(usersModels: ArrayList<TagUserModel>) {
+        if (usersModels.size > 0) {
+            tagUserModels.clear()
+            tagUserModels.addAll(usersModels)
+            tagUserAdapter!!.notifyDataSetChanged()
+
+            ismActivityMessagesBinding!!.vTagUsers.root.visibility = View.VISIBLE
+        } else {
+            ismActivityMessagesBinding!!.vTagUsers.root.visibility = View.GONE
+        }
+    }
+
+    override fun onTaggedUserClicked(memberId: String) {
         if (clickActionsNotBlocked() && !messagingDisabled) {
-            if (!isFinishing() && !memberDetailsFragment.isAdded()) {
-                dismissAllDialogs();
-                memberDetailsFragment.updateParameters(conversationId, memberId);
-                memberDetailsFragment.show(getSupportFragmentManager(), MemberDetailsFragment.TAG);
+            if (!isFinishing && !memberDetailsFragment!!.isAdded) {
+                dismissAllDialogs()
+                memberDetailsFragment!!.updateParameters(conversationId, memberId)
+                memberDetailsFragment!!.show(supportFragmentManager, MemberDetailsFragment.TAG)
             }
         }
     }
 
-    @Override
-    public void onConversationDeletedSuccessfully() {
-        onBackPressed();
+    override fun onConversationDeletedSuccessfully() {
+        onBackPressed()
     }
 
-    private boolean clickActionsNotBlocked() {
-        return !conversationMessagesPresenter.isRecordingAudio();
+    private fun clickActionsNotBlocked(): Boolean {
+        return !conversationMessagesPresenter!!.isRecordingAudio
     }
 
     /**
@@ -1980,373 +2786,499 @@ public class ConversationMessagesActivity extends AppCompatActivity implements C
      * @param messagesModel the messages model
      * @param localMedia    the local media
      */
-    public void handleClickOnMessageCell(MessagesModel messagesModel, boolean localMedia) {
-        if (ismActivityMessagesBinding.vSelectMultipleMessagesHeader.getRoot().getVisibility() == View.GONE && clickActionsNotBlocked()) {
-            if (!messagesModel.isUploading() && !messagesModel.isDownloading()) {
-                PreviewMessageUtil.previewMessage(ConversationMessagesActivity.this, messagesModel, localMedia);
+    override fun handleClickOnMessageCell(messagesModel: MessagesModel, localMedia: Boolean) {
+        if (ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility == View.GONE && clickActionsNotBlocked()) {
+            if (!messagesModel.isUploading && !messagesModel.isDownloading) {
+                PreviewMessageUtil.previewMessage(
+                    this@ConversationMessagesActivity,
+                    messagesModel,
+                    localMedia
+                )
             }
         }
     }
 
-    @Override
-    public void updateConversationDetailsInHeader(boolean local, boolean isPrivateOneToOne, String userName, boolean isOnline, long lastSeenAt, String conversationTitle, int participantsCount) {
-
+    override fun updateConversationDetailsInHeader(
+        local: Boolean,
+        isPrivateOneToOne: Boolean,
+        userName: String?,
+        isOnline: Boolean,
+        lastSeenAt: Long,
+        conversationTitle: String?,
+        participantsCount: Int
+    ) {
+        var userName: String? = userName
+        var isOnline = isOnline
+        var lastSeenAt = lastSeenAt
+        var conversationTitle: String? = conversationTitle
+        var participantsCount = participantsCount
         if (isPrivateOneToOne) {
-
             if (local) {
-                if (getIntent().getExtras().containsKey("userName")) {
-                    userName = getIntent().getExtras().getString("userName");
+                userName = if (intent.extras!!.containsKey("userName")) {
+                    intent.extras!!.getString("userName")
                 } else {
-                    userName = "";
+                    ""
                 }
             }
-            conversationUserFullName = userName;
-            ismActivityMessagesBinding.vSelectMultipleMessagesHeader.tvConversationTitle.setText(userName);
-            ismActivityMessagesBinding.ivOnlineStatus.setVisibility(View.VISIBLE);
-//            ismActivityMessagesBinding.ivRefreshOnlineStatus.setVisibility(messagingDisabled ? View.GONE : View.VISIBLE);
+            conversationUserFullName = userName
+            ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.tvConversationTitle.text =
+                userName
+            ismActivityMessagesBinding!!.ivOnlineStatus.visibility = View.VISIBLE
 
+            //            ismActivityMessagesBinding.ivRefreshOnlineStatus.setVisibility(messagingDisabled ? View.GONE : View.VISIBLE);
             if (local) {
-                if (getIntent().getExtras().containsKey("isOnline")) {
-                    isOnline = getIntent().getExtras().getBoolean("isOnline");
+                isOnline = if (intent.extras!!.containsKey("isOnline")) {
+                    intent.extras!!.getBoolean("isOnline")
                 } else {
-                    isOnline = false;
+                    false
                 }
                 if (!isOnline) {
-                    if (getIntent().getExtras().containsKey("lastSeenAt")) {
-                        lastSeenAt = getIntent().getExtras().getLong("lastSeenAt");
+                    lastSeenAt = if (intent.extras!!.containsKey("lastSeenAt")) {
+                        intent.extras!!.getLong("lastSeenAt")
                     } else {
-                        lastSeenAt = 0;
+                        0
                     }
                 }
             }
             if (messagingDisabled) {
-                ismActivityMessagesBinding.ivOnlineStatus.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ism_ic_blocked));
-                ismActivityMessagesBinding.tvParticipantsCountOrOnlineStatus.setText(getString(R.string.ism_unavailable));
-                SpannableString spannableString = new SpannableString(userName);
-                spannableString.setSpan(new StyleSpan(Typeface.ITALIC), 0, spannableString.length(), 0);
-                ismActivityMessagesBinding.tvConversationOrUserName.setText(spannableString);
+                ismActivityMessagesBinding!!.ivOnlineStatus.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this, R.drawable.ism_ic_blocked
+                    )
+                )
+                ismActivityMessagesBinding!!.tvParticipantsCountOrOnlineStatus.text =
+                    getString(R.string.ism_unavailable)
+                val spannableString = SpannableString(userName)
+                spannableString.setSpan(StyleSpan(Typeface.ITALIC), 0, spannableString.length, 0)
+                ismActivityMessagesBinding!!.tvConversationOrUserName.text = spannableString
             } else {
-                ismActivityMessagesBinding.tvConversationOrUserName.setText(userName);
+                ismActivityMessagesBinding!!.tvConversationOrUserName.text = userName
 
                 if (isOnline) {
-                    ismActivityMessagesBinding.ivOnlineStatus.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ism_user_online_status_circle));
-                    ismActivityMessagesBinding.tvParticipantsCountOrOnlineStatus.setText(getString(R.string.ism_online));
+                    ismActivityMessagesBinding!!.ivOnlineStatus.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            this, R.drawable.ism_user_online_status_circle
+                        )
+                    )
+                    ismActivityMessagesBinding!!.tvParticipantsCountOrOnlineStatus.text =
+                        getString(R.string.ism_online)
                 } else {
-                    ismActivityMessagesBinding.ivOnlineStatus.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ism_user_offline_status_circle));
+                    ismActivityMessagesBinding!!.ivOnlineStatus.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            this, R.drawable.ism_user_offline_status_circle
+                        )
+                    )
 
-                    if (lastSeenAt == 0) {
-                        ismActivityMessagesBinding.tvParticipantsCountOrOnlineStatus.setText(getString(R.string.ism_offline));
+                    if (lastSeenAt == 0L) {
+                        ismActivityMessagesBinding!!.tvParticipantsCountOrOnlineStatus.text =
+                            getString(R.string.ism_offline)
                     } else {
-                        ismActivityMessagesBinding.tvParticipantsCountOrOnlineStatus.setText(getString(R.string.ism_last_seen_at, TimeUtil.formatTimestampToBothDateAndTime(lastSeenAt)));
+                        ismActivityMessagesBinding!!.tvParticipantsCountOrOnlineStatus.text =
+                            getString(
+                                R.string.ism_last_seen_at,
+                                TimeUtil.formatTimestampToBothDateAndTime(
+                                    lastSeenAt
+                                )
+                            )
                     }
                 }
             }
         } else {
-
             if (local) {
-                conversationTitle = getIntent().getExtras().getString("conversationTitle");
+                conversationTitle = intent.extras!!.getString("conversationTitle")
             }
-            ismActivityMessagesBinding.tvConversationOrUserName.setText(conversationTitle);
-            ismActivityMessagesBinding.vSelectMultipleMessagesHeader.tvConversationTitle.setText(conversationTitle);
-            ismActivityMessagesBinding.ivOnlineStatus.setVisibility(View.GONE);
-//            ismActivityMessagesBinding.ivRefreshOnlineStatus.setVisibility(View.GONE);
+            ismActivityMessagesBinding!!.tvConversationOrUserName.text = conversationTitle
+            ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.tvConversationTitle.text =
+                conversationTitle
+            ismActivityMessagesBinding!!.ivOnlineStatus.visibility = View.GONE
 
+            //            ismActivityMessagesBinding.ivRefreshOnlineStatus.setVisibility(View.GONE);
             if (local) {
-                if (getIntent().getExtras().containsKey("participantsCount")) {
-                    participantsCount = getIntent().getExtras().getInt("participantsCount");
+                participantsCount = if (intent.extras!!.containsKey("participantsCount")) {
+                    intent.extras!!.getInt("participantsCount")
                 } else {
-                    participantsCount = 1;
+                    1
                 }
             }
-            ismActivityMessagesBinding.tvParticipantsCountOrOnlineStatus.setText(getString(R.string.ism_participants_count, participantsCount));
+            ismActivityMessagesBinding!!.tvParticipantsCountOrOnlineStatus.text =
+                getString(R.string.ism_participants_count, participantsCount)
         }
     }
 
-    @Override
-    public void messageToScrollToNotFound() {
-        runOnUiThread(() -> {
-            scrollToMessageNeeded = false;
-//            ismActivityMessagesBinding.ivSearch.setVisibility(View.VISIBLE);
-            ismActivityMessagesBinding.vLoadingOverlay.getRoot().setVisibility(View.GONE);
-            scrollToLastMessage();
-            Toast.makeText(this, getString(R.string.ism_message_not_found), Toast.LENGTH_SHORT).show();
-        });
+    override fun messageToScrollToNotFound() {
+        runOnUiThread {
+            scrollToMessageNeeded = false
+            //            ismActivityMessagesBinding.ivSearch.setVisibility(View.VISIBLE);
+            ismActivityMessagesBinding!!.vLoadingOverlay.root.visibility = View.GONE
+            scrollToLastMessage()
+            Toast.makeText(
+                this,
+                getString(R.string.ism_message_not_found),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
-    @Override
-    public void onMessagingStatusChanged(boolean disabled) {
-        runOnUiThread(() -> {
-            messagingDisabled = disabled;
-            ismActivityMessagesBinding.rlBottomLayout.setVisibility(disabled ? View.INVISIBLE : View.VISIBLE);
-            ismActivityMessagesBinding.rlRecordAudio.setVisibility(disabled ? View.GONE : View.VISIBLE);
-            ismActivityMessagesBinding.rlDeleteConversation.setVisibility(disabled ? View.VISIBLE : View.GONE);
-
+    override fun onMessagingStatusChanged(disabled: Boolean) {
+        runOnUiThread {
+            messagingDisabled = disabled
+            ismActivityMessagesBinding!!.rlBottomLayout.visibility =
+                if (disabled) View.INVISIBLE else View.VISIBLE
+            ismActivityMessagesBinding!!.rlRecordAudio.visibility =
+                if (disabled) View.GONE else View.VISIBLE
+            ismActivityMessagesBinding!!.rlDeleteConversation.visibility =
+                if (disabled) View.VISIBLE else View.GONE
             if (disabled) {
-
-                if (!conversationMessagesAdapter.isMessagingDisabled()) {
-                    conversationMessagesAdapter.setMessagingDisabled(true);
-                    conversationMessagesAdapter.notifyDataSetChanged();
+                if (!conversationMessagesAdapter!!.isMessagingDisabled) {
+                    conversationMessagesAdapter!!.isMessagingDisabled = true
+                    conversationMessagesAdapter!!.notifyDataSetChanged()
                 }
-                ismActivityMessagesBinding.ivOnlineStatus.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ism_ic_blocked));
-                ismActivityMessagesBinding.tvParticipantsCountOrOnlineStatus.setText(getString(R.string.ism_unavailable));
-//                ismActivityMessagesBinding.ivRefreshOnlineStatus.setVisibility(View.GONE);
+                ismActivityMessagesBinding!!.ivOnlineStatus.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this,
+                        R.drawable.ism_ic_blocked
+                    )
+                )
+                ismActivityMessagesBinding!!.tvParticipantsCountOrOnlineStatus.text =
+                    getString(R.string.ism_unavailable)
+                //                ismActivityMessagesBinding.ivRefreshOnlineStatus.setVisibility(View.GONE);
             } else {
-                if (conversationMessagesAdapter.isMessagingDisabled()) {
-                    conversationMessagesAdapter.setMessagingDisabled(false);
-                    conversationMessagesAdapter.notifyDataSetChanged();
+                if (conversationMessagesAdapter!!.isMessagingDisabled) {
+                    conversationMessagesAdapter!!.isMessagingDisabled = false
+                    conversationMessagesAdapter!!.notifyDataSetChanged()
                 }
-                if (conversationMessagesPresenter.isPrivateOneToOne()) {
+                if (conversationMessagesPresenter!!.isPrivateOneToOne) {
 //                    ismActivityMessagesBinding.ivRefreshOnlineStatus.setVisibility(View.VISIBLE);
-                    conversationMessagesPresenter.requestConversationDetails();
+                    conversationMessagesPresenter!!.requestConversationDetails()
                 }
-            }
-        });
-    }
-
-    @Override
-    public void connectionStateChanged(boolean connected) {
-        runOnUiThread(() -> ismActivityMessagesBinding.incConnectionState.tvConnectionState.setVisibility(connected ? View.GONE : View.VISIBLE));
-    }
-
-    private void updateShimmerVisibility(boolean visible) {
-        if (visible) {
-            ismActivityMessagesBinding.incShimmer.rlConversationDetailsOne.getRoot().setVisibility(View.GONE);
-            ismActivityMessagesBinding.incShimmer.rlConversationDetailsTwo.getRoot().setVisibility(View.GONE);
-            ismActivityMessagesBinding.incShimmer.rlConversationDetailsThree.getRoot().setVisibility(View.GONE);
-            ismActivityMessagesBinding.incShimmer.rlConversationDetailsFour.getRoot().setVisibility(View.GONE);
-            ismActivityMessagesBinding.incShimmer.rlConversationDetailsFive.getRoot().setVisibility(View.GONE);
-
-            ismActivityMessagesBinding.shimmerFrameLayout.startShimmer();
-            ismActivityMessagesBinding.rlShimmer.setVisibility(View.VISIBLE);
-        } else {
-            if (ismActivityMessagesBinding.rlShimmer.getVisibility() == View.VISIBLE) {
-                ismActivityMessagesBinding.rlShimmer.setVisibility(View.GONE);
-                ismActivityMessagesBinding.shimmerFrameLayout.stopShimmer();
             }
         }
     }
 
-    @Override
-    public void showMessageNotification(String conversationId, String conversationTitle, String message, boolean privateOneToOne, Integer messagePlaceHolderImage, boolean isReactionMessage, String conversationImageUrl, String senderImageUrl, String senderName) {
-        runOnUiThread(() -> {
-            ismActivityMessagesBinding.incMessageNotification.tvConversationTitle.setText(conversationTitle);
-            ismActivityMessagesBinding.incMessageNotification.tvConversationType.setText(privateOneToOne ? getString(R.string.ism_1_1) : getString(R.string.ism_group));
-            ismActivityMessagesBinding.incMessageNotification.tvMessage.setText(message);
-            if (PlaceholderUtils.isValidImageUrl(conversationImageUrl)) {
+    override fun connectionStateChanged(connected: Boolean) {
+        runOnUiThread {
+            ismActivityMessagesBinding!!.incConnectionState.tvConnectionState.visibility =
+                if (connected) View.GONE else View.VISIBLE
+        }
+    }
 
+    private fun updateShimmerVisibility(visible: Boolean) {
+        if (visible) {
+            ismActivityMessagesBinding!!.incShimmer.rlConversationDetailsOne.root.visibility =
+                View.GONE
+            ismActivityMessagesBinding!!.incShimmer.rlConversationDetailsTwo.root.visibility =
+                View.GONE
+            ismActivityMessagesBinding!!.incShimmer.rlConversationDetailsThree.root.visibility =
+                View.GONE
+            ismActivityMessagesBinding!!.incShimmer.rlConversationDetailsFour.root.visibility =
+                View.GONE
+            ismActivityMessagesBinding!!.incShimmer.rlConversationDetailsFive.root.visibility =
+                View.GONE
+
+            ismActivityMessagesBinding!!.shimmerFrameLayout.startShimmer()
+            ismActivityMessagesBinding!!.rlShimmer.visibility = View.VISIBLE
+        } else {
+            if (ismActivityMessagesBinding!!.rlShimmer.visibility == View.VISIBLE) {
+                ismActivityMessagesBinding!!.rlShimmer.visibility = View.GONE
+                ismActivityMessagesBinding!!.shimmerFrameLayout.stopShimmer()
+            }
+        }
+    }
+
+    override fun showMessageNotification(
+        conversationId: String,
+        conversationTitle: String,
+        message: String,
+        privateOneToOne: Boolean,
+        messagePlaceHolderImage: Int?,
+        isReactionMessage: Boolean,
+        conversationImageUrl: String?,
+        senderImageUrl: String?,
+        senderName: String
+    ) {
+        runOnUiThread {
+            ismActivityMessagesBinding!!.incMessageNotification.tvConversationTitle.text =
+                conversationTitle
+            ismActivityMessagesBinding!!.incMessageNotification.tvConversationType.text =
+                if (privateOneToOne) getString(R.string.ism_1_1) else getString(R.string.ism_group)
+            ismActivityMessagesBinding!!.incMessageNotification.tvMessage.text = message
+            if (PlaceholderUtils.isValidImageUrl(conversationImageUrl)) {
                 try {
-                    Glide.with(ConversationMessagesActivity.this).load(conversationImageUrl).placeholder(R.drawable.ism_ic_profile).transform(new CircleCrop()).into(ismActivityMessagesBinding.incMessageNotification.ivConversationImage);
-                } catch (IllegalArgumentException | NullPointerException ignore) {
+                    Glide.with(this@ConversationMessagesActivity)
+                        .load(conversationImageUrl).placeholder(R.drawable.ism_ic_profile)
+                        .transform(CircleCrop()).into(
+                            ismActivityMessagesBinding!!.incMessageNotification.ivConversationImage
+                        )
+                } catch (ignore: IllegalArgumentException) {
+                } catch (ignore: NullPointerException) {
                 }
             } else {
-                PlaceholderUtils.setTextRoundDrawable(ConversationMessagesActivity.this, conversationTitle, ismActivityMessagesBinding.incMessageNotification.ivConversationImage, 16);
+                PlaceholderUtils.setTextRoundDrawable(
+                    this@ConversationMessagesActivity,
+                    conversationTitle,
+                    ismActivityMessagesBinding!!.incMessageNotification.ivConversationImage,
+                    16
+                )
             }
 
             if (senderImageUrl != null) {
                 if (PlaceholderUtils.isValidImageUrl(senderImageUrl)) {
-
                     try {
-                        Glide.with(ConversationMessagesActivity.this).load(senderImageUrl).placeholder(R.drawable.ism_ic_profile).transform(new CircleCrop()).into(ismActivityMessagesBinding.incMessageNotification.ivSenderImage);
-                    } catch (IllegalArgumentException | NullPointerException ignore) {
+                        Glide.with(this@ConversationMessagesActivity)
+                            .load(senderImageUrl).placeholder(R.drawable.ism_ic_profile)
+                            .transform(CircleCrop()).into(
+                                ismActivityMessagesBinding!!.incMessageNotification.ivSenderImage
+                            )
+                    } catch (ignore: IllegalArgumentException) {
+                    } catch (ignore: NullPointerException) {
                     }
                 } else {
-
-                    PlaceholderUtils.setTextRoundDrawable(ConversationMessagesActivity.this, senderName, ismActivityMessagesBinding.incMessageNotification.ivSenderImage, 5);
+                    PlaceholderUtils.setTextRoundDrawable(
+                        this@ConversationMessagesActivity,
+                        senderName,
+                        ismActivityMessagesBinding!!.incMessageNotification.ivSenderImage,
+                        5
+                    )
                 }
-                ismActivityMessagesBinding.incMessageNotification.ivSenderImage.setVisibility(View.VISIBLE);
+                ismActivityMessagesBinding!!.incMessageNotification.ivSenderImage.visibility =
+                    View.VISIBLE
             } else {
-                ismActivityMessagesBinding.incMessageNotification.ivSenderImage.setVisibility(View.GONE);
+                ismActivityMessagesBinding!!.incMessageNotification.ivSenderImage.visibility =
+                    View.GONE
             }
 
             if (messagePlaceHolderImage != null) {
                 try {
-                    Glide.with(ConversationMessagesActivity.this).load(messagePlaceHolderImage).diskCacheStrategy(DiskCacheStrategy.NONE).into(ismActivityMessagesBinding.incMessageNotification.ivMessageType);
-                } catch (IllegalArgumentException | NullPointerException ignore) {
+                    Glide.with(this@ConversationMessagesActivity)
+                        .load(messagePlaceHolderImage).diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .into(
+                            ismActivityMessagesBinding!!.incMessageNotification.ivMessageType
+                        )
+                } catch (ignore: IllegalArgumentException) {
+                } catch (ignore: NullPointerException) {
                 }
 
                 if (isReactionMessage) {
-                    ismActivityMessagesBinding.incMessageNotification.ivMessageType.clearColorFilter();
+                    ismActivityMessagesBinding!!.incMessageNotification.ivMessageType.clearColorFilter()
                 } else {
-
-                    ismActivityMessagesBinding.incMessageNotification.ivMessageType.setColorFilter(ContextCompat.getColor(ConversationMessagesActivity.this, R.color.ism_last_message_grey), PorterDuff.Mode.SRC_IN);
+                    ismActivityMessagesBinding!!.incMessageNotification.ivMessageType.setColorFilter(
+                        ContextCompat.getColor(
+                            this@ConversationMessagesActivity,
+                            R.color.ism_last_message_grey
+                        ),
+                        PorterDuff.Mode.SRC_IN
+                    )
                 }
 
-                ismActivityMessagesBinding.incMessageNotification.ivMessageType.setVisibility(View.VISIBLE);
+                ismActivityMessagesBinding!!.incMessageNotification.ivMessageType.visibility =
+                    View.VISIBLE
             } else {
-                ismActivityMessagesBinding.incMessageNotification.ivMessageType.setVisibility(View.GONE);
+                ismActivityMessagesBinding!!.incMessageNotification.ivMessageType.visibility =
+                    View.GONE
             }
 
-            ismActivityMessagesBinding.incMessageNotification.getRoot().setOnClickListener(v -> {
-
-                Intent intent = new Intent(ConversationMessagesActivity.this, ConversationMessagesActivity.class);
-                intent.putExtra("conversationId", conversationId);
-                intent.putExtra("privateOneToOne", privateOneToOne);
-                startActivity(intent);
-            });
-            ismActivityMessagesBinding.incMessageNotification.getRoot().setVisibility(View.VISIBLE);
-            try {
-                handler.postDelayed(messageNotificationRunnable, Constants.MESSAGE_NOTIFICATION_VISIBILITY_DURATION_IN_MS);
-            } catch (Exception ignore) {
-
+            ismActivityMessagesBinding!!.incMessageNotification.root.setOnClickListener { v: View? ->
+                val intent = Intent(
+                    this@ConversationMessagesActivity,
+                    ConversationMessagesActivity::class.java
+                )
+                intent.putExtra("conversationId", conversationId)
+                intent.putExtra("privateOneToOne", privateOneToOne)
+                startActivity(intent)
             }
-        });
-    }
-
-    private final Runnable messageNotificationRunnable = new Runnable() {
-        public void run() {
+            ismActivityMessagesBinding!!.incMessageNotification.root.visibility =
+                View.VISIBLE
             try {
-                ismActivityMessagesBinding.incMessageNotification.getRoot().setVisibility(View.GONE);
-            } catch (Exception ignore) {
-
+                handler.postDelayed(
+                    messageNotificationRunnable,
+                    Constants.MESSAGE_NOTIFICATION_VISIBILITY_DURATION_IN_MS.toLong()
+                )
+            } catch (ignore: Exception) {
             }
         }
-    };
-
-    @Override
-    public void updateVisibilityOfObserversIcon() {
-        runOnUiThread(() -> ismActivityMessagesBinding.ivObservers.setVisibility(View.VISIBLE));
     }
 
-    @Override
-    public void onUserBlocked() {
-        IsometrikChatSdk.getInstance().getChatActionsClickListener().onBlockStatusUpdate(true,userPersonalUserId);
-        hideProgressDialog();
-        onMessagingStatusChanged(true);
+    private val messageNotificationRunnable = Runnable {
+        try {
+            ismActivityMessagesBinding!!.incMessageNotification.root.visibility =
+                View.GONE
+        } catch (ignore: Exception) {
+        }
     }
 
-    @Override
-    public void onUserUnBlocked() {
-        IsometrikChatSdk.getInstance().getChatActionsClickListener().onBlockStatusUpdate(false,userPersonalUserId);
-        hideProgressDialog();
-        onMessagingStatusChanged(false);
+    override fun updateVisibilityOfObserversIcon() {
+        runOnUiThread {
+            ismActivityMessagesBinding!!.ivObservers.visibility =
+                View.VISIBLE
+        }
     }
 
-    private void hideProgressDialog() {
-        if (alertDialog != null && alertDialog.isShowing()) alertDialog.dismiss();
+    override fun onUserBlocked() {
+        IsometrikChatSdk.getInstance().chatActionsClickListener.onBlockStatusUpdate(
+            true,
+            userPersonalUserId!!
+        )
+        hideProgressDialog()
+        onMessagingStatusChanged(true)
     }
 
-    @Override
-    public void onConversationClearedSuccessfully() {
-        onConversationCleared();
-        hideProgressDialog();
+    override fun onUserUnBlocked() {
+        IsometrikChatSdk.getInstance().chatActionsClickListener.onBlockStatusUpdate(
+            false,
+            userPersonalUserId!!
+        )
+        hideProgressDialog()
+        onMessagingStatusChanged(false)
+    }
+
+    private fun hideProgressDialog() {
+        if (alertDialog != null && alertDialog!!.isShowing) alertDialog!!.dismiss()
+    }
+
+    override fun onConversationClearedSuccessfully() {
+        onConversationCleared()
+        hideProgressDialog()
     }
 
     // Check the necessary permissions for recording video
-    private boolean checkRecordVideoPermissions() {
-        List<String> requiredPermissions = new ArrayList<>();
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            requiredPermissions.add(Manifest.permission.CAMERA);
+    private fun checkRecordVideoPermissions(): Boolean {
+        val requiredPermissions: MutableList<String> = ArrayList()
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requiredPermissions.add(Manifest.permission.CAMERA)
         }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            requiredPermissions.add(Manifest.permission.RECORD_AUDIO);
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.RECORD_AUDIO
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requiredPermissions.add(Manifest.permission.RECORD_AUDIO)
         }
 
         if (!requiredPermissions.isEmpty()) {
-            ActivityCompat.requestPermissions(this,
-                    requiredPermissions.toArray(new String[0]), VIDEO_RECORD_PERMISSIONS_REQUEST_CODE);
-            return false;
+            ActivityCompat.requestPermissions(
+                this,
+                requiredPermissions.toTypedArray<String>(), VIDEO_RECORD_PERMISSIONS_REQUEST_CODE
+            )
+            return false
         }
-        return true;
+        return true
     }
 
-    private void startRecording() {
-        KeyboardUtil.hideKeyboard(this);
-        ismActivityMessagesBinding.rlBottomLayout.setVisibility(View.INVISIBLE);
-        conversationMessagesPresenter.startAudioRecording(this);
+    private fun startRecording() {
+        KeyboardUtil.hideKeyboard(this)
+        ismActivityMessagesBinding!!.rlBottomLayout.visibility = View.INVISIBLE
+        conversationMessagesPresenter!!.startAudioRecording(this)
     }
 
-    public void onRecordVideoRequested() {
+    fun onRecordVideoRequested() {
         if (checkRecordVideoPermissions()) {
             // When you want to start VideoRecordingActivity
-            Intent videoRecordingIntent = new Intent(this, VideoRecordingActivity.class);
-            startActivityForResult(videoRecordingIntent, VIDEO_PREVIEW_REQUEST_CODE);
+            val videoRecordingIntent = Intent(this, VideoRecordingActivity::class.java)
+            startActivityForResult(videoRecordingIntent, VIDEO_PREVIEW_REQUEST_CODE)
         }
     }
 
 
-    @Override
-    public void onJoinedAsObserverSuccessfully() {
-        runOnUiThread(() -> {
-            ismActivityMessagesBinding.ivObservers.setVisibility(View.VISIBLE);
-            updateShimmerVisibility(false);
-        });
+    override fun onJoinedAsObserverSuccessfully() {
+        runOnUiThread {
+            ismActivityMessagesBinding!!.ivObservers.visibility = View.VISIBLE
+            updateShimmerVisibility(false)
+        }
     }
 
-    @Override
-    public void onFailedToJoinAsObserverOrFetchMessagesOrConversationDetails(String errorMessage) {
-        onError(errorMessage);
-        onBackPressed();
+    override fun onFailedToJoinAsObserverOrFetchMessagesOrConversationDetails(errorMessage: String) {
+        onError(errorMessage)
+        onBackPressed()
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    override fun onResume() {
+        super.onResume()
         if (firstResume) {
-            firstResume = false;
+            firstResume = false
         } else {
-            conversationMessagesPresenter.setActiveInConversation(true);
+            conversationMessagesPresenter!!.setActiveInConversation(true)
             if (!joiningAsObserver) {
-                conversationMessagesPresenter.markMessagesAsRead();
+                conversationMessagesPresenter!!.markMessagesAsRead()
             }
         }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        conversationMessagesPresenter.setActiveInConversation(false);
+    override fun onPause() {
+        super.onPause()
+        conversationMessagesPresenter!!.setActiveInConversation(false)
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == VIDEO_PREVIEW_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
-            String videoUriString = data.getStringExtra("videoUri");
+            val videoUriString = data.getStringExtra("videoUri")
             if (videoUriString != null) {
-                handleRecordedVideo(Uri.parse(videoUriString));
+                handleRecordedVideo(Uri.parse(videoUriString))
             }
         }
     }
 
-    private void handleRecordedVideo(Uri videoUri) {
-        ArrayList<String> videoPaths = new ArrayList<>(Collections.singletonList(videoUri.getPath()));
+    private fun handleRecordedVideo(videoUri: Uri) {
+        val videoPaths = ArrayList(listOf(videoUri.path))
 
-        conversationMessagesPresenter.shareMessage(
-                RemoteMessageTypes.NormalMessage,
-                null,
-                null,
-                CustomMessageTypes.Video.getValue(),
-                CustomMessageTypes.Video.getValue(),
-                false,
-                true,
-                true,
-                true,
-                null,
-                null,
-                null,
-                MessageTypesForUI.VideoSent,
-                videoPaths,
-                true,
-                PresignedUrlMediaTypes.Video,
-                AttachmentMessageType.Video
-        );
+        conversationMessagesPresenter!!.shareMessage(
+            RemoteMessageTypes.NormalMessage,
+            null,
+            null,
+            CustomMessageTypes.Video.value,
+            CustomMessageTypes.Video.value,
+            false,
+            true,
+            true,
+            true,
+            null,
+            null,
+            null,
+            MessageTypesForUI.VideoSent,
+            videoPaths,
+            true,
+            PresignedUrlMediaTypes.Video,
+            AttachmentMessageType.Video
+        )
     }
 
-    @Override
-    public void onScrollToParentMessage(String messageId) {
-        int position = getPositionById(messageId);
-        if (position != -1) {
-            ismActivityMessagesBinding.rvMessages.smoothScrollToPosition(position);
-        }
-    }
-
-    private int getPositionById(String messageId) {
-        for (int i = 0; i < messages.size(); i++) {
-            if (messages.get(i).getMessageId().equals(messageId)) {
-                return i;
+    override fun onScrollToParentMessage(messageId: String?) {
+        messageId?.let {
+            val position = getPositionById(messageId)
+            if (position != -1) {
+                ismActivityMessagesBinding!!.rvMessages.smoothScrollToPosition(position)
             }
         }
-        return -1;
+    }
+
+    private fun getPositionById(messageId: String): Int {
+        for (i in messages.indices) {
+            if (messages[i].messageId == messageId) {
+                return i
+            }
+        }
+        return -1
+    }
+
+    companion object {
+        var conversationId: String? = null
+        private const val DOWNLOAD_MEDIA_PERMISSIONS_REQUEST_CODE = 0
+        private const val SHARE_LOCATION_PERMISSIONS_REQUEST_CODE = 1
+        private const val RECORD_AUDIO_PERMISSIONS_REQUEST_CODE = 2
+        private const val CAPTURE_IMAGE_PERMISSIONS_REQUEST_CODE = 3
+        private const val SHARE_PHOTOS_PERMISSIONS_REQUEST_CODE = 4
+        private const val SHARE_VIDEOS_PERMISSIONS_REQUEST_CODE = 5
+        private const val SHARE_FILES_PERMISSIONS_REQUEST_CODE = 6
+        private const val SHARE_CONTACT_PERMISSIONS_REQUEST_CODE = 7
+
+        // Request code for permissions
+        private const val PERMISSION_REQUEST_CODE = 123
+        private const val VIDEO_RECORD_PERMISSIONS_REQUEST_CODE = 9
+        private const val VIDEO_PREVIEW_REQUEST_CODE = 8 // New request code for video preview
     }
 }

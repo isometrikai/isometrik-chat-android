@@ -31,7 +31,7 @@ Open your build.gradle file (app-level) and add the following line in the depend
 
 ```groovy
 dependencies {
-    implementation 'com.github.isometrikai:isometrik-chat-android:1.2.5'
+    implementation 'com.github.isometrikai:isometrik-chat-android:1.2.6'
 }
 ```
 ### Step 3: Sync Your Project
@@ -236,6 +236,24 @@ Check default view [here](isometrik-chat/src/main/java/io/isometrik/ui/conversat
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, chatFragment)
             .commit()
+
+```
+
+## Add custom view for any type of Message in Chat Screen
+
+Check total message type of UI [here](isometrik-chat/src/main/java/io/isometrik/chat/utils/enums/MessageTypeUi.kt)
+
+```kotlin
+
+        MessageBinderRegistry.registerBinder(
+            ConversationMessagesAdapter.TEXT_MESSAGE_SENT,
+            CustomTextSentBinder()
+        )
+
+        MessageBinderRegistry.registerBinder(
+            ConversationMessagesAdapter.TEXT_MESSAGE_RECEIVED,
+            CustomTextSentBinder()
+        )
 
 ```
 
