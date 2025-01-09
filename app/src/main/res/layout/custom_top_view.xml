@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@color/ism_red_dark"
     android:id="@+id/root_view"
-    android:visibility="gone"
+    android:visibility="visible"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.AppCompatTextView

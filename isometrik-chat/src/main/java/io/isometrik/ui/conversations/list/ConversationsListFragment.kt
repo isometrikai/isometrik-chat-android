@@ -23,6 +23,7 @@ import io.isometrik.chat.utils.RecyclerItemClickListener
 import io.isometrik.ui.IsometrikChatSdk
 import io.isometrik.ui.conversations.newconversation.type.SelectConversationTypeBottomSheet
 import io.isometrik.ui.messages.chat.ConversationMessagesActivity
+import io.isometrik.ui.messages.chat.common.ChatConfig
 
 /**
  * The fragment to fetch list of public/open and all conversations with paging, search and pull to
@@ -96,9 +97,10 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
         ismFragmentConversationsBinding!!.rvConversations.layoutManager = conversationsLayoutManager
 
         val binder = itemBinder ?: DefaultChatListItemBinder()
-        conversationsAdapter = ConversationsAdapter(requireActivity(), conversations, binder){  data ->
-            joinConversation(data)
-        }
+        conversationsAdapter =
+            ConversationsAdapter(requireActivity(), conversations, binder) { data ->
+                joinConversation(data)
+            }
 
         ismFragmentConversationsBinding!!.rvConversations.addOnScrollListener(
             conversationsOnScrollListener
@@ -172,9 +174,8 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
         }
 
 
-        if (IsometrikChatSdk.getInstance().chatActionsClickListener == null) {
-            ismFragmentConversationsBinding!!.ivAdd.visibility = View.GONE
-        }
+        ismFragmentConversationsBinding!!.ivAdd.visibility =
+            if (ChatConfig.hideCreateChatOption) View.GONE else View.VISIBLE
 
         return ismFragmentConversationsBinding!!.root
     }
@@ -250,7 +251,7 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
 
                         if (conversationType == ConversationType.AllConversations) {
                             ismFragmentConversationsBinding!!.tvNoConversations.text =
-                                getString(R.string.ism_no_conversations)
+                                getString(ChatConfig.noConversationsStringResId)
                         } else if (conversationType == ConversationType.PublicConversation) {
                             ismFragmentConversationsBinding!!.tvNoConversations.text =
                                 getString(R.string.ism_no_public_conversations)
@@ -337,7 +338,7 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
                             View.VISIBLE
                         if (conversationType == ConversationType.AllConversations) {
                             ismFragmentConversationsBinding!!.tvNoConversations.text =
-                                getString(R.string.ism_no_conversations)
+                                getString(ChatConfig.noConversationsStringResId)
                         } else if (conversationType == ConversationType.PublicConversation) {
                             ismFragmentConversationsBinding!!.tvNoConversations.text =
                                 getString(R.string.ism_no_public_conversations)
@@ -395,7 +396,7 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
 
     override fun onMessagingStatusChanged(conversationId: String, disabled: Boolean) {
         if (activity != null) {
-             requireActivity().runOnUiThread {
+            requireActivity().runOnUiThread {
                 val position = conversationsListPresenter!!.fetchConversationPositionInList(
                     conversations,
                     conversationId, false
@@ -415,7 +416,7 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
         lastMessageTime: String
     ) {
         if (activity != null) {
-             requireActivity().runOnUiThread {
+            requireActivity().runOnUiThread {
                 val position = conversationsListPresenter!!.fetchConversationPositionInList(
                     conversations,
                     conversationId, false
@@ -445,7 +446,7 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
         fetchRemoteConversationIfNotFoundLocally: Boolean
     ) {
         if (activity != null) {
-             requireActivity().runOnUiThread {
+            requireActivity().runOnUiThread {
                 val position = conversationsListPresenter!!.fetchConversationPositionInList(
                     conversations,
                     conversationId, fetchRemoteConversationIfNotFoundLocally
@@ -515,7 +516,7 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
     override fun onConversationJoinedSuccessfully(conversationsModel: ConversationsModel) {
         if (conversationType == ConversationType.PublicConversation) {
             if (activity != null) {
-                 requireActivity().runOnUiThread {
+                requireActivity().runOnUiThread {
                     val position =
                         conversationsListPresenter!!.fetchConversationPositionInList(
                             conversations,
@@ -543,7 +544,7 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
     private fun showProgressDialog(message: String) {
         if (activity != null) {
             alertDialog = alertProgress!!.getProgressDialog(activity, message)
-            if (! requireActivity().isFinishing) alertDialog?.show()
+            if (!requireActivity().isFinishing) alertDialog?.show()
         }
     }
 
@@ -576,7 +577,8 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
      */
     fun joinConversation(conversationsModel: ConversationsModel?) {
         if (activity != null) {
-            AlertDialog.Builder(requireActivity()).setTitle(getString(R.string.ism_join_conversation))
+            AlertDialog.Builder(requireActivity())
+                .setTitle(getString(R.string.ism_join_conversation))
                 .setMessage(getString(R.string.ism_join_conversation_alert_message))
                 .setCancelable(true)
                 .setPositiveButton(getString(R.string.ism_continue)) { dialog: DialogInterface, id: Int ->
@@ -646,7 +648,7 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
 
     override fun failedToConnect(errorMessage: String?) {
         if (activity != null) {
-             requireActivity().runOnUiThread {
+            requireActivity().runOnUiThread {
                 if (errorMessage != null) {
                     Toast.makeText(activity, errorMessage, Toast.LENGTH_SHORT).show()
                 } else {
@@ -662,7 +664,7 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
         count: Int
     ) {
         if (activity != null) {
-             requireActivity().runOnUiThread {
+            requireActivity().runOnUiThread {
                 val position = conversationsListPresenter!!.fetchConversationPositionInList(
                     conversations,
                     conversationId, false
@@ -709,7 +711,7 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
 
     override fun onRemoteUserTypingEvent(conversationId: String, message: String) {
         if (activity != null) {
-             requireActivity().runOnUiThread {
+            requireActivity().runOnUiThread {
                 val size = conversations.size
                 for (i in 0 until size) {
                     if (conversations[i].conversationId == conversationId) {

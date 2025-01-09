@@ -31,7 +31,7 @@ Open your build.gradle file (app-level) and add the following line in the depend
 
 ```groovy
 dependencies {
-    implementation 'com.github.isometrikai:isometrik-chat-android:1.2.7'
+    implementation 'com.github.isometrikai:isometrik-chat-android:1.2.8'
 }
 ```
 ### Step 3: Sync Your Project
@@ -245,15 +245,15 @@ Check total message type of UI [here](isometrik-chat/src/main/java/io/isometrik/
 
 ```kotlin
 
-        MessageBinderRegistry.registerBinder(
-            ConversationMessagesAdapter.TEXT_MESSAGE_SENT,
-            CustomTextSentBinder()
-        )
+               MessageBinderRegistry.registerBinder(
+                   MessageTypeUi.TEXT_MESSAGE_SENT,
+                   CustomTextSentBinder()
+               )
 
-        MessageBinderRegistry.registerBinder(
-            ConversationMessagesAdapter.TEXT_MESSAGE_RECEIVED,
-            CustomTextSentBinder()
-        )
+              MessageBinderRegistry.registerBinder(
+                  MessageTypeUi.TEXT_MESSAGE_RECEIVED,
+                  CustomTextSentBinder()
+              )
 
 ```
 

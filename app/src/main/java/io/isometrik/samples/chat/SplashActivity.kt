@@ -17,7 +17,7 @@ class SplashActivity : AppCompatActivity() {
         val intent = if (IsometrikChatSdk.getInstance().userSession.userToken == null) {
             Intent(this@SplashActivity, UsersActivity::class.java)
         } else {
-            Intent(this@SplashActivity, ConversationsListActivity::class.java)
+            Intent(this@SplashActivity, ChatListActivity::class.java)
         }
         startActivity(intent)
 

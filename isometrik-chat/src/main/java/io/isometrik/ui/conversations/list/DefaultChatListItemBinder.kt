@@ -66,7 +66,7 @@ class DefaultChatListItemBinder : ChatListItemBinder<ConversationsModel, IsmConv
             } else {
                 PlaceholderUtils.setTextRoundDrawable(
                     mContext, conversationsModel.conversationTitle,
-                    ismConversationItemBinding.ivConversationImage, /*position*/10, 16
+                    ismConversationItemBinding.ivConversationImage, /*position*/-1, 16
                 )
             }
             if (conversationsModel.isPrivateOneToOneConversation) {
@@ -111,7 +111,7 @@ class DefaultChatListItemBinder : ChatListItemBinder<ConversationsModel, IsmConv
                         PlaceholderUtils.setTextRoundDrawable(
                             mContext,
                             conversationsModel.lastMessageSenderName,
-                            ismConversationItemBinding.ivOnlineStatus, /*position + 1*/11, 5
+                            ismConversationItemBinding.ivOnlineStatus, /*position + 1*/-1, 5
                         )
                     }
                     ismConversationItemBinding.ivOnlineStatus.visibility = View.VISIBLE
