@@ -58,6 +58,8 @@ class ChatListActivity : AppCompatActivity() {
 
 
         ChatConfig.topViewHandler = MyCustomTopViewHandler()
+
+        ChatConfig.baseColor = R.color.ism_theme_base
     }
 
     private fun loadChatFragment() {

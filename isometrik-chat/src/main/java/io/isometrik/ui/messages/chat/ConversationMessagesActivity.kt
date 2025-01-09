@@ -214,6 +214,15 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             ismActivityMessagesBinding.topViewContainer.addView(topView)
         }
 
+        ismActivityMessagesBinding.ivAudioCall.visibility =
+            if (ChatConfig.hideAudioCallOption) View.GONE else View.VISIBLE
+        ismActivityMessagesBinding.ivVideoCall.visibility =
+            if (ChatConfig.hideVideoCallOption) View.GONE else View.VISIBLE
+        ismActivityMessagesBinding.ivCaptureImage.visibility =
+            if (ChatConfig.hideCaptureCameraOption) View.INVISIBLE else View.VISIBLE
+        ismActivityMessagesBinding.btRecord.visibility =
+            if (ChatConfig.hideRecordAudioOption) View.GONE else View.VISIBLE
+
 
             val itemBinders  = mapOf(
             MessageTypeUi.TEXT_MESSAGE_SENT to TextSentBinder(),
@@ -1197,7 +1206,8 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 ismActivityMessagesBinding!!.ivSendMessage.visibility = View.VISIBLE
             } else {
                 ismActivityMessagesBinding!!.ivSendMessage.visibility = View.GONE
-                ismActivityMessagesBinding!!.ivCaptureImage.visibility = View.VISIBLE
+                ismActivityMessagesBinding.ivCaptureImage.visibility =
+                    if (ChatConfig.hideCaptureCameraOption) View.INVISIBLE else View.VISIBLE
                 ismActivityMessagesBinding!!.rlRecordAudio.visibility = View.VISIBLE
             }
             if (!joiningAsObserver) conversationMessagesPresenter!!.sendTypingMessage()
@@ -2236,6 +2246,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 if (ismActivityMessagesBinding!!.tvNoMessages.visibility == View.VISIBLE) {
                     ismActivityMessagesBinding!!.tvNoMessages.visibility = View.GONE
                 }
+                onMessageUpdated(messages[messages.size - 1])
             }
         }
     }
