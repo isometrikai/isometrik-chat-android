@@ -29,7 +29,9 @@ enum class MessageTypeUi(val value: Int) {
     CONVERSATION_ACTION_MESSAGE(20),
     REPLAY_MESSAGE_SENT (21),
     POST_MESSAGE_SENT(23),
-    POST_MESSAGE_RECEIVED(24);
+    POST_MESSAGE_RECEIVED(24),
+    OFFER_SENT(25),
+    OFFER_RECEIVED(26);
 
     companion object {
         fun fromValue(value: Int): MessageTypeUi {

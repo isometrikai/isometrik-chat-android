@@ -14,7 +14,7 @@ import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmBottomsheetEditBinding;
 import io.isometrik.ui.messages.action.MessageActionCallback;
 import io.isometrik.ui.messages.chat.MessagesModel;
-import io.isometrik.ui.messages.chat.utils.enums.MessageTypesForUI;
+import io.isometrik.chat.utils.enums.MessageTypesForUI;
 import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.TimeUtil;
 

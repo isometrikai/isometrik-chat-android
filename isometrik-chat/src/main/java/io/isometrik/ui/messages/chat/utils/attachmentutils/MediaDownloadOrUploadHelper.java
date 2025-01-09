@@ -6,7 +6,7 @@ import io.isometrik.chat.models.download.mediautils.DownloadProgressListener;
 import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.messages.chat.MessagesModel;
-import io.isometrik.ui.messages.chat.utils.enums.MessageTypesForUI;
+import io.isometrik.chat.utils.enums.MessageTypesForUI;
 
 /**
  * The helper class to prepare success and error message for media download or upload completeion.

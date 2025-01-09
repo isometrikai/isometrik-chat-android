@@ -17,7 +17,7 @@ class SplashActivity : AppCompatActivity() {
         val intent = if (IsometrikChatSdk.getInstance().userSession.userToken == null) {
             Intent(this@SplashActivity, UsersActivity::class.java)
         } else {
-            Intent(this@SplashActivity, ChatListActivity::class.java)
+            Intent(this@SplashActivity, ConversationsListActivity::class.java)
         }
         startActivity(intent)
 
@@ -34,7 +34,7 @@ class SplashActivity : AppCompatActivity() {
                 } else {
                     val i = Intent(
                         this@SplashActivity,
-                        io.isometrik.ui.conversations.newconversation.onetoone.NewOneToOneConversationActivity::class.java
+                        ConversationsListActivity::class.java
                     )
                     startActivity(i)
                 }

@@ -3,15 +3,20 @@ package io.isometrik.samples.chat
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import io.isometrik.chat.utils.enums.MessageTypeUi
 import io.isometrik.samples.chat.databinding.ChatItemBinding
+import io.isometrik.samples.chat.databinding.CustomTopViewBinding
 import io.isometrik.ui.conversations.list.ChatListItemBinder
 import io.isometrik.ui.conversations.list.ConversationsListFragment
 import io.isometrik.ui.conversations.list.ConversationsModel
-import io.isometrik.ui.messages.chat.ConversationMessagesAdapter
-import io.isometrik.ui.messages.chat.MessageBinderRegistry
+import io.isometrik.ui.messages.chat.MessagesModel
+import io.isometrik.ui.messages.chat.common.ChatConfig
+import io.isometrik.ui.messages.chat.common.ChatTopViewHandler
+import io.isometrik.ui.messages.chat.common.MessageBinderRegistry
 
 class ChatListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,10 +33,31 @@ class ChatListActivity : AppCompatActivity() {
             CustomTextSentBinder()
         )
 
-        MessageBinderRegistry.registerBinder(
-            MessageTypeUi.TEXT_MESSAGE_RECEIVED,
-            CustomTextSentBinder()
-        )
+//        MessageBinderRegistry.registerBinder(
+//            MessageTypeUi.TEXT_MESSAGE_RECEIVED,
+//            CustomTextSentBinder()
+//        )
+
+        class MyCustomTopViewHandler : ChatTopViewHandler {
+
+            private var binding: CustomTopViewBinding? = null
+
+            override fun createTopView(parent: ViewGroup): View {
+                val inflater = LayoutInflater.from(parent.context)
+                binding = CustomTopViewBinding.inflate(inflater, parent, false)
+                return binding!!.root
+            }
+
+            override fun updateTopView(view: View, message: MessagesModel) {
+                binding?.apply {
+                    rootView.visibility = View.VISIBLE
+                    tvTitle.text = message.textMessage
+                }
+            }
+        }
+
+
+        ChatConfig.topViewHandler = MyCustomTopViewHandler()
     }
 
     private fun loadChatFragment() {

@@ -6,6 +6,8 @@ import androidx.viewbinding.ViewBinding
 import io.isometrik.chat.utils.enums.MessageTypeUi
 import io.isometrik.ui.messages.action.MessageActionCallback
 import io.isometrik.chat.utils.enums.MessageTypesForUI
+import io.isometrik.ui.messages.chat.common.MessageBinderRegistry
+import io.isometrik.ui.messages.chat.messageBinders.MessageItemBinder
 import io.isometrik.ui.messages.chat.viewholders.AudioMessageReceivedViewHolder
 import io.isometrik.ui.messages.chat.viewholders.AudioMessageSentViewHolder
 import io.isometrik.ui.messages.chat.viewholders.FileMessageReceivedViewHolder
@@ -62,6 +64,7 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
                     MessageTypesForUI.LocationSent -> MessageTypeUi.LOCATION_MESSAGE_SENT.value
                     MessageTypesForUI.ContactSent -> MessageTypeUi.CONTACT_MESSAGE_SENT.value
                     MessageTypesForUI.PostSent -> MessageTypeUi.POST_MESSAGE_SENT.value
+                    MessageTypesForUI.OfferSent -> MessageTypeUi.OFFER_SENT.value
                     else -> MessageTypeUi.CONVERSATION_ACTION_MESSAGE.value
                 }
             } else {
@@ -78,6 +81,7 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
                     MessageTypesForUI.ContactReceived -> MessageTypeUi.CONTACT_MESSAGE_RECEIVED.value
                     MessageTypesForUI.ConversationActionMessage -> MessageTypeUi.CONVERSATION_ACTION_MESSAGE.value
                     MessageTypesForUI.PostReceived -> MessageTypeUi.POST_MESSAGE_RECEIVED.value
+                    MessageTypesForUI.OfferReceived -> MessageTypeUi.OFFER_RECEIVED.value
                     else -> MessageTypeUi.CONVERSATION_ACTION_MESSAGE.value
                 }
             }

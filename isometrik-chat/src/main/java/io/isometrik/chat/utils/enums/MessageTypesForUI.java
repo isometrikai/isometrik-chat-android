@@ -137,7 +137,11 @@ public enum MessageTypesForUI {
   /**
    * Record Video sent message types for ui.
    */
-  RecordVideo(27);
+  RecordVideo(27),
+
+  OfferSent(28),
+
+  OfferReceived(29);
 
   private final int value;
 

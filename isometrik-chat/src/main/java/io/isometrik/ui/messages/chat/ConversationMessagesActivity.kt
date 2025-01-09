@@ -22,6 +22,7 @@ import android.text.style.StyleSpan
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -93,6 +94,8 @@ import io.isometrik.ui.messages.chat.messageBinders.WhiteboardReceivedBinder
 import io.isometrik.ui.messages.chat.messageBinders.WhiteboardSentBinder
 import io.isometrik.ui.messages.chat.utils.attachmentutils.PrepareAttachmentHelper
 import io.isometrik.chat.utils.enums.MessageTypesForUI
+import io.isometrik.ui.messages.chat.common.ChatConfig
+import io.isometrik.ui.messages.chat.common.ChatTopViewHandler
 import io.isometrik.ui.messages.chat.utils.enums.RemoteMessageTypes
 import io.isometrik.ui.messages.chat.utils.messageutils.ContactUtil
 import io.isometrik.ui.messages.chat.utils.messageutils.MultipleMessagesUtil
@@ -139,7 +142,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
     ReactionClickListener, MediaTypeToBeSharedCallback, MediaSelectedToBeShared,
     MessageActionCallback, TaggedUserCallback, OnScrollToMessageListener {
     private lateinit var conversationMessagesPresenter: ConversationMessagesContract.Presenter
-    private var ismActivityMessagesBinding: IsmActivityMessagesBinding? = null
+    lateinit var ismActivityMessagesBinding: IsmActivityMessagesBinding
     private val messages = ArrayList<MessagesModel>()
     private lateinit var conversationMessagesAdapter: ConversationMessagesAdapter<MessagesModel, ViewBinding>
     private val tagUserModels = ArrayList<TagUserModel>()
@@ -185,6 +188,9 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
     private var alertDialog: AlertDialog? = null
     private var alertProgress: AlertProgress? = null
 
+    private var topView: View? = null
+    private var topViewHandler: ChatTopViewHandler? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ismActivityMessagesBinding = IsmActivityMessagesBinding.inflate(
@@ -200,7 +206,16 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         joiningAsObserver = intent.extras!!.getBoolean("joinAsObserver", false)
 
 
-        val itemBinders  = mapOf(
+        topViewHandler = ChatConfig.topViewHandler
+
+        topViewHandler?.let { handler ->
+            // Create the top view
+            topView = handler.createTopView(ismActivityMessagesBinding.topViewContainer)
+            ismActivityMessagesBinding.topViewContainer.addView(topView)
+        }
+
+
+            val itemBinders  = mapOf(
             MessageTypeUi.TEXT_MESSAGE_SENT to TextSentBinder(),
             MessageTypeUi.PHOTO_MESSAGE_SENT to PhotoSentBinder(),
             MessageTypeUi.VIDEO_MESSAGE_SENT to VideoSentBinder(),
@@ -2120,6 +2135,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                     messages.size - 1
                 )
             }
+            onMessageUpdated(messagesModel)
         }
     }
 
@@ -2131,6 +2147,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             messages.add(messagesModel)
             conversationMessagesAdapter!!.notifyItemInserted(messages.size - 1)
             scrollToLastMessage()
+            onMessageUpdated(messagesModel)
         }
     }
 
@@ -3263,6 +3280,15 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             }
         }
         return -1
+    }
+
+    /**
+     * Update the top view when a message changes or a new message arrives.
+     */
+    fun onMessageUpdated(message: MessagesModel) {
+        topView?.let { view ->
+            topViewHandler?.updateTopView(view, message)
+        }
     }
 
     companion object {

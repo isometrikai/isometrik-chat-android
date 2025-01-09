@@ -1,7 +1,6 @@
 package io.isometrik.ui.messages.chat.messageBinders
 
 import android.content.Context
-import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,6 @@ import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
 import io.isometrik.chat.R
 import io.isometrik.chat.databinding.IsmSentMessageVideoBinding
 import io.isometrik.ui.messages.action.MessageActionCallback
-import io.isometrik.ui.messages.chat.MessageItemBinder
 import io.isometrik.ui.messages.chat.MessagesModel
 import io.isometrik.ui.messages.reaction.add.MessageReactionsAdapter
 
