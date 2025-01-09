@@ -1,4 +1,4 @@
-package io.isometrik.ui.messages.chat
+package io.isometrik.ui.messages.chat.messageBinders
 
 import android.content.Context
 import android.view.ViewGroup

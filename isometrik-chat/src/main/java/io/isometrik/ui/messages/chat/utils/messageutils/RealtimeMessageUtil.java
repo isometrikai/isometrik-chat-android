@@ -647,6 +647,21 @@ int size= members.size();
               false);
           break;
         }
+        case "AttachmentMessage:OfferSent": {
+          messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
+                  selfMessage ? MessageTypesForUI.OfferSent : MessageTypesForUI.OfferReceived,
+                  selfMessage, sendMessageEvent.getSentAt(), false,
+                  TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
+                          sendMessageEvent.getMentionedUsers(), taggedUserCallback),
+                  sendMessageEvent.getSenderName(), sendMessageEvent.getSenderProfileImageUrl(), null,
+                  true, null, (sendMessageEvent.getParentMessageId() == null) ? null
+                  : (new OriginalReplyMessageUtil(sendMessageEvent.getParentMessageId(),
+                  sendMessageEvent.getMetaData())), sendMessageEvent.getMessageType(),
+                  sendMessageEvent.getMetaData(), false, false, sendMessageEvent.getConversationId(),
+                  false);
+
+          break;
+        }
       }
     }
     return messageModel;

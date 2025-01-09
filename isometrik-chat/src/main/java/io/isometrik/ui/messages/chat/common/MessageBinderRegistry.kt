@@ -1,7 +1,9 @@
-package io.isometrik.ui.messages.chat
+package io.isometrik.ui.messages.chat.common
 
 import androidx.viewbinding.ViewBinding
 import io.isometrik.chat.utils.enums.MessageTypeUi
+import io.isometrik.ui.messages.chat.messageBinders.MessageItemBinder
+import io.isometrik.ui.messages.chat.MessagesModel
 
 object MessageBinderRegistry {
     private val customBinders = mutableMapOf<MessageTypeUi, MessageItemBinder<out MessagesModel, *>>()

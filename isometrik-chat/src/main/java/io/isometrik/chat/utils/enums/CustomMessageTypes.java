@@ -48,7 +48,11 @@ public enum CustomMessageTypes {
   /**
    * Reply custom message types.
    */
-  Replay("AttachmentMessage:Reply");
+  Replay("AttachmentMessage:Reply"),
+
+  Post("AttachmentMessage:Post"),
+
+  OfferSent("AttachmentMessage:OfferSent");
 
   private final String value;
 

@@ -14,7 +14,6 @@ import io.isometrik.chat.R
 import io.isometrik.chat.databinding.IsmSentMessageContactBinding
 import io.isometrik.chat.utils.PlaceholderUtils
 import io.isometrik.ui.messages.action.MessageActionCallback
-import io.isometrik.ui.messages.chat.MessageItemBinder
 import io.isometrik.ui.messages.chat.MessagesModel
 import io.isometrik.ui.messages.reaction.add.MessageReactionsAdapter
 

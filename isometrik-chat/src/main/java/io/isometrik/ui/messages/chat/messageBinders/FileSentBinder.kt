@@ -12,7 +12,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import io.isometrik.chat.R
 import io.isometrik.chat.databinding.IsmSentMessageFileBinding
 import io.isometrik.ui.messages.action.MessageActionCallback
-import io.isometrik.ui.messages.chat.MessageItemBinder
 import io.isometrik.ui.messages.chat.MessagesModel
 import io.isometrik.ui.messages.reaction.add.MessageReactionsAdapter
 

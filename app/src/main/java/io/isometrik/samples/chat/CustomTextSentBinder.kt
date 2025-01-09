@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.isometrik.samples.chat.databinding.ItemCustomTextBinding
 import io.isometrik.ui.messages.action.MessageActionCallback
-import io.isometrik.ui.messages.chat.MessageItemBinder
+import io.isometrik.ui.messages.chat.messageBinders.MessageItemBinder
 import io.isometrik.ui.messages.chat.MessagesModel
 
 class CustomTextSentBinder : MessageItemBinder<MessagesModel, ItemCustomTextBinding> {
