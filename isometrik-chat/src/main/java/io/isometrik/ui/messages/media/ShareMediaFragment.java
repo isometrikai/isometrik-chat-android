@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import io.isometrik.chat.databinding.IsmBottomsheetAttachmentsBinding;
-import io.isometrik.ui.messages.chat.utils.enums.MessageTypesForUI;
+import io.isometrik.chat.utils.enums.MessageTypesForUI;
 
 /**
  * The fragment with option to share various kind of media as message in a conversation.Supported

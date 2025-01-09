@@ -4,7 +4,7 @@ import android.text.SpannableString;
 
 import io.isometrik.chat.R;
 import io.isometrik.ui.IsometrikChatSdk;
-import io.isometrik.ui.messages.chat.utils.enums.MessageTypesForUI;
+import io.isometrik.chat.utils.enums.MessageTypesForUI;
 import io.isometrik.ui.messages.chat.utils.enums.RemoteMessageTypes;
 import io.isometrik.ui.messages.chat.utils.messageutils.OriginalReplyMessageUtil;
 import io.isometrik.chat.utils.TimeUtil;

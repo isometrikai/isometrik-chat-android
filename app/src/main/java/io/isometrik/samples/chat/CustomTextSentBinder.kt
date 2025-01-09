@@ -24,5 +24,6 @@ class CustomTextSentBinder : MessageItemBinder<MessagesModel, ItemCustomTextBind
     ) {
 
         binding.textTitle.text = data.textMessage
+
     }
 }

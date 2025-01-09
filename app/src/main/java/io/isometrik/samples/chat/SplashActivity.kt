@@ -34,7 +34,7 @@ class SplashActivity : AppCompatActivity() {
                 } else {
                     val i = Intent(
                         this@SplashActivity,
-                        io.isometrik.ui.conversations.newconversation.onetoone.NewOneToOneConversationActivity::class.java
+                        ConversationsListActivity::class.java
                     )
                     startActivity(i)
                 }

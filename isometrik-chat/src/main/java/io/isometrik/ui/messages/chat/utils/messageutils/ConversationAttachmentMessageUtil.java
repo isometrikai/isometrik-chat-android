@@ -4,7 +4,7 @@ import io.isometrik.chat.response.message.utils.fetchmessages.Message;
 import io.isometrik.chat.response.message.utils.schemas.Attachment;
 import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.ui.messages.chat.MessagesModel;
-import io.isometrik.ui.messages.chat.utils.enums.MessageTypesForUI;
+import io.isometrik.chat.utils.enums.MessageTypesForUI;
 import io.isometrik.ui.messages.reaction.util.ReactionUtil;
 import io.isometrik.ui.messages.tag.TaggedUserCallback;
 import io.isometrik.ui.messages.tag.util.ParseMentionedUsersFromFetchMessagesResponseUtil;

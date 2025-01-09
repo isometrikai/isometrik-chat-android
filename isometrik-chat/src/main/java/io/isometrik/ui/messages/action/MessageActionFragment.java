@@ -17,10 +17,7 @@ import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmBottomsheetMessageActionsBinding;
 import io.isometrik.chat.utils.MentionedUserSpan;
 import io.isometrik.ui.messages.chat.MessagesModel;
-import io.isometrik.ui.messages.chat.utils.enums.MessageTypesForUI;
-
-import static io.isometrik.ui.messages.chat.utils.enums.MessageTypesForUI.TextReceived;
-import static io.isometrik.ui.messages.chat.utils.enums.MessageTypesForUI.TextSent;
+import io.isometrik.chat.utils.enums.MessageTypesForUI;
 
 /**
  * The fragment for showing actionable items on click of a message for- reply/edit/delete for

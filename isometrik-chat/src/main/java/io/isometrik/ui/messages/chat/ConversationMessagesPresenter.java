@@ -92,7 +92,7 @@ import io.isometrik.ui.conversations.details.userconversation.UserConversationDe
 import io.isometrik.ui.messages.chat.utils.attachmentutils.LocalMediaAttachmentHelper;
 import io.isometrik.ui.messages.chat.utils.attachmentutils.MediaDownloadOrUploadHelper;
 import io.isometrik.ui.messages.chat.utils.attachmentutils.PrepareAttachmentHelper;
-import io.isometrik.ui.messages.chat.utils.enums.MessageTypesForUI;
+import io.isometrik.chat.utils.enums.MessageTypesForUI;
 import io.isometrik.ui.messages.chat.utils.enums.RemoteMessageTypes;
 import io.isometrik.ui.messages.chat.utils.messageutils.ConversationActionMessageUtil;
 import io.isometrik.ui.messages.chat.utils.messageutils.ConversationAttachmentMessageUtil;
