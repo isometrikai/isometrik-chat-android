@@ -31,7 +31,7 @@ Open your build.gradle file (app-level) and add the following line in the depend
 
 ```groovy
 dependencies {
-    implementation 'com.github.isometrikai:isometrik-chat-android:1.2.6'
+    implementation 'com.github.isometrikai:isometrik-chat-android:1.2.7'
 }
 ```
 ### Step 3: Sync Your Project
@@ -254,6 +254,33 @@ Check total message type of UI [here](isometrik-chat/src/main/java/io/isometrik/
             ConversationMessagesAdapter.TEXT_MESSAGE_RECEIVED,
             CustomTextSentBinder()
         )
+
+```
+
+## Add custom top view in Chat Screen
+
+```kotlin
+
+        class MyCustomTopViewHandler : ChatTopViewHandler {
+
+                   private var binding: CustomTopViewBinding? = null
+
+                   override fun createTopView(parent: ViewGroup): View {
+                       val inflater = LayoutInflater.from(parent.context)
+                       binding = CustomTopViewBinding.inflate(inflater, parent, false)
+                       return binding!!.root
+                   }
+
+                   override fun updateTopView(view: View, message: MessagesModel) {
+                       binding?.apply {
+                           rootView.visibility = View.VISIBLE
+                           tvTitle.text = message.textMessage
+                       }
+                   }
+               }
+
+
+               ChatConfig.topViewHandler = MyCustomTopViewHandler()
 
 ```
 
