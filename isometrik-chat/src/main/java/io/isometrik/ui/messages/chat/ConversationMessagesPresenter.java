@@ -843,30 +843,22 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                         for (int i = 0; i < messages.size(); i++) {
                             message = messages.get(i);
 
-                            Log.e("fetchMessages","==> 00 "+message.getConversationStatusMessage());
                             if (message.getConversationStatusMessage() != null) {
                                 String conversationActionMessage =
                                         ConversationActionMessageUtil.parseConversationActionMessage(message);
 
                                 if (conversationActionMessage != null) {
-                                    Log.e("fetchMessages","==> 11 "+message.getConversationDetails());
 
                                     JSONObject metadata = null;
                                     if(message.getConversationDetails() != null){
                                         metadata = message.getConversationDetails().getMetaData();
-
-                                        Log.e("fetchMessages","==> 22 "+metadata);
 
                                     }
                                     messageModel =
                                             new MessagesModel(conversationActionMessage, message.getMessageId(), message.getSentAt(), false, MessageTypesForUI.ConversationActionMessage, metadata);
                                     messageModels.add(0, messageModel);
                                 }
-
-                                Log.e("fetchMessages","==> 44 ");
                             } else {
-                                Log.e("fetchMessages","==> 33 "+i);
-
                                 messageModel =
                                         ConversationAttachmentMessageUtil.prepareMessageAttachmentModel(message,
                                                 taggedUserCallback);
