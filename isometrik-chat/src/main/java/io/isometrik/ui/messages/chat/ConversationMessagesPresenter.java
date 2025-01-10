@@ -847,8 +847,12 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                                         ConversationActionMessageUtil.parseConversationActionMessage(message);
 
                                 if (conversationActionMessage != null) {
+                                    JSONObject metadata = null;
+                                    if(message.getConversationDetails() != null){
+                                        metadata = message.getConversationDetails().getMetaData();
+                                    }
                                     messageModel =
-                                            new MessagesModel(conversationActionMessage, message.getMessageId(), message.getSentAt(), false, MessageTypesForUI.ConversationActionMessage, message.getMetaData());
+                                            new MessagesModel(conversationActionMessage, message.getMessageId(), message.getSentAt(), false, MessageTypesForUI.ConversationActionMessage, metadata);
                                     messageModels.add(0, messageModel);
                                 }
                             } else {
