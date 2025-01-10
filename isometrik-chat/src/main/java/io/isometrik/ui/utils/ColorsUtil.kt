@@ -1,9 +1,7 @@
 package io.isometrik.ui.utils
 
-import android.graphics.Color
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
-import io.isometrik.chat.R
 import io.isometrik.ui.IsometrikChatSdk
 import io.isometrik.ui.messages.chat.common.ChatConfig
 

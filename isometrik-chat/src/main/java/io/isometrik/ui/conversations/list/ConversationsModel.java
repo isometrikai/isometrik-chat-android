@@ -33,6 +33,7 @@ public class ConversationsModel {
   private long lastSeenAt;
   private final boolean canJoin;
   private boolean messagingDisabled;
+  private JSONObject metaData;
 
   /**
    * Instantiates a new Conversations model.
@@ -155,6 +156,7 @@ public class ConversationsModel {
           .getString(R.string.ism_members_count, conversation.getMembersCount());
       lastMessageTime = TimeUtil.formatTimestampToOnlyDate(conversation.getCreatedAt());
     }
+    metaData = conversation.getMetaData();
   }
 
   /**
@@ -960,5 +962,13 @@ public class ConversationsModel {
    */
   public String getOpponentIdentifier() {
     return opponentIdentifier;
+  }
+
+  public JSONObject getMetaData() {
+    return metaData;
+  }
+
+  public void setMetaData(JSONObject metaData) {
+    this.metaData = metaData;
   }
 }

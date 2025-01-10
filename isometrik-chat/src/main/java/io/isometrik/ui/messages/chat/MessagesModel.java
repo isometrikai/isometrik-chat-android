@@ -1584,6 +1584,27 @@ public class MessagesModel implements Serializable {
         this.isSentMessage = isSentMessage;
     }
 
+    /**
+     * Instantiates a new Messages model.
+     *
+     * @param conversationActionMessage the conversation action message
+     * @param messageId                 the message id
+     * @param messageTime               the message time
+     * @param isSentMessage             the is sent message
+     * @param customMessageType         the custom message type
+     * @param messageMetadata           the message Metadata
+     */
+    public MessagesModel(String conversationActionMessage, String messageId, long messageTime,
+                         boolean isSentMessage, MessageTypesForUI customMessageType,JSONObject messageMetadata) {
+        this.conversationActionMessage = conversationActionMessage;
+        this.messageId = messageId;
+        this.customMessageType = customMessageType;
+        this.sentAt = messageTime;
+        this.messageTime = TimeUtil.formatTimestampToBothDateAndTime(messageTime);
+        this.isSentMessage = isSentMessage;
+        this.metaData = messageMetadata;
+    }
+
     private boolean selected;
 
     /**
