@@ -226,7 +226,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             if (ChatConfig.hideRecordAudioOption) View.GONE else View.VISIBLE
 
 
-            val itemBinders  = mapOf(
+        val itemBinders = mapOf(
             MessageTypeUi.TEXT_MESSAGE_SENT to TextSentBinder(),
             MessageTypeUi.PHOTO_MESSAGE_SENT to PhotoSentBinder(),
             MessageTypeUi.VIDEO_MESSAGE_SENT to VideoSentBinder(),
@@ -278,7 +278,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         messagesLayoutManager = LinearLayoutManager(this)
         ismActivityMessagesBinding!!.rvMessages.layoutManager = messagesLayoutManager
         conversationMessagesAdapter = ConversationMessagesAdapter(
-             messages,
+            messages,
             itemBinders,
             ConversationActionBinder(),
             messagingDisabled,
@@ -1694,7 +1694,8 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                     }
                 }
             }
-            else ->{
+
+            else -> {
 
             }
         }
@@ -2270,7 +2271,11 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 if (ismActivityMessagesBinding!!.tvNoMessages.visibility == View.VISIBLE) {
                     ismActivityMessagesBinding!!.tvNoMessages.visibility = View.GONE
                 }
-                onMessageUpdated(messages[messages.size - 1])
+                for (message in messages) {
+                    message.metaData?.let {
+                        onMessageUpdated(message)
+                    }
+                }
             }
         }
     }
