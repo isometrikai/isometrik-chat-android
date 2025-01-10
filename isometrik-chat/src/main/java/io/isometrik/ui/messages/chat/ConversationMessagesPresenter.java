@@ -848,7 +848,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
 
                                 if (conversationActionMessage != null) {
                                     messageModel =
-                                            new MessagesModel(conversationActionMessage, message.getMessageId(), message.getSentAt(), false, MessageTypesForUI.ConversationActionMessage);
+                                            new MessagesModel(conversationActionMessage, message.getMessageId(), message.getSentAt(), false, MessageTypesForUI.ConversationActionMessage, message.getMetaData());
                                     messageModels.add(0, messageModel);
                                 }
                             } else {

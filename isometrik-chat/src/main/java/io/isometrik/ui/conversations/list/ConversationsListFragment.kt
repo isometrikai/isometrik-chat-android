@@ -241,12 +241,12 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
             requireActivity().runOnUiThread {
                 if (!resultsOnScroll) {
                     if (conversations.size > 0) {
-                        ismFragmentConversationsBinding!!.tvNoConversations.visibility =
+                        ismFragmentConversationsBinding!!.lnrNoConversations.visibility =
                             View.GONE
                         ismFragmentConversationsBinding!!.rvConversations.visibility =
                             View.VISIBLE
                     } else {
-                        ismFragmentConversationsBinding!!.tvNoConversations.visibility =
+                        ismFragmentConversationsBinding!!.lnrNoConversations.visibility =
                             View.VISIBLE
 
                         if (conversationType == ConversationType.AllConversations) {
@@ -311,7 +311,7 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
             if (activity != null) {
                 requireActivity().runOnUiThread {
                     if (conversations.size == 0) {
-                        ismFragmentConversationsBinding!!.tvNoConversations.visibility =
+                        ismFragmentConversationsBinding!!.lnrNoConversations.visibility =
                             View.GONE
                         ismFragmentConversationsBinding!!.rvConversations.visibility =
                             View.VISIBLE
@@ -334,7 +334,7 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
                     conversations.removeAt(position)
                     conversationsAdapter!!.notifyItemRemoved(position)
                     if (conversations.size == 0) {
-                        ismFragmentConversationsBinding!!.tvNoConversations.visibility =
+                        ismFragmentConversationsBinding!!.lnrNoConversations.visibility =
                             View.VISIBLE
                         if (conversationType == ConversationType.AllConversations) {
                             ismFragmentConversationsBinding!!.tvNoConversations.text =
@@ -526,7 +526,7 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
                         conversations.removeAt(position)
                         conversationsAdapter!!.notifyItemRemoved(position)
                         if (conversations.size == 0) {
-                            ismFragmentConversationsBinding!!.tvNoConversations.visibility =
+                            ismFragmentConversationsBinding!!.lnrNoConversations.visibility =
                                 View.VISIBLE
                             ismFragmentConversationsBinding!!.tvNoConversations.text =
                                 getString(R.string.ism_no_public_conversations)

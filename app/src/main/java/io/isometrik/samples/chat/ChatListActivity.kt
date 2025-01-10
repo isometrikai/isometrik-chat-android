@@ -2,6 +2,7 @@ package io.isometrik.samples.chat
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,10 +29,10 @@ class ChatListActivity : AppCompatActivity() {
             loadChatFragment()
         }
 
-        MessageBinderRegistry.registerBinder(
-            MessageTypeUi.TEXT_MESSAGE_SENT,
-            CustomTextSentBinder()
-        )
+//        MessageBinderRegistry.registerBinder(
+//            MessageTypeUi.TEXT_MESSAGE_SENT,
+//            CustomTextSentBinder()
+//        )
 
 //        MessageBinderRegistry.registerBinder(
 //            MessageTypeUi.TEXT_MESSAGE_RECEIVED,
@@ -75,7 +76,7 @@ class ChatListActivity : AppCompatActivity() {
             }
         }
 
-        val chatFragment = ConversationsListFragment()
+        val chatFragment = ConversationsListFragment.newInstance(customBinder)
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, chatFragment)
