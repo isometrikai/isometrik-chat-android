@@ -173,7 +173,7 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
             )
         }
 
-
+        ismFragmentConversationsBinding!!.ivNoConversations.setImageResource(ChatConfig.noConversationsImageResId)
         ismFragmentConversationsBinding!!.ivAdd.visibility =
             if (ChatConfig.hideCreateChatOption) View.GONE else View.VISIBLE
 
