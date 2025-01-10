@@ -662,6 +662,157 @@ int size= members.size();
 
           break;
         }
+        case "AttachmentMessage:CounterOffer": {
+          messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
+                  selfMessage ? MessageTypesForUI.CounterOfferSent : MessageTypesForUI.CounterOfferReceived,
+                  selfMessage, sendMessageEvent.getSentAt(), false,
+                  TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
+                          sendMessageEvent.getMentionedUsers(), taggedUserCallback),
+                  sendMessageEvent.getSenderName(), sendMessageEvent.getSenderProfileImageUrl(), null,
+                  true, null, (sendMessageEvent.getParentMessageId() == null) ? null
+                  : (new OriginalReplyMessageUtil(sendMessageEvent.getParentMessageId(),
+                  sendMessageEvent.getMetaData())), sendMessageEvent.getMessageType(),
+                  sendMessageEvent.getMetaData(), false, false, sendMessageEvent.getConversationId(),
+                  false);
+
+          break;
+        }
+        case "AttachmentMessage:EditOffer": {
+          messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
+                  selfMessage ? MessageTypesForUI.EditOfferSent : MessageTypesForUI.EditOfferReceived,
+                  selfMessage, sendMessageEvent.getSentAt(), false,
+                  TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
+                          sendMessageEvent.getMentionedUsers(), taggedUserCallback),
+                  sendMessageEvent.getSenderName(), sendMessageEvent.getSenderProfileImageUrl(), null,
+                  true, null, (sendMessageEvent.getParentMessageId() == null) ? null
+                  : (new OriginalReplyMessageUtil(sendMessageEvent.getParentMessageId(),
+                  sendMessageEvent.getMetaData())), sendMessageEvent.getMessageType(),
+                  sendMessageEvent.getMetaData(), false, false, sendMessageEvent.getConversationId(),
+                  false);
+
+          break;
+        }
+        case "AttachmentMessage:AcceptOffer": {
+          messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
+                  selfMessage ? MessageTypesForUI.AcceptOfferSent : MessageTypesForUI.AcceptOfferReceived,
+                  selfMessage, sendMessageEvent.getSentAt(), false,
+                  TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
+                          sendMessageEvent.getMentionedUsers(), taggedUserCallback),
+                  sendMessageEvent.getSenderName(), sendMessageEvent.getSenderProfileImageUrl(), null,
+                  true, null, (sendMessageEvent.getParentMessageId() == null) ? null
+                  : (new OriginalReplyMessageUtil(sendMessageEvent.getParentMessageId(),
+                  sendMessageEvent.getMetaData())), sendMessageEvent.getMessageType(),
+                  sendMessageEvent.getMetaData(), false, false, sendMessageEvent.getConversationId(),
+                  false);
+
+          break;
+        }
+
+        case "AttachmentMessage:CancelDeal": {
+          messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
+                  selfMessage ? MessageTypesForUI.CancelDealSent : MessageTypesForUI.CancelDealReceived,
+                  selfMessage, sendMessageEvent.getSentAt(), false,
+                  TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
+                          sendMessageEvent.getMentionedUsers(), taggedUserCallback),
+                  sendMessageEvent.getSenderName(), sendMessageEvent.getSenderProfileImageUrl(), null,
+                  true, null, (sendMessageEvent.getParentMessageId() == null) ? null
+                  : (new OriginalReplyMessageUtil(sendMessageEvent.getParentMessageId(),
+                  sendMessageEvent.getMetaData())), sendMessageEvent.getMessageType(),
+                  sendMessageEvent.getMetaData(), false, false, sendMessageEvent.getConversationId(),
+                  false);
+
+          break;
+        }
+        case "AttachmentMessage:CancelOffer": {
+          messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
+                  selfMessage ? MessageTypesForUI.CancelOfferSent : MessageTypesForUI.CancelOfferReceived,
+                  selfMessage, sendMessageEvent.getSentAt(), false,
+                  TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
+                          sendMessageEvent.getMentionedUsers(), taggedUserCallback),
+                  sendMessageEvent.getSenderName(), sendMessageEvent.getSenderProfileImageUrl(), null,
+                  true, null, (sendMessageEvent.getParentMessageId() == null) ? null
+                  : (new OriginalReplyMessageUtil(sendMessageEvent.getParentMessageId(),
+                  sendMessageEvent.getMetaData())), sendMessageEvent.getMessageType(),
+                  sendMessageEvent.getMetaData(), false, false, sendMessageEvent.getConversationId(),
+                  false);
+
+          break;
+        }
+        case "AttachmentMessage:BuyDirect": {
+          messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
+                  selfMessage ? MessageTypesForUI.BuyDirectSent : MessageTypesForUI.BuyDirectReceived,
+                  selfMessage, sendMessageEvent.getSentAt(), false,
+                  TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
+                          sendMessageEvent.getMentionedUsers(), taggedUserCallback),
+                  sendMessageEvent.getSenderName(), sendMessageEvent.getSenderProfileImageUrl(), null,
+                  true, null, (sendMessageEvent.getParentMessageId() == null) ? null
+                  : (new OriginalReplyMessageUtil(sendMessageEvent.getParentMessageId(),
+                  sendMessageEvent.getMetaData())), sendMessageEvent.getMessageType(),
+                  sendMessageEvent.getMetaData(), false, false, sendMessageEvent.getConversationId(),
+                  false);
+
+          break;
+        }
+        case "AttachmentMessage:AcceptBuyDirect": {
+          messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
+                  selfMessage ? MessageTypesForUI.AcceptBuyDirectSent : MessageTypesForUI.AcceptBuyDirectReceived,
+                  selfMessage, sendMessageEvent.getSentAt(), false,
+                  TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
+                          sendMessageEvent.getMentionedUsers(), taggedUserCallback),
+                  sendMessageEvent.getSenderName(), sendMessageEvent.getSenderProfileImageUrl(), null,
+                  true, null, (sendMessageEvent.getParentMessageId() == null) ? null
+                  : (new OriginalReplyMessageUtil(sendMessageEvent.getParentMessageId(),
+                  sendMessageEvent.getMetaData())), sendMessageEvent.getMessageType(),
+                  sendMessageEvent.getMetaData(), false, false, sendMessageEvent.getConversationId(),
+                  false);
+
+          break;
+        }
+        case "AttachmentMessage:CancelBuyDirect": {
+          messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
+                  selfMessage ? MessageTypesForUI.CancelBuyDirectSent : MessageTypesForUI.CancelBuyDirectReceived,
+                  selfMessage, sendMessageEvent.getSentAt(), false,
+                  TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
+                          sendMessageEvent.getMentionedUsers(), taggedUserCallback),
+                  sendMessageEvent.getSenderName(), sendMessageEvent.getSenderProfileImageUrl(), null,
+                  true, null, (sendMessageEvent.getParentMessageId() == null) ? null
+                  : (new OriginalReplyMessageUtil(sendMessageEvent.getParentMessageId(),
+                  sendMessageEvent.getMetaData())), sendMessageEvent.getMessageType(),
+                  sendMessageEvent.getMetaData(), false, false, sendMessageEvent.getConversationId(),
+                  false);
+
+          break;
+        }
+        case "AttachmentMessage:PaymentEscrowed": {
+          messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
+                  selfMessage ? MessageTypesForUI.PaymentEscrowedSent : MessageTypesForUI.PaymentEscrowedReceived,
+                  selfMessage, sendMessageEvent.getSentAt(), false,
+                  TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
+                          sendMessageEvent.getMentionedUsers(), taggedUserCallback),
+                  sendMessageEvent.getSenderName(), sendMessageEvent.getSenderProfileImageUrl(), null,
+                  true, null, (sendMessageEvent.getParentMessageId() == null) ? null
+                  : (new OriginalReplyMessageUtil(sendMessageEvent.getParentMessageId(),
+                  sendMessageEvent.getMetaData())), sendMessageEvent.getMessageType(),
+                  sendMessageEvent.getMetaData(), false, false, sendMessageEvent.getConversationId(),
+                  false);
+
+          break;
+        }
+        case "AttachmentMessage:DealComplete": {
+          messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
+                  selfMessage ? MessageTypesForUI.DealCompleteSent : MessageTypesForUI.DealCompleteReceived,
+                  selfMessage, sendMessageEvent.getSentAt(), false,
+                  TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
+                          sendMessageEvent.getMentionedUsers(), taggedUserCallback),
+                  sendMessageEvent.getSenderName(), sendMessageEvent.getSenderProfileImageUrl(), null,
+                  true, null, (sendMessageEvent.getParentMessageId() == null) ? null
+                  : (new OriginalReplyMessageUtil(sendMessageEvent.getParentMessageId(),
+                  sendMessageEvent.getMetaData())), sendMessageEvent.getMessageType(),
+                  sendMessageEvent.getMetaData(), false, false, sendMessageEvent.getConversationId(),
+                  false);
+
+          break;
+        }
       }
     }
     return messageModel;

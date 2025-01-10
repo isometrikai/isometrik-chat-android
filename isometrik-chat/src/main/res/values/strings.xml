@@ -630,4 +630,6 @@
     <string name="ism_remove_conversation_image">Remove conversation image</string>
     <string name="ism_remove_conversation_image_confirm">Are you sure you want to remove the conversation image?</string>
 
+    <string name="ism_offer">Offer</string>
+
 </resources>
