@@ -259,6 +259,188 @@ public class ConversationAttachmentMessageUtil {
                             message.getMessageUpdated() != null);
 
                 }
+                case "AttachmentMessage:CounterOffer": {
+
+                    messagesModel = new MessagesModel(message.getMessageId(),
+                            selfMessage ? MessageTypesForUI.CounterOfferSent : MessageTypesForUI.CounterOfferReceived,
+                            selfMessage, message.getSentAt(), message.getParentMessageId() != null,
+                            TagUserUtil.parseMentionedUsers(message.getBody(),
+                                    ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
+                                            message.getMentionedUsers()), taggedUserCallback),
+                            message.getSenderInfo().getUserName(),
+                            message.getSenderInfo().getUserProfileImageUrl(),
+                            ReactionUtil.parseReactionMessages(message.getReactions()), true, null,
+                            (message.getParentMessageId() == null) ? null
+                                    : (new OriginalReplyMessageUtil(message.getParentMessageId(),
+                                    message.getMetaData())), message.getMessageType(), message.getMetaData(),
+                            message.isDeliveredToAll(), message.isReadByAll(), message.getConversationId(),
+                            message.getMessageUpdated() != null);
+
+                }
+                case "AttachmentMessage:EditOffer": {
+
+                    messagesModel = new MessagesModel(message.getMessageId(),
+                            selfMessage ? MessageTypesForUI.EditOfferSent : MessageTypesForUI.EditOfferReceived,
+                            selfMessage, message.getSentAt(), message.getParentMessageId() != null,
+                            TagUserUtil.parseMentionedUsers(message.getBody(),
+                                    ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
+                                            message.getMentionedUsers()), taggedUserCallback),
+                            message.getSenderInfo().getUserName(),
+                            message.getSenderInfo().getUserProfileImageUrl(),
+                            ReactionUtil.parseReactionMessages(message.getReactions()), true, null,
+                            (message.getParentMessageId() == null) ? null
+                                    : (new OriginalReplyMessageUtil(message.getParentMessageId(),
+                                    message.getMetaData())), message.getMessageType(), message.getMetaData(),
+                            message.isDeliveredToAll(), message.isReadByAll(), message.getConversationId(),
+                            message.getMessageUpdated() != null);
+
+                }
+
+                case "AttachmentMessage:AcceptOffer": {
+
+                    messagesModel = new MessagesModel(message.getMessageId(),
+                            selfMessage ? MessageTypesForUI.AcceptOfferSent : MessageTypesForUI.AcceptOfferReceived,
+                            selfMessage, message.getSentAt(), message.getParentMessageId() != null,
+                            TagUserUtil.parseMentionedUsers(message.getBody(),
+                                    ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
+                                            message.getMentionedUsers()), taggedUserCallback),
+                            message.getSenderInfo().getUserName(),
+                            message.getSenderInfo().getUserProfileImageUrl(),
+                            ReactionUtil.parseReactionMessages(message.getReactions()), true, null,
+                            (message.getParentMessageId() == null) ? null
+                                    : (new OriginalReplyMessageUtil(message.getParentMessageId(),
+                                    message.getMetaData())), message.getMessageType(), message.getMetaData(),
+                            message.isDeliveredToAll(), message.isReadByAll(), message.getConversationId(),
+                            message.getMessageUpdated() != null);
+
+                }
+                case "AttachmentMessage:CancelDeal": {
+
+                    messagesModel = new MessagesModel(message.getMessageId(),
+                            selfMessage ? MessageTypesForUI.CancelDealSent : MessageTypesForUI.CancelDealReceived,
+                            selfMessage, message.getSentAt(), message.getParentMessageId() != null,
+                            TagUserUtil.parseMentionedUsers(message.getBody(),
+                                    ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
+                                            message.getMentionedUsers()), taggedUserCallback),
+                            message.getSenderInfo().getUserName(),
+                            message.getSenderInfo().getUserProfileImageUrl(),
+                            ReactionUtil.parseReactionMessages(message.getReactions()), true, null,
+                            (message.getParentMessageId() == null) ? null
+                                    : (new OriginalReplyMessageUtil(message.getParentMessageId(),
+                                    message.getMetaData())), message.getMessageType(), message.getMetaData(),
+                            message.isDeliveredToAll(), message.isReadByAll(), message.getConversationId(),
+                            message.getMessageUpdated() != null);
+
+                }
+                case "AttachmentMessage:CancelOffer": {
+
+                    messagesModel = new MessagesModel(message.getMessageId(),
+                            selfMessage ? MessageTypesForUI.CancelOfferSent : MessageTypesForUI.CancelOfferReceived,
+                            selfMessage, message.getSentAt(), message.getParentMessageId() != null,
+                            TagUserUtil.parseMentionedUsers(message.getBody(),
+                                    ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
+                                            message.getMentionedUsers()), taggedUserCallback),
+                            message.getSenderInfo().getUserName(),
+                            message.getSenderInfo().getUserProfileImageUrl(),
+                            ReactionUtil.parseReactionMessages(message.getReactions()), true, null,
+                            (message.getParentMessageId() == null) ? null
+                                    : (new OriginalReplyMessageUtil(message.getParentMessageId(),
+                                    message.getMetaData())), message.getMessageType(), message.getMetaData(),
+                            message.isDeliveredToAll(), message.isReadByAll(), message.getConversationId(),
+                            message.getMessageUpdated() != null);
+
+                }
+                case "AttachmentMessage:BuyDirect": {
+
+                    messagesModel = new MessagesModel(message.getMessageId(),
+                            selfMessage ? MessageTypesForUI.BuyDirectSent : MessageTypesForUI.BuyDirectReceived,
+                            selfMessage, message.getSentAt(), message.getParentMessageId() != null,
+                            TagUserUtil.parseMentionedUsers(message.getBody(),
+                                    ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
+                                            message.getMentionedUsers()), taggedUserCallback),
+                            message.getSenderInfo().getUserName(),
+                            message.getSenderInfo().getUserProfileImageUrl(),
+                            ReactionUtil.parseReactionMessages(message.getReactions()), true, null,
+                            (message.getParentMessageId() == null) ? null
+                                    : (new OriginalReplyMessageUtil(message.getParentMessageId(),
+                                    message.getMetaData())), message.getMessageType(), message.getMetaData(),
+                            message.isDeliveredToAll(), message.isReadByAll(), message.getConversationId(),
+                            message.getMessageUpdated() != null);
+
+                }
+                case "AttachmentMessage:AcceptBuyDirect": {
+
+                    messagesModel = new MessagesModel(message.getMessageId(),
+                            selfMessage ? MessageTypesForUI.AcceptBuyDirectSent : MessageTypesForUI.AcceptBuyDirectReceived,
+                            selfMessage, message.getSentAt(), message.getParentMessageId() != null,
+                            TagUserUtil.parseMentionedUsers(message.getBody(),
+                                    ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
+                                            message.getMentionedUsers()), taggedUserCallback),
+                            message.getSenderInfo().getUserName(),
+                            message.getSenderInfo().getUserProfileImageUrl(),
+                            ReactionUtil.parseReactionMessages(message.getReactions()), true, null,
+                            (message.getParentMessageId() == null) ? null
+                                    : (new OriginalReplyMessageUtil(message.getParentMessageId(),
+                                    message.getMetaData())), message.getMessageType(), message.getMetaData(),
+                            message.isDeliveredToAll(), message.isReadByAll(), message.getConversationId(),
+                            message.getMessageUpdated() != null);
+
+                }
+                case "AttachmentMessage:CancelBuyDirect": {
+
+                    messagesModel = new MessagesModel(message.getMessageId(),
+                            selfMessage ? MessageTypesForUI.CancelBuyDirectSent : MessageTypesForUI.CancelBuyDirectReceived,
+                            selfMessage, message.getSentAt(), message.getParentMessageId() != null,
+                            TagUserUtil.parseMentionedUsers(message.getBody(),
+                                    ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
+                                            message.getMentionedUsers()), taggedUserCallback),
+                            message.getSenderInfo().getUserName(),
+                            message.getSenderInfo().getUserProfileImageUrl(),
+                            ReactionUtil.parseReactionMessages(message.getReactions()), true, null,
+                            (message.getParentMessageId() == null) ? null
+                                    : (new OriginalReplyMessageUtil(message.getParentMessageId(),
+                                    message.getMetaData())), message.getMessageType(), message.getMetaData(),
+                            message.isDeliveredToAll(), message.isReadByAll(), message.getConversationId(),
+                            message.getMessageUpdated() != null);
+
+                }
+
+                case "AttachmentMessage:PaymentEscrowed": {
+
+                    messagesModel = new MessagesModel(message.getMessageId(),
+                            selfMessage ? MessageTypesForUI.PaymentEscrowedSent : MessageTypesForUI.PaymentEscrowedReceived,
+                            selfMessage, message.getSentAt(), message.getParentMessageId() != null,
+                            TagUserUtil.parseMentionedUsers(message.getBody(),
+                                    ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
+                                            message.getMentionedUsers()), taggedUserCallback),
+                            message.getSenderInfo().getUserName(),
+                            message.getSenderInfo().getUserProfileImageUrl(),
+                            ReactionUtil.parseReactionMessages(message.getReactions()), true, null,
+                            (message.getParentMessageId() == null) ? null
+                                    : (new OriginalReplyMessageUtil(message.getParentMessageId(),
+                                    message.getMetaData())), message.getMessageType(), message.getMetaData(),
+                            message.isDeliveredToAll(), message.isReadByAll(), message.getConversationId(),
+                            message.getMessageUpdated() != null);
+
+                }
+                case "AttachmentMessage:DealComplete": {
+
+                    messagesModel = new MessagesModel(message.getMessageId(),
+                            selfMessage ? MessageTypesForUI.DealCompleteSent : MessageTypesForUI.DealCompleteReceived,
+                            selfMessage, message.getSentAt(), message.getParentMessageId() != null,
+                            TagUserUtil.parseMentionedUsers(message.getBody(),
+                                    ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
+                                            message.getMentionedUsers()), taggedUserCallback),
+                            message.getSenderInfo().getUserName(),
+                            message.getSenderInfo().getUserProfileImageUrl(),
+                            ReactionUtil.parseReactionMessages(message.getReactions()), true, null,
+                            (message.getParentMessageId() == null) ? null
+                                    : (new OriginalReplyMessageUtil(message.getParentMessageId(),
+                                    message.getMetaData())), message.getMessageType(), message.getMetaData(),
+                            message.isDeliveredToAll(), message.isReadByAll(), message.getConversationId(),
+                            message.getMessageUpdated() != null);
+
+                }
 
             }
         }

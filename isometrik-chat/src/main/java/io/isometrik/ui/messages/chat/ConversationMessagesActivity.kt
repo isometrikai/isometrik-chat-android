@@ -96,6 +96,8 @@ import io.isometrik.ui.messages.chat.utils.attachmentutils.PrepareAttachmentHelp
 import io.isometrik.chat.utils.enums.MessageTypesForUI
 import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.messages.chat.common.ChatTopViewHandler
+import io.isometrik.ui.messages.chat.messageBinders.OfferReceivedBinder
+import io.isometrik.ui.messages.chat.messageBinders.OfferSentBinder
 import io.isometrik.ui.messages.chat.utils.enums.RemoteMessageTypes
 import io.isometrik.ui.messages.chat.utils.messageutils.ContactUtil
 import io.isometrik.ui.messages.chat.utils.messageutils.MultipleMessagesUtil
@@ -235,6 +237,17 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             MessageTypeUi.WHITEBOARD_MESSAGE_SENT to WhiteboardSentBinder(),
             MessageTypeUi.LOCATION_MESSAGE_SENT to LocationSentBinder(),
             MessageTypeUi.CONTACT_MESSAGE_SENT to ContactSentBinder(),
+            MessageTypeUi.OFFER_SENT to OfferSentBinder(),
+            MessageTypeUi.COUNTER_OFFER_SENT to OfferSentBinder(),
+            MessageTypeUi.EDIT_OFFER_SENT to OfferSentBinder(),
+            MessageTypeUi.ACCEPT_OFFER_SENT to OfferSentBinder(),
+            MessageTypeUi.CANCEL_DEAL_SENT to OfferSentBinder(),
+            MessageTypeUi.CANCEL_OFFER_SENT to OfferSentBinder(),
+            MessageTypeUi.BUY_DIRECT_SENT to OfferSentBinder(),
+            MessageTypeUi.ACCEPT_BUY_DIRECT_SENT to OfferSentBinder(),
+            MessageTypeUi.CANCEL_BUY_DIRECT_SENT to OfferSentBinder(),
+            MessageTypeUi.PAYMENT_ESCROWED_SENT to OfferSentBinder(),
+            MessageTypeUi.DEAL_COMPLETE_SENT to OfferSentBinder(),
 
             MessageTypeUi.TEXT_MESSAGE_RECEIVED to TextReceivedBinder(),
             MessageTypeUi.PHOTO_MESSAGE_RECEIVED to PhotoReceivedBinder(),
@@ -249,6 +262,17 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             MessageTypeUi.CONVERSATION_ACTION_MESSAGE to ConversationActionBinder(),
             MessageTypeUi.POST_MESSAGE_SENT to PostSentBinder(),
             MessageTypeUi.POST_MESSAGE_RECEIVED to PostReceivedBinder(),
+            MessageTypeUi.OFFER_RECEIVED to OfferReceivedBinder(),
+            MessageTypeUi.COUNTER_OFFER_RECEIVED to OfferReceivedBinder(),
+            MessageTypeUi.EDIT_OFFER_RECEIVED to OfferReceivedBinder(),
+            MessageTypeUi.ACCEPT_OFFER_RECEIVED to OfferReceivedBinder(),
+            MessageTypeUi.CANCEL_DEAL_RECEIVED to OfferReceivedBinder(),
+            MessageTypeUi.CANCEL_OFFER_RECEIVED to OfferReceivedBinder(),
+            MessageTypeUi.BUY_DIRECT_RECEIVED to OfferReceivedBinder(),
+            MessageTypeUi.ACCEPT_BUY_DIRECT_RECEIVED to OfferReceivedBinder(),
+            MessageTypeUi.CANCEL_BUY_DIRECT_RECEIVED to OfferReceivedBinder(),
+            MessageTypeUi.PAYMENT_ESCROWED_RECEIVED to OfferReceivedBinder(),
+            MessageTypeUi.DEAL_COMPLETE_RECEIVED to OfferReceivedBinder()
         )
 
         messagesLayoutManager = LinearLayoutManager(this)

@@ -65,6 +65,16 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
                     MessageTypesForUI.ContactSent -> MessageTypeUi.CONTACT_MESSAGE_SENT.value
                     MessageTypesForUI.PostSent -> MessageTypeUi.POST_MESSAGE_SENT.value
                     MessageTypesForUI.OfferSent -> MessageTypeUi.OFFER_SENT.value
+                    MessageTypesForUI.CounterOfferSent -> MessageTypeUi.COUNTER_OFFER_SENT.value
+                    MessageTypesForUI.EditOfferSent -> MessageTypeUi.EDIT_OFFER_SENT.value
+                    MessageTypesForUI.AcceptOfferSent -> MessageTypeUi.ACCEPT_OFFER_SENT.value
+                    MessageTypesForUI.CancelDealSent -> MessageTypeUi.CANCEL_DEAL_SENT.value
+                    MessageTypesForUI.CancelOfferSent -> MessageTypeUi.CANCEL_OFFER_SENT.value
+                    MessageTypesForUI.BuyDirectSent -> MessageTypeUi.BUY_DIRECT_SENT.value
+                    MessageTypesForUI.AcceptBuyDirectSent -> MessageTypeUi.ACCEPT_BUY_DIRECT_SENT.value
+                    MessageTypesForUI.CancelBuyDirectSent -> MessageTypeUi.CANCEL_BUY_DIRECT_SENT.value
+                    MessageTypesForUI.PaymentEscrowedSent -> MessageTypeUi.PAYMENT_ESCROWED_SENT.value
+                    MessageTypesForUI.DealCompleteSent -> MessageTypeUi.DEAL_COMPLETE_SENT.value
                     else -> MessageTypeUi.CONVERSATION_ACTION_MESSAGE.value
                 }
             } else {
@@ -82,6 +92,16 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
                     MessageTypesForUI.ConversationActionMessage -> MessageTypeUi.CONVERSATION_ACTION_MESSAGE.value
                     MessageTypesForUI.PostReceived -> MessageTypeUi.POST_MESSAGE_RECEIVED.value
                     MessageTypesForUI.OfferReceived -> MessageTypeUi.OFFER_RECEIVED.value
+                    MessageTypesForUI.CounterOfferReceived -> MessageTypeUi.COUNTER_OFFER_RECEIVED.value
+                    MessageTypesForUI.EditOfferReceived -> MessageTypeUi.EDIT_OFFER_RECEIVED.value
+                    MessageTypesForUI.AcceptOfferReceived -> MessageTypeUi.ACCEPT_OFFER_RECEIVED.value
+                    MessageTypesForUI.CancelDealReceived -> MessageTypeUi.CANCEL_DEAL_RECEIVED.value
+                    MessageTypesForUI.CancelOfferReceived -> MessageTypeUi.CANCEL_OFFER_RECEIVED.value
+                    MessageTypesForUI.BuyDirectReceived -> MessageTypeUi.BUY_DIRECT_RECEIVED.value
+                    MessageTypesForUI.AcceptBuyDirectReceived -> MessageTypeUi.ACCEPT_BUY_DIRECT_RECEIVED.value
+                    MessageTypesForUI.CancelBuyDirectReceived -> MessageTypeUi.CANCEL_BUY_DIRECT_RECEIVED.value
+                    MessageTypesForUI.PaymentEscrowedReceived -> MessageTypeUi.PAYMENT_ESCROWED_RECEIVED.value
+                    MessageTypesForUI.DealCompleteReceived -> MessageTypeUi.DEAL_COMPLETE_RECEIVED.value
                     else -> MessageTypeUi.CONVERSATION_ACTION_MESSAGE.value
                 }
             }
