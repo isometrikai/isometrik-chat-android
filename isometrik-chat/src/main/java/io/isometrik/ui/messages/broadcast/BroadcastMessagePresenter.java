@@ -58,7 +58,7 @@ public class BroadcastMessagePresenter implements BroadcastMessageContract.Prese
             .setEventForMessage(new EventForMessage(true, true))
             .setUserIds(userIds)
             .setSearchableTags(searchableTags)
-            .setCustomType(CustomMessageTypes.Text.getValue())
+            .setCustomType(CustomMessageTypes.Text.value)
             .setDeviceId(IsometrikChatSdk.getInstance().getUserSession().getDeviceId());
 
     isometrik.getRemoteUseCases()

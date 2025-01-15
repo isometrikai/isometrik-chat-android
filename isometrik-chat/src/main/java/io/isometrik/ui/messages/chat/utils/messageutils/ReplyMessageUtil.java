@@ -1,5 +1,6 @@
 package io.isometrik.ui.messages.chat.utils.messageutils;
 
+import io.isometrik.chat.utils.enums.MessageTypeUi;
 import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.messages.chat.MessagesModel;
@@ -19,166 +20,16 @@ public class ReplyMessageUtil {
    * @param messagesModel the messages model
    * @return the json object
    */
-//  public static JSONObject prepareReplyMessageMetadata(MessagesModel messagesModel) {
-//    JSONObject replyMessageDetails = new JSONObject();
-//    try {
-//      switch (messagesModel.getCustomMessageType()) {
-//        case TextSent:
-//        case TextReceived: {
-//          replyMessageDetails.put("originalMessageSenderName", messagesModel.getSenderName());
-//          replyMessageDetails.put("originalMessageSentAt", messagesModel.getSentAt());
-//          replyMessageDetails.put("originalMessageType", CustomMessageTypes.Text.getValue());
-//          replyMessageDetails.put("originalMessageSenderImageUrl",
-//              messagesModel.getSenderImageUrl());
-//
-//          replyMessageDetails.put("originalMessage", messagesModel.getTextMessage());
-//          replyMessageDetails.put("originalMessagePlaceHolderImage", null);
-//          break;
-//        }
-//        case PhotoSent:
-//
-//        case PhotoReceived: {
-//          replyMessageDetails.put("originalMessageSenderName", messagesModel.getSenderName());
-//          replyMessageDetails.put("originalMessageSentAt", messagesModel.getSentAt());
-//          replyMessageDetails.put("originalMessageType", CustomMessageTypes.Image.getValue());
-//          replyMessageDetails.put("originalMessageSenderImageUrl",
-//              messagesModel.getSenderImageUrl());
-//
-//          replyMessageDetails.put("originalMessage",
-//              IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_photo));
-//          replyMessageDetails.put("originalMessagePlaceHolderImage", R.drawable.ism_ic_picture);
-//          break;
-//        }
-//        case VideoSent:
-//
-//        case VideoReceived: {
-//          replyMessageDetails.put("originalMessageSenderName", messagesModel.getSenderName());
-//          replyMessageDetails.put("originalMessageSentAt", messagesModel.getSentAt());
-//          replyMessageDetails.put("originalMessageType", CustomMessageTypes.Video.getValue());
-//          replyMessageDetails.put("originalMessageSenderImageUrl",
-//              messagesModel.getSenderImageUrl());
-//
-//          replyMessageDetails.put("originalMessage",
-//              IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_video));
-//          replyMessageDetails.put("originalMessagePlaceHolderImage", R.drawable.ism_ic_video);
-//          break;
-//        }
-//        case AudioSent:
-//
-//        case AudioReceived: {
-//          replyMessageDetails.put("originalMessageSenderName", messagesModel.getSenderName());
-//          replyMessageDetails.put("originalMessageSentAt", messagesModel.getSentAt());
-//          replyMessageDetails.put("originalMessageType", CustomMessageTypes.Audio.getValue());
-//          replyMessageDetails.put("originalMessageSenderImageUrl",
-//              messagesModel.getSenderImageUrl());
-//
-//          replyMessageDetails.put("originalMessage",
-//              IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_audio_recording));
-//          replyMessageDetails.put("originalMessagePlaceHolderImage", R.drawable.ism_ic_mic);
-//          break;
-//        }
-//        case FileSent:
-//
-//        case FileReceived: {
-//          replyMessageDetails.put("originalMessageSenderName", messagesModel.getSenderName());
-//          replyMessageDetails.put("originalMessageSentAt", messagesModel.getSentAt());
-//          replyMessageDetails.put("originalMessageType", CustomMessageTypes.File.getValue());
-//          replyMessageDetails.put("originalMessageSenderImageUrl",
-//              messagesModel.getSenderImageUrl());
-//
-//          replyMessageDetails.put("originalMessage",
-//              IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_file));
-//          replyMessageDetails.put("originalMessagePlaceHolderImage", R.drawable.ism_ic_file);
-//          break;
-//        }
-//        case StickerSent:
-//
-//        case StickerReceived: {
-//          replyMessageDetails.put("originalMessageSenderName", messagesModel.getSenderName());
-//          replyMessageDetails.put("originalMessageSentAt", messagesModel.getSentAt());
-//          replyMessageDetails.put("originalMessageType", CustomMessageTypes.Sticker.getValue());
-//          replyMessageDetails.put("originalMessageSenderImageUrl",
-//              messagesModel.getSenderImageUrl());
-//
-//          replyMessageDetails.put("originalMessage",
-//              IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_sticker));
-//          replyMessageDetails.put("originalMessagePlaceHolderImage", R.drawable.ism_ic_sticker);
-//          break;
-//        }
-//        case GifSent:
-//
-//        case GifReceived: {
-//          replyMessageDetails.put("originalMessageSenderName", messagesModel.getSenderName());
-//          replyMessageDetails.put("originalMessageSentAt", messagesModel.getSentAt());
-//          replyMessageDetails.put("originalMessageType", CustomMessageTypes.Gif.getValue());
-//          replyMessageDetails.put("originalMessageSenderImageUrl",
-//              messagesModel.getSenderImageUrl());
-//
-//          replyMessageDetails.put("originalMessage",
-//              IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_gif));
-//          replyMessageDetails.put("originalMessagePlaceHolderImage", R.drawable.ism_ic_gif);
-//          break;
-//        }
-//        case WhiteboardSent:
-//
-//        case WhiteboardReceived: {
-//          replyMessageDetails.put("originalMessageSenderName", messagesModel.getSenderName());
-//          replyMessageDetails.put("originalMessageSentAt", messagesModel.getSentAt());
-//          replyMessageDetails.put("originalMessageType", CustomMessageTypes.Whiteboard.getValue());
-//          replyMessageDetails.put("originalMessageSenderImageUrl",
-//              messagesModel.getSenderImageUrl());
-//
-//          replyMessageDetails.put("originalMessage",
-//              IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_whiteboard));
-//          replyMessageDetails.put("originalMessagePlaceHolderImage", R.drawable.ism_ic_whiteboard);
-//          break;
-//        }
-//        case LocationSent:
-//
-//        case LocationReceived: {
-//          replyMessageDetails.put("originalMessageSenderName", messagesModel.getSenderName());
-//          replyMessageDetails.put("originalMessageSentAt", messagesModel.getSentAt());
-//          replyMessageDetails.put("originalMessageType", CustomMessageTypes.Location.getValue());
-//          replyMessageDetails.put("originalMessageSenderImageUrl",
-//              messagesModel.getSenderImageUrl());
-//
-//          replyMessageDetails.put("originalMessage",
-//              IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_location));
-//          replyMessageDetails.put("originalMessagePlaceHolderImage", R.drawable.ism_ic_location);
-//          break;
-//        }
-//        case ContactSent:
-//
-//        case ContactReceived: {
-//          replyMessageDetails.put("originalMessageSenderName", messagesModel.getSenderName());
-//          replyMessageDetails.put("originalMessageSentAt", messagesModel.getSentAt());
-//          replyMessageDetails.put("originalMessageType", CustomMessageTypes.Contact.getValue());
-//          replyMessageDetails.put("originalMessageSenderImageUrl",
-//              messagesModel.getSenderImageUrl());
-//
-//          replyMessageDetails.put("originalMessage",
-//              IsometrikUiSdk.getInstance().getContext().getString(R.string.ism_contact));
-//          replyMessageDetails.put("originalMessagePlaceHolderImage", R.drawable.ism_ic_contact);
-//          break;
-//        }
-//        default:
-//          replyMessageDetails = null;
-//      }
-//    } catch (JSONException ignore) {
-//      replyMessageDetails = null;
-//    }
-//    return replyMessageDetails;
-//  }
   public static JSONObject prepareReplyMessageMetadata(MessagesModel messagesModel) {
     JSONObject replyMessage = new JSONObject();
     JSONObject replyMessageDetails = new JSONObject();
     try {
       switch (messagesModel.getCustomMessageType()) {
-        case TextSent:
-        case TextReceived: {
+        case TEXT_MESSAGE_SENT:
+        case TEXT_MESSAGE_RECEIVED: {
           replyMessageDetails.put("parentMessageUserName", messagesModel.getSenderName());
           replyMessageDetails.put("parentMessageSentAt", messagesModel.getSentAt());
-          replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Text.getValue());
+          replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Text.value);
 
           replyMessageDetails.put("parentMessageBody", messagesModel.getTextMessage());
           replyMessageDetails.put("parentMessageAttachmentUrl", null);
@@ -187,12 +38,12 @@ public class ReplyMessageUtil {
           replyMessageDetails.put("originalMessagePlaceHolderImage", null);
           break;
         }
-        case PhotoSent:
+        case PHOTO_MESSAGE_SENT:
 
-        case PhotoReceived: {
+        case PHOTO_MESSAGE_RECEIVED: {
           replyMessageDetails.put("parentMessageUserName", messagesModel.getSenderName());
           replyMessageDetails.put("parentMessageSentAt", messagesModel.getSentAt());
-          replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Image.getValue());
+          replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Image.value);
 
           replyMessageDetails.put("parentMessageBody",
               IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_photo));
@@ -202,12 +53,12 @@ public class ReplyMessageUtil {
           replyMessageDetails.put("originalMessagePlaceHolderImage", R.drawable.ism_ic_picture);
           break;
         }
-        case VideoSent:
+        case VIDEO_MESSAGE_SENT:
 
-        case VideoReceived: {
+        case VIDEO_MESSAGE_RECEIVED: {
           replyMessageDetails.put("parentMessageUserName", messagesModel.getSenderName());
           replyMessageDetails.put("parentMessageSentAt", messagesModel.getSentAt());
-          replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Video.getValue());
+          replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Video.value);
 
           replyMessageDetails.put("parentMessageBody",
               IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_video));
@@ -217,12 +68,12 @@ public class ReplyMessageUtil {
           replyMessageDetails.put("originalMessagePlaceHolderImage", R.drawable.ism_ic_video);
           break;
         }
-        case AudioSent:
+        case AUDIO_MESSAGE_SENT:
 
-        case AudioReceived: {
+        case AUDIO_MESSAGE_RECEIVED: {
           replyMessageDetails.put("parentMessageUserName", messagesModel.getSenderName());
           replyMessageDetails.put("parentMessageSentAt", messagesModel.getSentAt());
-          replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Audio.getValue());
+          replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Audio.value);
 
           replyMessageDetails.put("parentMessageBody",
               IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_audio_recording));
@@ -232,12 +83,12 @@ public class ReplyMessageUtil {
           replyMessageDetails.put("originalMessagePlaceHolderImage", R.drawable.ism_ic_mic);
           break;
         }
-        case FileSent:
+        case FILE_MESSAGE_SENT:
 
-        case FileReceived: {
+        case FILE_MESSAGE_RECEIVED: {
           replyMessageDetails.put("parentMessageUserName", messagesModel.getSenderName());
           replyMessageDetails.put("parentMessageSentAt", messagesModel.getSentAt());
-          replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.File.getValue());
+          replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.File.value);
 
           replyMessageDetails.put("parentMessageBody",
               IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_file));
@@ -247,12 +98,12 @@ public class ReplyMessageUtil {
           replyMessageDetails.put("originalMessagePlaceHolderImage", R.drawable.ism_ic_file);
           break;
         }
-        case StickerSent:
+        case STICKER_MESSAGE_SENT:
 
-        case StickerReceived: {
+        case STICKER_MESSAGE_RECEIVED: {
           replyMessageDetails.put("parentMessageUserName", messagesModel.getSenderName());
           replyMessageDetails.put("parentMessageSentAt", messagesModel.getSentAt());
-          replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Sticker.getValue());
+          replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Sticker.value);
 
           replyMessageDetails.put("parentMessageBody",
               IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_sticker));
@@ -262,12 +113,12 @@ public class ReplyMessageUtil {
           replyMessageDetails.put("originalMessagePlaceHolderImage", R.drawable.ism_ic_sticker);
           break;
         }
-        case GifSent:
+        case GIF_MESSAGE_SENT:
 
-        case GifReceived: {
+        case GIF_MESSAGE_RECEIVED: {
           replyMessageDetails.put("parentMessageUserName", messagesModel.getSenderName());
           replyMessageDetails.put("parentMessageSentAt", messagesModel.getSentAt());
-          replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Gif.getValue());
+          replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Gif.value);
 
           replyMessageDetails.put("parentMessageBody",
               IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_gif));
@@ -277,12 +128,12 @@ public class ReplyMessageUtil {
           replyMessageDetails.put("originalMessagePlaceHolderImage", R.drawable.ism_ic_gif);
           break;
         }
-        case WhiteboardSent:
+        case WHITEBOARD_MESSAGE_SENT:
 
-        case WhiteboardReceived: {
+        case WHITEBOARD_MESSAGE_RECEIVED: {
           replyMessageDetails.put("parentMessageUserName", messagesModel.getSenderName());
           replyMessageDetails.put("parentMessageSentAt", messagesModel.getSentAt());
-          replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Whiteboard.getValue());
+          replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Whiteboard.value);
 
           replyMessageDetails.put("parentMessageBody",
               IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_whiteboard));
@@ -292,12 +143,12 @@ public class ReplyMessageUtil {
           replyMessageDetails.put("originalMessagePlaceHolderImage", R.drawable.ism_ic_whiteboard);
           break;
         }
-        case LocationSent:
+        case LOCATION_MESSAGE_SENT:
 
-        case LocationReceived: {
+        case LOCATION_MESSAGE_RECEIVED: {
           replyMessageDetails.put("parentMessageUserName", messagesModel.getSenderName());
           replyMessageDetails.put("parentMessageSentAt", messagesModel.getSentAt());
-          replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Location.getValue());
+          replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Location.value);
 
           replyMessageDetails.put("parentMessageBody",
               IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_location));
@@ -307,12 +158,12 @@ public class ReplyMessageUtil {
           replyMessageDetails.put("originalMessagePlaceHolderImage", R.drawable.ism_ic_location);
           break;
         }
-        case ContactSent:
+        case CONTACT_MESSAGE_SENT:
 
-        case ContactReceived: {
+        case CONTACT_MESSAGE_RECEIVED: {
           replyMessageDetails.put("parentMessageUserName", messagesModel.getSenderName());
           replyMessageDetails.put("parentMessageSentAt", messagesModel.getSentAt());
-          replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Contact.getValue());
+          replyMessageDetails.put("parentMessageMessageType", CustomMessageTypes.Contact.value);
 
           replyMessageDetails.put("parentMessageBody",
               IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_contact));

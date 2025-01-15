@@ -117,52 +117,52 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     if (messages.get(position).isSentMessage()) {
       switch (messages.get(position).getCustomMessageType()) {
-        case TextSent:
+        case TEXT_MESSAGE_SENT:
           return TEXT_MESSAGE_SENT;
-        case PhotoSent:
+        case PHOTO_MESSAGE_SENT:
           return PHOTO_MESSAGE_SENT;
-        case VideoSent:
+        case VIDEO_MESSAGE_SENT:
           return VIDEO_MESSAGE_SENT;
-        case AudioSent:
+        case AUDIO_MESSAGE_SENT:
           return AUDIO_MESSAGE_SENT;
-        case FileSent:
+        case FILE_MESSAGE_SENT:
           return FILE_MESSAGE_SENT;
-        case StickerSent:
+        case STICKER_MESSAGE_SENT:
           return STICKER_MESSAGE_SENT;
-        case GifSent:
+        case GIF_MESSAGE_SENT:
           return GIF_MESSAGE_SENT;
-        case WhiteboardSent:
+        case WHITEBOARD_MESSAGE_SENT:
           return WHITEBOARD_MESSAGE_SENT;
-        case LocationSent:
+        case LOCATION_MESSAGE_SENT:
           return LOCATION_MESSAGE_SENT;
-        case ContactSent:
+        case CONTACT_MESSAGE_SENT:
           return CONTACT_MESSAGE_SENT;
         default:
           return -1;
       }
     } else {
       switch (messages.get(position).getCustomMessageType()) {
-        case TextReceived:
+        case TEXT_MESSAGE_RECEIVED:
           return TEXT_MESSAGE_RECEIVED;
-        case PhotoReceived:
+        case PHOTO_MESSAGE_RECEIVED:
           return PHOTO_MESSAGE_RECEIVED;
-        case VideoReceived:
+        case VIDEO_MESSAGE_RECEIVED:
           return VIDEO_MESSAGE_RECEIVED;
-        case AudioReceived:
+        case AUDIO_MESSAGE_RECEIVED:
           return AUDIO_MESSAGE_RECEIVED;
-        case FileReceived:
+        case FILE_MESSAGE_RECEIVED:
           return FILE_MESSAGE_RECEIVED;
-        case StickerReceived:
+        case STICKER_MESSAGE_RECEIVED:
           return STICKER_MESSAGE_RECEIVED;
-        case GifReceived:
+        case GIF_MESSAGE_RECEIVED:
           return GIF_MESSAGE_RECEIVED;
-        case WhiteboardReceived:
+        case WHITEBOARD_MESSAGE_RECEIVED:
           return WHITEBOARD_MESSAGE_RECEIVED;
-        case LocationReceived:
+        case LOCATION_MESSAGE_RECEIVED:
           return LOCATION_MESSAGE_RECEIVED;
-        case ContactReceived:
+        case CONTACT_MESSAGE_RECEIVED:
           return CONTACT_MESSAGE_RECEIVED;
-        case ConversationActionMessage:
+        case CONVERSATION_ACTION_MESSAGE:
           return CONVERSATION_ACTION_MESSAGE;
         default:
           return -1;

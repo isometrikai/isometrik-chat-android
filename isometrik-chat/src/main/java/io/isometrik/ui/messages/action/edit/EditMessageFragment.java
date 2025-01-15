@@ -12,9 +12,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmBottomsheetEditBinding;
+import io.isometrik.chat.utils.enums.MessageTypeUi;
 import io.isometrik.ui.messages.action.MessageActionCallback;
 import io.isometrik.ui.messages.chat.MessagesModel;
-import io.isometrik.chat.utils.enums.MessageTypesForUI;
 import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.TimeUtil;
 
@@ -114,7 +114,7 @@ public class EditMessageFragment extends BottomSheetDialogFragment {
   public void updateParameters(MessagesModel messagesModel,
       MessageActionCallback editMessageCallback) {
 
-    if (messagesModel.getCustomMessageType() != MessageTypesForUI.TextSent) {
+    if (messagesModel.getCustomMessageType() != MessageTypeUi.TEXT_MESSAGE_SENT) {
       close();
     } else {
       this.editMessageCallback = editMessageCallback;

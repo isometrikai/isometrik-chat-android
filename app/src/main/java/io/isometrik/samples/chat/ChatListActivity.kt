@@ -15,6 +15,7 @@ import io.isometrik.ui.conversations.list.ChatListItemBinder
 import io.isometrik.ui.conversations.list.ConversationsListFragment
 import io.isometrik.ui.conversations.list.ConversationsModel
 import io.isometrik.ui.messages.chat.MessagesModel
+import io.isometrik.ui.messages.chat.common.AttachmentsConfig
 import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.messages.chat.common.ChatTopViewHandler
 import io.isometrik.ui.messages.chat.common.MessageBinderRegistry
@@ -58,9 +59,30 @@ class ChatListActivity : AppCompatActivity() {
         }
 
 
-        ChatConfig.topViewHandler = MyCustomTopViewHandler()
+//        ChatConfig.topViewHandler = MyCustomTopViewHandler()
 
-        ChatConfig.baseColor = R.color.ism_theme_base
+//        ChatConfig.baseColor = R.color.ism_test_base
+//        ChatConfig.chatBackGroundColor = R.color.ism_theme_base
+//        ChatConfig.noConversationsStringResId = R.string.your_text
+//        ChatConfig.noConversationsImageResId = R.drawable.your_image
+//        ChatConfig.noConversationsImageResId = R.drawable.your_image
+//        ChatConfig.hideCreateChatOption = true
+//        ChatConfig.hideAudioCallOption = true
+//        ChatConfig.hideVideoCallOption = true
+//        ChatConfig.hideCaptureCameraOption = true
+//        ChatConfig.hideRecordAudioOption = true
+
+        AttachmentsConfig.hideCameraOption = true
+        AttachmentsConfig.hideRecordVideoOption = true
+        AttachmentsConfig.hidePhotosOption  = true
+        AttachmentsConfig.hideVideosOption = true
+        AttachmentsConfig.hideFilesOption = true
+        AttachmentsConfig.hideLocationOption = true
+        AttachmentsConfig.hideContactOption = true
+        AttachmentsConfig.hideStickerOption = true
+        AttachmentsConfig.hideGIFOption = true
+
+
     }
 
     private fun loadChatFragment() {
@@ -76,7 +98,7 @@ class ChatListActivity : AppCompatActivity() {
             }
         }
 
-        val chatFragment = ConversationsListFragment.newInstance(customBinder)
+        val chatFragment = ConversationsListFragment()
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, chatFragment)

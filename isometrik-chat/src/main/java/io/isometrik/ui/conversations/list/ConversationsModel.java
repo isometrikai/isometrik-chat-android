@@ -537,6 +537,28 @@ public class ConversationsModel {
                 IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_photo);
             break;
           }
+          case "AttachmentMessage:Payment Request": {
+            lastMessagePlaceHolderImage = null;
+            JSONObject details = lastMessage.getJSONObject("metaData");
+            long currentTimeSeconds = System.currentTimeMillis() / 1000;
+            long sentTimeSeconds = lastMessage.getLong("sentAt") / 1000;
+            long requestAPaymentExpiryTimeInMinutes = details.getLong("requestAPaymentExpiryTime");
+            long expirationTimeSeconds = sentTimeSeconds + (requestAPaymentExpiryTimeInMinutes * 60);
+            boolean isExpired = currentTimeSeconds > expirationTimeSeconds;
+            JSONArray members = details.getJSONArray("paymentRequestedMembers");
+            for (int i = 0; i < members.length(); i++) {
+              JSONObject member = members.getJSONObject(i);
+              String userId = member.getString("userId");
+              if (isExpired) {
+                lastMessageText = "This payment request has expired.";
+              } else {
+                lastMessageText = userId.equals(IsometrikChatSdk.getInstance().getUserSession().getUserId()) ?
+                        "You sent a payment request." :
+                        lastMessageSenderName + " sent you a payment request.";
+              }
+            }
+            break;
+          }
           case "AttachmentMessage:Video": {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_video;
             lastMessageText =

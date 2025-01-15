@@ -1,12 +1,13 @@
 package io.isometrik.ui.messages.chat.utils.attachmentutils;
 
+
 import io.isometrik.chat.builder.download.DownloadMediaQuery;
 import io.isometrik.chat.enums.DownloadMediaType;
 import io.isometrik.chat.models.download.mediautils.DownloadProgressListener;
+import io.isometrik.chat.utils.enums.MessageTypeUi;
 import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.messages.chat.MessagesModel;
-import io.isometrik.chat.utils.enums.MessageTypesForUI;
 
 /**
  * The helper class to prepare success and error message for media download or upload completeion.
@@ -35,9 +36,9 @@ public class MediaDownloadOrUploadHelper {
 
     switch (messagesModel.getCustomMessageType()) {
 
-      case PhotoSent:
+      case PHOTO_MESSAGE_SENT:
 
-      case PhotoReceived: {
+      case PHOTO_MESSAGE_RECEIVED: {
         downloadMediaQuery.setDownloadMediaType(DownloadMediaType.Image)
             .setMediaUrl(messagesModel.getPhotoMainUrl());
         downloadSuccessMessage = IsometrikChatSdk.getInstance()
@@ -52,9 +53,9 @@ public class MediaDownloadOrUploadHelper {
         break;
       }
 
-      case VideoSent:
+      case VIDEO_MESSAGE_SENT:
 
-      case VideoReceived: {
+      case VIDEO_MESSAGE_RECEIVED: {
         downloadMediaQuery.setDownloadMediaType(DownloadMediaType.Video)
             .setMediaUrl(messagesModel.getVideoMainUrl());
         downloadSuccessMessage = IsometrikChatSdk.getInstance()
@@ -70,9 +71,9 @@ public class MediaDownloadOrUploadHelper {
         break;
       }
 
-      case AudioSent:
+      case AUDIO_MESSAGE_SENT:
 
-      case AudioReceived: {
+      case AUDIO_MESSAGE_RECEIVED: {
         downloadMediaQuery.setDownloadMediaType(DownloadMediaType.Audio)
             .setMediaUrl(messagesModel.getAudioUrl());
 
@@ -89,9 +90,9 @@ public class MediaDownloadOrUploadHelper {
         break;
       }
 
-      case FileSent:
+      case FILE_MESSAGE_SENT:
 
-      case FileReceived: {
+      case FILE_MESSAGE_RECEIVED: {
         downloadMediaQuery.setDownloadMediaType(DownloadMediaType.File)
             .setMediaUrl(messagesModel.getFileUrl());
 
@@ -108,9 +109,9 @@ public class MediaDownloadOrUploadHelper {
         break;
       }
 
-      case WhiteboardSent:
+      case WHITEBOARD_MESSAGE_SENT:
 
-      case WhiteboardReceived: {
+      case WHITEBOARD_MESSAGE_RECEIVED: {
         downloadMediaQuery.setDownloadMediaType(DownloadMediaType.Whiteboard)
             .setMediaUrl(messagesModel.getWhiteboardMainUrl());
         downloadSuccessMessage = IsometrikChatSdk.getInstance()
@@ -185,18 +186,18 @@ public class MediaDownloadOrUploadHelper {
   /**
    * Parse download media failed message string.
    *
-   * @param messageTypesForUI the message types for ui
+   * @param messageTypeUi the message types for ui
    * @param errorMessage the error message
    * @return the string
    */
-  public static String parseDownloadMediaFailedMessage(MessageTypesForUI messageTypesForUI,
+  public static String parseDownloadMediaFailedMessage(MessageTypeUi messageTypeUi,
       String errorMessage) {
 
-    switch (messageTypesForUI) {
+    switch (messageTypeUi) {
 
-      case PhotoSent:
+      case PHOTO_MESSAGE_SENT:
 
-      case PhotoReceived: {
+      case PHOTO_MESSAGE_RECEIVED: {
 
         return IsometrikChatSdk.getInstance()
             .getContext()
@@ -205,9 +206,9 @@ public class MediaDownloadOrUploadHelper {
                 errorMessage);
       }
 
-      case VideoSent:
+      case VIDEO_MESSAGE_SENT:
 
-      case VideoReceived: {
+      case VIDEO_MESSAGE_RECEIVED: {
         return IsometrikChatSdk.getInstance()
             .getContext()
             .getString(R.string.ism_download_failed_due_to,
@@ -215,9 +216,9 @@ public class MediaDownloadOrUploadHelper {
                 errorMessage);
       }
 
-      case AudioSent:
+      case AUDIO_MESSAGE_SENT:
 
-      case AudioReceived: {
+      case AUDIO_MESSAGE_RECEIVED: {
         return IsometrikChatSdk.getInstance()
             .getContext()
             .getString(R.string.ism_download_failed_due_to,
@@ -225,9 +226,9 @@ public class MediaDownloadOrUploadHelper {
                 errorMessage);
       }
 
-      case FileSent:
+      case FILE_MESSAGE_SENT:
 
-      case FileReceived: {
+      case FILE_MESSAGE_RECEIVED: {
         return IsometrikChatSdk.getInstance()
             .getContext()
             .getString(R.string.ism_download_failed_due_to,
@@ -235,9 +236,9 @@ public class MediaDownloadOrUploadHelper {
                 errorMessage);
       }
 
-      case WhiteboardSent:
+      case WHITEBOARD_MESSAGE_SENT:
 
-      case WhiteboardReceived: {
+      case WHITEBOARD_MESSAGE_RECEIVED: {
         return IsometrikChatSdk.getInstance()
             .getContext()
             .getString(R.string.ism_download_failed_due_to,
@@ -253,22 +254,22 @@ public class MediaDownloadOrUploadHelper {
   /**
    * Parse media download or upload canceled message string.
    *
-   * @param messageTypesForUI the message types for ui
+   * @param messageTypeUi the message types for ui
    * @param success the success
    * @param download the download
    * @return the string
    */
-  public static String parseMediaDownloadOrUploadCanceledMessage(MessageTypesForUI messageTypesForUI,
+  public static String parseMediaDownloadOrUploadCanceledMessage(MessageTypeUi messageTypeUi,
       boolean success, boolean download) {
 
     String actionType=download? IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_download): IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_upload);
     
     
-    switch (messageTypesForUI) {
+    switch (messageTypeUi) {
 
-      case PhotoSent:
+      case PHOTO_MESSAGE_SENT:
 
-      case PhotoReceived: {
+      case PHOTO_MESSAGE_RECEIVED: {
 
         if (success) {
           return IsometrikChatSdk.getInstance()
@@ -283,9 +284,9 @@ public class MediaDownloadOrUploadHelper {
         }
       }
 
-      case VideoSent:
+      case VIDEO_MESSAGE_SENT:
 
-      case VideoReceived: {
+      case VIDEO_MESSAGE_RECEIVED: {
         if (success) {
           return IsometrikChatSdk.getInstance()
               .getContext()
@@ -299,9 +300,9 @@ public class MediaDownloadOrUploadHelper {
         }
       }
 
-      case AudioSent:
+      case AUDIO_MESSAGE_SENT:
 
-      case AudioReceived: {
+      case AUDIO_MESSAGE_RECEIVED: {
         if (success) {
           return IsometrikChatSdk.getInstance()
               .getContext()
@@ -317,9 +318,9 @@ public class MediaDownloadOrUploadHelper {
         }
       }
 
-      case FileSent:
+      case FILE_MESSAGE_SENT:
 
-      case FileReceived: {
+      case FILE_MESSAGE_RECEIVED: {
         if (success) {
           return IsometrikChatSdk.getInstance()
               .getContext()
@@ -333,9 +334,9 @@ public class MediaDownloadOrUploadHelper {
         }
       }
 
-      case WhiteboardSent:
+      case WHITEBOARD_MESSAGE_SENT:
 
-      case WhiteboardReceived: {
+      case WHITEBOARD_MESSAGE_RECEIVED: {
         if (success) {
           return IsometrikChatSdk.getInstance()
               .getContext()

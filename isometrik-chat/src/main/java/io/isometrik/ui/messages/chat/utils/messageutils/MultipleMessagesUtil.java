@@ -1,7 +1,8 @@
 package io.isometrik.ui.messages.chat.utils.messageutils;
 
+import io.isometrik.chat.utils.enums.MessageTypeUi;
 import io.isometrik.ui.messages.chat.MessagesModel;
-import io.isometrik.chat.utils.enums.MessageTypesForUI;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -60,8 +61,8 @@ public class MultipleMessagesUtil {
   public boolean isCopyEnabled() {
     if (selectedMessages.size() == 0) return false;
     for (MessagesModel messagesModel : selectedMessages.values()) {
-      if (messagesModel.getCustomMessageType() != MessageTypesForUI.TextSent
-          && messagesModel.getCustomMessageType() != MessageTypesForUI.TextReceived) {
+      if (messagesModel.getCustomMessageType() != MessageTypeUi.TEXT_MESSAGE_SENT
+          && messagesModel.getCustomMessageType() != MessageTypeUi.TEXT_MESSAGE_RECEIVED) {
         return false;
       }
     }
@@ -110,8 +111,8 @@ public class MultipleMessagesUtil {
 
     StringBuilder text = new StringBuilder();
     for (MessagesModel messagesModel : selectedMessages.values()) {
-      if (messagesModel.getCustomMessageType() == MessageTypesForUI.TextSent
-          || messagesModel.getCustomMessageType() == MessageTypesForUI.TextReceived) {
+      if (messagesModel.getCustomMessageType() == MessageTypeUi.TEXT_MESSAGE_SENT
+          || messagesModel.getCustomMessageType() == MessageTypeUi.TEXT_MESSAGE_RECEIVED) {
         text.append(" \n").append(messagesModel.getTextMessage());
       }
     }

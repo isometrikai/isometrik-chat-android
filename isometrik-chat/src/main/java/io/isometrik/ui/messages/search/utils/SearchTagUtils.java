@@ -24,66 +24,66 @@ public class SearchTagUtils {
     List<String> searchableTags = new ArrayList<>();
     Context context = IsometrikChatSdk.getInstance().getContext();
     switch (messagesModel.getCustomMessageType()) {
-      case TextSent: {
+      case TEXT_MESSAGE_SENT: {
         searchableTags.add(context.getString(R.string.ism_search_tag_text));
         searchableTags.add(messagesModel.getTextMessage().toString());
         break;
       }
-      case PhotoSent: {
+      case PHOTO_MESSAGE_SENT: {
         searchableTags.add(context.getString(R.string.ism_search_tag_photo));
         if (mediaName != null) {
           searchableTags.add(mediaName);
         }
         break;
       }
-      case VideoSent: {
+      case VIDEO_MESSAGE_SENT: {
         searchableTags.add(context.getString(R.string.ism_search_tag_video));
         if (mediaName != null) {
           searchableTags.add(mediaName);
         }
         break;
       }
-      case AudioSent: {
+      case AUDIO_MESSAGE_SENT: {
         searchableTags.add(context.getString(R.string.ism_search_tag_audio));
         searchableTags.add(messagesModel.getAudioName());
         break;
       }
-      case FileSent: {
+      case FILE_MESSAGE_SENT: {
         searchableTags.add(context.getString(R.string.ism_search_tag_file));
         searchableTags.add(messagesModel.getFileName());
         break;
       }
-      case StickerSent: {
+      case STICKER_MESSAGE_SENT: {
         searchableTags.add(context.getString(R.string.ism_search_tag_sticker));
         if (mediaName != null) {
           searchableTags.add(mediaName);
         }
         break;
       }
-      case GifSent: {
+      case GIF_MESSAGE_SENT: {
         searchableTags.add(context.getString(R.string.ism_search_tag_gif));
         if (mediaName != null) {
           searchableTags.add(mediaName);
         }
         break;
       }
-      case WhiteboardSent: {
+      case WHITEBOARD_MESSAGE_SENT: {
         searchableTags.add(context.getString(R.string.ism_search_tag_whiteboard));
         break;
       }
-      case LocationSent: {
+      case LOCATION_MESSAGE_SENT: {
         searchableTags.add(context.getString(R.string.ism_search_tag_location));
         searchableTags.add(messagesModel.getLocationName());
         searchableTags.add(messagesModel.getLocationDescription());
         break;
       }
-      case ContactSent: {
+      case CONTACT_MESSAGE_SENT: {
         searchableTags.add(context.getString(R.string.ism_search_tag_contact));
         searchableTags.add(messagesModel.getContactName());
         searchableTags.add(messagesModel.getContactIdentifier());
         break;
       }
-      case ReplaySent: {
+      case REPLAY_MESSAGE_SENT: {
         searchableTags.add(context.getString(R.string.ism_search_tag_text));
         searchableTags.add(messagesModel.getTextMessage().toString());
       }

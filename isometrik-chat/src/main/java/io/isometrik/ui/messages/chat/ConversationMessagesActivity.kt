@@ -6,6 +6,7 @@ import android.content.ClipboardManager
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.net.Uri
@@ -59,7 +60,6 @@ import io.isometrik.chat.utils.TagUserUtil
 import io.isometrik.chat.utils.TimeUtil
 import io.isometrik.chat.utils.Utilities
 import io.isometrik.chat.utils.enums.CustomMessageTypes
-import io.isometrik.chat.utils.enums.MessageTypeUi
 import io.isometrik.ui.IsometrikChatSdk
 import io.isometrik.ui.camera.CameraActivity
 import io.isometrik.ui.camera.VideoRecordingActivity
@@ -93,7 +93,7 @@ import io.isometrik.ui.messages.chat.messageBinders.VideoSentBinder
 import io.isometrik.ui.messages.chat.messageBinders.WhiteboardReceivedBinder
 import io.isometrik.ui.messages.chat.messageBinders.WhiteboardSentBinder
 import io.isometrik.ui.messages.chat.utils.attachmentutils.PrepareAttachmentHelper
-import io.isometrik.chat.utils.enums.MessageTypesForUI
+import io.isometrik.chat.utils.enums.MessageTypeUi
 import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.messages.chat.common.ChatTopViewHandler
 import io.isometrik.ui.messages.chat.messageBinders.OfferReceivedBinder
@@ -225,9 +225,22 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         ismActivityMessagesBinding.btRecord.visibility =
             if (ChatConfig.hideRecordAudioOption) View.GONE else View.VISIBLE
 
+        ismActivityMessagesBinding.btRecord.backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(this, ChatConfig.baseColor))
+        ismActivityMessagesBinding.ivSendMessage.backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(this, ChatConfig.baseColor))
+        ismActivityMessagesBinding.ivAddAttachment.backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(this, ChatConfig.baseColor))
+
+        ismActivityMessagesBinding.relRoot.backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(this, ChatConfig.chatBackGroundColor))
+        ismActivityMessagesBinding.relTopbar.backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(this, ChatConfig.chatBackGroundColor))
+
 
         val itemBinders = mapOf(
             MessageTypeUi.TEXT_MESSAGE_SENT to TextSentBinder(),
+            MessageTypeUi.REPLAY_MESSAGE_SENT to TextSentBinder(),
             MessageTypeUi.PHOTO_MESSAGE_SENT to PhotoSentBinder(),
             MessageTypeUi.VIDEO_MESSAGE_SENT to VideoSentBinder(),
             MessageTypeUi.AUDIO_MESSAGE_SENT to AudioSentBinder(),
@@ -250,6 +263,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             MessageTypeUi.DEAL_COMPLETE_SENT to OfferSentBinder(),
 
             MessageTypeUi.TEXT_MESSAGE_RECEIVED to TextReceivedBinder(),
+            MessageTypeUi.REPLAY_MESSAGE_RECEIVED to TextReceivedBinder(),
             MessageTypeUi.PHOTO_MESSAGE_RECEIVED to PhotoReceivedBinder(),
             MessageTypeUi.VIDEO_MESSAGE_RECEIVED to VideoReceivedBinder(),
             MessageTypeUi.AUDIO_MESSAGE_RECEIVED to AudioReceivedBinder(),
@@ -437,7 +451,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                         null,
                         null,
                         null,
-                        MessageTypesForUI.PhotoSent,
+                        MessageTypeUi.PHOTO_MESSAGE_SENT,
                         ArrayList(
                             listOf(
                                 result.data!!.getStringExtra("capturedImagePath")
@@ -497,7 +511,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                                 null,
                                 null,
                                 null,
-                                MessageTypesForUI.PhotoSent,
+                                MessageTypeUi.PHOTO_MESSAGE_SENT,
                                 photoPaths,
                                 true,
                                 PresignedUrlMediaTypes.Photo,
@@ -560,7 +574,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                                 null,
                                 null,
                                 null,
-                                MessageTypesForUI.VideoSent,
+                                MessageTypeUi.VIDEO_MESSAGE_SENT,
                                 videoPaths,
                                 true,
                                 PresignedUrlMediaTypes.Video,
@@ -627,7 +641,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                                 null,
                                 null,
                                 null,
-                                MessageTypesForUI.FileSent,
+                                MessageTypeUi.FILE_MESSAGE_SENT,
                                 filePaths,
                                 true,
                                 PresignedUrlMediaTypes.File,
@@ -693,7 +707,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                         ),
                         null,
                         null,
-                        MessageTypesForUI.LocationSent,
+                        MessageTypeUi.LOCATION_MESSAGE_SENT,
                         null,
                         false,
                         null,
@@ -739,7 +753,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                             null,
                             messageMetadata,
                             null,
-                            MessageTypesForUI.ContactSent,
+                            MessageTypeUi.CONTACT_MESSAGE_SENT,
                             null,
                             false,
                             null,
@@ -842,7 +856,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                     TagUserUtil.prepareMentionedUsers(
                         ismActivityMessagesBinding!!.etSendMessage.editableText
                     ),
-                    MessageTypesForUI.TextSent,
+                    MessageTypeUi.TEXT_MESSAGE_SENT,
                     null,
                     false,
                     null,
@@ -866,7 +880,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                     override fun onItemClick(view: View, position: Int) {
                         if (position >= 0) {
                             if (ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility == View.VISIBLE) {
-                                if (messages[position].customMessageType != MessageTypesForUI.ConversationActionMessage) {
+                                if (messages[position].customMessageType != MessageTypeUi.CONVERSATION_ACTION_MESSAGE) {
                                     val messagesModel = messages[position]
                                     val selected = !messagesModel.isSelected
                                     messagesModel.isSelected = selected
@@ -884,7 +898,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                     override fun onItemLongClick(view: View, position: Int) {
                         if (position >= 0) {
                             if (!messagingDisabled) {
-                                if (messages[position].customMessageType != MessageTypesForUI.ConversationActionMessage) {
+                                if (messages[position].customMessageType != MessageTypeUi.CONVERSATION_ACTION_MESSAGE) {
                                     if (ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility == View.VISIBLE) {
                                         val messagesModel = messages[position]
                                         val selected = !messagesModel.isSelected
@@ -1554,19 +1568,19 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         }
     }
 
-    override fun onMediaTypeToBeSharedSelected(mediaTypeSelected: MessageTypesForUI) {
+    override fun onMediaTypeToBeSharedSelected(mediaTypeSelected: MessageTypeUi) {
         when (mediaTypeSelected) {
-            MessageTypesForUI.CameraPhoto -> {
+            MessageTypeUi.CAMERA_PHOTO_SENT -> {
                 //Capture Image
                 checkImageCapturePermissions(true)
             }
 
-            MessageTypesForUI.RecordVideo -> {
+            MessageTypeUi.RECORD_VIDEO_SENT -> {
                 //RecordVideo
                 onRecordVideoRequested()
             }
 
-            MessageTypesForUI.PhotoSent -> {
+            MessageTypeUi.PHOTO_MESSAGE_SENT -> {
                 //Photos
                 checkAccessStoragePermissions(
                     SHARE_PHOTOS_PERMISSIONS_REQUEST_CODE,
@@ -1574,7 +1588,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 )
             }
 
-            MessageTypesForUI.VideoSent -> {
+            MessageTypeUi.VIDEO_MESSAGE_SENT -> {
                 //Videos
                 checkAccessStoragePermissions(
                     SHARE_VIDEOS_PERMISSIONS_REQUEST_CODE,
@@ -1582,7 +1596,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 )
             }
 
-            MessageTypesForUI.FileSent -> {
+            MessageTypeUi.FILE_MESSAGE_SENT -> {
                 //Files
                 checkAccessStoragePermissions(
                     SHARE_FILES_PERMISSIONS_REQUEST_CODE,
@@ -1590,7 +1604,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 )
             }
 
-            MessageTypesForUI.StickerSent -> {
+            MessageTypeUi.STICKER_MESSAGE_SENT -> {
                 //Sticker
                 if (!isFinishing && !stickersFragment!!.isAdded) {
                     dismissAllDialogs()
@@ -1599,7 +1613,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 }
             }
 
-            MessageTypesForUI.GifSent -> {
+            MessageTypeUi.GIF_MESSAGE_SENT -> {
                 //Gif
                 if (!isFinishing && !gifsFragment!!.isAdded) {
                     dismissAllDialogs()
@@ -1608,7 +1622,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 }
             }
 
-            MessageTypesForUI.WhiteboardSent -> {
+            MessageTypeUi.WHITEBOARD_MESSAGE_SENT -> {
                 //Whiteboard
                 if (!isFinishing && !whiteboardFragment!!.isAdded) {
                     dismissAllDialogs()
@@ -1617,7 +1631,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 }
             }
 
-            MessageTypesForUI.LocationSent -> {
+            MessageTypeUi.LOCATION_MESSAGE_SENT -> {
                 //Location
                 if (ActivityCompat.checkSelfPermission(
                         this@ConversationMessagesActivity,
@@ -1656,7 +1670,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 }
             }
 
-            MessageTypesForUI.ContactSent -> {
+            MessageTypeUi.CONTACT_MESSAGE_SENT -> {
                 //Contact
                 if (ActivityCompat.checkSelfPermission(
                         this@ConversationMessagesActivity,
@@ -1727,7 +1741,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 ),
                 null,
                 null,
-                MessageTypesForUI.GifSent,
+                MessageTypeUi.GIF_MESSAGE_SENT,
                 null,
                 false,
                 null,
@@ -1763,7 +1777,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 ),
                 null,
                 null,
-                MessageTypesForUI.StickerSent,
+                MessageTypeUi.STICKER_MESSAGE_SENT,
                 null,
                 false,
                 null,
@@ -1786,7 +1800,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             null,
             null,
             null,
-            MessageTypesForUI.WhiteboardSent,
+            MessageTypeUi.WHITEBOARD_MESSAGE_SENT,
             ArrayList(
                 listOf(whiteboardImageUrl)
             ),
@@ -2105,26 +2119,26 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 messagesModel.isUploading = false
                 if (mediaUrl != null) {
                     when (messagesModel.customMessageType) {
-                        MessageTypesForUI.PhotoSent -> {
+                        MessageTypeUi.PHOTO_MESSAGE_SENT -> {
                             messagesModel.photoMainUrl = mediaUrl
                             messagesModel.photoThumbnailUrl = thumbnailUrl
                         }
 
-                        MessageTypesForUI.VideoSent -> {
+                        MessageTypeUi.VIDEO_MESSAGE_SENT -> {
                             messagesModel.videoMainUrl = mediaUrl
                             messagesModel.videoThumbnailUrl = thumbnailUrl
                         }
 
-                        MessageTypesForUI.WhiteboardSent -> {
+                        MessageTypeUi.WHITEBOARD_MESSAGE_SENT -> {
                             messagesModel.whiteboardMainUrl = mediaUrl
                             messagesModel.whiteboardThumbnailUrl = thumbnailUrl
                         }
 
-                        MessageTypesForUI.FileSent -> {
+                        MessageTypeUi.FILE_MESSAGE_SENT -> {
                             messagesModel.fileUrl = mediaUrl
                         }
 
-                        MessageTypesForUI.AudioSent -> {
+                        MessageTypeUi.AUDIO_MESSAGE_SENT -> {
                             messagesModel.audioUrl = mediaUrl
                         }
 
@@ -2455,7 +2469,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
     }
 
     override fun fetchMessagesInfoRequest(messagesModel: MessagesModel) {
-        if (messagesModel.customMessageType == MessageTypesForUI.TextSent || messagesModel.customMessageType == MessageTypesForUI.TextReceived) {
+        if (messagesModel.customMessageType == MessageTypeUi.TEXT_MESSAGE_SENT || messagesModel.customMessageType == MessageTypeUi.TEXT_MESSAGE_RECEIVED) {
             //To handle  java.lang.IllegalArgumentException: class android.widget.ListView declares multiple JSON fields named mPendingCheckForTap for tagged users
             messagesModel.textMessage = SpannableString(messagesModel.textMessage.toString())
         }
@@ -2472,7 +2486,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
 
     override fun forwardMessageRequest(messagesModel: MessagesModel) {
         if (clickActionsNotBlocked()) {
-            if (messagesModel.customMessageType == MessageTypesForUI.TextSent || messagesModel.customMessageType == MessageTypesForUI.TextReceived) {
+            if (messagesModel.customMessageType == MessageTypeUi.TEXT_MESSAGE_SENT || messagesModel.customMessageType == MessageTypeUi.TEXT_MESSAGE_RECEIVED) {
                 //To handle  java.lang.IllegalArgumentException: class android.widget.ListView declares multiple JSON fields named mPendingCheckForTap for tagged users
                 messagesModel.textMessage = SpannableString(messagesModel.textMessage.toString())
             }
@@ -2542,7 +2556,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             null,
             replyMessageDetails,
             null,
-            MessageTypesForUI.ReplaySent,
+            MessageTypeUi.REPLAY_MESSAGE_SENT,
             null,
             false,
             null,
@@ -2766,7 +2780,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                     null,
                     null,
                     null,
-                    MessageTypesForUI.AudioSent,
+                    MessageTypeUi.AUDIO_MESSAGE_SENT,
                     ArrayList(
                         listOf(audioFilePath)
                     ),
@@ -3296,7 +3310,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             null,
             null,
             null,
-            MessageTypesForUI.VideoSent,
+            MessageTypeUi.VIDEO_MESSAGE_SENT,
             videoPaths,
             true,
             PresignedUrlMediaTypes.Video,

@@ -95,66 +95,66 @@ public class PreviewMessageUtil {
     public static void previewMessage(Activity activity, MessagesModel messagesModel,
                                       boolean localMedia) {
         switch (messagesModel.getCustomMessageType()) {
-            case PhotoSent:
-            case PhotoReceived: {
+            case PHOTO_MESSAGE_SENT:
+            case PHOTO_MESSAGE_RECEIVED: {
                 handlePhotoClick(activity,
                         localMedia ? messagesModel.getDownloadedMediaPath() : messagesModel.getPhotoMainUrl(),
                         messagesModel.getMimeType(), localMedia);
 
                 break;
             }
-            case StickerSent:
-            case StickerReceived: {
+            case STICKER_MESSAGE_SENT:
+            case STICKER_MESSAGE_RECEIVED: {
                 //handlePhotoClick(activity, messagesModel.getStickerMainUrl(), messagesModel.getMimeType());
                 new PreviewImagePopup().show(activity, messagesModel.getStickerMainUrl());
                 break;
             }
-            case GifSent:
-            case GifReceived: {
+            case GIF_MESSAGE_SENT:
+            case GIF_MESSAGE_RECEIVED: {
                 //handlePhotoClick(activity, messagesModel.getGifMainUrl(), messagesModel.getMimeType());
                 new PreviewImagePopup().show(activity, messagesModel.getGifMainUrl());
                 break;
             }
-            case WhiteboardSent:
-            case WhiteboardReceived: {
+            case WHITEBOARD_MESSAGE_SENT:
+            case WHITEBOARD_MESSAGE_RECEIVED: {
                 handlePhotoClick(activity, localMedia ? messagesModel.getDownloadedMediaPath()
                         : messagesModel.getWhiteboardMainUrl(), messagesModel.getMimeType(), localMedia);
 
                 break;
             }
 
-            case VideoSent:
-            case VideoReceived: {
+            case VIDEO_MESSAGE_SENT:
+            case VIDEO_MESSAGE_RECEIVED: {
                 handleVideoClick(activity, messagesModel.getVideoThumbnailUrl(),
                         localMedia ? messagesModel.getDownloadedMediaPath() : messagesModel.getVideoMainUrl(),
                         messagesModel.getMimeType(), localMedia);
                 break;
             }
-            case AudioSent:
-            case AudioReceived: {
+            case AUDIO_MESSAGE_SENT:
+            case AUDIO_MESSAGE_RECEIVED: {
                 handleAudioClick(activity,
                         localMedia ? messagesModel.getDownloadedMediaPath() : messagesModel.getAudioUrl(),
                         messagesModel.getAudioName(), messagesModel.getMimeType(), localMedia);
                 break;
             }
 
-            case FileSent:
-            case FileReceived: {
+            case FILE_MESSAGE_SENT:
+            case FILE_MESSAGE_RECEIVED: {
                 handleFileClick(activity,
                         localMedia ? messagesModel.getDownloadedMediaPath() : messagesModel.getFileUrl(),
                         messagesModel.getMimeType(), localMedia);
                 break;
             }
 
-            case LocationSent:
-            case LocationReceived: {
+            case LOCATION_MESSAGE_SENT:
+            case LOCATION_MESSAGE_RECEIVED: {
 
                 handleLocationClick(activity, messagesModel.getLatitude(), messagesModel.getLongitude());
                 break;
             }
 
-            case ContactSent:
-            case ContactReceived: {
+            case CONTACT_MESSAGE_SENT:
+            case CONTACT_MESSAGE_RECEIVED: {
 
                 handleContactClick(activity, messagesModel.getContactName(),
                         messagesModel.getContactIdentifier(), messagesModel.getContactList());

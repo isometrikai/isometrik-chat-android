@@ -8,7 +8,7 @@ import io.isometrik.chat.enums.AttachmentMessageType
 import io.isometrik.chat.enums.PresignedUrlMediaTypes
 import io.isometrik.chat.response.message.utils.schemas.Attachment
 import io.isometrik.chat.response.message.utils.schemas.MentionedUser
-import io.isometrik.chat.utils.enums.MessageTypesForUI
+import io.isometrik.chat.utils.enums.MessageTypeUi
 import io.isometrik.ui.messages.chat.utils.enums.RemoteMessageTypes
 import io.isometrik.ui.messages.chat.utils.messageutils.MultipleMessagesUtil
 import io.isometrik.ui.messages.chat.utils.messageutils.OriginalReplyMessageUtil
@@ -117,7 +117,7 @@ interface ConversationMessagesContract {
             attachments: ArrayList<Attachment?>?,
             messageMetadata: JSONObject?,
             mentionedUsers: ArrayList<MentionedUser?>?,
-            messageTypesForUI: MessageTypesForUI?,
+            messageTypeUi: MessageTypeUi?,
             mediaPaths: ArrayList<String?>?,
             uploadMediaRequired: Boolean,
             presignedUrlMediaTypes: PresignedUrlMediaTypes?,
