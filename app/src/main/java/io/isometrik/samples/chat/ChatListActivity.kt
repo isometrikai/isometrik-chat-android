@@ -66,7 +66,7 @@ class ChatListActivity : AppCompatActivity() {
 //        ChatConfig.noConversationsStringResId = R.string.your_text
 //        ChatConfig.noConversationsImageResId = R.drawable.your_image
 //        ChatConfig.noConversationsImageResId = R.drawable.your_image
-//        ChatConfig.hideCreateChatOption = true
+        ChatConfig.hideCreateChatOption = false
 //        ChatConfig.hideAudioCallOption = true
 //        ChatConfig.hideVideoCallOption = true
 //        ChatConfig.hideCaptureCameraOption = true
@@ -74,13 +74,13 @@ class ChatListActivity : AppCompatActivity() {
 
         AttachmentsConfig.hideCameraOption = true
         AttachmentsConfig.hideRecordVideoOption = true
-        AttachmentsConfig.hidePhotosOption  = true
-        AttachmentsConfig.hideVideosOption = true
-        AttachmentsConfig.hideFilesOption = true
-        AttachmentsConfig.hideLocationOption = true
-        AttachmentsConfig.hideContactOption = true
-        AttachmentsConfig.hideStickerOption = true
-        AttachmentsConfig.hideGIFOption = true
+//        AttachmentsConfig.hidePhotosOption  = true
+//        AttachmentsConfig.hideVideosOption = true
+//        AttachmentsConfig.hideFilesOption = true
+//        AttachmentsConfig.hideLocationOption = true
+//        AttachmentsConfig.hideContactOption = true
+//        AttachmentsConfig.hideStickerOption = true
+//        AttachmentsConfig.hideGIFOption = true
 
 
     }
