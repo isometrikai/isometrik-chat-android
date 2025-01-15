@@ -51,31 +51,31 @@ public class GalleryMediaItemsSettingsUtil implements Serializable {
     List<String> galleryItemsEnabled = new ArrayList<>();
 
     if (includeImages) {
-      galleryItemsEnabled.add(CustomMessageTypes.Image.getValue());
+      galleryItemsEnabled.add(CustomMessageTypes.Image.value);
     }
     if (includeVideos) {
-      galleryItemsEnabled.add(CustomMessageTypes.Video.getValue());
+      galleryItemsEnabled.add(CustomMessageTypes.Video.value);
     }
     if (includeAudioRecordings) {
-      galleryItemsEnabled.add(CustomMessageTypes.Audio.getValue());
+      galleryItemsEnabled.add(CustomMessageTypes.Audio.value);
     }
     if (includeFiles) {
-      galleryItemsEnabled.add(CustomMessageTypes.File.getValue());
+      galleryItemsEnabled.add(CustomMessageTypes.File.value);
     }
     if (includeStickers) {
-      galleryItemsEnabled.add(CustomMessageTypes.Sticker.getValue());
+      galleryItemsEnabled.add(CustomMessageTypes.Sticker.value);
     }
     if (includeGifs) {
-      galleryItemsEnabled.add(CustomMessageTypes.Gif.getValue());
+      galleryItemsEnabled.add(CustomMessageTypes.Gif.value);
     }
     if (includeWhiteboards) {
-      galleryItemsEnabled.add(CustomMessageTypes.Whiteboard.getValue());
+      galleryItemsEnabled.add(CustomMessageTypes.Whiteboard.value);
     }
     if (includeLocations) {
-      galleryItemsEnabled.add(CustomMessageTypes.Location.getValue());
+      galleryItemsEnabled.add(CustomMessageTypes.Location.value);
     }
     if (includeContacts) {
-      galleryItemsEnabled.add(CustomMessageTypes.Contact.getValue());
+      galleryItemsEnabled.add(CustomMessageTypes.Contact.value);
     }
     return galleryItemsEnabled;
   }
@@ -91,39 +91,39 @@ public class GalleryMediaItemsSettingsUtil implements Serializable {
 
     if (includeImages) {
       galleryMediaTypeHeaderModels.add(
-          new GalleryMediaTypeHeaderModel(CustomMessageTypes.Image.getValue()));
+          new GalleryMediaTypeHeaderModel(CustomMessageTypes.Image.value));
     }
     if (includeVideos) {
       galleryMediaTypeHeaderModels.add(
-          new GalleryMediaTypeHeaderModel(CustomMessageTypes.Video.getValue()));
+          new GalleryMediaTypeHeaderModel(CustomMessageTypes.Video.value));
     }
     if (includeAudioRecordings) {
       galleryMediaTypeHeaderModels.add(
-          new GalleryMediaTypeHeaderModel(CustomMessageTypes.Audio.getValue()));
+          new GalleryMediaTypeHeaderModel(CustomMessageTypes.Audio.value));
     }
     if (includeFiles) {
       galleryMediaTypeHeaderModels.add(
-          new GalleryMediaTypeHeaderModel(CustomMessageTypes.File.getValue()));
+          new GalleryMediaTypeHeaderModel(CustomMessageTypes.File.value));
     }
     if (includeStickers) {
       galleryMediaTypeHeaderModels.add(
-          new GalleryMediaTypeHeaderModel(CustomMessageTypes.Sticker.getValue()));
+          new GalleryMediaTypeHeaderModel(CustomMessageTypes.Sticker.value));
     }
     if (includeGifs) {
       galleryMediaTypeHeaderModels.add(
-          new GalleryMediaTypeHeaderModel(CustomMessageTypes.Gif.getValue()));
+          new GalleryMediaTypeHeaderModel(CustomMessageTypes.Gif.value));
     }
     if (includeWhiteboards) {
       galleryMediaTypeHeaderModels.add(
-          new GalleryMediaTypeHeaderModel(CustomMessageTypes.Whiteboard.getValue()));
+          new GalleryMediaTypeHeaderModel(CustomMessageTypes.Whiteboard.value));
     }
     if (includeLocations) {
       galleryMediaTypeHeaderModels.add(
-          new GalleryMediaTypeHeaderModel(CustomMessageTypes.Location.getValue()));
+          new GalleryMediaTypeHeaderModel(CustomMessageTypes.Location.value));
     }
     if (includeContacts) {
       galleryMediaTypeHeaderModels.add(
-          new GalleryMediaTypeHeaderModel(CustomMessageTypes.Contact.getValue()));
+          new GalleryMediaTypeHeaderModel(CustomMessageTypes.Contact.value));
     }
 
     return galleryMediaTypeHeaderModels;

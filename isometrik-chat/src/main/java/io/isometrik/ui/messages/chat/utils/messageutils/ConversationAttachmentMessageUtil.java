@@ -2,9 +2,9 @@ package io.isometrik.ui.messages.chat.utils.messageutils;
 
 import io.isometrik.chat.response.message.utils.fetchmessages.Message;
 import io.isometrik.chat.response.message.utils.schemas.Attachment;
+import io.isometrik.chat.utils.enums.MessageTypeUi;
 import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.ui.messages.chat.MessagesModel;
-import io.isometrik.chat.utils.enums.MessageTypesForUI;
 import io.isometrik.ui.messages.reaction.util.ReactionUtil;
 import io.isometrik.ui.messages.tag.TaggedUserCallback;
 import io.isometrik.ui.messages.tag.util.ParseMentionedUsersFromFetchMessagesResponseUtil;
@@ -44,7 +44,7 @@ public class ConversationAttachmentMessageUtil {
                 case "AttachmentMessage:Reply": {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
-                            selfMessage ? MessageTypesForUI.TextSent : MessageTypesForUI.TextReceived,
+                            selfMessage ? MessageTypeUi.TEXT_MESSAGE_SENT : MessageTypeUi.TEXT_MESSAGE_RECEIVED,
                             selfMessage, message.getSentAt(), message.getParentMessageId() != null,
                             TagUserUtil.parseMentionedUsers(message.getBody(),
                                     ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
@@ -60,11 +60,49 @@ public class ConversationAttachmentMessageUtil {
 
                     break;
                 }
+
+                case "AttachmentMessage:Payment Request": {
+                    messagesModel = new MessagesModel(message.getMessageId(),
+                            selfMessage ? MessageTypeUi.PAYMENT_MESSAGE_SENT : MessageTypeUi.PAYMENT_MESSAGE_RECEIVED,
+                            selfMessage, message.getSentAt(), message.getParentMessageId() != null,
+                            TagUserUtil.parseMentionedUsers(message.getBody(),
+                                    ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
+                                            message.getMentionedUsers()), taggedUserCallback),
+                            message.getSenderInfo().getUserName(),
+                            message.getSenderInfo().getUserProfileImageUrl(),
+                            ReactionUtil.parseReactionMessages(message.getReactions()), true, null,
+                            (message.getParentMessageId() == null) ? null
+                                    : (new OriginalReplyMessageUtil(message.getParentMessageId(),
+                                    message.getMetaData())), message.getMessageType(), message.getMetaData(),
+                            message.isDeliveredToAll(), message.isReadByAll(), message.getConversationId(),
+                            message.getMessageUpdated() != null);
+
+                    break;
+                }
+
+                case "AttachmentMessage:Post": {
+                    messagesModel = new MessagesModel(message.getMessageId(),
+                            selfMessage ? MessageTypeUi.POST_MESSAGE_SENT : MessageTypeUi.POST_MESSAGE_RECEIVED,
+                            selfMessage, message.getSentAt(), message.getParentMessageId() != null,
+                            TagUserUtil.parseMentionedUsers(message.getBody(),
+                                    ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
+                                            message.getMentionedUsers()), taggedUserCallback),
+                            message.getSenderInfo().getUserName(),
+                            message.getSenderInfo().getUserProfileImageUrl(),
+                            ReactionUtil.parseReactionMessages(message.getReactions()), true, null,
+                            (message.getParentMessageId() == null) ? null
+                                    : (new OriginalReplyMessageUtil(message.getParentMessageId(),
+                                    message.getMetaData())), message.getMessageType(), message.getMetaData(),
+                            message.isDeliveredToAll(), message.isReadByAll(), message.getConversationId(),
+                            message.getMessageUpdated() != null);
+                    break;
+                }
+
                 case "AttachmentMessage:Image": {
                     Attachment attachment = message.getAttachments().get(0);
 
                     messagesModel = new MessagesModel(message.getMessageId(),
-                            selfMessage ? MessageTypesForUI.PhotoSent : MessageTypesForUI.PhotoReceived,
+                            selfMessage ? MessageTypeUi.PHOTO_MESSAGE_SENT : MessageTypeUi.PHOTO_MESSAGE_RECEIVED,
                             selfMessage, message.getSentAt(), message.getParentMessageId() != null,
                             FileUtils.getSizeOfFile(attachment.getSize()), false, false, true, false,
                             attachment.getThumbnailUrl(), attachment.getMediaUrl(), attachment.getMimeType(),
@@ -84,7 +122,7 @@ public class ConversationAttachmentMessageUtil {
                     Attachment attachment = message.getAttachments().get(0);
 
                     messagesModel = new MessagesModel(message.getMessageId(),
-                            selfMessage ? MessageTypesForUI.VideoSent : MessageTypesForUI.VideoReceived,
+                            selfMessage ? MessageTypeUi.VIDEO_MESSAGE_SENT : MessageTypeUi.VIDEO_MESSAGE_RECEIVED,
                             selfMessage, message.getSentAt(), message.getParentMessageId() != null,
                             FileUtils.getSizeOfFile(attachment.getSize()), false, false, true, false,
                             attachment.getThumbnailUrl(), attachment.getMediaUrl(), attachment.getMimeType(),
@@ -103,7 +141,7 @@ public class ConversationAttachmentMessageUtil {
                 case "AttachmentMessage:Audio": {
                     Attachment attachment = message.getAttachments().get(0);
                     messagesModel = new MessagesModel(message.getMessageId(),
-                            selfMessage ? MessageTypesForUI.AudioSent : MessageTypesForUI.AudioReceived,
+                            selfMessage ? MessageTypeUi.AUDIO_MESSAGE_SENT : MessageTypeUi.AUDIO_MESSAGE_RECEIVED,
                             selfMessage, message.getSentAt(), message.getParentMessageId() != null,
                             FileUtils.getSizeOfFile(attachment.getSize()), false, false, true, false,
                             attachment.getMediaUrl(), attachment.getName(), attachment.getMimeType(),
@@ -122,7 +160,7 @@ public class ConversationAttachmentMessageUtil {
                 case "AttachmentMessage:File": {
                     Attachment attachment = message.getAttachments().get(0);
                     messagesModel = new MessagesModel(message.getMessageId(),
-                            selfMessage ? MessageTypesForUI.FileSent : MessageTypesForUI.FileReceived,
+                            selfMessage ? MessageTypeUi.FILE_MESSAGE_SENT : MessageTypeUi.FILE_MESSAGE_RECEIVED,
                             selfMessage, message.getSentAt(), message.getParentMessageId() != null,
                             FileUtils.getSizeOfFile(attachment.getSize()), false, false, true, false,
                             attachment.getMediaUrl(), attachment.getName(), attachment.getMimeType(),
@@ -141,7 +179,7 @@ public class ConversationAttachmentMessageUtil {
                     Attachment attachment = message.getAttachments().get(0);
 
                     messagesModel = new MessagesModel(message.getMessageId(),
-                            selfMessage ? MessageTypesForUI.LocationSent : MessageTypesForUI.LocationReceived,
+                            selfMessage ? MessageTypeUi.LOCATION_MESSAGE_SENT : MessageTypeUi.LOCATION_MESSAGE_RECEIVED,
                             selfMessage, message.getSentAt(), message.getParentMessageId() != null,
                             String.valueOf(attachment.getLatitude()), attachment.getTitle(),
                             String.valueOf(attachment.getLongitude()), attachment.getAddress(),
@@ -158,7 +196,7 @@ public class ConversationAttachmentMessageUtil {
                 case "AttachmentMessage:Sticker": {
                     Attachment attachment = message.getAttachments().get(0);
                     messagesModel = new MessagesModel(message.getMessageId(),
-                            selfMessage ? MessageTypesForUI.StickerSent : MessageTypesForUI.StickerReceived,
+                            selfMessage ? MessageTypeUi.STICKER_MESSAGE_SENT : MessageTypeUi.STICKER_MESSAGE_RECEIVED,
                             selfMessage, message.getSentAt(), message.getParentMessageId() != null,
                             attachment.getStillUrl(), attachment.getMediaUrl(),
                             message.getSenderInfo().getUserName(),
@@ -176,7 +214,7 @@ public class ConversationAttachmentMessageUtil {
                 case "AttachmentMessage:Gif": {
                     Attachment attachment = message.getAttachments().get(0);
                     messagesModel = new MessagesModel(message.getMessageId(),
-                            selfMessage ? MessageTypesForUI.GifSent : MessageTypesForUI.GifReceived, selfMessage,
+                            selfMessage ? MessageTypeUi.GIF_MESSAGE_SENT : MessageTypeUi.GIF_MESSAGE_RECEIVED, selfMessage,
                             message.getSentAt(), message.getParentMessageId() != null, attachment.getStillUrl(),
                             attachment.getMediaUrl(), message.getSenderInfo().getUserName(),
                             message.getSenderInfo().getUserProfileImageUrl(),
@@ -194,7 +232,7 @@ public class ConversationAttachmentMessageUtil {
                     Attachment attachment = message.getAttachments().get(0);
 
                     messagesModel = new MessagesModel(message.getMessageId(),
-                            selfMessage ? MessageTypesForUI.WhiteboardSent : MessageTypesForUI.WhiteboardReceived,
+                            selfMessage ? MessageTypeUi.WHITEBOARD_MESSAGE_SENT : MessageTypeUi.WHITEBOARD_MESSAGE_RECEIVED,
                             selfMessage, message.getSentAt(), message.getParentMessageId() != null,
                             FileUtils.getSizeOfFile(attachment.getSize()), false, false, true, false,
                             attachment.getThumbnailUrl(), attachment.getMediaUrl(), attachment.getMimeType(),
@@ -229,7 +267,7 @@ public class ConversationAttachmentMessageUtil {
 
                     }
                     messagesModel = new MessagesModel(message.getMessageId(),
-                            selfMessage ? MessageTypesForUI.ContactSent : MessageTypesForUI.ContactReceived,
+                            selfMessage ? MessageTypeUi.CONTACT_MESSAGE_SENT : MessageTypeUi.CONTACT_MESSAGE_RECEIVED,
                             selfMessage, message.getSentAt(), message.getParentMessageId() != null, contactName,
                             contactIdentifier, contactImageUrl, message.getSenderInfo().getUserName(),
                             message.getSenderInfo().getUserProfileImageUrl(),
@@ -244,7 +282,7 @@ public class ConversationAttachmentMessageUtil {
                 case "AttachmentMessage:OfferSent": {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
-                            selfMessage ? MessageTypesForUI.OfferSent : MessageTypesForUI.OfferReceived,
+                            selfMessage ? MessageTypeUi.OFFER_SENT : MessageTypeUi.OFFER_RECEIVED,
                             selfMessage, message.getSentAt(), message.getParentMessageId() != null,
                             TagUserUtil.parseMentionedUsers(message.getBody(),
                                     ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
@@ -262,7 +300,7 @@ public class ConversationAttachmentMessageUtil {
                 case "AttachmentMessage:CounterOffer": {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
-                            selfMessage ? MessageTypesForUI.CounterOfferSent : MessageTypesForUI.CounterOfferReceived,
+                            selfMessage ? MessageTypeUi.COUNTER_OFFER_SENT : MessageTypeUi.COUNTER_OFFER_RECEIVED,
                             selfMessage, message.getSentAt(), message.getParentMessageId() != null,
                             TagUserUtil.parseMentionedUsers(message.getBody(),
                                     ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
@@ -280,7 +318,7 @@ public class ConversationAttachmentMessageUtil {
                 case "AttachmentMessage:EditOffer": {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
-                            selfMessage ? MessageTypesForUI.EditOfferSent : MessageTypesForUI.EditOfferReceived,
+                            selfMessage ? MessageTypeUi.EDIT_OFFER_SENT : MessageTypeUi.EDIT_OFFER_RECEIVED,
                             selfMessage, message.getSentAt(), message.getParentMessageId() != null,
                             TagUserUtil.parseMentionedUsers(message.getBody(),
                                     ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
@@ -299,7 +337,7 @@ public class ConversationAttachmentMessageUtil {
                 case "AttachmentMessage:AcceptOffer": {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
-                            selfMessage ? MessageTypesForUI.AcceptOfferSent : MessageTypesForUI.AcceptOfferReceived,
+                            selfMessage ? MessageTypeUi.ACCEPT_OFFER_SENT : MessageTypeUi.ACCEPT_OFFER_RECEIVED,
                             selfMessage, message.getSentAt(), message.getParentMessageId() != null,
                             TagUserUtil.parseMentionedUsers(message.getBody(),
                                     ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
@@ -317,7 +355,7 @@ public class ConversationAttachmentMessageUtil {
                 case "AttachmentMessage:CancelDeal": {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
-                            selfMessage ? MessageTypesForUI.CancelDealSent : MessageTypesForUI.CancelDealReceived,
+                            selfMessage ? MessageTypeUi.CANCEL_DEAL_SENT : MessageTypeUi.CANCEL_DEAL_RECEIVED,
                             selfMessage, message.getSentAt(), message.getParentMessageId() != null,
                             TagUserUtil.parseMentionedUsers(message.getBody(),
                                     ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
@@ -335,7 +373,7 @@ public class ConversationAttachmentMessageUtil {
                 case "AttachmentMessage:CancelOffer": {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
-                            selfMessage ? MessageTypesForUI.CancelOfferSent : MessageTypesForUI.CancelOfferReceived,
+                            selfMessage ? MessageTypeUi.CANCEL_OFFER_SENT : MessageTypeUi.CANCEL_OFFER_RECEIVED,
                             selfMessage, message.getSentAt(), message.getParentMessageId() != null,
                             TagUserUtil.parseMentionedUsers(message.getBody(),
                                     ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
@@ -353,7 +391,7 @@ public class ConversationAttachmentMessageUtil {
                 case "AttachmentMessage:BuyDirect": {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
-                            selfMessage ? MessageTypesForUI.BuyDirectSent : MessageTypesForUI.BuyDirectReceived,
+                            selfMessage ? MessageTypeUi.BUY_DIRECT_SENT : MessageTypeUi.BUY_DIRECT_RECEIVED,
                             selfMessage, message.getSentAt(), message.getParentMessageId() != null,
                             TagUserUtil.parseMentionedUsers(message.getBody(),
                                     ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
@@ -371,7 +409,7 @@ public class ConversationAttachmentMessageUtil {
                 case "AttachmentMessage:AcceptBuyDirect": {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
-                            selfMessage ? MessageTypesForUI.AcceptBuyDirectSent : MessageTypesForUI.AcceptBuyDirectReceived,
+                            selfMessage ? MessageTypeUi.ACCEPT_BUY_DIRECT_SENT : MessageTypeUi.ACCEPT_BUY_DIRECT_RECEIVED,
                             selfMessage, message.getSentAt(), message.getParentMessageId() != null,
                             TagUserUtil.parseMentionedUsers(message.getBody(),
                                     ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
@@ -389,7 +427,7 @@ public class ConversationAttachmentMessageUtil {
                 case "AttachmentMessage:CancelBuyDirect": {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
-                            selfMessage ? MessageTypesForUI.CancelBuyDirectSent : MessageTypesForUI.CancelBuyDirectReceived,
+                            selfMessage ? MessageTypeUi.CANCEL_BUY_DIRECT_SENT : MessageTypeUi.CANCEL_BUY_DIRECT_RECEIVED,
                             selfMessage, message.getSentAt(), message.getParentMessageId() != null,
                             TagUserUtil.parseMentionedUsers(message.getBody(),
                                     ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
@@ -408,7 +446,7 @@ public class ConversationAttachmentMessageUtil {
                 case "AttachmentMessage:PaymentEscrowed": {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
-                            selfMessage ? MessageTypesForUI.PaymentEscrowedSent : MessageTypesForUI.PaymentEscrowedReceived,
+                            selfMessage ? MessageTypeUi.PAYMENT_ESCROWED_SENT : MessageTypeUi.PAYMENT_ESCROWED_RECEIVED,
                             selfMessage, message.getSentAt(), message.getParentMessageId() != null,
                             TagUserUtil.parseMentionedUsers(message.getBody(),
                                     ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
@@ -426,7 +464,7 @@ public class ConversationAttachmentMessageUtil {
                 case "AttachmentMessage:DealComplete": {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
-                            selfMessage ? MessageTypesForUI.DealCompleteSent : MessageTypesForUI.DealCompleteReceived,
+                            selfMessage ? MessageTypeUi.DEAL_COMPLETE_SENT : MessageTypeUi.DEAL_COMPLETE_RECEIVED,
                             selfMessage, message.getSentAt(), message.getParentMessageId() != null,
                             TagUserUtil.parseMentionedUsers(message.getBody(),
                                     ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(

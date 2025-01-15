@@ -31,7 +31,7 @@ Open your build.gradle file (app-level) and add the following line in the depend
 
 ```groovy
 dependencies {
-    implementation 'com.github.isometrikai:isometrik-chat-android:1.3.2'
+    implementation 'com.github.isometrikai:isometrik-chat-android:1.3.3'
 }
 ```
 ### Step 3: Sync Your Project
@@ -284,16 +284,41 @@ Check total message type of UI [here](isometrik-chat/src/main/java/io/isometrik/
 
 ```
 
-### Change the Base Color
+### Change base colors, default text, drawables and visibility of options
 
-To change the theme color of the module, add the following color name to your module's colors.xml file:
+Modify below file to update base color and other customisation.
 
-```java
-<color name="ism_theme_base">#YOUR_COLOR_HEX</color>
-<color name="ism_conversation_bg">#YOUR_COLOR_HEX</color>
-<color name="ism_send_message_bg">#YOUR_COLOR_HEX</color>
+```kotlin
+
+ChatConfig.baseColor = R.color.your_base_color
+ChatConfig.chatBackGroundColor = R.color.your_bg_color
+
+ChatConfig.noConversationsStringResId = R.string.your_text
+ChatConfig.noConversationsImageResId = R.drawable.your_image
+ChatConfig.noConversationsImageResId = R.drawable.your_ima
+ChatConfig.hideCreateChatOption = true
+ChatConfig.hideAudioCallOption = true
+ChatConfig.hideVideoCallOption = true
+ChatConfig.hideCaptureCameraOption = true
+ChatConfig.hideRecordAudioOption = true
+
 ```
-Replace #YOUR_COLOR_HEX with your desired color value.
+
+### Manage attachments options visibility by below file
+
+```kotlin
+
+AttachmentsConfig.hideCameraOption = true
+AttachmentsConfig.hideRecordVideoOption = true
+AttachmentsConfig.hidePhotosOption  = true
+AttachmentsConfig.hideVideosOption = true
+AttachmentsConfig.hideFilesOption = true
+AttachmentsConfig.hideLocationOption = true
+AttachmentsConfig.hideContactOption = true
+AttachmentsConfig.hideStickerOption = true
+AttachmentsConfig.hideGIFOption = true
+
+```
 
 
 # Technical details

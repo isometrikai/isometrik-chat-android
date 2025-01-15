@@ -10,6 +10,7 @@
 
 
   <color name="ism_theme_base">#7062E9</color>
+  <color name="ism_test_base">#9C27B0</color>
   <color name="ism_conversation_bg">#FFFFFF</color>
   <color name="ism_send_message_bg">#EEEEEE</color>
 

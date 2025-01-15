@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import io.isometrik.chat.utils.enums.MessageTypeUi
 import io.isometrik.ui.messages.action.MessageActionCallback
-import io.isometrik.chat.utils.enums.MessageTypesForUI
 import io.isometrik.ui.messages.chat.common.MessageBinderRegistry
 import io.isometrik.ui.messages.chat.messageBinders.MessageItemBinder
 import io.isometrik.ui.messages.chat.viewholders.AudioMessageReceivedViewHolder
@@ -51,62 +50,8 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
 
         val message = messages[position]
         return (message as? MessagesModel)?.let { messagesModel ->
-            return if (messagesModel.isSentMessage) {
-                when (messagesModel.customMessageType) {
-                    MessageTypesForUI.TextSent, MessageTypesForUI.ReplaySent -> MessageTypeUi.TEXT_MESSAGE_SENT.value
-                    MessageTypesForUI.PhotoSent -> MessageTypeUi.PHOTO_MESSAGE_SENT.value
-                    MessageTypesForUI.VideoSent -> MessageTypeUi.VIDEO_MESSAGE_SENT.value
-                    MessageTypesForUI.AudioSent -> MessageTypeUi.AUDIO_MESSAGE_SENT.value
-                    MessageTypesForUI.FileSent -> MessageTypeUi.FILE_MESSAGE_SENT.value
-                    MessageTypesForUI.StickerSent -> MessageTypeUi.STICKER_MESSAGE_SENT.value
-                    MessageTypesForUI.GifSent -> MessageTypeUi.GIF_MESSAGE_SENT.value
-                    MessageTypesForUI.WhiteboardSent -> MessageTypeUi.WHITEBOARD_MESSAGE_SENT.value
-                    MessageTypesForUI.LocationSent -> MessageTypeUi.LOCATION_MESSAGE_SENT.value
-                    MessageTypesForUI.ContactSent -> MessageTypeUi.CONTACT_MESSAGE_SENT.value
-                    MessageTypesForUI.PostSent -> MessageTypeUi.POST_MESSAGE_SENT.value
-                    MessageTypesForUI.OfferSent -> MessageTypeUi.OFFER_SENT.value
-                    MessageTypesForUI.CounterOfferSent -> MessageTypeUi.COUNTER_OFFER_SENT.value
-                    MessageTypesForUI.EditOfferSent -> MessageTypeUi.EDIT_OFFER_SENT.value
-                    MessageTypesForUI.AcceptOfferSent -> MessageTypeUi.ACCEPT_OFFER_SENT.value
-                    MessageTypesForUI.CancelDealSent -> MessageTypeUi.CANCEL_DEAL_SENT.value
-                    MessageTypesForUI.CancelOfferSent -> MessageTypeUi.CANCEL_OFFER_SENT.value
-                    MessageTypesForUI.BuyDirectSent -> MessageTypeUi.BUY_DIRECT_SENT.value
-                    MessageTypesForUI.AcceptBuyDirectSent -> MessageTypeUi.ACCEPT_BUY_DIRECT_SENT.value
-                    MessageTypesForUI.CancelBuyDirectSent -> MessageTypeUi.CANCEL_BUY_DIRECT_SENT.value
-                    MessageTypesForUI.PaymentEscrowedSent -> MessageTypeUi.PAYMENT_ESCROWED_SENT.value
-                    MessageTypesForUI.DealCompleteSent -> MessageTypeUi.DEAL_COMPLETE_SENT.value
-                    else -> MessageTypeUi.CONVERSATION_ACTION_MESSAGE.value
-                }
-            } else {
-                when (messagesModel.customMessageType) {
-                    MessageTypesForUI.TextReceived, MessageTypesForUI.ReplayReceived -> MessageTypeUi.TEXT_MESSAGE_RECEIVED.value
-                    MessageTypesForUI.PhotoReceived -> MessageTypeUi.PHOTO_MESSAGE_RECEIVED.value
-                    MessageTypesForUI.VideoReceived -> MessageTypeUi.VIDEO_MESSAGE_RECEIVED.value
-                    MessageTypesForUI.AudioReceived -> MessageTypeUi.AUDIO_MESSAGE_RECEIVED.value
-                    MessageTypesForUI.FileReceived -> MessageTypeUi.FILE_MESSAGE_RECEIVED.value
-                    MessageTypesForUI.StickerReceived -> MessageTypeUi.STICKER_MESSAGE_RECEIVED.value
-                    MessageTypesForUI.GifReceived -> MessageTypeUi.GIF_MESSAGE_RECEIVED.value
-                    MessageTypesForUI.WhiteboardReceived -> MessageTypeUi.WHITEBOARD_MESSAGE_RECEIVED.value
-                    MessageTypesForUI.LocationReceived -> MessageTypeUi.LOCATION_MESSAGE_RECEIVED.value
-                    MessageTypesForUI.ContactReceived -> MessageTypeUi.CONTACT_MESSAGE_RECEIVED.value
-                    MessageTypesForUI.ConversationActionMessage -> MessageTypeUi.CONVERSATION_ACTION_MESSAGE.value
-                    MessageTypesForUI.PostReceived -> MessageTypeUi.POST_MESSAGE_RECEIVED.value
-                    MessageTypesForUI.OfferReceived -> MessageTypeUi.OFFER_RECEIVED.value
-                    MessageTypesForUI.CounterOfferReceived -> MessageTypeUi.COUNTER_OFFER_RECEIVED.value
-                    MessageTypesForUI.EditOfferReceived -> MessageTypeUi.EDIT_OFFER_RECEIVED.value
-                    MessageTypesForUI.AcceptOfferReceived -> MessageTypeUi.ACCEPT_OFFER_RECEIVED.value
-                    MessageTypesForUI.CancelDealReceived -> MessageTypeUi.CANCEL_DEAL_RECEIVED.value
-                    MessageTypesForUI.CancelOfferReceived -> MessageTypeUi.CANCEL_OFFER_RECEIVED.value
-                    MessageTypesForUI.BuyDirectReceived -> MessageTypeUi.BUY_DIRECT_RECEIVED.value
-                    MessageTypesForUI.AcceptBuyDirectReceived -> MessageTypeUi.ACCEPT_BUY_DIRECT_RECEIVED.value
-                    MessageTypesForUI.CancelBuyDirectReceived -> MessageTypeUi.CANCEL_BUY_DIRECT_RECEIVED.value
-                    MessageTypesForUI.PaymentEscrowedReceived -> MessageTypeUi.PAYMENT_ESCROWED_RECEIVED.value
-                    MessageTypesForUI.DealCompleteReceived -> MessageTypeUi.DEAL_COMPLETE_RECEIVED.value
-                    else -> MessageTypeUi.CONVERSATION_ACTION_MESSAGE.value
-                }
-            }
-
-        } ?: -1
+            return messagesModel.customMessageType.value
+        } ?: 20 // conversation type
 
     }
 
@@ -196,7 +141,7 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
             val item = messages[position]
             if (item is MessagesModel) {
                 when (item.customMessageType) {
-                    MessageTypesForUI.PhotoSent -> {
+                    MessageTypeUi.PHOTO_MESSAGE_SENT -> {
                         if (download) {
                             (rvMessages.findViewHolderForAdapterPosition(
                                 position
@@ -218,7 +163,7 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
                         }
                     }
 
-                    MessageTypesForUI.PhotoReceived -> {
+                    MessageTypeUi.PHOTO_MESSAGE_RECEIVED -> {
                         (rvMessages.findViewHolderForAdapterPosition(
                             position
                         ) as PhotoMessageReceivedViewHolder).ismReceivedMessagePhotoBinding.pbDownload.setProgressCompat(
@@ -227,7 +172,7 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
                         )
                     }
 
-                    MessageTypesForUI.VideoSent -> {
+                    MessageTypeUi.VIDEO_MESSAGE_SENT -> {
                         if (download) {
                             (rvMessages.findViewHolderForAdapterPosition(
                                 position
@@ -247,7 +192,7 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
                         }
                     }
 
-                    MessageTypesForUI.VideoReceived -> {
+                    MessageTypeUi.VIDEO_MESSAGE_RECEIVED -> {
                         (rvMessages.findViewHolderForAdapterPosition(
                             position
                         ) as VideoMessageReceivedViewHolder).ismReceivedMessageVideoBinding.pbDownload.setProgressCompat(
@@ -256,7 +201,7 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
                         )
                     }
 
-                    MessageTypesForUI.AudioSent -> {
+                    MessageTypeUi.AUDIO_MESSAGE_SENT -> {
                         if (download) {
                             (rvMessages.findViewHolderForAdapterPosition(
                                 position
@@ -276,7 +221,7 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
                         }
                     }
 
-                    MessageTypesForUI.AudioReceived -> {
+                    MessageTypeUi.AUDIO_MESSAGE_RECEIVED -> {
                         (rvMessages.findViewHolderForAdapterPosition(
                             position
                         ) as AudioMessageReceivedViewHolder).ismReceivedMessageAudioBinding.pbDownload.setProgressCompat(
@@ -285,7 +230,7 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
                         )
                     }
 
-                    MessageTypesForUI.FileSent -> {
+                    MessageTypeUi.FILE_MESSAGE_SENT -> {
                         if (download) {
                             (rvMessages.findViewHolderForAdapterPosition(
                                 position
@@ -305,7 +250,7 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
                         }
                     }
 
-                    MessageTypesForUI.FileReceived -> {
+                    MessageTypeUi.FILE_MESSAGE_RECEIVED -> {
                         (rvMessages.findViewHolderForAdapterPosition(
                             position
                         ) as FileMessageReceivedViewHolder).ismReceivedMessageFileBinding.pbDownload.setProgressCompat(
@@ -314,7 +259,7 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
                         )
                     }
 
-                    MessageTypesForUI.WhiteboardSent -> {
+                    MessageTypeUi.WHITEBOARD_MESSAGE_SENT -> {
                         if (download) {
                             (rvMessages.findViewHolderForAdapterPosition(
                                 position
@@ -334,7 +279,7 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
                         }
                     }
 
-                    MessageTypesForUI.WhiteboardReceived -> {
+                    MessageTypeUi.WHITEBOARD_MESSAGE_RECEIVED -> {
                         (rvMessages.findViewHolderForAdapterPosition(
                             position
                         ) as WhiteboardMessageReceivedViewHolder).ismReceivedMessageWhiteboardBinding.pbDownload.setProgressCompat(

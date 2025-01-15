@@ -1,6 +1,6 @@
 package io.isometrik.ui.messages.media;
 
-import io.isometrik.chat.utils.enums.MessageTypesForUI;
+import io.isometrik.chat.utils.enums.MessageTypeUi;
 
 /**
  * The interface Media type to be shared callback to messages screen based on message type selected
@@ -13,5 +13,5 @@ public interface MediaTypeToBeSharedCallback {
    *
    * @param mediaTypeSelected the media type selected
    */
-  void onMediaTypeToBeSharedSelected(MessageTypesForUI mediaTypeSelected);
+  void onMediaTypeToBeSharedSelected(MessageTypeUi mediaTypeSelected);
 }

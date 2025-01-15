@@ -24,44 +24,44 @@ public class NotificationBodyUtils {
         String notificationBody = "";
         Context context = IsometrikChatSdk.getInstance().getContext();
         switch (messagesModel.getCustomMessageType()) {
-            case TextSent: {
+            case TEXT_MESSAGE_SENT: {
                 notificationBody = messagesModel.getTextMessage().toString();
                 break;
             }
-            case PhotoSent: {
+            case PHOTO_MESSAGE_SENT: {
                 notificationBody = "📷 "+context.getString(R.string.ism_photo);
                 break;
             }
-            case VideoSent: {
+            case VIDEO_MESSAGE_SENT: {
                 notificationBody = "📹 "+context.getString(R.string.ism_video);
                 break;
             }
-            case AudioSent: {
+            case AUDIO_MESSAGE_SENT: {
                 notificationBody = "🎤 "+context.getString(R.string.ism_voice_message);
                 break;
             }
-            case FileSent: {
+            case FILE_MESSAGE_SENT: {
                 notificationBody = "📄 " + messagesModel.getFileName();
                 break;
             }
-            case StickerSent: {
+            case STICKER_MESSAGE_SENT: {
               notificationBody = context.getString(R.string.ism_sticker);
                 break;
             }
-            case GifSent: {
+            case GIF_MESSAGE_SENT: {
               notificationBody = context.getString(R.string.ism_gif);
 
               break;
             }
-            case WhiteboardSent: {
+            case WHITEBOARD_MESSAGE_SENT: {
                 notificationBody = context.getString(R.string.ism_whiteboard);
                 break;
             }
-            case LocationSent: {
+            case LOCATION_MESSAGE_SENT: {
                 notificationBody = "📍 " + messagesModel.getLocationDescription();
                 break;
             }
-            case ContactSent: {
+            case CONTACT_MESSAGE_SENT: {
                 if (messagesModel.getContactList().length() > 0) {
                     if (messagesModel.getContactList().length() == 1) {
                         try {
@@ -81,7 +81,7 @@ public class NotificationBodyUtils {
                 }
                 break;
             }
-            case ReplaySent: {
+            case REPLAY_MESSAGE_SENT: {
                 notificationBody = messagesModel.getTextMessage().toString();
             }
         }

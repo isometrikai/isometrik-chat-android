@@ -59,8 +59,8 @@ public class ForwardMessageActivity extends FragmentActivity
     Integer attachmentPlaceholderIcon = null;
     switch (messagesModel.getCustomMessageType()) {
 
-      case TextReceived:
-      case TextSent: {
+      case TEXT_MESSAGE_RECEIVED:
+      case TEXT_MESSAGE_SENT: {
         //TextMessage
         ismActivityForwardMessageBinding.tvMediaDescription.setVisibility(View.VISIBLE);
         ismActivityForwardMessageBinding.tvMediaDescription.setText(messagesModel.getTextMessage());
@@ -70,8 +70,8 @@ public class ForwardMessageActivity extends FragmentActivity
         break;
       }
 
-      case PhotoReceived:
-      case PhotoSent: {
+      case PHOTO_MESSAGE_RECEIVED:
+      case PHOTO_MESSAGE_SENT: {
         //Image
         ismActivityForwardMessageBinding.tvMediaDescription.setVisibility(View.GONE);
         attachmentPlaceholderIcon = R.drawable.ism_ic_picture;
@@ -92,8 +92,8 @@ public class ForwardMessageActivity extends FragmentActivity
         ismActivityForwardMessageBinding.tvAttachmentType.setText(getString(R.string.ism_photo));
         break;
       }
-      case VideoReceived:
-      case VideoSent: {
+      case VIDEO_MESSAGE_RECEIVED:
+      case VIDEO_MESSAGE_SENT: {
         //Video
         ismActivityForwardMessageBinding.tvMediaDescription.setVisibility(View.GONE);
         attachmentPlaceholderIcon = R.drawable.ism_ic_video;
@@ -115,8 +115,8 @@ public class ForwardMessageActivity extends FragmentActivity
         ismActivityForwardMessageBinding.ivPlayVideo.setVisibility(View.VISIBLE);
         break;
       }
-      case AudioReceived:
-      case AudioSent: {
+      case AUDIO_MESSAGE_RECEIVED:
+      case AUDIO_MESSAGE_SENT: {
         //Audio
         ismActivityForwardMessageBinding.tvMediaDescription.setVisibility(View.VISIBLE);
         ismActivityForwardMessageBinding.tvMediaDescription.setText(messagesModel.getAudioName());
@@ -127,8 +127,8 @@ public class ForwardMessageActivity extends FragmentActivity
 
         break;
       }
-      case FileReceived:
-      case FileSent: {
+      case FILE_MESSAGE_RECEIVED:
+      case FILE_MESSAGE_SENT: {
         //File
         ismActivityForwardMessageBinding.tvMediaDescription.setVisibility(View.VISIBLE);
         ismActivityForwardMessageBinding.tvMediaDescription.setText(messagesModel.getFileName());
@@ -139,8 +139,8 @@ public class ForwardMessageActivity extends FragmentActivity
 
         break;
       }
-      case LocationReceived:
-      case LocationSent: {
+      case LOCATION_MESSAGE_RECEIVED:
+      case LOCATION_MESSAGE_SENT: {
         //Location
         ismActivityForwardMessageBinding.tvMediaDescription.setVisibility(View.VISIBLE);
         ismActivityForwardMessageBinding.tvMediaDescription.setText(
@@ -162,8 +162,8 @@ public class ForwardMessageActivity extends FragmentActivity
 
         break;
       }
-      case ContactReceived:
-      case ContactSent: {
+      case CONTACT_MESSAGE_RECEIVED:
+      case CONTACT_MESSAGE_SENT: {
         //Contact
         ismActivityForwardMessageBinding.tvMediaDescription.setVisibility(View.VISIBLE);
         ismActivityForwardMessageBinding.tvMediaDescription.setText(
@@ -174,8 +174,8 @@ public class ForwardMessageActivity extends FragmentActivity
 
         break;
       }
-      case WhiteboardReceived:
-      case WhiteboardSent: {
+      case WHITEBOARD_MESSAGE_RECEIVED:
+      case WHITEBOARD_MESSAGE_SENT: {
         //Whiteboard
         ismActivityForwardMessageBinding.tvMediaDescription.setVisibility(View.GONE);
         attachmentPlaceholderIcon = R.drawable.ism_ic_whiteboard;
@@ -197,8 +197,8 @@ public class ForwardMessageActivity extends FragmentActivity
 
         break;
       }
-      case GifReceived:
-      case GifSent: {
+      case GIF_MESSAGE_RECEIVED:
+      case GIF_MESSAGE_SENT: {
         //Gif
         ismActivityForwardMessageBinding.tvMediaDescription.setVisibility(View.GONE);
         attachmentPlaceholderIcon = R.drawable.ism_ic_gif;
@@ -219,8 +219,8 @@ public class ForwardMessageActivity extends FragmentActivity
 
         break;
       }
-      case StickerReceived:
-      case StickerSent: {
+      case STICKER_MESSAGE_RECEIVED:
+      case STICKER_MESSAGE_SENT: {
         //Sticker
         ismActivityForwardMessageBinding.tvMediaDescription.setVisibility(View.GONE);
         attachmentPlaceholderIcon = R.drawable.ism_ic_sticker;

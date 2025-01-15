@@ -48,16 +48,16 @@ public class ForwardMessagePresenter implements ForwardMessageContract.Presenter
 
     switch (messagesModel.getCustomMessageType()) {
 
-      case TextSent:
-      case TextReceived: {
+      case TEXT_MESSAGE_SENT:
+      case TEXT_MESSAGE_RECEIVED: {
         messageBody = messagesModel.getTextMessage().toString();
-        customType = CustomMessageTypes.Text.getValue();
+        customType = CustomMessageTypes.Text.value;
         break;
       }
-      case PhotoSent:
-      case PhotoReceived: {
-        messageBody = CustomMessageTypes.Image.getValue();
-        customType = CustomMessageTypes.Image.getValue();
+      case PHOTO_MESSAGE_SENT:
+      case PHOTO_MESSAGE_RECEIVED: {
+        messageBody = CustomMessageTypes.Image.value;
+        customType = CustomMessageTypes.Image.value;
 
         mediaAttachment = PrepareAttachmentHelper.prepareMediaAttachment(messagesModel.getMediaId(),
             messagesModel.getPhotoMainUrl(), messagesModel.getPhotoThumbnailUrl(),
@@ -67,10 +67,10 @@ public class ForwardMessagePresenter implements ForwardMessageContract.Presenter
 
         break;
       }
-      case VideoSent:
-      case VideoReceived: {
-        messageBody = CustomMessageTypes.Video.getValue();
-        customType = CustomMessageTypes.Video.getValue();
+      case VIDEO_MESSAGE_SENT:
+      case VIDEO_MESSAGE_RECEIVED: {
+        messageBody = CustomMessageTypes.Video.value;
+        customType = CustomMessageTypes.Video.value;
 
         mediaAttachment = PrepareAttachmentHelper.prepareMediaAttachment(messagesModel.getMediaId(),
             messagesModel.getVideoMainUrl(), messagesModel.getVideoThumbnailUrl(),
@@ -80,10 +80,10 @@ public class ForwardMessagePresenter implements ForwardMessageContract.Presenter
 
         break;
       }
-      case AudioSent:
-      case AudioReceived: {
-        messageBody = CustomMessageTypes.Audio.getValue();
-        customType = CustomMessageTypes.Audio.getValue();
+      case AUDIO_MESSAGE_SENT:
+      case AUDIO_MESSAGE_RECEIVED: {
+        messageBody = CustomMessageTypes.Audio.value;
+        customType = CustomMessageTypes.Audio.value;
 
         mediaAttachment = PrepareAttachmentHelper.prepareMediaAttachment(messagesModel.getMediaId(),
             messagesModel.getAudioUrl(), messagesModel.getAudioUrl(), AttachmentMessageType.Audio,
@@ -92,10 +92,10 @@ public class ForwardMessagePresenter implements ForwardMessageContract.Presenter
 
         break;
       }
-      case FileSent:
-      case FileReceived: {
-        messageBody = CustomMessageTypes.File.getValue();
-        customType = CustomMessageTypes.File.getValue();
+      case FILE_MESSAGE_SENT:
+      case FILE_MESSAGE_RECEIVED: {
+        messageBody = CustomMessageTypes.File.value;
+        customType = CustomMessageTypes.File.value;
 
         mediaAttachment = PrepareAttachmentHelper.prepareMediaAttachment(messagesModel.getMediaId(),
             messagesModel.getFileUrl(), messagesModel.getFileUrl(), AttachmentMessageType.File,
@@ -104,10 +104,10 @@ public class ForwardMessagePresenter implements ForwardMessageContract.Presenter
 
         break;
       }
-      case WhiteboardSent:
-      case WhiteboardReceived: {
-        messageBody = CustomMessageTypes.Whiteboard.getValue();
-        customType = CustomMessageTypes.Whiteboard.getValue();
+      case WHITEBOARD_MESSAGE_SENT:
+      case WHITEBOARD_MESSAGE_RECEIVED: {
+        messageBody = CustomMessageTypes.Whiteboard.value;
+        customType = CustomMessageTypes.Whiteboard.value;
 
         mediaAttachment = PrepareAttachmentHelper.prepareMediaAttachment(messagesModel.getMediaId(),
             messagesModel.getWhiteboardMainUrl(), messagesModel.getWhiteboardThumbnailUrl(),
@@ -117,10 +117,10 @@ public class ForwardMessagePresenter implements ForwardMessageContract.Presenter
 
         break;
       }
-      case StickerSent:
-      case StickerReceived: {
-        messageBody = CustomMessageTypes.Sticker.getValue();
-        customType = CustomMessageTypes.Sticker.getValue();
+      case STICKER_MESSAGE_SENT:
+      case STICKER_MESSAGE_RECEIVED: {
+        messageBody = CustomMessageTypes.Sticker.value;
+        customType = CustomMessageTypes.Sticker.value;
 
         mediaAttachment =
             PrepareAttachmentHelper.prepareStickerAttachment(messagesModel.getAttachmentName(),
@@ -128,10 +128,10 @@ public class ForwardMessagePresenter implements ForwardMessageContract.Presenter
                 messagesModel.getStickerStillUrl());
         break;
       }
-      case GifSent:
-      case GifReceived: {
-        messageBody = CustomMessageTypes.Gif.getValue();
-        customType = CustomMessageTypes.Gif.getValue();
+      case GIF_MESSAGE_SENT:
+      case GIF_MESSAGE_RECEIVED: {
+        messageBody = CustomMessageTypes.Gif.value;
+        customType = CustomMessageTypes.Gif.value;
 
         mediaAttachment =
             PrepareAttachmentHelper.prepareGifAttachment(messagesModel.getAttachmentName(),
@@ -140,10 +140,10 @@ public class ForwardMessagePresenter implements ForwardMessageContract.Presenter
 
         break;
       }
-      case LocationSent:
-      case LocationReceived: {
-        messageBody = CustomMessageTypes.Location.getValue();
-        customType = CustomMessageTypes.Location.getValue();
+      case LOCATION_MESSAGE_SENT:
+      case LOCATION_MESSAGE_RECEIVED: {
+        messageBody = CustomMessageTypes.Location.value;
+        customType = CustomMessageTypes.Location.value;
 
         mediaAttachment =
             PrepareAttachmentHelper.prepareLocationAttachment(messagesModel.getLocationName(),
@@ -152,10 +152,10 @@ public class ForwardMessagePresenter implements ForwardMessageContract.Presenter
                 Double.parseDouble(messagesModel.getLongitude()));
         break;
       }
-      case ContactSent:
-      case ContactReceived: {
-        messageBody = CustomMessageTypes.Contact.getValue();
-        customType = CustomMessageTypes.Contact.getValue();
+      case CONTACT_MESSAGE_SENT:
+      case CONTACT_MESSAGE_RECEIVED: {
+        messageBody = CustomMessageTypes.Contact.value;
+        customType = CustomMessageTypes.Contact.value;
 
         messageMetadata = ContactUtil.parseContactsData(messagesModel.getContactName(),
             messagesModel.getContactIdentifier(), messagesModel.getContactImageUrl());

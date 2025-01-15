@@ -3,8 +3,8 @@ package io.isometrik.ui.messages.chat;
 import android.text.SpannableString;
 
 import io.isometrik.chat.R;
+import io.isometrik.chat.utils.enums.MessageTypeUi;
 import io.isometrik.ui.IsometrikChatSdk;
-import io.isometrik.chat.utils.enums.MessageTypesForUI;
 import io.isometrik.ui.messages.chat.utils.enums.RemoteMessageTypes;
 import io.isometrik.ui.messages.chat.utils.messageutils.OriginalReplyMessageUtil;
 import io.isometrik.chat.utils.TimeUtil;
@@ -355,7 +355,7 @@ public class MessagesModel implements Serializable {
      * @param editedMessage            the edited message
      */
     //Gif/Sticker message
-    public MessagesModel(String messageId, MessageTypesForUI customMessageType, boolean isSentMessage,
+    public MessagesModel(String messageId, MessageTypeUi customMessageType, boolean isSentMessage,
                          long messageTime, boolean isQuotedMessage, String gifOrStickerStillUrl,
                          String gifOrStickerMainUrl, String senderName, String senderImageUrl,
                          ArrayList<ReactionModel> reactions, boolean sticker, boolean messageSentSuccessfully,
@@ -455,7 +455,7 @@ public class MessagesModel implements Serializable {
      * @param editedMessage            the edited message
      */
     //Audio/file message
-    public MessagesModel(String messageId, MessageTypesForUI customMessageType, boolean isSentMessage,
+    public MessagesModel(String messageId, MessageTypeUi customMessageType, boolean isSentMessage,
                          long messageTime, boolean isQuotedMessage, String mediaSizeInMB, boolean isDownloaded,
                          boolean isDownloading, boolean isUploaded, boolean isUploading, String audioOrFileUrl,
                          String audioOrFileName, String mimeType, String mediaExtension, String senderName,
@@ -659,14 +659,14 @@ public class MessagesModel implements Serializable {
     }
 
     //For identifying the custom message type
-    private final MessageTypesForUI customMessageType;
+    private final MessageTypeUi customMessageType;
 
     /**
      * Gets custom message type.
      *
      * @return the custom message type
      */
-    public MessageTypesForUI getCustomMessageType() {
+    public MessageTypeUi getCustomMessageType() {
         return customMessageType;
     }
 
@@ -1192,7 +1192,7 @@ public class MessagesModel implements Serializable {
      * @param editedMessage            the edited message
      */
     //Location message constructor
-    public MessagesModel(String messageId, MessageTypesForUI customMessageType, boolean isSentMessage,
+    public MessagesModel(String messageId, MessageTypeUi customMessageType, boolean isSentMessage,
                          long messageTime, boolean isQuotedMessage, String latitude, String locationName,
                          String longitude, String locationDescription, String senderName, String senderImageUrl,
                          ArrayList<ReactionModel> reactions, boolean messageSentSuccessfully, String localMessageId,
@@ -1275,7 +1275,7 @@ public class MessagesModel implements Serializable {
      * @param editedMessage            the edited message
      */
     //Contact message
-    public MessagesModel(String messageId, MessageTypesForUI customMessageType, boolean isSentMessage,
+    public MessagesModel(String messageId, MessageTypeUi customMessageType, boolean isSentMessage,
                          long messageTime, boolean isQuotedMessage, String contactName, String contactIdentifier,
                          String contactImageUrl, String senderName, String senderImageUrl,
                          ArrayList<ReactionModel> reactions, boolean messageSentSuccessfully, String localMessageId,
@@ -1379,7 +1379,7 @@ public class MessagesModel implements Serializable {
      * @param editedMessage            the edited message
      */
     //Video/photo/whiteboard message
-    public MessagesModel(String messageId, MessageTypesForUI customMessageType, boolean isSentMessage,
+    public MessagesModel(String messageId, MessageTypeUi customMessageType, boolean isSentMessage,
                          long messageTime, boolean isQuotedMessage, String mediaSizeInMB, boolean isDownloaded,
                          boolean isDownloading, boolean isUploaded, boolean isUploading, String thumbnailUrl,
                          String mainUrl, String mimeType, String mediaExtension, String senderName,
@@ -1412,20 +1412,20 @@ public class MessagesModel implements Serializable {
         this.isUploaded = isUploaded;
         this.isUploading = isUploading;
         switch (customMessageType) {
-            case PhotoReceived:
-            case PhotoSent, PostReceived, PostSent: {
+            case PHOTO_MESSAGE_RECEIVED:
+            case PHOTO_MESSAGE_SENT, POST_MESSAGE_RECEIVED, POST_MESSAGE_SENT: {
                 this.photoThumbnailUrl = thumbnailUrl;
                 this.photoMainUrl = mainUrl;
                 break;
             }
-            case VideoReceived:
-            case VideoSent: {
+            case VIDEO_MESSAGE_RECEIVED:
+            case VIDEO_MESSAGE_SENT: {
                 this.videoThumbnailUrl = thumbnailUrl;
                 this.videoMainUrl = mainUrl;
                 break;
             }
-            case WhiteboardReceived:
-            case WhiteboardSent: {
+            case WHITEBOARD_MESSAGE_RECEIVED:
+            case WHITEBOARD_MESSAGE_SENT: {
                 this.whiteboardThumbnailUrl = thumbnailUrl;
                 this.whiteboardMainUrl = mainUrl;
                 break;
@@ -1492,7 +1492,7 @@ public class MessagesModel implements Serializable {
      * @param editedMessage            the edited message
      */
     //Text message
-    public MessagesModel(String messageId, MessageTypesForUI customMessageType, boolean isSentMessage,
+    public MessagesModel(String messageId, MessageTypeUi customMessageType, boolean isSentMessage,
                          long messageTime, boolean isQuotedMessage, SpannableString textMessage, String senderName,
                          String senderImageUrl, ArrayList<ReactionModel> reactions, boolean messageSentSuccessfully,
                          String localMessageId, OriginalReplyMessageUtil originalReplyMessageUtil,
@@ -1575,7 +1575,7 @@ public class MessagesModel implements Serializable {
      * @param customMessageType         the custom message type
      */
     public MessagesModel(String conversationActionMessage, String messageId, long messageTime,
-                         boolean isSentMessage, MessageTypesForUI customMessageType) {
+                         boolean isSentMessage, MessageTypeUi customMessageType) {
         this.conversationActionMessage = conversationActionMessage;
         this.messageId = messageId;
         this.customMessageType = customMessageType;
@@ -1595,7 +1595,7 @@ public class MessagesModel implements Serializable {
      * @param messageMetadata           the message Metadata
      */
     public MessagesModel(String conversationActionMessage, String messageId, long messageTime,
-                         boolean isSentMessage, MessageTypesForUI customMessageType,JSONObject messageMetadata) {
+                         boolean isSentMessage, MessageTypeUi customMessageType,JSONObject messageMetadata) {
         this.conversationActionMessage = conversationActionMessage;
         this.messageId = messageId;
         this.customMessageType = customMessageType;

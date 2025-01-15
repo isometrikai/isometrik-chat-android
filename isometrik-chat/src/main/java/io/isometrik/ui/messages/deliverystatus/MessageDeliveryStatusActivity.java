@@ -51,8 +51,8 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
 
      switch (messagesModel.getCustomMessageType()) {
 
-       case ReplaySent:
-       case TextSent: {
+       case REPLAY_MESSAGE_SENT:
+       case TEXT_MESSAGE_SENT: {
          //TextMessage
          ismActivityMessageDeliveryStatusBinding.rlTextMessage.setVisibility(View.VISIBLE);
 
@@ -90,7 +90,7 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
 
          break;
        }
-       case PhotoSent: {
+       case PHOTO_MESSAGE_SENT: {
          //Image
          ismActivityMessageDeliveryStatusBinding.rlPhoto.setVisibility(View.VISIBLE);
          if (isQuotedMessage) {
@@ -135,7 +135,7 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
 
          break;
        }
-       case VideoSent: {
+       case VIDEO_MESSAGE_SENT: {
          //Video
          ismActivityMessageDeliveryStatusBinding.rlVideo.setVisibility(View.VISIBLE);
          if (isQuotedMessage) {
@@ -180,7 +180,7 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
 
          break;
        }
-       case AudioSent: {
+       case AUDIO_MESSAGE_SENT: {
          //Audio
          ismActivityMessageDeliveryStatusBinding.rlAudioMessage.setVisibility(View.VISIBLE);
          if (isQuotedMessage) {
@@ -217,7 +217,7 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
 
          break;
        }
-       case FileSent: {
+       case FILE_MESSAGE_SENT: {
          //File
          ismActivityMessageDeliveryStatusBinding.rlFile.setVisibility(View.VISIBLE);
          if (isQuotedMessage) {
@@ -253,7 +253,7 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
          break;
        }
 
-       case LocationSent: {
+       case LOCATION_MESSAGE_SENT: {
          //Location
          ismActivityMessageDeliveryStatusBinding.rlLocation.setVisibility(View.VISIBLE);
          if (isQuotedMessage) {
@@ -298,7 +298,7 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
              messagesModel.getLocationDescription());
          break;
        }
-       case ContactSent: {
+       case CONTACT_MESSAGE_SENT: {
          //Contact
          ismActivityMessageDeliveryStatusBinding.rlContact.setVisibility(View.VISIBLE);
          if (isQuotedMessage) {
@@ -350,7 +350,7 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
          break;
        }
 
-       case WhiteboardSent: {
+       case WHITEBOARD_MESSAGE_SENT: {
          //Whiteboard
          ismActivityMessageDeliveryStatusBinding.rlWhiteboard.setVisibility(View.VISIBLE);
          if (isQuotedMessage) {
@@ -396,7 +396,7 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
          break;
        }
 
-       case GifSent: {
+       case GIF_MESSAGE_SENT: {
          //Gif
          ismActivityMessageDeliveryStatusBinding.rlGif.setVisibility(View.VISIBLE);
          if (isQuotedMessage) {
@@ -437,7 +437,7 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
          }
          break;
        }
-       case StickerSent: {
+       case STICKER_MESSAGE_SENT: {
          //Sticker
          ismActivityMessageDeliveryStatusBinding.rlSticker.setVisibility(View.VISIBLE);
          if (isQuotedMessage) {

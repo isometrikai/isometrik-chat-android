@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/rel_root"
     android:background="@color/ism_white"
     android:keepScreenOn="true">
 
@@ -13,6 +14,7 @@
         android:layout_height="?attr/actionBarSize">
 
         <RelativeLayout
+            android:id="@+id/rel_topbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/ism_white">

@@ -16,8 +16,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmBottomsheetMessageActionsBinding;
 import io.isometrik.chat.utils.MentionedUserSpan;
+import io.isometrik.chat.utils.enums.MessageTypeUi;
 import io.isometrik.ui.messages.chat.MessagesModel;
-import io.isometrik.chat.utils.enums.MessageTypesForUI;
 
 /**
  * The fragment for showing actionable items on click of a message for- reply/edit/delete for
@@ -49,8 +49,8 @@ public class MessageActionFragment extends BottomSheetDialogFragment {
     IsmBottomsheetMessageActionsBinding ismBottomsheetMessageActionsBinding =
         IsmBottomsheetMessageActionsBinding.inflate(inflater, container, false);
 
-    if (messagesModel.getCustomMessageType().equals(MessageTypesForUI.TextSent)
-        || messagesModel.getCustomMessageType().equals(MessageTypesForUI.TextReceived)) {
+    if (messagesModel.getCustomMessageType().equals(MessageTypeUi.TEXT_MESSAGE_SENT)
+        || messagesModel.getCustomMessageType().equals(MessageTypeUi.TEXT_MESSAGE_RECEIVED)) {
       ismBottomsheetMessageActionsBinding.rlCopy.setVisibility(View.VISIBLE);
       if (messagesModel.isSentMessage()) {
 
@@ -146,35 +146,35 @@ public class MessageActionFragment extends BottomSheetDialogFragment {
     String downloadMediaType = null;
     switch (messagesModel.getCustomMessageType()) {
 
-      case PhotoSent:
-      case PhotoReceived: {
+      case PHOTO_MESSAGE_SENT:
+      case PHOTO_MESSAGE_RECEIVED: {
         canBeDownloaded = true;
         downloadMediaType = getString(R.string.ism_photo);
         break;
       }
 
-      case WhiteboardSent:
-      case WhiteboardReceived: {
+      case WHITEBOARD_MESSAGE_SENT:
+      case WHITEBOARD_MESSAGE_RECEIVED: {
         canBeDownloaded = true;
         downloadMediaType = getString(R.string.ism_whiteboard);
         break;
       }
 
-      case VideoSent:
-      case VideoReceived: {
+      case VIDEO_MESSAGE_SENT:
+      case VIDEO_MESSAGE_RECEIVED: {
         canBeDownloaded = true;
         downloadMediaType = getString(R.string.ism_video);
         break;
       }
-      case AudioSent:
-      case AudioReceived: {
+      case AUDIO_MESSAGE_SENT:
+      case AUDIO_MESSAGE_RECEIVED: {
         canBeDownloaded = true;
         downloadMediaType = getString(R.string.ism_audio_recording);
         break;
       }
 
-      case FileSent:
-      case FileReceived: {
+      case FILE_MESSAGE_SENT:
+      case FILE_MESSAGE_RECEIVED: {
         canBeDownloaded = true;
         downloadMediaType = getString(R.string.ism_file);
         break;

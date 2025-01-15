@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import io.isometrik.chat.Isometrik;
 import io.isometrik.chat.builder.conversation.FetchConversationDetailsQuery;
@@ -86,6 +85,7 @@ import io.isometrik.chat.response.message.utils.fetchmessages.Message;
 import io.isometrik.chat.response.message.utils.schemas.Attachment;
 import io.isometrik.chat.response.message.utils.schemas.EventForMessage;
 import io.isometrik.chat.response.message.utils.schemas.MentionedUser;
+import io.isometrik.chat.utils.enums.MessageTypeUi;
 import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.conversations.details.groupconversation.ConversationDetailsActivity;
@@ -93,7 +93,6 @@ import io.isometrik.ui.conversations.details.userconversation.UserConversationDe
 import io.isometrik.ui.messages.chat.utils.attachmentutils.LocalMediaAttachmentHelper;
 import io.isometrik.ui.messages.chat.utils.attachmentutils.MediaDownloadOrUploadHelper;
 import io.isometrik.ui.messages.chat.utils.attachmentutils.PrepareAttachmentHelper;
-import io.isometrik.chat.utils.enums.MessageTypesForUI;
 import io.isometrik.ui.messages.chat.utils.enums.RemoteMessageTypes;
 import io.isometrik.ui.messages.chat.utils.messageutils.ConversationActionMessageUtil;
 import io.isometrik.ui.messages.chat.utils.messageutils.ConversationAttachmentMessageUtil;
@@ -273,7 +272,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
     public void shareMessage(RemoteMessageTypes messageType, String parentMessageId,
                              OriginalReplyMessageUtil originalReplyMessageUtil, String customType, String messageBody,
                              boolean encrypted, boolean showInConversation, Boolean sendPushNotification, Boolean updateUnreadCount, ArrayList<Attachment> attachments, JSONObject messageMetadata,
-                             ArrayList<MentionedUser> mentionedUsers, MessageTypesForUI messageTypesForUI, ArrayList<String> mediaPaths, boolean uploadMediaRequired,
+                             ArrayList<MentionedUser> mentionedUsers, MessageTypeUi messageTypeUi, ArrayList<String> mediaPaths, boolean uploadMediaRequired,
                              PresignedUrlMediaTypes presignedUrlMediaTypes, AttachmentMessageType attachmentMessageType) {
 
         MessagesModel messageModel = null;
@@ -289,14 +288,14 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                 String mediaId = PresignedUrlUtils.getMediaId(presignedUrlMediaTypes.getValue());
                 mediaDetailsMap.put(mediaId, media);
 
-                switch (messageTypesForUI) {
-                    case PhotoSent:
-                    case VideoSent:
-                    case WhiteboardSent: {
+                switch (messageTypeUi) {
+                    case PHOTO_MESSAGE_SENT:
+                    case VIDEO_MESSAGE_SENT:
+                    case WHITEBOARD_MESSAGE_SENT: {
                         LocalMediaAttachmentHelper localMediaAttachmentHelper =
                                 new LocalMediaAttachmentHelper(mediaPaths.get(i));
                         messageModel =
-                                new MessagesModel(null, messageTypesForUI, true, System.currentTimeMillis(),
+                                new MessagesModel(null, messageTypeUi, true, System.currentTimeMillis(),
                                         parentMessageId != null, localMediaAttachmentHelper.getSizeInMb(), false, false,
                                         false, true, localMediaAttachmentHelper.getThumbnailUrl(),
                                         localMediaAttachmentHelper.getMediaUrl(),
@@ -311,11 +310,11 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
 
                         break;
                     }
-                    case FileSent: {
+                    case FILE_MESSAGE_SENT: {
 
                         LocalMediaAttachmentHelper localMediaAttachmentHelper = new LocalMediaAttachmentHelper(mediaPaths.get(i));
                         messageModel =
-                                new MessagesModel(null, messageTypesForUI, true, System.currentTimeMillis(),
+                                new MessagesModel(null, messageTypeUi, true, System.currentTimeMillis(),
                                         parentMessageId != null, localMediaAttachmentHelper.getSizeInMb(), false, false,
                                         false, true, localMediaAttachmentHelper.getMediaUrl(),
                                         localMediaAttachmentHelper.getMediaName(),
@@ -329,10 +328,10 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
 
                         break;
                     }
-                    case AudioSent: {
+                    case AUDIO_MESSAGE_SENT: {
                         LocalMediaAttachmentHelper localMediaAttachmentHelper = new LocalMediaAttachmentHelper(mediaPaths.get(i));
                         messageModel =
-                                new MessagesModel(null, messageTypesForUI, true, System.currentTimeMillis(),
+                                new MessagesModel(null, messageTypeUi, true, System.currentTimeMillis(),
                                         parentMessageId != null, localMediaAttachmentHelper.getSizeInMb(), false, false,
                                         false, true, localMediaAttachmentHelper.getMediaUrl(),
                                         localMediaAttachmentHelper.getMediaName(),
@@ -356,20 +355,20 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
             requestPresignedUrls(conversationId, messageType, parentMessageId, customType, messageBody,
                     encrypted, showInConversation, sendPushNotification, updateUnreadCount, messageMetadata,
                     mentionedUsers, presignedUrlMediaTypes, mediaDetailsMap, attachmentMessageType,
-                    messageTypesForUI == MessageTypesForUI.WhiteboardSent,messageModel);
+                    messageTypeUi == MessageTypeUi.WHITEBOARD_MESSAGE_SENT,messageModel);
         } else {
             String localMessageId = String.valueOf(System.currentTimeMillis());
             List<String> searchableTags = null;
             String notificationTitle = IsometrikChatSdk.getInstance().getUserSession().getUserName();
             String notificationBody = "";
 
-            switch (messageTypesForUI) {
+            switch (messageTypeUi) {
 
-                case TextSent:
+                case TEXT_MESSAGE_SENT:
 
-                case ReplaySent: {
+                case REPLAY_MESSAGE_SENT: {
                     messageModel =
-                            new MessagesModel(null, messageTypesForUI, true, System.currentTimeMillis(),
+                            new MessagesModel(null, messageTypeUi, true, System.currentTimeMillis(),
                                     parentMessageId != null,
                                     TagUserUtil.parseMentionedUsers(messageBody, mentionedUsers, taggedUserCallback),
                                     IsometrikChatSdk.getInstance().getUserSession().getUserName(),
@@ -381,10 +380,10 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                     break;
                 }
 
-                case LocationSent: {
+                case LOCATION_MESSAGE_SENT: {
                     Attachment attachment = attachments.get(0);
                     messageModel =
-                            new MessagesModel(null, messageTypesForUI, true, System.currentTimeMillis(),
+                            new MessagesModel(null, messageTypeUi, true, System.currentTimeMillis(),
                                     parentMessageId != null, String.valueOf(attachment.getLatitude()),
                                     attachment.getTitle(), String.valueOf(attachment.getLongitude()),
                                     attachment.getAddress(),
@@ -397,10 +396,10 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                     break;
                 }
 
-                case StickerSent: {
+                case STICKER_MESSAGE_SENT: {
                     Attachment attachment = attachments.get(0);
                     messageModel =
-                            new MessagesModel(null, messageTypesForUI, true, System.currentTimeMillis(),
+                            new MessagesModel(null, messageTypeUi, true, System.currentTimeMillis(),
                                     parentMessageId != null, attachment.getStillUrl(), attachment.getMediaUrl(),
                                     IsometrikChatSdk.getInstance().getUserSession().getUserName(),
                                     IsometrikChatSdk.getInstance().getUserSession().getUserProfilePic(),
@@ -412,10 +411,10 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                     break;
                 }
 
-                case GifSent: {
+                case GIF_MESSAGE_SENT: {
                     Attachment attachment = attachments.get(0);
                     messageModel =
-                            new MessagesModel(null, messageTypesForUI, true, System.currentTimeMillis(),
+                            new MessagesModel(null, messageTypeUi, true, System.currentTimeMillis(),
                                     parentMessageId != null, attachment.getStillUrl(), attachment.getMediaUrl(),
                                     IsometrikChatSdk.getInstance().getUserSession().getUserName(),
                                     IsometrikChatSdk.getInstance().getUserSession().getUserProfilePic(),
@@ -427,7 +426,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                     break;
                 }
 
-                case ContactSent: {
+                case CONTACT_MESSAGE_SENT: {
                     String contactName = "", contactIdentifier = "", contactImageUrl = "";
                     try {
                         contactName = messageMetadata.getJSONArray("contacts").getJSONObject(0).getString("contactName");
@@ -443,7 +442,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                         }
                     }
                     messageModel =
-                            new MessagesModel(null, messageTypesForUI, true, System.currentTimeMillis(),
+                            new MessagesModel(null, messageTypeUi, true, System.currentTimeMillis(),
                                     parentMessageId != null, contactName,
                                     contactIdentifier,
                                     contactImageUrl,
@@ -641,7 +640,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                                                     .getMessageUseCases()
                                                     .sendMessage(sendMessageQuery.build(), (var111, var222) -> {
                                                         Map<String, String> mediaMap = mediaDetailsMap.get(var11.getMediaId());
-                                                        if (customType != null && customType.equals(CustomMessageTypes.Audio.getValue())) {
+                                                        if (customType != null && customType.equals(CustomMessageTypes.Audio.value)) {
                                                             AudioFileUtil.deleteRecordingFile(audioFilePath);
                                                         }
                                                         if (var111 != null) {
@@ -855,7 +854,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
 
                                     }
                                     messageModel =
-                                            new MessagesModel(conversationActionMessage, message.getMessageId(), message.getSentAt(), false, MessageTypesForUI.ConversationActionMessage, metadata);
+                                            new MessagesModel(conversationActionMessage, message.getMessageId(), message.getSentAt(), false, MessageTypeUi.CONVERSATION_ACTION_MESSAGE, metadata);
                                     messageModels.add(0, messageModel);
                                 }
                             } else {
