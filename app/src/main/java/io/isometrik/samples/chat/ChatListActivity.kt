@@ -70,7 +70,7 @@ class ChatListActivity : AppCompatActivity() {
 //        ChatConfig.hideAudioCallOption = true
 //        ChatConfig.hideVideoCallOption = true
 //        ChatConfig.hideCaptureCameraOption = true
-//        ChatConfig.hideRecordAudioOption = true
+        ChatConfig.hideRecordAudioOption = false
 
         AttachmentsConfig.hideCameraOption = true
         AttachmentsConfig.hideRecordVideoOption = true
