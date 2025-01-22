@@ -3,13 +3,11 @@ package io.isometrik.ui.messages.groupcast
 import android.util.Log
 import io.isometrik.chat.builder.groupcast.GroupCastCreateQuery
 import io.isometrik.chat.builder.groupcast.GroupCastMessageQuery
-import io.isometrik.chat.builder.message.broadcastforward.BroadcastMessageQuery
 import io.isometrik.chat.enums.CustomMessageTypes
 import io.isometrik.chat.response.CompletionHandler
 import io.isometrik.chat.response.error.IsometrikError
 import io.isometrik.chat.response.groupcast.GroupCastCreateResult
 import io.isometrik.chat.response.groupcast.GroupCastMessageResult
-import io.isometrik.chat.response.message.broadcastforward.GroupCastMessageResult
 import io.isometrik.chat.response.message.utils.fetchmessages.MentionedUser
 import io.isometrik.chat.response.message.utils.schemas.EventForMessage
 import io.isometrik.ui.IsometrikChatSdk
