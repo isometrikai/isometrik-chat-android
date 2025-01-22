@@ -7,6 +7,7 @@ import io.isometrik.chat.enums.ConversationType
 import io.isometrik.ui.IsometrikChatSdk
 import io.isometrik.ui.conversations.list.ConversationsListActivity
 import io.isometrik.ui.conversations.newconversation.group.NewGroupConversationActivity
+import io.isometrik.ui.conversations.newconversation.onetoone.NewOneToOneConversationActivity
 import io.isometrik.ui.messages.chat.ChatActionsClickListener
 import io.isometrik.ui.users.list.UsersActivity
 
@@ -34,7 +35,7 @@ class SplashActivity : AppCompatActivity() {
                 } else {
                     val i = Intent(
                         this@SplashActivity,
-                        ConversationsListActivity::class.java
+                        NewOneToOneConversationActivity::class.java
                     )
                     startActivity(i)
                 }

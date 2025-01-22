@@ -2,6 +2,7 @@ package io.isometrik.samples.chat
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -90,11 +91,12 @@ class ChatListActivity : AppCompatActivity() {
             override fun bindData(context: Context, binding: ChatItemBinding, data: ConversationsModel) {
                 binding.chatName.text = data.lastMessageText
 //                binding.chatLastMessage.text = data.ti
+                Log.e(data.lastMessageText,"Status delivered: "+data.isDeliveredToAll+" Status read:"+data.isReadByAll)
 
             }
         }
 
-        val chatFragment = ConversationsListFragment()
+        val chatFragment = ConversationsListFragment.newInstance(customBinder)
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, chatFragment)
