@@ -3,7 +3,7 @@ package io.isometrik.ui.messages.chat;
 import android.text.SpannableString;
 
 import io.isometrik.chat.R;
-import io.isometrik.chat.utils.enums.MessageTypeUi;
+import io.isometrik.chat.enums.MessageTypeUi;
 import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.ui.messages.chat.utils.enums.RemoteMessageTypes;
 import io.isometrik.ui.messages.chat.utils.messageutils.OriginalReplyMessageUtil;

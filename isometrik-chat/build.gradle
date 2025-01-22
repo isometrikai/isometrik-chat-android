@@ -102,6 +102,9 @@ dependencies {
     //For notifications
     implementation platform('com.google.firebase:firebase-bom:33.2.0')
     implementation 'com.google.firebase:firebase-messaging'
+    compileOnly 'com.github.lincollincol:amplituda:2.2.2'
+    implementation 'com.arthenica:ffmpeg-kit-full:5.1'
+
 }
 
 afterEvaluate {

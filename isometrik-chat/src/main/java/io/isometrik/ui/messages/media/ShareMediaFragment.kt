@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import io.isometrik.chat.databinding.IsmBottomsheetAttachmentsBinding
-import io.isometrik.chat.utils.enums.MessageTypeUi
+import io.isometrik.chat.enums.MessageTypeUi
 import io.isometrik.ui.messages.chat.common.AttachmentsConfig
 
 /**

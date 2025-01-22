@@ -1,29 +1,51 @@
 package io.isometrik.ui.messages.chat.messageBinders
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.arthenica.ffmpegkit.FFmpegKit
+import com.arthenica.ffmpegkit.FFmpegSession
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import io.isometrik.chat.R
 import io.isometrik.chat.databinding.IsmSentMessageAudioBinding
+import io.isometrik.ui.libwave.SeekBarOnProgressChanged
+import io.isometrik.ui.libwave.Utils
+import io.isometrik.ui.libwave.WaveGravity
+import io.isometrik.ui.libwave.WaveformSeekBar
 import io.isometrik.ui.messages.action.MessageActionCallback
 import io.isometrik.ui.messages.chat.MessagesModel
 import io.isometrik.ui.messages.reaction.add.MessageReactionsAdapter
+import io.isometrik.ui.utils.AudioFIleUtil
+import io.isometrik.ui.utils.DummyDataUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
+import java.net.URL
+import java.util.HashMap
+import java.util.Random
 
 class AudioSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageAudioBinding> {
 
     override fun createBinding(parent: ViewGroup, viewType: Int): IsmSentMessageAudioBinding {
-        return IsmSentMessageAudioBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return IsmSentMessageAudioBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
     }
 
-    override fun bindData(mContext: Context, ismSentMessageAudioBinding: IsmSentMessageAudioBinding,
-                          message: MessagesModel, position : Int, multipleMessagesSelectModeOn : Boolean,
-                          isMessagingDisabled : Boolean, messageActionCallback : MessageActionCallback
+    override fun bindData(
+        mContext: Context, ismSentMessageAudioBinding: IsmSentMessageAudioBinding,
+        message: MessagesModel, position: Int, multipleMessagesSelectModeOn: Boolean,
+        isMessagingDisabled: Boolean, messageActionCallback: MessageActionCallback
     ) {
         try {
             ismSentMessageAudioBinding.ivEdited.visibility =
@@ -244,6 +266,44 @@ class AudioSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageAudioBind
                     message.isDownloaded
                 )
             }
+            if (message.isUploaded) {
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    val file = AudioFIleUtil.getOrDownloadAudioFile(mContext, message.audioUrl)
+                    val amplitudes = AudioFIleUtil.extractAmplitudes(mContext, file)
+                    ismSentMessageAudioBinding.waveSeekBar.apply {
+                        sample = amplitudes.toIntArray()
+                    }
+
+                }
+            } else {
+                ismSentMessageAudioBinding.waveSeekBar.apply {
+                    progress = 0F
+                    waveWidth = Utils.dp(context, 2)
+                    waveGap = Utils.dp(context, 1)
+                    waveMinHeight = Utils.dp(context, 5)
+                    waveCornerRadius = Utils.dp(context, 2)
+                    waveGravity = WaveGravity.CENTER
+                    waveBackgroundColor =
+                        ContextCompat.getColor(context, R.color.ism_identifier_text_grey)
+                    waveProgressColor =
+                        ContextCompat.getColor(context, R.color.ism_blue)
+                    sample = DummyDataUtil.getDummyWaveSample()
+//                marker = getDummyMarkerSample(ismSentMessageAudioBinding)
+                    onProgressChanged = object : SeekBarOnProgressChanged {
+                        override fun onProgressChanged(
+                            waveformSeekBar: WaveformSeekBar,
+                            progress: Float,
+                            fromUser: Boolean
+                        ) {
+                            if (!fromUser)
+                                ismSentMessageAudioBinding.waveSeekBar.progress =
+                                    progress
+                        }
+                    }
+                }
+            }
+
         } catch (ignore: Exception) {
         }
     }

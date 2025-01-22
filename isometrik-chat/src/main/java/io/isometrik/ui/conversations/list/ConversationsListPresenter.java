@@ -12,6 +12,7 @@ import io.isometrik.chat.callbacks.MessageEventCallback;
 import io.isometrik.chat.callbacks.ReactionEventCallback;
 import io.isometrik.chat.callbacks.UserEventCallback;
 import io.isometrik.chat.enums.ConversationType;
+import io.isometrik.chat.enums.CustomMessageTypes;
 import io.isometrik.chat.events.connection.ConnectEvent;
 import io.isometrik.chat.events.connection.ConnectionFailedEvent;
 import io.isometrik.chat.events.connection.DisconnectEvent;
@@ -812,8 +813,8 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
         Integer lastMessagePlaceHolderImage = null;
         String lastMessageText = null;
 
-        switch (sendMessageEvent.getCustomType()) {
-          case "AttachmentMessage:Text": {
+        switch (CustomMessageTypes.Companion.fromValue(sendMessageEvent.getCustomType())) {
+          case Text: {
 
             if (sendMessageEvent.getParentMessageId() == null) {
 
@@ -832,60 +833,60 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
             lastMessageText = sendMessageEvent.getBody();
             break;
           }
-          case "AttachmentMessage:Image": {
+          case Image: {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_picture;
             lastMessageText =
                 IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_photo);
             break;
           }
-          case "AttachmentMessage:Video": {
+          case Video: {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_video;
             lastMessageText =
                 IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_video);
             break;
           }
-          case "AttachmentMessage:Audio": {
+          case Audio: {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_mic;
             lastMessageText =
                 IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_audio_recording);
             break;
           }
-          case "AttachmentMessage:File": {
+          case File: {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_file;
             lastMessageText =
                 IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_file);
             break;
           }
-          case "AttachmentMessage:Sticker": {
+          case Sticker: {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_sticker;
             lastMessageText =
                 IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_sticker);
             break;
           }
-          case "AttachmentMessage:Gif": {
+          case Gif: {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_gif;
             lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_gif);
             break;
           }
-          case "AttachmentMessage:Whiteboard": {
+          case Whiteboard: {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_whiteboard;
             lastMessageText =
                 IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_whiteboard);
             break;
           }
-          case "AttachmentMessage:Location": {
+          case Location: {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_location;
             lastMessageText =
                 IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_location);
             break;
           }
-          case "AttachmentMessage:Contact": {
+          case Contact: {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_contact;
             lastMessageText =
                 IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_contact);
             break;
           }
-          case "AttachmentMessage:Reply": {
+          case Replay: {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_quote;
             lastMessageText = sendMessageEvent.getBody();
 

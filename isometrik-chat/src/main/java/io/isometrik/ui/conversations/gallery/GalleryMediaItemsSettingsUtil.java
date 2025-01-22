@@ -1,6 +1,6 @@
 package io.isometrik.ui.conversations.gallery;
 
-import io.isometrik.chat.utils.enums.CustomMessageTypes;
+import io.isometrik.chat.enums.CustomMessageTypes;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

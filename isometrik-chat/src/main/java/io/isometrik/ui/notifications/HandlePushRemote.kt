@@ -21,6 +21,8 @@ import com.bumptech.glide.request.FutureTarget
 import com.google.firebase.messaging.RemoteMessage
 import io.isometrik.chat.R
 import io.isometrik.chat.builder.message.delivery.MarkMessageAsDeliveredQuery
+import io.isometrik.chat.enums.CustomMessageTypes
+import io.isometrik.chat.enums.CustomMessageTypes.*
 import io.isometrik.chat.response.error.IsometrikError
 import io.isometrik.chat.response.message.delivery.MarkMessageAsDeliveredResult
 import io.isometrik.chat.utils.NotificationUtil
@@ -322,8 +324,9 @@ class HandlePushRemote {
                     senderId = data["senderId"]
                     senderName = data["senderName"]
                     senderProfileImageUrl = data["senderProfileImageUrl"]
-                    when (data["customType"]) {
-                        "AttachmentMessage:Text" -> {
+                    
+                    when (CustomMessageTypes.fromValue(data["customType"].orEmpty())) {
+                        Text -> {
                             var prefix: String? = null
                             if (data["parentMessageId"] == null) {
                                 if (data["action"] != null) {
@@ -341,56 +344,85 @@ class HandlePushRemote {
                             }
                         }
 
-                        "AttachmentMessage:Image" -> {
+                        Image -> {
                             message =
                                 context.getString(R.string.ism_attachment_prefix) + context.getString(R.string.ism_photo)
                         }
 
-                        "AttachmentMessage:Post" -> {
+                        Post -> {
                             message =
                                 context.getString(R.string.ism_attachment_prefix) + context.getString(R.string.ism_post)
                         }
 
-                        "AttachmentMessage:Video" -> {
+                        Video -> {
                             message =
                                 context.getString(R.string.ism_attachment_prefix) + context.getString(R.string.ism_video)
                         }
 
-                        "AttachmentMessage:Audio" -> {
+                        Audio -> {
                             message = context.getString(R.string.ism_attachment_prefix) + context.getString(
                                 R.string.ism_audio_recording
                             )
                         }
 
-                        "AttachmentMessage:File" -> {
+                        File -> {
                             message =
                                 context.getString(R.string.ism_attachment_prefix) + context.getString(R.string.ism_file)
                         }
 
-                        "AttachmentMessage:Sticker" -> {
+                        Sticker -> {
                             message =
                                 context.getString(R.string.ism_attachment_prefix) + context.getString(R.string.ism_sticker)
                         }
 
-                        "AttachmentMessage:Gif" -> {
+                        Gif -> {
                             message =
                                 context.getString(R.string.ism_attachment_prefix) + context.getString(R.string.ism_gif)
                         }
 
-                        "AttachmentMessage:Whiteboard" -> {
+                        Whiteboard -> {
                             message =
                                 context.getString(R.string.ism_attachment_prefix) + context.getString(R.string.ism_whiteboard)
                         }
 
-                        "AttachmentMessage:Location" -> {
+                        Location -> {
                             message =
                                 context.getString(R.string.ism_attachment_prefix) + context.getString(R.string.ism_location)
                         }
 
-                        "AttachmentMessage:Contact" -> {
+                        Contact -> {
                             message =
                                 context.getString(R.string.ism_attachment_prefix) + context.getString(R.string.ism_contact)
                         }
+
+                        Replay -> message =
+                                context.getString(R.string.ism_offer_prefix)
+                        Payment -> message =
+                                context.getString(R.string.ism_offer_prefix)
+                        OfferSent -> message =
+                                context.getString(R.string.ism_offer_prefix)
+                        CounterOffer -> message =
+                                context.getString(R.string.ism_offer_prefix)
+                        EditOffer -> message =
+                                context.getString(R.string.ism_offer_prefix)
+                        AcceptOffer -> message =
+                                context.getString(R.string.ism_offer_prefix)
+                        CancelDeal -> message =
+                                context.getString(R.string.ism_offer_prefix)
+                        CancelOffer -> message =
+                                context.getString(R.string.ism_offer_prefix)
+                        BuyDirect -> message =
+                                context.getString(R.string.ism_offer_prefix)
+                        AcceptBuyDirect -> message =
+                                context.getString(R.string.ism_offer_prefix)
+                        CancelBuyDirect -> message =
+                                context.getString(R.string.ism_offer_prefix)
+                        RejectBuyDirect -> message =
+                                context.getString(R.string.ism_offer_prefix)
+                        PaymentEscrowed -> message =
+                                context.getString(R.string.ism_offer_prefix)
+                        DealComplete -> message =
+                                context.getString(R.string.ism_offer_prefix)
                     }
                     try {
                         if (IsometrikChatSdk.getInstance().userSession.userToken != null) {

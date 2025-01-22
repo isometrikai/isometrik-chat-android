@@ -16,7 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmBottomsheetMessageActionsBinding;
 import io.isometrik.chat.utils.MentionedUserSpan;
-import io.isometrik.chat.utils.enums.MessageTypeUi;
+import io.isometrik.chat.enums.MessageTypeUi;
 import io.isometrik.ui.messages.chat.MessagesModel;
 
 /**

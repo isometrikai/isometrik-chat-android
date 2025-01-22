@@ -4,7 +4,7 @@ package io.isometrik.ui.messages.chat.utils.attachmentutils;
 import io.isometrik.chat.builder.download.DownloadMediaQuery;
 import io.isometrik.chat.enums.DownloadMediaType;
 import io.isometrik.chat.models.download.mediautils.DownloadProgressListener;
-import io.isometrik.chat.utils.enums.MessageTypeUi;
+import io.isometrik.chat.enums.MessageTypeUi;
 import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.messages.chat.MessagesModel;

@@ -1,6 +1,6 @@
 package io.isometrik.ui.messages.media;
 
-import io.isometrik.chat.utils.enums.MessageTypeUi;
+import io.isometrik.chat.enums.MessageTypeUi;
 
 /**
  * The interface Media type to be shared callback to messages screen based on message type selected

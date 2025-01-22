@@ -34,6 +34,7 @@ public class ConversationsModel {
   private final boolean canJoin;
   private boolean messagingDisabled;
   private JSONObject metaData;
+  private boolean readByAll, deliveredToAll;
 
   /**
    * Instantiates a new Conversations model.

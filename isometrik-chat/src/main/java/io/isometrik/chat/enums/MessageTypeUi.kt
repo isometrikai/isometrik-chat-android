@@ -1,4 +1,4 @@
-package io.isometrik.chat.utils.enums
+package io.isometrik.chat.enums
 
 
 /**
@@ -60,7 +60,7 @@ enum class MessageTypeUi(val value: Int) {
 
     companion object {
         fun fromValue(value: Int): MessageTypeUi {
-            return values().find { it.value == value }?:CONVERSATION_ACTION_MESSAGE
+            return values().find { it.value == value }?: CONVERSATION_ACTION_MESSAGE
         }
     }
 }

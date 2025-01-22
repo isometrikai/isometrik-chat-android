@@ -3,7 +3,7 @@ package io.isometrik.ui.messages.chat
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import io.isometrik.chat.utils.enums.MessageTypeUi
+import io.isometrik.chat.enums.MessageTypeUi
 import io.isometrik.ui.messages.action.MessageActionCallback
 import io.isometrik.ui.messages.chat.common.MessageBinderRegistry
 import io.isometrik.ui.messages.chat.messageBinders.MessageItemBinder

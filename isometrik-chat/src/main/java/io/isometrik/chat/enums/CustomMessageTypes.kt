@@ -1,4 +1,4 @@
-package io.isometrik.chat.utils.enums
+package io.isometrik.chat.enums
 
 /**
  * The enum Custom message types for various media types.
@@ -79,57 +79,61 @@ enum class CustomMessageTypes(
     /**
      * OfferSent custom message types.
      */
-    OfferSent("AttachmentMessage:OfferSent"),
+    OfferSent("OFFER_SENT"),
 
     /**
      * CounterOffer custom message types.
      */
-    CounterOffer("AttachmentMessage:CounterOffer"),
+    CounterOffer("COUNTER_OFFER"),
 
     /**
      * EditOffer custom message types.
      */
-    EditOffer("AttachmentMessage:EditOffer"),
+    EditOffer("EDIT_OFFER"),
 
     /**
      * AcceptOffer custom message types.
      */
-    AcceptOffer("AttachmentMessage:AcceptOffer"),
+    AcceptOffer("ACCEPT_OFFER"),
 
     /**
      * CancelDeal custom message types.
      */
-    CancelDeal("AttachmentMessage:CancelDeal"),
+    CancelDeal("CANCEL_DEAL"),
 
     /**
      * CancelOffer custom message types.
      */
-    CancelOffer("AttachmentMessage:CancelOffer"),
+    CancelOffer("CANCEL_OFFER"),
 
     /**
      * BuyDirect custom message types.
      */
-    BuyDirect("AttachmentMessage:BuyDirect"),
+    BuyDirect("BUYDIRECT_REQUEST"),
 
     /**
      * AcceptBuyDirect custom message types.
      */
-    AcceptBuyDirect("AttachmentMessage:AcceptBuyDirect"),
+    AcceptBuyDirect("ACCEPT_BUYDIRECT_REQUEST"),
 
     /**
      * CancelBuyDirect custom message types.
      */
-    CancelBuyDirect("AttachmentMessage:CancelBuyDirect"),
+    CancelBuyDirect("CANCEL_BUYDIRECT_REQUEST"),
+    /**
+     * RejectBuyDirect custom message types.
+     */
+    RejectBuyDirect("REJECT_BUYDIRECT_REQUEST"),
 
     /**
      * PaymentEscrowed custom message types.
      */
-    PaymentEscrowed("AttachmentMessage:PaymentEscrowed"),
+    PaymentEscrowed("PAYMENT_ESCROWED"),
 
     /**
      * DealComplete custom message types.
      */
-    DealComplete("AttachmentMessage:DealComplete");
+    DealComplete("DEAL_COMPLETE");
 
     companion object {
         /**
@@ -138,8 +142,8 @@ enum class CustomMessageTypes(
          * @param value the string value
          * @return the matching enum type or null if no match is found
          */
-        fun fromValue(value: String): CustomMessageTypes? {
-            return values().find { it.value == value }
+        fun fromValue(value: String): CustomMessageTypes {
+            return values().find { it.value == value }?:Text
         }
     }
 

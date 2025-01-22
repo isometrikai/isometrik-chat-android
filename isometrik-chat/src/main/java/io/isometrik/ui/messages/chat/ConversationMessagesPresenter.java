@@ -85,7 +85,7 @@ import io.isometrik.chat.response.message.utils.fetchmessages.Message;
 import io.isometrik.chat.response.message.utils.schemas.Attachment;
 import io.isometrik.chat.response.message.utils.schemas.EventForMessage;
 import io.isometrik.chat.response.message.utils.schemas.MentionedUser;
-import io.isometrik.chat.utils.enums.MessageTypeUi;
+import io.isometrik.chat.enums.MessageTypeUi;
 import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.conversations.details.groupconversation.ConversationDetailsActivity;
@@ -110,7 +110,7 @@ import io.isometrik.ui.messages.tag.TagUserModel;
 import io.isometrik.ui.messages.tag.TaggedUserCallback;
 import io.isometrik.chat.utils.Constants;
 import io.isometrik.chat.utils.TagUserUtil;
-import io.isometrik.chat.utils.enums.CustomMessageTypes;
+import io.isometrik.chat.enums.CustomMessageTypes;
 import io.isometrik.chat.utils.PresignedUrlUtils;
 
 import java.util.ArrayList;

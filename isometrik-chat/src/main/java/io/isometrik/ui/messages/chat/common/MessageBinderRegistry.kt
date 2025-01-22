@@ -1,7 +1,7 @@
 package io.isometrik.ui.messages.chat.common
 
 import androidx.viewbinding.ViewBinding
-import io.isometrik.chat.utils.enums.MessageTypeUi
+import io.isometrik.chat.enums.MessageTypeUi
 import io.isometrik.ui.messages.chat.messageBinders.MessageItemBinder
 import io.isometrik.ui.messages.chat.MessagesModel
 

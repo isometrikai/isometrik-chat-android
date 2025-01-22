@@ -11,7 +11,7 @@ import io.isometrik.ui.messages.chat.utils.attachmentutils.PrepareAttachmentHelp
 import io.isometrik.ui.messages.chat.utils.enums.RemoteMessageTypes;
 import io.isometrik.ui.messages.chat.utils.messageutils.ContactUtil;
 import io.isometrik.ui.messages.search.utils.SearchTagUtils;
-import io.isometrik.chat.utils.enums.CustomMessageTypes;
+import io.isometrik.chat.enums.CustomMessageTypes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

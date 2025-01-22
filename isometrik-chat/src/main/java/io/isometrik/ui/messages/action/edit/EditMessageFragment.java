@@ -12,7 +12,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmBottomsheetEditBinding;
-import io.isometrik.chat.utils.enums.MessageTypeUi;
+import io.isometrik.chat.enums.MessageTypeUi;
 import io.isometrik.ui.messages.action.MessageActionCallback;
 import io.isometrik.ui.messages.chat.MessagesModel;
 import com.bumptech.glide.Glide;
