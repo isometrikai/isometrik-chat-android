@@ -1,10 +1,9 @@
 package io.isometrik.ui.messages.chat.utils.messageutils;
 
-import io.isometrik.chat.utils.enums.MessageTypeUi;
 import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.messages.chat.MessagesModel;
-import io.isometrik.chat.utils.enums.CustomMessageTypes;
+import io.isometrik.chat.enums.CustomMessageTypes;
 import org.json.JSONException;
 import org.json.JSONObject;
 

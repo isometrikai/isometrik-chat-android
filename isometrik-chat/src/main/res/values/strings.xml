@@ -593,6 +593,7 @@
     <string name="ism_summary_title">Isometrik:Chat</string>
     <string name="ism_summary_text">New messages</string>
     <string name="ism_attachment_prefix">Attachment:\u0020 </string>
+    <string name="ism_offer_prefix">Offer </string>
     <string name="ism_bullet">\u2022\u0020</string>
 
     <!--  Message edit fragment-->

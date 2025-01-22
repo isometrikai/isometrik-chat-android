@@ -296,7 +296,7 @@ class AudioSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageAudioBind
                             progress: Float,
                             fromUser: Boolean
                         ) {
-                            if (fromUser)
+                            if (!fromUser)
                                 ismSentMessageAudioBinding.waveSeekBar.progress =
                                     progress
                         }

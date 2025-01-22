@@ -23,7 +23,6 @@ import android.text.style.StyleSpan
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -59,7 +58,7 @@ import io.isometrik.chat.utils.RecyclerItemClickListener
 import io.isometrik.chat.utils.TagUserUtil
 import io.isometrik.chat.utils.TimeUtil
 import io.isometrik.chat.utils.Utilities
-import io.isometrik.chat.utils.enums.CustomMessageTypes
+import io.isometrik.chat.enums.CustomMessageTypes
 import io.isometrik.ui.IsometrikChatSdk
 import io.isometrik.ui.camera.CameraActivity
 import io.isometrik.ui.camera.VideoRecordingActivity
@@ -93,7 +92,7 @@ import io.isometrik.ui.messages.chat.messageBinders.VideoSentBinder
 import io.isometrik.ui.messages.chat.messageBinders.WhiteboardReceivedBinder
 import io.isometrik.ui.messages.chat.messageBinders.WhiteboardSentBinder
 import io.isometrik.ui.messages.chat.utils.attachmentutils.PrepareAttachmentHelper
-import io.isometrik.chat.utils.enums.MessageTypeUi
+import io.isometrik.chat.enums.MessageTypeUi
 import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.messages.chat.common.ChatTopViewHandler
 import io.isometrik.ui.messages.chat.messageBinders.OfferReceivedBinder

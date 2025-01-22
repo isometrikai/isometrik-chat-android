@@ -1,6 +1,6 @@
 package io.isometrik.ui.messages.chat.utils.messageutils;
 
-import io.isometrik.chat.utils.enums.MessageTypeUi;
+import io.isometrik.chat.enums.MessageTypeUi;
 import io.isometrik.ui.messages.chat.MessagesModel;
 
 import java.util.ArrayList;

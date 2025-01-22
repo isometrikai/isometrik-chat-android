@@ -9,7 +9,7 @@ import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.messages.chat.utils.enums.RemoteMessageTypes;
 import io.isometrik.chat.utils.Constants;
-import io.isometrik.chat.utils.enums.CustomMessageTypes;
+import io.isometrik.chat.enums.CustomMessageTypes;
 import java.util.ArrayList;
 import java.util.List;
 

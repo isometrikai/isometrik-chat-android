@@ -1,8 +1,9 @@
 package io.isometrik.ui.messages.chat.utils.messageutils;
 
+import io.isometrik.chat.enums.CustomMessageTypes;
 import io.isometrik.chat.response.message.utils.fetchmessages.Message;
 import io.isometrik.chat.response.message.utils.schemas.Attachment;
-import io.isometrik.chat.utils.enums.MessageTypeUi;
+import io.isometrik.chat.enums.MessageTypeUi;
 import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.ui.messages.chat.MessagesModel;
 import io.isometrik.ui.messages.reaction.util.ReactionUtil;
@@ -37,11 +38,11 @@ public class ConversationAttachmentMessageUtil {
                     .equals(message.getSenderInfo().getUserId());
 
             //selfMessage = false;
-            switch (message.getCustomType()) {
+            switch (CustomMessageTypes.Companion.fromValue(message.getCustomType())) {
 
-                case "AttachmentMessage:Text":
+                case Text:
 
-                case "AttachmentMessage:Reply": {
+                case Replay: {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
                             selfMessage ? MessageTypeUi.TEXT_MESSAGE_SENT : MessageTypeUi.TEXT_MESSAGE_RECEIVED,
@@ -61,7 +62,7 @@ public class ConversationAttachmentMessageUtil {
                     break;
                 }
 
-                case "AttachmentMessage:Payment Request": {
+                case Payment: {
                     messagesModel = new MessagesModel(message.getMessageId(),
                             selfMessage ? MessageTypeUi.PAYMENT_MESSAGE_SENT : MessageTypeUi.PAYMENT_MESSAGE_RECEIVED,
                             selfMessage, message.getSentAt(), message.getParentMessageId() != null,
@@ -80,7 +81,7 @@ public class ConversationAttachmentMessageUtil {
                     break;
                 }
 
-                case "AttachmentMessage:Post": {
+                case Post: {
                     messagesModel = new MessagesModel(message.getMessageId(),
                             selfMessage ? MessageTypeUi.POST_MESSAGE_SENT : MessageTypeUi.POST_MESSAGE_RECEIVED,
                             selfMessage, message.getSentAt(), message.getParentMessageId() != null,
@@ -98,7 +99,7 @@ public class ConversationAttachmentMessageUtil {
                     break;
                 }
 
-                case "AttachmentMessage:Image": {
+                case Image: {
                     Attachment attachment = message.getAttachments().get(0);
 
                     messagesModel = new MessagesModel(message.getMessageId(),
@@ -118,7 +119,7 @@ public class ConversationAttachmentMessageUtil {
 
                     break;
                 }
-                case "AttachmentMessage:Video": {
+                case Video: {
                     Attachment attachment = message.getAttachments().get(0);
 
                     messagesModel = new MessagesModel(message.getMessageId(),
@@ -138,7 +139,7 @@ public class ConversationAttachmentMessageUtil {
 
                     break;
                 }
-                case "AttachmentMessage:Audio": {
+                case Audio: {
                     Attachment attachment = message.getAttachments().get(0);
                     messagesModel = new MessagesModel(message.getMessageId(),
                             selfMessage ? MessageTypeUi.AUDIO_MESSAGE_SENT : MessageTypeUi.AUDIO_MESSAGE_RECEIVED,
@@ -157,7 +158,7 @@ public class ConversationAttachmentMessageUtil {
 
                     break;
                 }
-                case "AttachmentMessage:File": {
+                case File: {
                     Attachment attachment = message.getAttachments().get(0);
                     messagesModel = new MessagesModel(message.getMessageId(),
                             selfMessage ? MessageTypeUi.FILE_MESSAGE_SENT : MessageTypeUi.FILE_MESSAGE_RECEIVED,
@@ -175,7 +176,7 @@ public class ConversationAttachmentMessageUtil {
                             message.getMessageUpdated() != null);
                     break;
                 }
-                case "AttachmentMessage:Location": {
+                case Location: {
                     Attachment attachment = message.getAttachments().get(0);
 
                     messagesModel = new MessagesModel(message.getMessageId(),
@@ -193,7 +194,7 @@ public class ConversationAttachmentMessageUtil {
                             message.getMessageUpdated() != null);
                     break;
                 }
-                case "AttachmentMessage:Sticker": {
+                case Sticker: {
                     Attachment attachment = message.getAttachments().get(0);
                     messagesModel = new MessagesModel(message.getMessageId(),
                             selfMessage ? MessageTypeUi.STICKER_MESSAGE_SENT : MessageTypeUi.STICKER_MESSAGE_RECEIVED,
@@ -211,7 +212,7 @@ public class ConversationAttachmentMessageUtil {
 
                     break;
                 }
-                case "AttachmentMessage:Gif": {
+                case Gif: {
                     Attachment attachment = message.getAttachments().get(0);
                     messagesModel = new MessagesModel(message.getMessageId(),
                             selfMessage ? MessageTypeUi.GIF_MESSAGE_SENT : MessageTypeUi.GIF_MESSAGE_RECEIVED, selfMessage,
@@ -228,7 +229,7 @@ public class ConversationAttachmentMessageUtil {
 
                     break;
                 }
-                case "AttachmentMessage:Whiteboard": {
+                case Whiteboard: {
                     Attachment attachment = message.getAttachments().get(0);
 
                     messagesModel = new MessagesModel(message.getMessageId(),
@@ -248,7 +249,7 @@ public class ConversationAttachmentMessageUtil {
 
                     break;
                 }
-                case "AttachmentMessage:Contact": {
+                case Contact: {
                     JSONObject messageMetadata = message.getMetaData();
 
                     String contactName = "", contactIdentifier = "", contactImageUrl = "";
@@ -279,7 +280,7 @@ public class ConversationAttachmentMessageUtil {
                             message.getMessageUpdated() != null);
                     break;
                 }
-                case "AttachmentMessage:OfferSent": {
+                case OfferSent: {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
                             selfMessage ? MessageTypeUi.OFFER_SENT : MessageTypeUi.OFFER_RECEIVED,
@@ -297,7 +298,7 @@ public class ConversationAttachmentMessageUtil {
                             message.getMessageUpdated() != null);
 
                 }
-                case "AttachmentMessage:CounterOffer": {
+                case CounterOffer: {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
                             selfMessage ? MessageTypeUi.COUNTER_OFFER_SENT : MessageTypeUi.COUNTER_OFFER_RECEIVED,
@@ -315,7 +316,7 @@ public class ConversationAttachmentMessageUtil {
                             message.getMessageUpdated() != null);
 
                 }
-                case "AttachmentMessage:EditOffer": {
+                case EditOffer: {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
                             selfMessage ? MessageTypeUi.EDIT_OFFER_SENT : MessageTypeUi.EDIT_OFFER_RECEIVED,
@@ -334,7 +335,7 @@ public class ConversationAttachmentMessageUtil {
 
                 }
 
-                case "AttachmentMessage:AcceptOffer": {
+                case AcceptOffer: {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
                             selfMessage ? MessageTypeUi.ACCEPT_OFFER_SENT : MessageTypeUi.ACCEPT_OFFER_RECEIVED,
@@ -352,7 +353,7 @@ public class ConversationAttachmentMessageUtil {
                             message.getMessageUpdated() != null);
 
                 }
-                case "AttachmentMessage:CancelDeal": {
+                case CancelDeal: {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
                             selfMessage ? MessageTypeUi.CANCEL_DEAL_SENT : MessageTypeUi.CANCEL_DEAL_RECEIVED,
@@ -370,7 +371,7 @@ public class ConversationAttachmentMessageUtil {
                             message.getMessageUpdated() != null);
 
                 }
-                case "AttachmentMessage:CancelOffer": {
+                case CancelOffer: {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
                             selfMessage ? MessageTypeUi.CANCEL_OFFER_SENT : MessageTypeUi.CANCEL_OFFER_RECEIVED,
@@ -388,7 +389,7 @@ public class ConversationAttachmentMessageUtil {
                             message.getMessageUpdated() != null);
 
                 }
-                case "AttachmentMessage:BuyDirect": {
+                case BuyDirect: {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
                             selfMessage ? MessageTypeUi.BUY_DIRECT_SENT : MessageTypeUi.BUY_DIRECT_RECEIVED,
@@ -406,7 +407,7 @@ public class ConversationAttachmentMessageUtil {
                             message.getMessageUpdated() != null);
 
                 }
-                case "AttachmentMessage:AcceptBuyDirect": {
+                case AcceptBuyDirect: {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
                             selfMessage ? MessageTypeUi.ACCEPT_BUY_DIRECT_SENT : MessageTypeUi.ACCEPT_BUY_DIRECT_RECEIVED,
@@ -424,7 +425,7 @@ public class ConversationAttachmentMessageUtil {
                             message.getMessageUpdated() != null);
 
                 }
-                case "AttachmentMessage:CancelBuyDirect": {
+                case CancelBuyDirect: {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
                             selfMessage ? MessageTypeUi.CANCEL_BUY_DIRECT_SENT : MessageTypeUi.CANCEL_BUY_DIRECT_RECEIVED,
@@ -443,7 +444,7 @@ public class ConversationAttachmentMessageUtil {
 
                 }
 
-                case "AttachmentMessage:PaymentEscrowed": {
+                case PaymentEscrowed: {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
                             selfMessage ? MessageTypeUi.PAYMENT_ESCROWED_SENT : MessageTypeUi.PAYMENT_ESCROWED_RECEIVED,
@@ -461,7 +462,7 @@ public class ConversationAttachmentMessageUtil {
                             message.getMessageUpdated() != null);
 
                 }
-                case "AttachmentMessage:DealComplete": {
+                case DealComplete: {
 
                     messagesModel = new MessagesModel(message.getMessageId(),
                             selfMessage ? MessageTypeUi.DEAL_COMPLETE_SENT : MessageTypeUi.DEAL_COMPLETE_RECEIVED,

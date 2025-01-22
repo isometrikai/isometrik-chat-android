@@ -1,5 +1,6 @@
 package io.isometrik.ui.messages.chat.utils.messageutils;
 
+import io.isometrik.chat.enums.CustomMessageTypes;
 import io.isometrik.chat.events.conversation.cleanup.ClearConversationEvent;
 import io.isometrik.chat.events.conversation.config.UpdateConversationDetailsEvent;
 import io.isometrik.chat.events.conversation.config.UpdateConversationImageEvent;
@@ -23,7 +24,7 @@ import io.isometrik.chat.response.message.utils.schemas.Attachment;
 import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.messages.chat.MessagesModel;
-import io.isometrik.chat.utils.enums.MessageTypeUi;
+import io.isometrik.chat.enums.MessageTypeUi;
 import io.isometrik.ui.messages.tag.TaggedUserCallback;
 import io.isometrik.chat.utils.TagUserUtil;
 import io.isometrik.chat.utils.FileUtils;
@@ -450,11 +451,11 @@ int size= members.size();
       boolean selfMessage = sendMessageEvent.getSenderId()
           .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId());
 
-      switch (sendMessageEvent.getCustomType()) {
+      switch (CustomMessageTypes.Companion.fromValue(sendMessageEvent.getCustomType())) {
 
-        case "AttachmentMessage:Text":
+        case Text:
 
-        case "AttachmentMessage:Reply": {
+        case Replay: {
           boolean isQuoted = sendMessageEvent.getParentMessageId() != null;
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
               selfMessage ? MessageTypeUi.TEXT_MESSAGE_SENT : MessageTypeUi.TEXT_MESSAGE_RECEIVED,
@@ -470,7 +471,7 @@ int size= members.size();
 
           break;
         }
-        case "AttachmentMessage:Payment Request": {
+        case Payment: {
           boolean isQuoted = sendMessageEvent.getParentMessageId() != null;
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.PAYMENT_MESSAGE_SENT : MessageTypeUi.PAYMENT_MESSAGE_RECEIVED,
@@ -486,7 +487,7 @@ int size= members.size();
 
           break;
         }
-        case "AttachmentMessage:Post": {
+        case Post: {
           boolean isQuoted = sendMessageEvent.getParentMessageId() != null;
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.POST_MESSAGE_SENT : MessageTypeUi.POST_MESSAGE_RECEIVED,
@@ -501,7 +502,7 @@ int size= members.size();
                   false);
           break;
         }
-        case "AttachmentMessage:Image": {
+        case Image: {
           Attachment attachment = sendMessageEvent.getAttachments().get(0);
 
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
@@ -521,7 +522,7 @@ int size= members.size();
 
           break;
         }
-        case "AttachmentMessage:Video": {
+        case Video: {
           Attachment attachment = sendMessageEvent.getAttachments().get(0);
 
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
@@ -541,7 +542,7 @@ int size= members.size();
 
           break;
         }
-        case "AttachmentMessage:Audio": {
+        case Audio: {
           Attachment attachment = sendMessageEvent.getAttachments().get(0);
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
               selfMessage ? MessageTypeUi.AUDIO_MESSAGE_SENT : MessageTypeUi.AUDIO_MESSAGE_RECEIVED,
@@ -560,7 +561,7 @@ int size= members.size();
 
           break;
         }
-        case "AttachmentMessage:File": {
+        case File: {
           Attachment attachment = sendMessageEvent.getAttachments().get(0);
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
               selfMessage ? MessageTypeUi.FILE_MESSAGE_SENT : MessageTypeUi.FILE_MESSAGE_RECEIVED,
@@ -578,7 +579,7 @@ int size= members.size();
               false);
           break;
         }
-        case "AttachmentMessage:Location": {
+        case Location: {
           Attachment attachment = sendMessageEvent.getAttachments().get(0);
 
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
@@ -595,7 +596,7 @@ int size= members.size();
               false);
           break;
         }
-        case "AttachmentMessage:Sticker": {
+        case Sticker: {
           Attachment attachment = sendMessageEvent.getAttachments().get(0);
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
               selfMessage ? MessageTypeUi.STICKER_MESSAGE_SENT : MessageTypeUi.STICKER_MESSAGE_RECEIVED,
@@ -612,7 +613,7 @@ int size= members.size();
 
           break;
         }
-        case "AttachmentMessage:Gif": {
+        case Gif: {
           Attachment attachment = sendMessageEvent.getAttachments().get(0);
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
               selfMessage ? MessageTypeUi.GIF_MESSAGE_SENT : MessageTypeUi.GIF_MESSAGE_RECEIVED, selfMessage,
@@ -628,7 +629,7 @@ int size= members.size();
 
           break;
         }
-        case "AttachmentMessage:Whiteboard": {
+        case Whiteboard: {
           Attachment attachment = sendMessageEvent.getAttachments().get(0);
 
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
@@ -648,7 +649,7 @@ int size= members.size();
 
           break;
         }
-        case "AttachmentMessage:Contact": {
+        case Contact: {
           JSONObject messageMetadata = sendMessageEvent.getMetaData();
           String contactName = "", contactIdentifier = "", contactImageUrl = "";
           try {
@@ -678,7 +679,7 @@ int size= members.size();
               false);
           break;
         }
-        case "AttachmentMessage:OfferSent": {
+        case OfferSent: {
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.OFFER_SENT : MessageTypeUi.OFFER_RECEIVED,
                   selfMessage, sendMessageEvent.getSentAt(), false,
@@ -693,7 +694,7 @@ int size= members.size();
 
           break;
         }
-        case "AttachmentMessage:CounterOffer": {
+        case CounterOffer: {
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.COUNTER_OFFER_SENT : MessageTypeUi.COUNTER_OFFER_RECEIVED,
                   selfMessage, sendMessageEvent.getSentAt(), false,
@@ -708,7 +709,7 @@ int size= members.size();
 
           break;
         }
-        case "AttachmentMessage:EditOffer": {
+        case EditOffer: {
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.EDIT_OFFER_SENT : MessageTypeUi.EDIT_OFFER_RECEIVED,
                   selfMessage, sendMessageEvent.getSentAt(), false,
@@ -723,7 +724,7 @@ int size= members.size();
 
           break;
         }
-        case "AttachmentMessage:AcceptOffer": {
+        case AcceptOffer: {
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.ACCEPT_OFFER_SENT : MessageTypeUi.ACCEPT_OFFER_RECEIVED,
                   selfMessage, sendMessageEvent.getSentAt(), false,
@@ -739,7 +740,7 @@ int size= members.size();
           break;
         }
 
-        case "AttachmentMessage:CancelDeal": {
+        case CancelDeal: {
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.CANCEL_DEAL_SENT : MessageTypeUi.CANCEL_DEAL_RECEIVED,
                   selfMessage, sendMessageEvent.getSentAt(), false,
@@ -754,7 +755,7 @@ int size= members.size();
 
           break;
         }
-        case "AttachmentMessage:CancelOffer": {
+        case CancelOffer: {
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.CANCEL_OFFER_SENT : MessageTypeUi.CANCEL_OFFER_RECEIVED,
                   selfMessage, sendMessageEvent.getSentAt(), false,
@@ -769,7 +770,7 @@ int size= members.size();
 
           break;
         }
-        case "AttachmentMessage:BuyDirect": {
+        case BuyDirect: {
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.BUY_DIRECT_SENT : MessageTypeUi.BUY_DIRECT_RECEIVED,
                   selfMessage, sendMessageEvent.getSentAt(), false,
@@ -784,7 +785,7 @@ int size= members.size();
 
           break;
         }
-        case "AttachmentMessage:AcceptBuyDirect": {
+        case AcceptBuyDirect: {
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.ACCEPT_BUY_DIRECT_SENT : MessageTypeUi.ACCEPT_BUY_DIRECT_RECEIVED,
                   selfMessage, sendMessageEvent.getSentAt(), false,
@@ -799,7 +800,7 @@ int size= members.size();
 
           break;
         }
-        case "AttachmentMessage:CancelBuyDirect": {
+        case CancelBuyDirect: {
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.CANCEL_BUY_DIRECT_SENT : MessageTypeUi.CANCEL_BUY_DIRECT_RECEIVED,
                   selfMessage, sendMessageEvent.getSentAt(), false,
@@ -814,7 +815,7 @@ int size= members.size();
 
           break;
         }
-        case "AttachmentMessage:PaymentEscrowed": {
+        case PaymentEscrowed: {
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.PAYMENT_ESCROWED_SENT : MessageTypeUi.PAYMENT_ESCROWED_RECEIVED,
                   selfMessage, sendMessageEvent.getSentAt(), false,
@@ -829,7 +830,7 @@ int size= members.size();
 
           break;
         }
-        case "AttachmentMessage:DealComplete": {
+        case DealComplete: {
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.DEAL_COMPLETE_SENT : MessageTypeUi.DEAL_COMPLETE_RECEIVED,
                   selfMessage, sendMessageEvent.getSentAt(), false,
@@ -868,8 +869,8 @@ int size= members.size();
       conversationTitle = sendMessageEvent.getConversationTitle();
       conversationImageUrl = sendMessageEvent.getConversationImageUrl();
     }
-    switch (sendMessageEvent.getCustomType()) {
-      case "AttachmentMessage:Text": {
+    switch (CustomMessageTypes.Companion.fromValue(sendMessageEvent.getCustomType())) {
+      case Text: {
 
         if (sendMessageEvent.getParentMessageId() == null) {
 
@@ -887,53 +888,53 @@ int size= members.size();
         messageText = sendMessageEvent.getBody();
         break;
       }
-      case "AttachmentMessage:Image": {
+      case Image: {
         messagePlaceHolderImage = R.drawable.ism_ic_picture;
         messageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_photo);
         break;
       }
-      case "AttachmentMessage:Video": {
+      case Video: {
         messagePlaceHolderImage = R.drawable.ism_ic_video;
         messageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_video);
         break;
       }
-      case "AttachmentMessage:Audio": {
+      case Audio: {
         messagePlaceHolderImage = R.drawable.ism_ic_mic;
         messageText =
             IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_audio_recording);
         break;
       }
-      case "AttachmentMessage:File": {
+      case File: {
         messagePlaceHolderImage = R.drawable.ism_ic_file;
         messageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_file);
         break;
       }
-      case "AttachmentMessage:Sticker": {
+      case Sticker: {
         messagePlaceHolderImage = R.drawable.ism_ic_sticker;
         messageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_sticker);
         break;
       }
-      case "AttachmentMessage:Gif": {
+      case Gif: {
         messagePlaceHolderImage = R.drawable.ism_ic_gif;
         messageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_gif);
         break;
       }
-      case "AttachmentMessage:Whiteboard": {
+      case Whiteboard: {
         messagePlaceHolderImage = R.drawable.ism_ic_whiteboard;
         messageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_whiteboard);
         break;
       }
-      case "AttachmentMessage:Location": {
+      case Location: {
         messagePlaceHolderImage = R.drawable.ism_ic_location;
         messageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_location);
         break;
       }
-      case "AttachmentMessage:Contact": {
+      case Contact: {
         messagePlaceHolderImage = R.drawable.ism_ic_contact;
         messageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_contact);
         break;
       }
-      case "AttachmentMessage:Reply":{
+      case Replay:{
         messagePlaceHolderImage = R.drawable.ism_ic_quote;
         messageText = sendMessageEvent.getBody();
       }

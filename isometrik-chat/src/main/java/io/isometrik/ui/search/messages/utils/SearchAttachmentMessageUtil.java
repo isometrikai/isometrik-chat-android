@@ -2,7 +2,7 @@ package io.isometrik.ui.search.messages.utils;
 
 import io.isometrik.chat.response.message.utils.fetchmessages.UserMessage;
 import io.isometrik.chat.response.message.utils.schemas.Attachment;
-import io.isometrik.chat.utils.enums.MessageTypeUi;
+import io.isometrik.chat.enums.MessageTypeUi;
 import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.messages.chat.MessagesModel;

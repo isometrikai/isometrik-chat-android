@@ -2,13 +2,10 @@ package io.isometrik.samples.chat
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import io.isometrik.chat.utils.enums.MessageTypeUi
 import io.isometrik.samples.chat.databinding.ChatItemBinding
 import io.isometrik.samples.chat.databinding.CustomTopViewBinding
 import io.isometrik.ui.conversations.list.ChatListItemBinder
@@ -18,7 +15,6 @@ import io.isometrik.ui.messages.chat.MessagesModel
 import io.isometrik.ui.messages.chat.common.AttachmentsConfig
 import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.messages.chat.common.ChatTopViewHandler
-import io.isometrik.ui.messages.chat.common.MessageBinderRegistry
 
 class ChatListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,7 +88,7 @@ class ChatListActivity : AppCompatActivity() {
             }
 
             override fun bindData(context: Context, binding: ChatItemBinding, data: ConversationsModel) {
-                binding.chatName.text = data.conversationTitle
+                binding.chatName.text = data.lastMessageText
 //                binding.chatLastMessage.text = data.ti
 
             }
