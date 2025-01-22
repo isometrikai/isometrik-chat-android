@@ -93,7 +93,7 @@ class ChatListActivity : AppCompatActivity() {
 
             override fun bindData(context: Context, binding: ChatItemBinding, data: ConversationsModel) {
                 binding.chatName.text = data.conversationTitle
-                binding.chatLastMessage.text = data.lastMessageSenderName
+//                binding.chatLastMessage.text = data.ti
 
             }
         }

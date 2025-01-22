@@ -141,6 +141,7 @@
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ism_ic_mic"
             android:layout_margin="@dimen/ism_dp_5"
+            android:visibility="gone"
             android:layout_below="@+id/vParentMessage"
             />
 
@@ -152,6 +153,7 @@
             android:layout_toEndOf="@+id/ivAudioImagePh"
             android:layout_marginTop="@dimen/ism_dp_6"
             android:textStyle="bold"
+            android:visibility="gone"
             android:layout_below="@+id/vParentMessage"
             />
 
@@ -163,22 +165,41 @@
             android:textColor="@color/ism_black"
             android:maxLines="1"
             android:ellipsize="end"
+            android:visibility="gone"
             android:text="@string/ism_audio_recording"
             android:layout_marginStart="@dimen/ism_dp_13"
             android:layout_marginEnd="@dimen/ism_dp_13"
             android:layout_toStartOf="@+id/ivPlayAudio"
             />
 
+        <io.isometrik.ui.libwave.WaveformSeekBar
+            android:id="@+id/waveSeekBar"
+            app:marker_color="@color/ism_red_dark"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ism_dp_50"
+            app:wave_width="2dp"
+            android:padding="@dimen/ism_dp_5"
+            app:wave_gap="1dp"
+            android:layout_toEndOf="@+id/ivPlayAudio"
+            app:wave_min_height="15dp"
+            app:wave_corner_radius="1dp"
+            android:clickable="false"
+            android:allowClickWhenDisabled="false"
+            app:wave_background_color="@color/ism_identifier_text_grey"
+            app:wave_progress_color="@color/ism_blue"
+            app:wave_gravity="center" />
+
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivPlayAudio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/waveSeekBar"
+            android:layout_alignBottom="@+id/waveSeekBar"
             app:srcCompat="@drawable/ism_ic_play_audio"
-            android:layout_marginTop="@dimen/ism_dp_8"
-            android:layout_below="@+id/ivAudioImagePh"
-            android:layout_alignParentEnd="true"
-            android:paddingEnd="@dimen/ism_dp_13"
-            android:paddingStart="@dimen/ism_dp_1"
+            android:layout_margin="@dimen/ism_dp_8"
+            android:paddingStart="@dimen/ism_dp_5"
+            android:paddingEnd="@dimen/ism_dp_1"
             />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -190,6 +211,7 @@
             android:layout_below="@+id/tvAudioName"
             android:maxLines="1"
             android:ellipsize="end"
+            android:visibility="gone"
             android:layout_marginStart="@dimen/ism_dp_13"
             android:text="1MB"
             android:layout_marginTop="@dimen/ism_dp_3"
@@ -199,7 +221,7 @@
 
         <RelativeLayout
             android:id="@+id/rlDownload"
-            android:layout_below="@+id/tvAudioSize"
+            android:layout_below="@+id/waveSeekBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         <View

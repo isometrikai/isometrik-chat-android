@@ -171,7 +171,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/ism_dp_50"
                     app:wave_width="2dp"
-                    android:paddingVertical="@dimen/ism_dp_5"
+                    android:padding="@dimen/ism_dp_5"
                     app:wave_gap="1dp"
                     android:layout_toStartOf="@+id/ivPlayAudio"
                     app:wave_min_height="15dp"

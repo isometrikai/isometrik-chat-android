@@ -21,6 +21,8 @@ import io.isometrik.ui.libwave.WaveformSeekBar
 import io.isometrik.ui.messages.action.MessageActionCallback
 import io.isometrik.ui.messages.chat.MessagesModel
 import io.isometrik.ui.messages.reaction.add.MessageReactionsAdapter
+import io.isometrik.ui.utils.AudioFIleUtil
+import io.isometrik.ui.utils.DummyDataUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -264,22 +266,11 @@ class AudioSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageAudioBind
                     message.isDownloaded
                 )
             }
-
-
-            Log.e("message.isUploaded", "===> " + message.isUploaded)
-//            ismSentMessageAudioBinding.waveSeekBar.setSampleFrom(message.audioUrl)
             if (message.isUploaded) {
 
                 CoroutineScope(Dispatchers.Main).launch {
-                    Log.e("AudioDownloadPath", "audioUrl===> " + message.audioUrl)
-
-                    val file = getOrDownloadAudioFile(mContext, message.audioUrl)
-                    Log.e("AudioDownloadPath", "file===> " + file.name)
-
-                    val amplitudes = extractAmplitudes(mContext, file)
-
-                    Log.e("AudioDownloadPath", "amplitudes===> " + amplitudes.size)
-
+                    val file = AudioFIleUtil.getOrDownloadAudioFile(mContext, message.audioUrl)
+                    val amplitudes = AudioFIleUtil.extractAmplitudes(mContext, file)
                     ismSentMessageAudioBinding.waveSeekBar.apply {
                         sample = amplitudes.toIntArray()
                     }
@@ -297,7 +288,7 @@ class AudioSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageAudioBind
                         ContextCompat.getColor(context, R.color.ism_identifier_text_grey)
                     waveProgressColor =
                         ContextCompat.getColor(context, R.color.ism_blue)
-                    sample = getDummyWaveSample()
+                    sample = DummyDataUtil.getDummyWaveSample()
 //                marker = getDummyMarkerSample(ismSentMessageAudioBinding)
                     onProgressChanged = object : SeekBarOnProgressChanged {
                         override fun onProgressChanged(
@@ -316,79 +307,4 @@ class AudioSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageAudioBind
         } catch (ignore: Exception) {
         }
     }
-
-    suspend fun getOrDownloadAudioFile(context: Context, audioUrl: String): File {
-        // Generate a unique file name based on the URL (you can use hashing for better results)
-        val fileName = audioUrl.hashCode().toString()
-        val cacheFile = File(context.cacheDir, fileName)
-
-        // Check if the file already exists
-        if (cacheFile.exists()) {
-            return cacheFile
-        }
-
-        // File does not exist, download it
-        withContext(Dispatchers.IO) {
-            URL(audioUrl).openStream().use { input ->
-                cacheFile.outputStream().use { output ->
-                    input.copyTo(output)
-                }
-            }
-        }
-
-        return cacheFile
-    }
-
-    fun extractAmplitudes(context: Context, audioFile: File): List<Int> {
-        val amplitudes = mutableListOf<Int>()
-        // Create output PCM file
-        val pcmFile = File(context.cacheDir, "${audioFile.name}.pcm")
-        var startReadingFile = false
-        if (pcmFile.exists()) {
-            startReadingFile = true
-        }else{
-            // Construct the FFmpeg command as a single string
-            val command =
-                "-i ${audioFile.absolutePath} -f s16le -ac 1 -ar 44100 ${pcmFile.absolutePath}"
-            // Execute the command
-            val result = FFmpegKit.execute(command)
-            if (result.returnCode.isValueSuccess) {
-                startReadingFile = true
-            } else {
-                println("FFmpeg Error: ${result.failStackTrace}")
-            }
-        }
-        if(startReadingFile){
-            pcmFile.inputStream().buffered().use { input ->
-                while (true) {
-                    // Read two bytes at a time for 16-bit PCM
-                    val low = input.read()
-                    val high = input.read()
-                    if (low == -1 || high == -1) break
-
-                    // Combine the bytes to form the amplitude value
-                    val amplitude = (high shl 8) or (low and 0xFF)
-                    amplitudes.add(amplitude)
-                }
-            }
-        }
-        return amplitudes
-    }
-
-
-    private fun getDummyWaveSample(): IntArray {
-        val data = IntArray(50)
-        for (i in data.indices)
-            data[i] = Random().nextInt(data.size)
-
-        return data
-    }
-
-    private fun getDummyMarkerSample(binding: IsmSentMessageAudioBinding): HashMap<Float, String> {
-        val map = hashMapOf<Float, String>()
-        map[binding.waveSeekBar.maxProgress / 2] = "Middle"
-        map[binding.waveSeekBar.maxProgress / 4] = "Quarter"
-        return map
-    }
-
 }
