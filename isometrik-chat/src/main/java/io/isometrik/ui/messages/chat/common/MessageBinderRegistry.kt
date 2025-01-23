@@ -18,4 +18,6 @@ object MessageBinderRegistry {
     fun getBinder(viewType: MessageTypeUi): MessageItemBinder<out MessagesModel, *>? {
         return customBinders[viewType]
     }
+
+    fun getBinderList() = customBinders
 }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import io.isometrik.chat.enums.MessageTypeUi
 import io.isometrik.samples.chat.databinding.ChatItemBinding
 import io.isometrik.samples.chat.databinding.CustomTopViewBinding
 import io.isometrik.ui.conversations.list.ChatListItemBinder
@@ -16,6 +17,7 @@ import io.isometrik.ui.messages.chat.MessagesModel
 import io.isometrik.ui.messages.chat.common.AttachmentsConfig
 import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.messages.chat.common.ChatTopViewHandler
+import io.isometrik.ui.messages.chat.common.MessageBinderRegistry
 
 class ChatListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,10 +29,10 @@ class ChatListActivity : AppCompatActivity() {
             loadChatFragment()
         }
 
-//        MessageBinderRegistry.registerBinder(
-//            MessageTypeUi.TEXT_MESSAGE_SENT,
-//            CustomTextSentBinder()
-//        )
+        MessageBinderRegistry.registerBinder(
+            MessageTypeUi.PAYMENT_ESCROWED_SENT,
+            CustomTextSentBinder()
+        )
 
 //        MessageBinderRegistry.registerBinder(
 //            MessageTypeUi.TEXT_MESSAGE_RECEIVED,
