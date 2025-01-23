@@ -20,6 +20,7 @@ import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.TextWatcher
 import android.text.style.StyleSpan
+import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
@@ -2295,6 +2296,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                     ismActivityMessagesBinding!!.tvNoMessages.visibility = View.GONE
                 }
                 for (message in messages) {
+                    Log.e("CUSTOM_TYPE__","==> metaData: ${message.metaData}")
                     message.metaData?.let {
                         onMessageUpdated(message)
                     }
