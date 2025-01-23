@@ -37,6 +37,7 @@ public class ConversationsModel {
     private boolean messagingDisabled;
     private JSONObject metaData;
     private boolean readByAll, deliveredToAll;
+    private String customType;
 
     /**
      * Instantiates a new Conversations model.
@@ -137,6 +138,8 @@ public class ConversationsModel {
         }
 
         conversationMembersCount = createConversationEvent.getConversationDetails().getMembersCount();
+        customType = createConversationEvent.getConversationDetails().getCustomType();
+
     }
 
     /**
@@ -162,6 +165,9 @@ public class ConversationsModel {
         metaData = conversation.getMetaData();
         JSONObject lastMessageDetails = conversation.getLastMessageDetails();
         try {
+            if(lastMessageDetails.has("customType")){
+                customType = lastMessageDetails.getString("customType");
+            }
             if (!conversation.isGroup()) {
 
                 if (lastMessageDetails.has("deliveredTo") && lastMessageDetails.getJSONArray("deliveredTo").length() == 1
@@ -180,7 +186,6 @@ public class ConversationsModel {
                 }
             }
         } catch (JSONException ignore) {
-
         }
     }
 
@@ -198,6 +203,7 @@ public class ConversationsModel {
         membersCountText = IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_members_count, conversation.getMembersCount());
+        customType = conversation.getCustomType();
     }
 
     private void parseConversationMessage(Conversation conversation) {
@@ -660,6 +666,7 @@ public class ConversationsModel {
         }
 
         conversationMembersCount = conversation.getMembersCount();
+        customType = conversation.getCustomType();
     }
 
     /**
@@ -1025,5 +1032,9 @@ public class ConversationsModel {
 
     public boolean isDeliveredToAll() {
         return deliveredToAll;
+    }
+
+    public String getCustomType() {
+        return customType;
     }
 }

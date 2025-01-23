@@ -43,7 +43,7 @@ public class VisualMediaFragment extends BottomSheetDialogFragment implements Vi
   /**
    * The constant TAG.
    */
-  public static final String TAG = "StickersFragment";
+  public static final String TAG = "VisualFragment";
 
   /**
    * Instantiates a stickers fragment.
@@ -73,17 +73,17 @@ public class VisualMediaFragment extends BottomSheetDialogFragment implements Vi
             IsmBottomsheetVisualMediaBinding.inflate(inflater, container, false);
     updateShimmerVisibility(true);
     stickersCategories = new ArrayList<>();
-    ismBottomsheetVisualBinding.rvGifsStickersCategories.setLayoutManager(
-        new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
+
 
     stickers = new ArrayList<>();
     stickersAdapter = new StickersAdapter(stickers, activity);
-    gridLayoutManager = new GridLayoutManager(activity, 2);
+    gridLayoutManager = new GridLayoutManager(activity, 3);
     ismBottomsheetVisualBinding.rvGifsStickers.setLayoutManager(gridLayoutManager);
     ismBottomsheetVisualBinding.rvGifsStickers.setNestedScrollingEnabled(true);
     ismBottomsheetVisualBinding.rvGifsStickers.setAdapter(stickersAdapter);
 
-    visualPresenter.fetchStickersCategories();
+//    ismBottomsheetVisualBinding.etSearch.setText("");
+    ismBottomsheetVisualBinding.pbLoading.setVisibility(View.VISIBLE);
 
     ismBottomsheetVisualBinding.rvGifsStickers.addOnScrollListener(stickersOnScrollListener);
     ismBottomsheetVisualBinding.rvGifsStickers.addOnItemTouchListener(
@@ -146,12 +146,6 @@ public class VisualMediaFragment extends BottomSheetDialogFragment implements Vi
       return true;
     });
 
-    ismBottomsheetVisualBinding.rvGifsStickersCategories.setOnTouchListener((v, event) -> {
-      v.getParent().requestDisallowInterceptTouchEvent(true);
-      v.onTouchEvent(event);
-      return true;
-    });
-
     return ismBottomsheetVisualBinding.getRoot();
   }
 
@@ -182,8 +176,6 @@ public class VisualMediaFragment extends BottomSheetDialogFragment implements Vi
 
     if (stickersCategoryModels.size() > 0) {
       stickersCategories.addAll(stickersCategoryModels);
-      StickersCategoriesAdapter stickersCategoriesAdapter =
-          new StickersCategoriesAdapter(stickersCategories, activity);
 
       if (stickersCategories.size() > 0) {
         currentlySelectedStickerCategoryId = stickersCategories.get(0).getStickerCategoryName();
@@ -195,67 +187,6 @@ public class VisualMediaFragment extends BottomSheetDialogFragment implements Vi
           ismBottomsheetVisualBinding.rlSearch.setVisibility(View.GONE);
         }
       }
-      ismBottomsheetVisualBinding.rvGifsStickersCategories.setAdapter(stickersCategoriesAdapter);
-
-      ismBottomsheetVisualBinding.rvGifsStickersCategories.addOnItemTouchListener(
-          new RecyclerItemClickListener(activity,
-              ismBottomsheetVisualBinding.rvGifsStickersCategories,
-              new RecyclerItemClickListener.OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, final int position) {
-                  if (position >= 0) {
-
-                    StickersCategoryModel stickerCategoryModel = stickersCategories.get(position);
-                    currentlySelectedStickerCategoryId =
-                        stickerCategoryModel.getStickerCategoryName();
-                    if (stickerCategoryModel.getStickerCategoryName()
-                        .equals(StickerCategoriesRepository.StickerCategoryNameEnum.Classic.getValue())) {
-                      ismBottomsheetVisualBinding.rlSearch.setVisibility(View.GONE);
-                      ArrayList<StickersModel> stickersData =
-                          stickersCategories.get(position).getStickers();
-                      if (stickersData.size() > 0) {
-
-                        ismBottomsheetVisualBinding.rvGifsStickers.setVisibility(View.VISIBLE);
-                        ismBottomsheetVisualBinding.tvNoGifsStickers.setVisibility(View.GONE);
-
-                        stickers.clear();
-                        stickers.addAll(stickersData);
-                        updateShimmerVisibility(false);
-                        stickersAdapter.notifyDataSetChanged();
-                      } else {
-
-                        ismBottomsheetVisualBinding.tvNoGifsStickers.setText(
-                            getString(R.string.ism_no_stickers_in_category));
-                        ismBottomsheetVisualBinding.tvNoGifsStickers.setVisibility(View.VISIBLE);
-                        ismBottomsheetVisualBinding.rvGifsStickers.setVisibility(View.GONE);
-                      }
-                    } else {
-                      ismBottomsheetVisualBinding.rlSearch.setVisibility(View.VISIBLE);
-                      stickers.clear();
-                      stickersAdapter.notifyDataSetChanged();
-                      ismBottomsheetVisualBinding.etSearch.setText("");
-                      ismBottomsheetVisualBinding.pbLoading.setVisibility(View.VISIBLE);
-                      updateShimmerVisibility(true);
-                      //Not needed anymore, as triggered due to update of edittext to empty text.
-                      //visualPresenter.fetchStickersInACategory(currentlySelectedStickerCategoryId,
-                      //    GIFS_STICKERS_PAGE_SIZE, 0);
-                    }
-                  }
-
-                  for (int i = 0; i < stickersCategories.size(); i++) {
-                    StickersCategoryModel stickersCategoryModel = stickersCategories.get(i);
-                    stickersCategoryModel.setSelected((i == position));
-                  }
-                  stickersCategoriesAdapter.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onItemLongClick(View view, int position) {
-                }
-              }
-
-          ));
-
     } else {
       ismBottomsheetVisualBinding.tvNoGifsStickers.setText(
           getString(R.string.ism_no_gifs_stickers_category, getString(R.string.ism_no_stickers)));

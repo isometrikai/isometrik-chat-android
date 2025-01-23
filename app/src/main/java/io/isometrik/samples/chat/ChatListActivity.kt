@@ -90,13 +90,13 @@ class ChatListActivity : AppCompatActivity() {
 
             override fun bindData(context: Context, binding: ChatItemBinding, data: ConversationsModel) {
                 binding.chatName.text = data.lastMessageText
-//                binding.chatLastMessage.text = data.ti
-                Log.e(data.lastMessageText,"Status delivered: "+data.isDeliveredToAll+" Status read:"+data.isReadByAll)
+                binding.chatLastMessage.text = data.customType
+                Log.e(data.lastMessageText,"Status delivered: "+data.isDeliveredToAll+" Type:"+data.customType)
 
             }
         }
 
-        val chatFragment = ConversationsListFragment()
+        val chatFragment = ConversationsListFragment.newInstance(customBinder)
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, chatFragment)

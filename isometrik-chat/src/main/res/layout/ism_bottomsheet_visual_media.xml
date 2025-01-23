@@ -14,33 +14,17 @@
       android:layout_marginBottom="@dimen/ism_dp_5"
       />
 
-  <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/rvGifsStickersCategories"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginEnd="@dimen/ism_dp_5"
-      android:layout_marginStart="@dimen/ism_dp_5"
-      android:focusableInTouchMode="true"
-      android:layout_below="@+id/vPeek"
-      />
 
-  <View
-      android:id="@+id/vSeperator"
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/ism_dp_0_5"
-      android:background="@color/ism_gif_sticker_seperator_grey"
-      android:layout_below="@+id/rvGifsStickersCategories"
-      />
 
   <RelativeLayout
       android:id="@+id/rlSearch"
       android:layout_width="match_parent"
       android:layout_height="@dimen/ism_dp_40"
-      android:layout_below="@+id/vSeperator"
+      android:layout_below="@+id/vPeek"
       android:layout_margin="@dimen/ism_dp_16"
       android:background="@drawable/ism_gif_sticker_search_background"
       android:elevation="@dimen/ism_dp_0_5"
-      android:visibility="gone"
+      android:visibility="visible"
       >
 
     <androidx.appcompat.widget.AppCompatEditText
