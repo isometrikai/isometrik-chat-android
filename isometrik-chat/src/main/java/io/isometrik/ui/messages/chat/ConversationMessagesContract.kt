@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import io.isometrik.chat.enums.AttachmentMessageType
+import io.isometrik.chat.enums.CustomMessageTypes
 import io.isometrik.chat.enums.PresignedUrlMediaTypes
 import io.isometrik.chat.response.message.utils.schemas.Attachment
 import io.isometrik.chat.response.message.utils.schemas.MentionedUser
@@ -89,7 +90,7 @@ interface ConversationMessagesContract {
          * @param messageType the message type
          * @param parentMessageId the parent message id
          * @param originalReplyMessageUtil the original reply message util
-         * @param customType the custom type
+         * @param customMessageType the custom type
          * @param messageBody the message body
          * @param encrypted the encrypted
          * @param showInConversation the show in conversation
@@ -108,7 +109,7 @@ interface ConversationMessagesContract {
             messageType: RemoteMessageTypes?,
             parentMessageId: String?,
             originalReplyMessageUtil: OriginalReplyMessageUtil?,
-            customType: String?,
+            customMessageType: CustomMessageTypes?,
             messageBody: String?,
             encrypted: Boolean,
             showInConversation: Boolean,

@@ -3,6 +3,7 @@ package io.isometrik.ui.messages.chat;
 import android.text.SpannableString;
 
 import io.isometrik.chat.R;
+import io.isometrik.chat.enums.CustomMessageTypes;
 import io.isometrik.chat.enums.MessageTypeUi;
 import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.ui.messages.chat.utils.enums.RemoteMessageTypes;
@@ -355,7 +356,7 @@ public class MessagesModel implements Serializable {
      * @param editedMessage            the edited message
      */
     //Gif/Sticker message
-    public MessagesModel(String messageId, MessageTypeUi messageTypeUi, boolean isSentMessage,
+    public MessagesModel(String messageId, MessageTypeUi messageTypeUi, CustomMessageTypes customMessageType, boolean isSentMessage,
                          long messageTime, boolean isQuotedMessage, String gifOrStickerStillUrl,
                          String gifOrStickerMainUrl, String senderName, String senderImageUrl,
                          ArrayList<ReactionModel> reactions, boolean sticker, boolean messageSentSuccessfully,
@@ -364,6 +365,7 @@ public class MessagesModel implements Serializable {
                          boolean deliveredToAll, boolean readByAll, String conversationId, boolean editedMessage) {
         this.messageId = messageId;
         this.messageTypeUi = messageTypeUi;
+        this.customMessageType = customMessageType;
         this.isSentMessage = isSentMessage;
         this.sentAt = messageTime;
         this.messageTime = TimeUtil.formatTimestampToBothDateAndTime(messageTime);
@@ -455,7 +457,7 @@ public class MessagesModel implements Serializable {
      * @param editedMessage            the edited message
      */
     //Audio/file message
-    public MessagesModel(String messageId, MessageTypeUi messageTypeUi, boolean isSentMessage,
+    public MessagesModel(String messageId, MessageTypeUi messageTypeUi, CustomMessageTypes customMessageType, boolean isSentMessage,
                          long messageTime, boolean isQuotedMessage, String mediaSizeInMB, boolean isDownloaded,
                          boolean isDownloading, boolean isUploaded, boolean isUploading, String audioOrFileUrl,
                          String audioOrFileName, String mimeType, String mediaExtension, String senderName,
@@ -466,6 +468,7 @@ public class MessagesModel implements Serializable {
                          boolean readByAll, String conversationId, boolean editedMessage) {
         this.messageId = messageId;
         this.messageTypeUi = messageTypeUi;
+        this.customMessageType = customMessageType;
         this.isSentMessage = isSentMessage;
         this.sentAt = messageTime;
         this.messageTime = TimeUtil.formatTimestampToBothDateAndTime(messageTime);
@@ -660,6 +663,7 @@ public class MessagesModel implements Serializable {
 
     //For identifying the custom message type
     private final MessageTypeUi messageTypeUi;
+    private final CustomMessageTypes customMessageType;
 
     /**
      * Gets custom message type.
@@ -668,6 +672,10 @@ public class MessagesModel implements Serializable {
      */
     public MessageTypeUi getMessageTypeUi() {
         return messageTypeUi;
+    }
+
+    public CustomMessageTypes getCustomMessageType() {
+        return customMessageType;
     }
 
     //For checking if given message is sent or received
@@ -1192,7 +1200,7 @@ public class MessagesModel implements Serializable {
      * @param editedMessage            the edited message
      */
     //Location message constructor
-    public MessagesModel(String messageId, MessageTypeUi messageTypeUi, boolean isSentMessage,
+    public MessagesModel(String messageId, MessageTypeUi messageTypeUi, CustomMessageTypes customMessageType, boolean isSentMessage,
                          long messageTime, boolean isQuotedMessage, String latitude, String locationName,
                          String longitude, String locationDescription, String senderName, String senderImageUrl,
                          ArrayList<ReactionModel> reactions, boolean messageSentSuccessfully, String localMessageId,
@@ -1201,6 +1209,7 @@ public class MessagesModel implements Serializable {
                          boolean editedMessage) {
         this.messageId = messageId;
         this.messageTypeUi = messageTypeUi;
+        this.customMessageType = customMessageType;
         this.isSentMessage = isSentMessage;
         this.sentAt = messageTime;
         this.messageTime = TimeUtil.formatTimestampToBothDateAndTime(messageTime);
@@ -1275,7 +1284,7 @@ public class MessagesModel implements Serializable {
      * @param editedMessage            the edited message
      */
     //Contact message
-    public MessagesModel(String messageId, MessageTypeUi messageTypeUi, boolean isSentMessage,
+    public MessagesModel(String messageId, MessageTypeUi messageTypeUi, CustomMessageTypes customMessageType, boolean isSentMessage,
                          long messageTime, boolean isQuotedMessage, String contactName, String contactIdentifier,
                          String contactImageUrl, String senderName, String senderImageUrl,
                          ArrayList<ReactionModel> reactions, boolean messageSentSuccessfully, String localMessageId,
@@ -1284,6 +1293,7 @@ public class MessagesModel implements Serializable {
                          boolean editedMessage) {
         this.messageId = messageId;
         this.messageTypeUi = messageTypeUi;
+        this.customMessageType = customMessageType;
         this.isSentMessage = isSentMessage;
         this.sentAt = messageTime;
         this.messageTime = TimeUtil.formatTimestampToBothDateAndTime(messageTime);
@@ -1379,7 +1389,7 @@ public class MessagesModel implements Serializable {
      * @param editedMessage            the edited message
      */
     //Video/photo/whiteboard message
-    public MessagesModel(String messageId, MessageTypeUi messageTypeUi, boolean isSentMessage,
+    public MessagesModel(String messageId, MessageTypeUi messageTypeUi, CustomMessageTypes customMessageType, boolean isSentMessage,
                          long messageTime, boolean isQuotedMessage, String mediaSizeInMB, boolean isDownloaded,
                          boolean isDownloading, boolean isUploaded, boolean isUploading, String thumbnailUrl,
                          String mainUrl, String mimeType, String mediaExtension, String senderName,
@@ -1390,6 +1400,7 @@ public class MessagesModel implements Serializable {
                          boolean editedMessage) {
         this.messageId = messageId;
         this.messageTypeUi = messageTypeUi;
+        this.customMessageType = customMessageType;
         this.isSentMessage = isSentMessage;
         this.sentAt = messageTime;
         this.messageTime = TimeUtil.formatTimestampToBothDateAndTime(messageTime);
@@ -1492,7 +1503,7 @@ public class MessagesModel implements Serializable {
      * @param editedMessage            the edited message
      */
     //Text message
-    public MessagesModel(String messageId, MessageTypeUi messageTypeUi, boolean isSentMessage,
+    public MessagesModel(String messageId, MessageTypeUi messageTypeUi, CustomMessageTypes customMessageType, boolean isSentMessage,
                          long messageTime, boolean isQuotedMessage, SpannableString textMessage, String senderName,
                          String senderImageUrl, ArrayList<ReactionModel> reactions, boolean messageSentSuccessfully,
                          String localMessageId, OriginalReplyMessageUtil originalReplyMessageUtil,
@@ -1500,6 +1511,7 @@ public class MessagesModel implements Serializable {
                          boolean readByAll, String conversationId, boolean editedMessage) {
         this.messageId = messageId;
         this.messageTypeUi = messageTypeUi;
+        this.customMessageType = customMessageType;
         this.isSentMessage = isSentMessage;
         this.sentAt = messageTime;
         this.messageTime = TimeUtil.formatTimestampToBothDateAndTime(messageTime);
@@ -1579,6 +1591,7 @@ public class MessagesModel implements Serializable {
         this.conversationActionMessage = conversationActionMessage;
         this.messageId = messageId;
         this.messageTypeUi = messageTypeUi;
+        this.customMessageType = null;
         this.sentAt = messageTime;
         this.messageTime = TimeUtil.formatTimestampToBothDateAndTime(messageTime);
         this.isSentMessage = isSentMessage;
@@ -1599,6 +1612,7 @@ public class MessagesModel implements Serializable {
         this.conversationActionMessage = conversationActionMessage;
         this.messageId = messageId;
         this.messageTypeUi = messageTypeUi;
+        this.customMessageType = null;
         this.sentAt = messageTime;
         this.messageTime = TimeUtil.formatTimestampToBothDateAndTime(messageTime);
         this.isSentMessage = isSentMessage;

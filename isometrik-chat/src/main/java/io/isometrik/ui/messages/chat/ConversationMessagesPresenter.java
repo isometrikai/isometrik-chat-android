@@ -270,7 +270,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
 
     @Override
     public void shareMessage(RemoteMessageTypes messageType, String parentMessageId,
-                             OriginalReplyMessageUtil originalReplyMessageUtil, String customType, String messageBody,
+                             OriginalReplyMessageUtil originalReplyMessageUtil, CustomMessageTypes customMessageType, String messageBody,
                              boolean encrypted, boolean showInConversation, Boolean sendPushNotification, Boolean updateUnreadCount, ArrayList<Attachment> attachments, JSONObject messageMetadata,
                              ArrayList<MentionedUser> mentionedUsers, MessageTypeUi messageTypeUi, ArrayList<String> mediaPaths, boolean uploadMediaRequired,
                              PresignedUrlMediaTypes presignedUrlMediaTypes, AttachmentMessageType attachmentMessageType) {
@@ -295,7 +295,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                         LocalMediaAttachmentHelper localMediaAttachmentHelper =
                                 new LocalMediaAttachmentHelper(mediaPaths.get(i));
                         messageModel =
-                                new MessagesModel(null, messageTypeUi, true, System.currentTimeMillis(),
+                                new MessagesModel(null, messageTypeUi,customMessageType, true, System.currentTimeMillis(),
                                         parentMessageId != null, localMediaAttachmentHelper.getSizeInMb(), false, false,
                                         false, true, localMediaAttachmentHelper.getThumbnailUrl(),
                                         localMediaAttachmentHelper.getMediaUrl(),
@@ -314,7 +314,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
 
                         LocalMediaAttachmentHelper localMediaAttachmentHelper = new LocalMediaAttachmentHelper(mediaPaths.get(i));
                         messageModel =
-                                new MessagesModel(null, messageTypeUi, true, System.currentTimeMillis(),
+                                new MessagesModel(null, messageTypeUi,customMessageType, true, System.currentTimeMillis(),
                                         parentMessageId != null, localMediaAttachmentHelper.getSizeInMb(), false, false,
                                         false, true, localMediaAttachmentHelper.getMediaUrl(),
                                         localMediaAttachmentHelper.getMediaName(),
@@ -331,7 +331,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                     case AUDIO_MESSAGE_SENT: {
                         LocalMediaAttachmentHelper localMediaAttachmentHelper = new LocalMediaAttachmentHelper(mediaPaths.get(i));
                         messageModel =
-                                new MessagesModel(null, messageTypeUi, true, System.currentTimeMillis(),
+                                new MessagesModel(null, messageTypeUi,customMessageType, true, System.currentTimeMillis(),
                                         parentMessageId != null, localMediaAttachmentHelper.getSizeInMb(), false, false,
                                         false, true, localMediaAttachmentHelper.getMediaUrl(),
                                         localMediaAttachmentHelper.getMediaName(),
@@ -352,7 +352,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                     conversationMessagesView.addSentMessageInUILocally(messageModel, true);
                 }
             }
-            requestPresignedUrls(conversationId, messageType, parentMessageId, customType, messageBody,
+            requestPresignedUrls(conversationId, messageType, parentMessageId, customMessageType.value, messageBody,
                     encrypted, showInConversation, sendPushNotification, updateUnreadCount, messageMetadata,
                     mentionedUsers, presignedUrlMediaTypes, mediaDetailsMap, attachmentMessageType,
                     messageTypeUi == MessageTypeUi.WHITEBOARD_MESSAGE_SENT,messageModel);
@@ -368,7 +368,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
 
                 case REPLAY_MESSAGE_SENT: {
                     messageModel =
-                            new MessagesModel(null, messageTypeUi, true, System.currentTimeMillis(),
+                            new MessagesModel(null, messageTypeUi,customMessageType, true, System.currentTimeMillis(),
                                     parentMessageId != null,
                                     TagUserUtil.parseMentionedUsers(messageBody, mentionedUsers, taggedUserCallback),
                                     IsometrikChatSdk.getInstance().getUserSession().getUserName(),
@@ -383,7 +383,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                 case LOCATION_MESSAGE_SENT: {
                     Attachment attachment = attachments.get(0);
                     messageModel =
-                            new MessagesModel(null, messageTypeUi, true, System.currentTimeMillis(),
+                            new MessagesModel(null, messageTypeUi,customMessageType, true, System.currentTimeMillis(),
                                     parentMessageId != null, String.valueOf(attachment.getLatitude()),
                                     attachment.getTitle(), String.valueOf(attachment.getLongitude()),
                                     attachment.getAddress(),
@@ -399,7 +399,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                 case STICKER_MESSAGE_SENT: {
                     Attachment attachment = attachments.get(0);
                     messageModel =
-                            new MessagesModel(null, messageTypeUi, true, System.currentTimeMillis(),
+                            new MessagesModel(null, messageTypeUi,customMessageType, true, System.currentTimeMillis(),
                                     parentMessageId != null, attachment.getStillUrl(), attachment.getMediaUrl(),
                                     IsometrikChatSdk.getInstance().getUserSession().getUserName(),
                                     IsometrikChatSdk.getInstance().getUserSession().getUserProfilePic(),
@@ -414,7 +414,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                 case GIF_MESSAGE_SENT: {
                     Attachment attachment = attachments.get(0);
                     messageModel =
-                            new MessagesModel(null, messageTypeUi, true, System.currentTimeMillis(),
+                            new MessagesModel(null, messageTypeUi,customMessageType, true, System.currentTimeMillis(),
                                     parentMessageId != null, attachment.getStillUrl(), attachment.getMediaUrl(),
                                     IsometrikChatSdk.getInstance().getUserSession().getUserName(),
                                     IsometrikChatSdk.getInstance().getUserSession().getUserProfilePic(),
@@ -442,7 +442,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                         }
                     }
                     messageModel =
-                            new MessagesModel(null, messageTypeUi, true, System.currentTimeMillis(),
+                            new MessagesModel(null, messageTypeUi,customMessageType, true, System.currentTimeMillis(),
                                     parentMessageId != null, contactName,
                                     contactIdentifier,
                                     contactImageUrl,
@@ -474,8 +474,8 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
             if (attachments != null) {
                 sendMessageQuery.setAttachments(attachments);
             }
-            if (customType != null) {
-                sendMessageQuery.setCustomType(customType);
+            if (customMessageType != null) {
+                sendMessageQuery.setCustomType(customMessageType.value);
             }
             if (mentionedUsers != null) {
                 sendMessageQuery.setMentionedUsers(mentionedUsers);
