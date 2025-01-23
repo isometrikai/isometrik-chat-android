@@ -112,6 +112,7 @@ import io.isometrik.ui.messages.media.gifs.GifsFragment
 import io.isometrik.ui.messages.media.location.LocationUtils
 import io.isometrik.ui.messages.media.location.ShareLocationActivity
 import io.isometrik.ui.messages.media.stickers.StickersFragment
+import io.isometrik.ui.messages.media.visual.VisualMediaFragment
 import io.isometrik.ui.messages.media.whiteboard.WhiteboardFragment
 import io.isometrik.ui.messages.preview.PreviewMessageUtil
 import io.isometrik.ui.messages.reaction.add.AddReactionFragment
@@ -153,6 +154,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
     private var fetchReactionUsersFragment: FetchReactionUsersFragment? = null
     private var gifsFragment: GifsFragment? = null
     private var stickersFragment: StickersFragment? = null
+    private var visualMediaFragment: VisualMediaFragment? = null
     private var shareMediaFragment: ShareMediaFragment? = null
     private var whiteboardFragment: WhiteboardFragment? = null
     private var sendMessageReplyFragment: SendMessageReplyFragment? = null
@@ -371,6 +373,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         fetchReactionUsersFragment = FetchReactionUsersFragment()
         gifsFragment = GifsFragment()
         stickersFragment = StickersFragment()
+        visualMediaFragment = VisualMediaFragment()
         shareMediaFragment = ShareMediaFragment()
         whiteboardFragment = WhiteboardFragment()
         sendMessageReplyFragment = SendMessageReplyFragment()
@@ -1603,23 +1606,30 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 )
             }
 
+            MessageTypeUi.GIF_MESSAGE_SENT,
             MessageTypeUi.STICKER_MESSAGE_SENT -> {
                 //Sticker
-                if (!isFinishing && !stickersFragment!!.isAdded) {
+                if (!isFinishing && !visualMediaFragment!!.isAdded) {
                     dismissAllDialogs()
-                    stickersFragment!!.updateParameters(this)
-                    stickersFragment!!.show(supportFragmentManager, StickersFragment.TAG)
+                    visualMediaFragment!!.updateParameters(this)
+                    visualMediaFragment!!.show(supportFragmentManager, VisualMediaFragment.TAG)
                 }
+
+//                if (!isFinishing && !stickersFragment!!.isAdded) {
+//                    dismissAllDialogs()
+//                    stickersFragment!!.updateParameters(this)
+//                    stickersFragment!!.show(supportFragmentManager, StickersFragment.TAG)
+//                }
             }
 
-            MessageTypeUi.GIF_MESSAGE_SENT -> {
-                //Gif
-                if (!isFinishing && !gifsFragment!!.isAdded) {
-                    dismissAllDialogs()
-                    gifsFragment!!.updateParameters(this)
-                    gifsFragment!!.show(supportFragmentManager, GifsFragment.TAG)
-                }
-            }
+//            MessageTypeUi.GIF_MESSAGE_SENT -> {
+//                //Gif
+//                if (!isFinishing && !gifsFragment!!.isAdded) {
+//                    dismissAllDialogs()
+//                    gifsFragment!!.updateParameters(this)
+//                    gifsFragment!!.show(supportFragmentManager, GifsFragment.TAG)
+//                }
+//            }
 
             MessageTypeUi.WHITEBOARD_MESSAGE_SENT -> {
                 //Whiteboard
@@ -2357,12 +2367,16 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                         .isShowing && !fetchReactionUsersFragment!!.isRemoving
                 ) {
                     fetchReactionUsersFragment!!.dismiss()
-                } else if (gifsFragment!!.dialog != null && gifsFragment!!.dialog!!.isShowing && !gifsFragment!!.isRemoving) {
+                } /*else if (gifsFragment!!.dialog != null && gifsFragment!!.dialog!!.isShowing && !gifsFragment!!.isRemoving) {
                     gifsFragment!!.dismiss()
                 } else if (stickersFragment!!.dialog != null && stickersFragment!!.dialog!!
                         .isShowing && !stickersFragment!!.isRemoving
                 ) {
                     stickersFragment!!.dismiss()
+                }*/ else if (visualMediaFragment!!.dialog != null && visualMediaFragment!!.dialog!!
+                        .isShowing && !visualMediaFragment!!.isRemoving
+                ) {
+                    visualMediaFragment!!.dismiss()
                 } else if (shareMediaFragment!!.dialog != null && shareMediaFragment!!.dialog!!
                         .isShowing && !shareMediaFragment!!.isRemoving
                 ) {

@@ -1,5 +1,7 @@
 package io.isometrik.chat.services;
 
+import io.isometrik.chat.response.groupcast.GroupCastCreateResult;
+import io.isometrik.chat.response.groupcast.GroupCastMessageResult;
 import io.isometrik.chat.response.message.FetchAttachmentPresignedUrlsResult;
 import io.isometrik.chat.response.message.FetchMentionedMessagesResult;
 import io.isometrik.chat.response.message.FetchMessagesCountResult;
@@ -18,7 +20,9 @@ import io.isometrik.chat.response.message.delivery.MarkMessageAsDeliveredResult;
 import io.isometrik.chat.response.message.delivery.MarkMessageAsReadResult;
 import io.isometrik.chat.response.message.delivery.MarkMultipleMessagesAsReadResult;
 import io.isometrik.chat.response.message.delivery.UpdateLastReadInConversationResult;
+
 import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -39,201 +43,223 @@ import retrofit2.http.QueryMap;
  */
 public interface MessageService {
 
-  /**
-   * Broadcast message call.
-   *
-   * @param headers the headers
-   * @param bodyParams the body params
-   * @return the call
-   */
-  @POST("/chat/message/broadcast")
-  Call<BroadcastMessageResult> broadcastMessage(@HeaderMap Map<String, String> headers,
-      @Body Map<String, Object> bodyParams);
+    /**
+     * Broadcast message call.
+     *
+     * @param headers    the headers
+     * @param bodyParams the body params
+     * @return the call
+     */
+    @POST("/chat/message/broadcast")
+    Call<BroadcastMessageResult> broadcastMessage(@HeaderMap Map<String, String> headers,
+                                                  @Body Map<String, Object> bodyParams);
 
-  /**
-   * Forward message call.
-   *
-   * @param headers the headers
-   * @param bodyParams the body params
-   * @return the call
-   */
-  @POST("/chat/message/forward")
-  Call<ForwardMessageResult> forwardMessage(@HeaderMap Map<String, String> headers,
-      @Body Map<String, Object> bodyParams);
+    /**
+     * Forward message call.
+     *
+     * @param headers    the headers
+     * @param bodyParams the body params
+     * @return the call
+     */
+    @POST("/chat/message/forward")
+    Call<ForwardMessageResult> forwardMessage(@HeaderMap Map<String, String> headers,
+                                              @Body Map<String, Object> bodyParams);
 
-  /**
-   * Remove messages for self call.
-   *
-   * @param headers the headers
-   * @param queryParams the query params
-   * @return the call
-   */
-  @DELETE("/chat/messages/self")
-  Call<RemoveMessagesForSelfResult> removeMessagesForSelf(@HeaderMap Map<String, String> headers,
-      @QueryMap Map<String, Object> queryParams);
+    /**
+     * Remove messages for self call.
+     *
+     * @param headers     the headers
+     * @param queryParams the query params
+     * @return the call
+     */
+    @DELETE("/chat/messages/self")
+    Call<RemoveMessagesForSelfResult> removeMessagesForSelf(@HeaderMap Map<String, String> headers,
+                                                            @QueryMap Map<String, Object> queryParams);
 
-  /**
-   * Remove messages for everyone call.
-   *
-   * @param headers the headers
-   * @param queryParams the query params
-   * @return the call
-   */
-  @DELETE("/chat/messages/everyone")
-  Call<RemoveMessagesForEveryoneResult> removeMessagesForEveryone(
-      @HeaderMap Map<String, String> headers, @QueryMap Map<String, Object> queryParams);
+    /**
+     * Remove messages for everyone call.
+     *
+     * @param headers     the headers
+     * @param queryParams the query params
+     * @return the call
+     */
+    @DELETE("/chat/messages/everyone")
+    Call<RemoveMessagesForEveryoneResult> removeMessagesForEveryone(
+            @HeaderMap Map<String, String> headers, @QueryMap Map<String, Object> queryParams);
 
-  /**
-   * Mark multiple messages as read call.
-   *
-   * @param headers the headers
-   * @param bodyParams the body params
-   * @return the call
-   */
-  @PUT("/chat/messages/read")
-  Call<MarkMultipleMessagesAsReadResult> markMultipleMessagesAsRead(
-      @HeaderMap Map<String, String> headers, @Body Map<String, Object> bodyParams);
+    /**
+     * Mark multiple messages as read call.
+     *
+     * @param headers    the headers
+     * @param bodyParams the body params
+     * @return the call
+     */
+    @PUT("/chat/messages/read")
+    Call<MarkMultipleMessagesAsReadResult> markMultipleMessagesAsRead(
+            @HeaderMap Map<String, String> headers, @Body Map<String, Object> bodyParams);
 
-  /**
-   * Mark message as read call.
-   *
-   * @param headers the headers
-   * @param bodyParams the body params
-   * @return the call
-   */
-  @PUT("/chat/indicator/read")
-  Call<MarkMessageAsReadResult> markMessageAsRead(@HeaderMap Map<String, String> headers,
-      @Body Map<String, Object> bodyParams);
+    /**
+     * Mark message as read call.
+     *
+     * @param headers    the headers
+     * @param bodyParams the body params
+     * @return the call
+     */
+    @PUT("/chat/indicator/read")
+    Call<MarkMessageAsReadResult> markMessageAsRead(@HeaderMap Map<String, String> headers,
+                                                    @Body Map<String, Object> bodyParams);
 
-  /**
-   * Mark message as delivered call.
-   *
-   * @param headers the headers
-   * @param bodyParams the body params
-   * @return the call
-   */
-  @PUT("/chat/indicator/delivered")
-  Call<MarkMessageAsDeliveredResult> markMessageAsDelivered(@HeaderMap Map<String, String> headers,
-      @Body Map<String, Object> bodyParams);
+    /**
+     * Mark message as delivered call.
+     *
+     * @param headers    the headers
+     * @param bodyParams the body params
+     * @return the call
+     */
+    @PUT("/chat/indicator/delivered")
+    Call<MarkMessageAsDeliveredResult> markMessageAsDelivered(@HeaderMap Map<String, String> headers,
+                                                              @Body Map<String, Object> bodyParams);
 
-  /**
-   * Send typing message call.
-   *
-   * @param headers the headers
-   * @param bodyParams the body params
-   * @return the call
-   */
-  @POST("/chat/indicator/typing")
-  Call<SendTypingMessageResult> sendTypingMessage(@HeaderMap Map<String, String> headers,
-      @Body Map<String, Object> bodyParams);
+    /**
+     * Send typing message call.
+     *
+     * @param headers    the headers
+     * @param bodyParams the body params
+     * @return the call
+     */
+    @POST("/chat/indicator/typing")
+    Call<SendTypingMessageResult> sendTypingMessage(@HeaderMap Map<String, String> headers,
+                                                    @Body Map<String, Object> bodyParams);
 
-  /**
-   * Fetch messages call.
-   *
-   * @param headers the headers
-   * @param queryParams the query params
-   * @return the call
-   */
-  @GET("/chat/messages")
-  Call<FetchMessagesResult> fetchMessages(@HeaderMap Map<String, String> headers,
-      @QueryMap Map<String, Object> queryParams);
+    /**
+     * Fetch messages call.
+     *
+     * @param headers     the headers
+     * @param queryParams the query params
+     * @return the call
+     */
+    @GET("/chat/messages")
+    Call<FetchMessagesResult> fetchMessages(@HeaderMap Map<String, String> headers,
+                                            @QueryMap Map<String, Object> queryParams);
 
-  /**
-   * Fetch user messages call.
-   *
-   * @param headers the headers
-   * @param queryParams the query params
-   * @return the call
-   */
-  @GET("/chat/messages/user")
-  Call<FetchUserMessagesResult> fetchUserMessages(@HeaderMap Map<String, String> headers,
-      @QueryMap Map<String, Object> queryParams);
+    /**
+     * Fetch user messages call.
+     *
+     * @param headers     the headers
+     * @param queryParams the query params
+     * @return the call
+     */
+    @GET("/chat/messages/user")
+    Call<FetchUserMessagesResult> fetchUserMessages(@HeaderMap Map<String, String> headers,
+                                                    @QueryMap Map<String, Object> queryParams);
 
-  /**
-   * Fetch messages count call.
-   *
-   * @param headers the headers
-   * @param queryParams the query params
-   * @return the call
-   */
-  @GET("/chat/messages/count")
-  Call<FetchMessagesCountResult> fetchMessagesCount(@HeaderMap Map<String, String> headers,
-      @QueryMap Map<String, Object> queryParams);
+    /**
+     * Fetch messages count call.
+     *
+     * @param headers     the headers
+     * @param queryParams the query params
+     * @return the call
+     */
+    @GET("/chat/messages/count")
+    Call<FetchMessagesCountResult> fetchMessagesCount(@HeaderMap Map<String, String> headers,
+                                                      @QueryMap Map<String, Object> queryParams);
 
-  /**
-   * Send message call.
-   *
-   * @param headers the headers
-   * @param bodyParams the body params
-   * @return the call
-   */
-  @POST("/chat/message")
-  Call<SendMessageResult> sendMessage(@HeaderMap Map<String, String> headers,
-      @Body Map<String, Object> bodyParams);
+    /**
+     * Send message call.
+     *
+     * @param headers    the headers
+     * @param bodyParams the body params
+     * @return the call
+     */
+    @POST("/chat/message")
+    Call<SendMessageResult> sendMessage(@HeaderMap Map<String, String> headers,
+                                        @Body Map<String, Object> bodyParams);
 
-  /**
-   * Fetch unread messages count call.
-   *
-   * @param headers the headers
-   * @param queryParams the query params
-   * @return the call
-   */
-  @GET("/chat/messages/unread/count")
-  Call<FetchUnreadMessagesCountResult> fetchUnreadMessagesCount(
-      @HeaderMap Map<String, String> headers, @QueryMap Map<String, Object> queryParams);
+    /**
+     * Fetch unread messages count call.
+     *
+     * @param headers     the headers
+     * @param queryParams the query params
+     * @return the call
+     */
+    @GET("/chat/messages/unread/count")
+    Call<FetchUnreadMessagesCountResult> fetchUnreadMessagesCount(
+            @HeaderMap Map<String, String> headers, @QueryMap Map<String, Object> queryParams);
 
-  /**
-   * Fetch unread messages call.
-   *
-   * @param headers the headers
-   * @param queryParams the query params
-   * @return the call
-   */
-  @GET("/chat/messages/unread")
-  Call<FetchUnreadMessagesResult> fetchUnreadMessages(@HeaderMap Map<String, String> headers,
-      @QueryMap Map<String, Object> queryParams);
+    /**
+     * Fetch unread messages call.
+     *
+     * @param headers     the headers
+     * @param queryParams the query params
+     * @return the call
+     */
+    @GET("/chat/messages/unread")
+    Call<FetchUnreadMessagesResult> fetchUnreadMessages(@HeaderMap Map<String, String> headers,
+                                                        @QueryMap Map<String, Object> queryParams);
 
-  /**
-   * Fetch attachment presigned urls call.
-   *
-   * @param headers the headers
-   * @param bodyParams the body params
-   * @return the call
-   */
-  @POST("/chat/messages/presignedurls")
-  Call<FetchAttachmentPresignedUrlsResult> fetchAttachmentPresignedUrls(
-      @HeaderMap Map<String, String> headers, @Body Map<String, Object> bodyParams);
+    /**
+     * Fetch attachment presigned urls call.
+     *
+     * @param headers    the headers
+     * @param bodyParams the body params
+     * @return the call
+     */
+    @POST("/chat/messages/presignedurls")
+    Call<FetchAttachmentPresignedUrlsResult> fetchAttachmentPresignedUrls(
+            @HeaderMap Map<String, String> headers, @Body Map<String, Object> bodyParams);
 
-  /**
-   * Fetch mentioned messages call.
-   *
-   * @param headers the headers
-   * @param queryParams the query params
-   * @return the call
-   */
-  @GET("/chat/messages/mentioned")
-  Call<FetchMentionedMessagesResult> fetchMentionedMessages(@HeaderMap Map<String, String> headers,
-      @QueryMap Map<String, Object> queryParams);
+    /**
+     * Fetch mentioned messages call.
+     *
+     * @param headers     the headers
+     * @param queryParams the query params
+     * @return the call
+     */
+    @GET("/chat/messages/mentioned")
+    Call<FetchMentionedMessagesResult> fetchMentionedMessages(@HeaderMap Map<String, String> headers,
+                                                              @QueryMap Map<String, Object> queryParams);
 
-  /**
-   * Update last read in conversation call.
-   *
-   * @param headers the headers
-   * @param bodyParams the body params
-   * @return the call
-   */
-  @PUT("/chat/conversation/lastread")
-  Call<UpdateLastReadInConversationResult> updateLastReadInConversation(
-      @HeaderMap Map<String, String> headers, @Body Map<String, Object> bodyParams);
+    /**
+     * Update last read in conversation call.
+     *
+     * @param headers    the headers
+     * @param bodyParams the body params
+     * @return the call
+     */
+    @PUT("/chat/conversation/lastread")
+    Call<UpdateLastReadInConversationResult> updateLastReadInConversation(
+            @HeaderMap Map<String, String> headers, @Body Map<String, Object> bodyParams);
 
-  /**
-   * Update message details call.
-   *
-   * @param headers the headers
-   * @param bodyParams the body params
-   * @return the call
-   */
-  @PATCH("/chat/message")
-  Call<UpdateMessageDetailsResult> updateMessageDetails(@HeaderMap Map<String, String> headers,
-      @Body Map<String, Object> bodyParams);
+    /**
+     * Update message details call.
+     *
+     * @param headers    the headers
+     * @param bodyParams the body params
+     * @return the call
+     */
+    @PATCH("/chat/message")
+    Call<UpdateMessageDetailsResult> updateMessageDetails(@HeaderMap Map<String, String> headers,
+                                                          @Body Map<String, Object> bodyParams);
+
+    /**
+     * Groupcast create call.
+     *
+     * @param headers    the headers
+     * @param bodyParams the body params
+     * @return the call
+     */
+    @POST("/chat/groupcast")
+    Call<GroupCastCreateResult> groupCastCreate(@HeaderMap Map<String, String> headers,
+                                                @Body Map<String, Object> bodyParams);
+
+    /**
+     * Groupcast message call.
+     *
+     * @param headers    the headers
+     * @param bodyParams the body params
+     * @return the call
+     */
+    @POST("/chat/groupcast/message")
+    Call<GroupCastMessageResult> groupCastMessage(@HeaderMap Map<String, String> headers,
+                                                  @Body Map<String, Object> bodyParams);
 }

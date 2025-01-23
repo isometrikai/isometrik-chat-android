@@ -23,6 +23,7 @@ public class RemoteUseCases {
   private final ReactionUseCases reactionUseCases;
   private final UploadUseCases uploadUseCases;
   private final UserUseCases userUseCases;
+  private final GroupCastUseCases groupCastUseCases;
 
   /**
    * Instantiates a new Remote use cases.
@@ -56,6 +57,8 @@ public class RemoteUseCases {
     uploadUseCases = new UploadUseCases(mediaTransferManager, baseResponse);
 
     userUseCases = new UserUseCases(imConfiguration, retrofitManager, baseResponse, gson);
+
+    groupCastUseCases = new GroupCastUseCases(imConfiguration, retrofitManager, baseResponse, gson);
   }
 
   /**
@@ -128,5 +131,9 @@ public class RemoteUseCases {
    */
   public UserUseCases getUserUseCases() {
     return userUseCases;
+  }
+
+  public GroupCastUseCases getGroupCastUseCases() {
+    return groupCastUseCases;
   }
 }

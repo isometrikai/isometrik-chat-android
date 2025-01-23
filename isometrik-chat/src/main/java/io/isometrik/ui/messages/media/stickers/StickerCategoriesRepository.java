@@ -243,7 +243,7 @@ public class StickerCategoriesRepository {
   /**
    * The enum Sticker category name enum.
    */
-  enum StickerCategoryNameEnum {
+  public enum StickerCategoryNameEnum {
 
     /**
      * Classic sticker category name enum.
@@ -265,7 +265,7 @@ public class StickerCategoriesRepository {
      *
      * @return the value
      */
-    String getValue() {
+    public String getValue() {
       return this.value;
     }
   }

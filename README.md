@@ -240,8 +240,7 @@ Check default view [here](isometrik-chat/src/main/java/io/isometrik/ui/conversat
 ```
 
 ## Add custom view for any type of Message in Chat Screen
-
-Check total message type of UI [here](isometrik-chat/src/main/java/io/isometrik/chat/utils/enums/MessageTypeUi.kt)
+Check total message type of UI [here](isometrik-chat/src/main/java/io/isometrik/chat/enums/MessageTypeUi.kt)
 
 ```kotlin
 
