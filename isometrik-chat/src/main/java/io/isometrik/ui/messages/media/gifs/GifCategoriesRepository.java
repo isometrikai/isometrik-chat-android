@@ -158,7 +158,7 @@ public class GifCategoriesRepository {
   /**
    * The enum Gif category name enum.
    */
-  enum GifCategoryNameEnum {
+  public enum GifCategoryNameEnum {
 
     /**
      * Classic gif category name enum.
@@ -180,7 +180,7 @@ public class GifCategoriesRepository {
      *
      * @return the value
      */
-    String getValue() {
+    public String getValue() {
       return this.value;
     }
   }

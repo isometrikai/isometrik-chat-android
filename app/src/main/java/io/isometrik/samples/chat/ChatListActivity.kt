@@ -96,7 +96,7 @@ class ChatListActivity : AppCompatActivity() {
             }
         }
 
-        val chatFragment = ConversationsListFragment.newInstance(customBinder)
+        val chatFragment = ConversationsListFragment()
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, chatFragment)
