@@ -1,5 +1,7 @@
 package io.isometrik.ui.messages.chat.utils.messageutils;
 
+import android.util.Log;
+
 import io.isometrik.chat.enums.CustomMessageTypes;
 import io.isometrik.chat.response.message.utils.fetchmessages.Message;
 import io.isometrik.chat.response.message.utils.schemas.Attachment;
@@ -38,7 +40,11 @@ public class ConversationAttachmentMessageUtil {
                     .equals(message.getSenderInfo().getUserId());
 
             //selfMessage = false;
+            Log.e("PAYMENT__","prepareMessageAttachmentModel getCustomType :"+message.getCustomType());
+
             CustomMessageTypes customMessageType = CustomMessageTypes.Companion.fromValue(message.getCustomType());
+            Log.e("PAYMENT__","prepareMessageAttachmentModel getCustomType value:"+customMessageType);
+
             switch (customMessageType) {
 
                 case Text:
@@ -467,6 +473,7 @@ public class ConversationAttachmentMessageUtil {
                 }
 
                 case PaymentEscrowed: {
+                    Log.e("PAYMENT__","prepareMessageAttachmentModel PaymentEscrowed created:");
 
                     messagesModel = new MessagesModel(message.getMessageId(),
                             selfMessage ? MessageTypeUi.PAYMENT_ESCROWED_SENT : MessageTypeUi.PAYMENT_ESCROWED_RECEIVED,
