@@ -90,8 +90,8 @@ class ChatListActivity : AppCompatActivity() {
 
             override fun bindData(context: Context, binding: ChatItemBinding, data: ConversationsModel) {
                 binding.chatName.text = data.lastMessageText
-                binding.chatLastMessage.text = data.customType
-                Log.e(data.lastMessageText,"Status delivered: "+data.isDeliveredToAll+" Type:"+data.customType)
+                binding.chatLastMessage.text = data.lastMessageCustomType
+                Log.e(data.lastMessageText,"Status delivered: "+data.isLastMessageDeliveredToAll +" Type:"+data.lastMessageCustomType)
 
             }
         }

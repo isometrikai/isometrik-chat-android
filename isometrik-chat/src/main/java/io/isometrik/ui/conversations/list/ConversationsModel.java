@@ -36,8 +36,8 @@ public class ConversationsModel {
     private final boolean canJoin;
     private boolean messagingDisabled;
     private JSONObject metaData;
-    private boolean readByAll, deliveredToAll;
-    private String customType;
+    private boolean lastMessageReadByAll, lastMessageDeliveredToAll;
+    private String lastMessageCustomType;
 
     /**
      * Instantiates a new Conversations model.
@@ -138,7 +138,7 @@ public class ConversationsModel {
         }
 
         conversationMembersCount = createConversationEvent.getConversationDetails().getMembersCount();
-        customType = createConversationEvent.getConversationDetails().getCustomType();
+        lastMessageCustomType = createConversationEvent.getConversationDetails().getCustomType();
 
     }
 
@@ -166,7 +166,7 @@ public class ConversationsModel {
         JSONObject lastMessageDetails = conversation.getLastMessageDetails();
         try {
             if(lastMessageDetails.has("customType")){
-                customType = lastMessageDetails.getString("customType");
+                lastMessageCustomType = lastMessageDetails.getString("customType");
             }
             if (!conversation.isGroup()) {
 
@@ -175,14 +175,14 @@ public class ConversationsModel {
                         && lastMessageDetails.has("readBy") && lastMessageDetails.getJSONArray("readBy").length() == 1
                         && !lastMessageDetails.getJSONArray("readBy").getJSONObject(0).getString("userId").isBlank()
                 ){
-                    readByAll = true;
+                    lastMessageReadByAll = true;
                 }else if(lastMessageDetails.has("deliveredTo") && lastMessageDetails.getJSONArray("deliveredTo").length() == 1
                         && !lastMessageDetails.getJSONArray("deliveredTo").getJSONObject(0).getString("userId").isBlank()
                         && lastMessageDetails.has("readBy") && lastMessageDetails.getJSONArray("readBy").length() == 0){
-                    deliveredToAll = true;
+                    lastMessageDeliveredToAll = true;
                 }else{
-                    readByAll = false;
-                    deliveredToAll = false;
+                    lastMessageReadByAll = false;
+                    lastMessageDeliveredToAll = false;
                 }
             }
         } catch (JSONException ignore) {
@@ -203,7 +203,7 @@ public class ConversationsModel {
         membersCountText = IsometrikChatSdk.getInstance()
                 .getContext()
                 .getString(R.string.ism_members_count, conversation.getMembersCount());
-        customType = conversation.getCustomType();
+        lastMessageCustomType = conversation.getCustomType();
     }
 
     private void parseConversationMessage(Conversation conversation) {
@@ -666,7 +666,7 @@ public class ConversationsModel {
         }
 
         conversationMembersCount = conversation.getMembersCount();
-        customType = conversation.getCustomType();
+        lastMessageCustomType = conversation.getCustomType();
     }
 
     /**
@@ -1026,15 +1026,15 @@ public class ConversationsModel {
         this.metaData = metaData;
     }
 
-    public boolean isReadByAll() {
-        return readByAll;
+    public boolean isLastMessageReadByAll() {
+        return lastMessageReadByAll;
     }
 
-    public boolean isDeliveredToAll() {
-        return deliveredToAll;
+    public boolean isLastMessageDeliveredToAll() {
+        return lastMessageDeliveredToAll;
     }
 
-    public String getCustomType() {
-        return customType;
+    public String getLastMessageCustomType() {
+        return lastMessageCustomType;
     }
 }
