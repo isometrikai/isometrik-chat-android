@@ -50,7 +50,7 @@ class ChatListActivity : AppCompatActivity() {
             override fun updateTopView(view: View, message: MessagesModel) {
                 binding?.apply {
                     rootView.visibility = View.VISIBLE
-                    tvTitle.text = message.textMessage
+                    tvTitle.text = message.messageTypeUi.name
                 }
             }
         }
@@ -96,7 +96,7 @@ class ChatListActivity : AppCompatActivity() {
             }
         }
 
-        val chatFragment = ConversationsListFragment.newInstance(customBinder)
+        val chatFragment = ConversationsListFragment()
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, chatFragment)

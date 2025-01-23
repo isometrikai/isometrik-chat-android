@@ -49,7 +49,7 @@ private   IsmActivityMessageDeliveryStatusBinding ismActivityMessageDeliveryStat
        originalMessagePlaceholderImage = messagesModel.getOriginalMessagePlaceholderImage();
      }
 
-     switch (messagesModel.getCustomMessageType()) {
+     switch (messagesModel.getMessageTypeUi()) {
 
        case REPLAY_MESSAGE_SENT:
        case TEXT_MESSAGE_SENT: {

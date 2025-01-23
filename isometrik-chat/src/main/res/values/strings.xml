@@ -75,6 +75,7 @@
     <string name="ism_contact">Contact</string>
     <string name="ism_whiteboard">Whiteboard</string>
     <string name="ism_sticker">Sticker</string>
+    <string name="ism_sticker_gif">Sticker &amp; Gif</string>
     <string name="ism_gif">GIF</string>
     <string name="ism_share_photos">Share photos</string>
     <string name="ism_share_videos">Share videos</string>
@@ -82,6 +83,7 @@
     <string name="ism_share_location">Share location</string>
     <string name="ism_share_contact">Share contact</string>
     <string name="ism_share_whiteboard">Draw on whiteboard</string>
+    <string name="ism_share_sticker_gif">Share sticker &amp; gif</string>
     <string name="ism_share_sticker">Share sticker</string>
     <string name="ism_share_gif">Share gif</string>
     <string name="ism_attachments_title">Attachments</string>

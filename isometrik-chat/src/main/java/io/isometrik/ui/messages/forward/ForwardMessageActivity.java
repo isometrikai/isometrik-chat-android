@@ -57,7 +57,7 @@ public class ForwardMessageActivity extends FragmentActivity
     int cornerRadius = (int) (13 * getResources().getDisplayMetrics().density);
 
     Integer attachmentPlaceholderIcon = null;
-    switch (messagesModel.getCustomMessageType()) {
+    switch (messagesModel.getMessageTypeUi()) {
 
       case TEXT_MESSAGE_RECEIVED:
       case TEXT_MESSAGE_SENT: {

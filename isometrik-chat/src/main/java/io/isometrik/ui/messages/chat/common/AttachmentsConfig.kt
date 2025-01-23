@@ -8,6 +8,5 @@ object AttachmentsConfig {
     var hideFilesOption: Boolean = false
     var hideLocationOption: Boolean = false
     var hideContactOption: Boolean = false
-    var hideStickerOption: Boolean = false
-    var hideGIFOption: Boolean = false
+    var hideStickerGifOption: Boolean = false
 }

@@ -239,7 +239,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                                 conversationMessagesView.onMediaDownloadedComplete(false,
                                         messagesModel.getMessageId(),
                                         MediaDownloadOrUploadHelper.parseDownloadMediaFailedMessage(
-                                                messagesModel.getCustomMessageType(), var2.getErrorMessage()),
+                                                messagesModel.getMessageTypeUi(), var2.getErrorMessage()),
                                         messagePosition, null);
                             }
                         }
@@ -258,12 +258,12 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                             if (var1 != null) {
                                 conversationMessagesView.onMediaDownloadCanceled(true, messagesModel.getMessageId(),
                                         MediaDownloadOrUploadHelper.parseMediaDownloadOrUploadCanceledMessage(
-                                                messagesModel.getCustomMessageType(), true, true), messagePosition);
+                                                messagesModel.getMessageTypeUi(), true, true), messagePosition);
                             } else {
                                 conversationMessagesView.onMediaDownloadCanceled(false,
                                         messagesModel.getMessageId(),
                                         MediaDownloadOrUploadHelper.parseMediaDownloadOrUploadCanceledMessage(
-                                                messagesModel.getCustomMessageType(), false, true), messagePosition);
+                                                messagesModel.getMessageTypeUi(), false, true), messagePosition);
                             }
                         });
     }
@@ -1770,11 +1770,11 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                             if (var1 != null) {
                                 conversationMessagesView.onMediaUploadCanceled(true, messagesModel.getLocalMessageId(),
                                         MediaDownloadOrUploadHelper.parseMediaDownloadOrUploadCanceledMessage(
-                                                messagesModel.getCustomMessageType(), true, false), messagePosition);
+                                                messagesModel.getMessageTypeUi(), true, false), messagePosition);
                             } else {
                                 conversationMessagesView.onMediaUploadCanceled(false, messagesModel.getLocalMessageId(),
                                         MediaDownloadOrUploadHelper.parseMediaDownloadOrUploadCanceledMessage(
-                                                messagesModel.getCustomMessageType(), false, false), messagePosition);
+                                                messagesModel.getMessageTypeUi(), false, false), messagePosition);
                             }
                         });
     }

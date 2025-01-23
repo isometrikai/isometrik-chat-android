@@ -23,7 +23,7 @@ public class SearchTagUtils {
   public static List<String> generateSearchTags(MessagesModel messagesModel, String mediaName) {
     List<String> searchableTags = new ArrayList<>();
     Context context = IsometrikChatSdk.getInstance().getContext();
-    switch (messagesModel.getCustomMessageType()) {
+    switch (messagesModel.getMessageTypeUi()) {
       case TEXT_MESSAGE_SENT: {
         searchableTags.add(context.getString(R.string.ism_search_tag_text));
         searchableTags.add(messagesModel.getTextMessage().toString());

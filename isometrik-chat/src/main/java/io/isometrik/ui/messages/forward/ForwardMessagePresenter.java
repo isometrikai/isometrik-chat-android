@@ -46,7 +46,7 @@ public class ForwardMessagePresenter implements ForwardMessageContract.Presenter
     Attachment mediaAttachment = null;
     JSONObject messageMetadata = null;
 
-    switch (messagesModel.getCustomMessageType()) {
+    switch (messagesModel.getMessageTypeUi()) {
 
       case TEXT_MESSAGE_SENT:
       case TEXT_MESSAGE_RECEIVED: {

@@ -116,7 +116,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
   public int getItemViewType(int position) {
 
     if (messages.get(position).isSentMessage()) {
-      switch (messages.get(position).getCustomMessageType()) {
+      switch (messages.get(position).getMessageTypeUi()) {
         case TEXT_MESSAGE_SENT:
           return TEXT_MESSAGE_SENT;
         case PHOTO_MESSAGE_SENT:
@@ -141,7 +141,7 @@ public class SearchMessagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
           return -1;
       }
     } else {
-      switch (messages.get(position).getCustomMessageType()) {
+      switch (messages.get(position).getMessageTypeUi()) {
         case TEXT_MESSAGE_RECEIVED:
           return TEXT_MESSAGE_RECEIVED;
         case PHOTO_MESSAGE_RECEIVED:

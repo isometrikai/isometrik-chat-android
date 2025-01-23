@@ -545,7 +545,7 @@
       </RelativeLayout>
 
       <RelativeLayout
-          android:id="@+id/rlSticker"
+          android:id="@+id/rlStickerGif"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_below="@+id/rlWhiteboard"
@@ -576,7 +576,7 @@
             android:layout_below="@+id/tvStickerHeading"
             android:layout_toEndOf="@+id/ivSticker"
             android:paddingStart="@dimen/ism_dp_5"
-            android:text="@string/ism_share_sticker"
+            android:text="@string/ism_share_sticker_gif"
             tools:ignore="RtlSymmetry"
             android:textColor="@color/ism_attachment_gray"
             android:maxLines="1"
@@ -589,7 +589,7 @@
             android:layout_marginTop="@dimen/ism_dp_14"
             android:layout_toEndOf="@+id/ivSticker"
             android:paddingStart="@dimen/ism_dp_5"
-            android:text="@string/ism_sticker"
+            android:text="@string/ism_sticker_gif"
             android:textColor="@color/ism_black"
             android:textStyle="bold"
             tools:ignore="RtlSymmetry"
@@ -602,7 +602,8 @@
           android:id="@+id/rlGifs"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_below="@+id/rlSticker"
+          android:layout_below="@+id/rlStickerGif"
+          android:visibility="gone"
           >
         <!--  Gifs-->
         <View

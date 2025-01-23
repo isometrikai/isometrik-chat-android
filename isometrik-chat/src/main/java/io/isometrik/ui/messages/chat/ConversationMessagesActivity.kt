@@ -882,7 +882,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                     override fun onItemClick(view: View, position: Int) {
                         if (position >= 0) {
                             if (ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility == View.VISIBLE) {
-                                if (messages[position].customMessageType != MessageTypeUi.CONVERSATION_ACTION_MESSAGE) {
+                                if (messages[position].messageTypeUi != MessageTypeUi.CONVERSATION_ACTION_MESSAGE) {
                                     val messagesModel = messages[position]
                                     val selected = !messagesModel.isSelected
                                     messagesModel.isSelected = selected
@@ -900,7 +900,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                     override fun onItemLongClick(view: View, position: Int) {
                         if (position >= 0) {
                             if (!messagingDisabled) {
-                                if (messages[position].customMessageType != MessageTypeUi.CONVERSATION_ACTION_MESSAGE) {
+                                if (messages[position].messageTypeUi != MessageTypeUi.CONVERSATION_ACTION_MESSAGE) {
                                     if (ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility == View.VISIBLE) {
                                         val messagesModel = messages[position]
                                         val selected = !messagesModel.isSelected
@@ -2127,7 +2127,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 messagesModel.isUploaded = true
                 messagesModel.isUploading = false
                 if (mediaUrl != null) {
-                    when (messagesModel.customMessageType) {
+                    when (messagesModel.messageTypeUi) {
                         MessageTypeUi.PHOTO_MESSAGE_SENT -> {
                             messagesModel.photoMainUrl = mediaUrl
                             messagesModel.photoThumbnailUrl = thumbnailUrl
@@ -2482,7 +2482,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
     }
 
     override fun fetchMessagesInfoRequest(messagesModel: MessagesModel) {
-        if (messagesModel.customMessageType == MessageTypeUi.TEXT_MESSAGE_SENT || messagesModel.customMessageType == MessageTypeUi.TEXT_MESSAGE_RECEIVED) {
+        if (messagesModel.messageTypeUi == MessageTypeUi.TEXT_MESSAGE_SENT || messagesModel.messageTypeUi == MessageTypeUi.TEXT_MESSAGE_RECEIVED) {
             //To handle  java.lang.IllegalArgumentException: class android.widget.ListView declares multiple JSON fields named mPendingCheckForTap for tagged users
             messagesModel.textMessage = SpannableString(messagesModel.textMessage.toString())
         }
@@ -2499,7 +2499,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
 
     override fun forwardMessageRequest(messagesModel: MessagesModel) {
         if (clickActionsNotBlocked()) {
-            if (messagesModel.customMessageType == MessageTypeUi.TEXT_MESSAGE_SENT || messagesModel.customMessageType == MessageTypeUi.TEXT_MESSAGE_RECEIVED) {
+            if (messagesModel.messageTypeUi == MessageTypeUi.TEXT_MESSAGE_SENT || messagesModel.messageTypeUi == MessageTypeUi.TEXT_MESSAGE_RECEIVED) {
                 //To handle  java.lang.IllegalArgumentException: class android.widget.ListView declares multiple JSON fields named mPendingCheckForTap for tagged users
                 messagesModel.textMessage = SpannableString(messagesModel.textMessage.toString())
             }

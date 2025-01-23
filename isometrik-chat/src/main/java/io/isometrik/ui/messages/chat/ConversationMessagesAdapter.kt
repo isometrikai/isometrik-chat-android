@@ -50,7 +50,7 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
 
         val message = messages[position]
         return (message as? MessagesModel)?.let { messagesModel ->
-            return messagesModel.customMessageType.value
+            return messagesModel.messageTypeUi.value
         } ?: 20 // conversation type
 
     }
@@ -140,7 +140,7 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
         try {
             val item = messages[position]
             if (item is MessagesModel) {
-                when (item.customMessageType) {
+                when (item.messageTypeUi) {
                     MessageTypeUi.PHOTO_MESSAGE_SENT -> {
                         if (download) {
                             (rvMessages.findViewHolderForAdapterPosition(
