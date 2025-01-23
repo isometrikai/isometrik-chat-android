@@ -168,7 +168,7 @@ public class ConversationsModel {
             if(lastMessageDetails.has("customType")){
                 lastMessageCustomType = lastMessageDetails.getString("customType");
             }
-            if (!conversation.isGroup()) {
+            if (!conversation.isGroup() ) {
 
                 if (lastMessageDetails.has("deliveredTo") && lastMessageDetails.getJSONArray("deliveredTo").length() == 1
                         && !lastMessageDetails.getJSONArray("deliveredTo").getJSONObject(0).getString("userId").isBlank()

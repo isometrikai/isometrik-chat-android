@@ -316,6 +316,7 @@ public class ConversationAttachmentMessageUtil {
                                     message.getMetaData())), message.getMessageType(), message.getMetaData(),
                             message.isDeliveredToAll(), message.isReadByAll(), message.getConversationId(),
                             message.getMessageUpdated() != null);
+                    break;
 
                 }
                 case CounterOffer: {
@@ -335,6 +336,7 @@ public class ConversationAttachmentMessageUtil {
                                     message.getMetaData())), message.getMessageType(), message.getMetaData(),
                             message.isDeliveredToAll(), message.isReadByAll(), message.getConversationId(),
                             message.getMessageUpdated() != null);
+                    break;
 
                 }
                 case EditOffer: {
@@ -354,6 +356,7 @@ public class ConversationAttachmentMessageUtil {
                                     message.getMetaData())), message.getMessageType(), message.getMetaData(),
                             message.isDeliveredToAll(), message.isReadByAll(), message.getConversationId(),
                             message.getMessageUpdated() != null);
+                    break;
 
                 }
 
@@ -374,6 +377,7 @@ public class ConversationAttachmentMessageUtil {
                                     message.getMetaData())), message.getMessageType(), message.getMetaData(),
                             message.isDeliveredToAll(), message.isReadByAll(), message.getConversationId(),
                             message.getMessageUpdated() != null);
+                    break;
 
                 }
                 case CancelDeal: {
@@ -393,6 +397,7 @@ public class ConversationAttachmentMessageUtil {
                                     message.getMetaData())), message.getMessageType(), message.getMetaData(),
                             message.isDeliveredToAll(), message.isReadByAll(), message.getConversationId(),
                             message.getMessageUpdated() != null);
+                    break;
 
                 }
                 case CancelOffer: {
@@ -412,6 +417,7 @@ public class ConversationAttachmentMessageUtil {
                                     message.getMetaData())), message.getMessageType(), message.getMetaData(),
                             message.isDeliveredToAll(), message.isReadByAll(), message.getConversationId(),
                             message.getMessageUpdated() != null);
+                    break;
 
                 }
                 case BuyDirect: {
@@ -431,6 +437,7 @@ public class ConversationAttachmentMessageUtil {
                                     message.getMetaData())), message.getMessageType(), message.getMetaData(),
                             message.isDeliveredToAll(), message.isReadByAll(), message.getConversationId(),
                             message.getMessageUpdated() != null);
+                    break;
 
                 }
                 case AcceptBuyDirect: {
@@ -450,6 +457,7 @@ public class ConversationAttachmentMessageUtil {
                                     message.getMetaData())), message.getMessageType(), message.getMetaData(),
                             message.isDeliveredToAll(), message.isReadByAll(), message.getConversationId(),
                             message.getMessageUpdated() != null);
+                    break;
 
                 }
                 case CancelBuyDirect: {
@@ -469,6 +477,7 @@ public class ConversationAttachmentMessageUtil {
                                     message.getMetaData())), message.getMessageType(), message.getMetaData(),
                             message.isDeliveredToAll(), message.isReadByAll(), message.getConversationId(),
                             message.getMessageUpdated() != null);
+                    break;
 
                 }
 
@@ -490,6 +499,7 @@ public class ConversationAttachmentMessageUtil {
                                     message.getMetaData())), message.getMessageType(), message.getMetaData(),
                             message.isDeliveredToAll(), message.isReadByAll(), message.getConversationId(),
                             message.getMessageUpdated() != null);
+                    break;
 
                 }
                 case DealComplete: {
@@ -509,6 +519,7 @@ public class ConversationAttachmentMessageUtil {
                                     message.getMetaData())), message.getMessageType(), message.getMetaData(),
                             message.isDeliveredToAll(), message.isReadByAll(), message.getConversationId(),
                             message.getMessageUpdated() != null);
+                    break;
 
                 }
 
