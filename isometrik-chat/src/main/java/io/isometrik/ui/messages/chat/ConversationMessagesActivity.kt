@@ -2296,10 +2296,9 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                     ismActivityMessagesBinding!!.tvNoMessages.visibility = View.GONE
                 }
                 for (message in messages) {
-                    Log.e("CUSTOM_TYPE__","==> metaData: ${message.metaData}")
-                    message.metaData?.let {
+                    Log.e("CUSTOM_TYPE__","type: ${message.customMessageType}  ==> metaData: ${message.metaData}")
+                    if(message.metaData != null || message.customMessageType != null)
                         onMessageUpdated(message)
-                    }
                 }
             }
         }
