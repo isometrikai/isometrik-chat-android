@@ -23,7 +23,7 @@ public class NotificationBodyUtils {
     public static String getNotificationBody(MessagesModel messagesModel, String mediaName) {
         String notificationBody = "";
         Context context = IsometrikChatSdk.getInstance().getContext();
-        switch (messagesModel.getCustomMessageType()) {
+        switch (messagesModel.getMessageTypeUi()) {
             case TEXT_MESSAGE_SENT: {
                 notificationBody = messagesModel.getTextMessage().toString();
                 break;

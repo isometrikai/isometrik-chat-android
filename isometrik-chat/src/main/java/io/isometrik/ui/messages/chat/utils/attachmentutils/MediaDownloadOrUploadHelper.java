@@ -34,7 +34,7 @@ public class MediaDownloadOrUploadHelper {
             .setMediaExtension(messagesModel.getMediaExtension())
             .setDownloadProgressListener(downloadProgressListener);
 
-    switch (messagesModel.getCustomMessageType()) {
+    switch (messagesModel.getMessageTypeUi()) {
 
       case PHOTO_MESSAGE_SENT:
 

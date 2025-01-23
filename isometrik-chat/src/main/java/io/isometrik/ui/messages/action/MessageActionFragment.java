@@ -49,8 +49,8 @@ public class MessageActionFragment extends BottomSheetDialogFragment {
     IsmBottomsheetMessageActionsBinding ismBottomsheetMessageActionsBinding =
         IsmBottomsheetMessageActionsBinding.inflate(inflater, container, false);
 
-    if (messagesModel.getCustomMessageType().equals(MessageTypeUi.TEXT_MESSAGE_SENT)
-        || messagesModel.getCustomMessageType().equals(MessageTypeUi.TEXT_MESSAGE_RECEIVED)) {
+    if (messagesModel.getMessageTypeUi().equals(MessageTypeUi.TEXT_MESSAGE_SENT)
+        || messagesModel.getMessageTypeUi().equals(MessageTypeUi.TEXT_MESSAGE_RECEIVED)) {
       ismBottomsheetMessageActionsBinding.rlCopy.setVisibility(View.VISIBLE);
       if (messagesModel.isSentMessage()) {
 
@@ -144,7 +144,7 @@ public class MessageActionFragment extends BottomSheetDialogFragment {
 
     boolean canBeDownloaded = false;
     String downloadMediaType = null;
-    switch (messagesModel.getCustomMessageType()) {
+    switch (messagesModel.getMessageTypeUi()) {
 
       case PHOTO_MESSAGE_SENT:
       case PHOTO_MESSAGE_RECEIVED: {

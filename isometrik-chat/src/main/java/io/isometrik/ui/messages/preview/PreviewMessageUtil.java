@@ -94,7 +94,7 @@ public class PreviewMessageUtil {
      */
     public static void previewMessage(Activity activity, MessagesModel messagesModel,
                                       boolean localMedia) {
-        switch (messagesModel.getCustomMessageType()) {
+        switch (messagesModel.getMessageTypeUi()) {
             case PHOTO_MESSAGE_SENT:
             case PHOTO_MESSAGE_RECEIVED: {
                 handlePhotoClick(activity,

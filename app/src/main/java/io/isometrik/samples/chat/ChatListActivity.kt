@@ -50,13 +50,14 @@ class ChatListActivity : AppCompatActivity() {
             override fun updateTopView(view: View, message: MessagesModel) {
                 binding?.apply {
                     rootView.visibility = View.VISIBLE
-                    tvTitle.text = message.textMessage
+                    tvTitle.text = message.messageTypeUi.name
+                    Log.e("Type ${message.conversationTitle}",": ${message.customMessageType.value}")
                 }
             }
         }
 
 
-//        ChatConfig.topViewHandler = MyCustomTopViewHandler()
+        ChatConfig.topViewHandler = MyCustomTopViewHandler()
 
 //        ChatConfig.baseColor = R.color.ism_test_base
 //        ChatConfig.chatBackGroundColor = R.color.ism_theme_base
@@ -96,7 +97,7 @@ class ChatListActivity : AppCompatActivity() {
             }
         }
 
-        val chatFragment = ConversationsListFragment.newInstance(customBinder)
+        val chatFragment = ConversationsListFragment()
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, chatFragment)

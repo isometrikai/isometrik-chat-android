@@ -48,7 +48,7 @@ class ShareMediaFragment
             dismissDialog()
             mediaTypeToBeSharedCallback!!.onMediaTypeToBeSharedSelected(MessageTypeUi.FILE_MESSAGE_SENT)
         }
-        ismBottomsheetAttachmentsBinding!!.rlSticker.setOnClickListener { v: View? ->
+        ismBottomsheetAttachmentsBinding!!.rlStickerGif.setOnClickListener { v: View? ->
             dismissDialog()
             mediaTypeToBeSharedCallback!!.onMediaTypeToBeSharedSelected(MessageTypeUi.STICKER_MESSAGE_SENT)
         }
@@ -90,11 +90,8 @@ class ShareMediaFragment
         if (AttachmentsConfig.hideContactOption) {
             ismBottomsheetAttachmentsBinding!!.rlContact.visibility = View.GONE
         }
-        if (AttachmentsConfig.hideStickerOption) {
-            ismBottomsheetAttachmentsBinding!!.rlSticker.visibility = View.GONE
-        }
-        if (AttachmentsConfig.hideGIFOption) {
-            ismBottomsheetAttachmentsBinding!!.rlGifs.visibility = View.GONE
+        if (AttachmentsConfig.hideStickerGifOption) {
+            ismBottomsheetAttachmentsBinding!!.rlStickerGif.visibility = View.GONE
         }
 
         ismBottomsheetAttachmentsBinding!!.ivClose.setOnClickListener { v: View? -> dismissDialog() }

@@ -23,7 +23,7 @@ public class ReplyMessageUtil {
     JSONObject replyMessage = new JSONObject();
     JSONObject replyMessageDetails = new JSONObject();
     try {
-      switch (messagesModel.getCustomMessageType()) {
+      switch (messagesModel.getMessageTypeUi()) {
         case TEXT_MESSAGE_SENT:
         case TEXT_MESSAGE_RECEIVED: {
           replyMessageDetails.put("parentMessageUserName", messagesModel.getSenderName());

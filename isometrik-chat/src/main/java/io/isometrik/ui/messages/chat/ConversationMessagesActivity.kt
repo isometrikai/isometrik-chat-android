@@ -444,7 +444,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                         RemoteMessageTypes.NormalMessage,
                         null,
                         null,
-                        CustomMessageTypes.Image.value,
+                        CustomMessageTypes.Image,
                         CustomMessageTypes.Image.value,
                         false,
                         true,
@@ -504,7 +504,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                                 RemoteMessageTypes.NormalMessage,
                                 null,
                                 null,
-                                CustomMessageTypes.Image.value,
+                                CustomMessageTypes.Image,
                                 CustomMessageTypes.Image.value,
                                 false,
                                 true,
@@ -567,7 +567,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                                 RemoteMessageTypes.NormalMessage,
                                 null,
                                 null,
-                                CustomMessageTypes.Video.value,
+                                CustomMessageTypes.Video,
                                 CustomMessageTypes.Video.value,
                                 false,
                                 true,
@@ -634,7 +634,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                                 RemoteMessageTypes.NormalMessage,
                                 null,
                                 null,
-                                CustomMessageTypes.File.value,
+                                CustomMessageTypes.File,
                                 CustomMessageTypes.File.value,
                                 false,
                                 true,
@@ -698,7 +698,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                         RemoteMessageTypes.NormalMessage,
                         null,
                         null,
-                        CustomMessageTypes.Location.value,
+                        CustomMessageTypes.Location,
                         CustomMessageTypes.Location.value,
                         false,
                         true,
@@ -746,7 +746,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                             RemoteMessageTypes.NormalMessage,
                             null,
                             null,
-                            CustomMessageTypes.Contact.value,
+                            CustomMessageTypes.Contact,
                             CustomMessageTypes.Contact.value,
                             false,
                             true,
@@ -847,7 +847,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                     RemoteMessageTypes.NormalMessage,
                     null,
                     null,
-                    CustomMessageTypes.Text.value,
+                    CustomMessageTypes.Text,
                     ismActivityMessagesBinding!!.etSendMessage.text.toString(),
                     false,
                     true,
@@ -882,7 +882,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                     override fun onItemClick(view: View, position: Int) {
                         if (position >= 0) {
                             if (ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility == View.VISIBLE) {
-                                if (messages[position].customMessageType != MessageTypeUi.CONVERSATION_ACTION_MESSAGE) {
+                                if (messages[position].messageTypeUi != MessageTypeUi.CONVERSATION_ACTION_MESSAGE) {
                                     val messagesModel = messages[position]
                                     val selected = !messagesModel.isSelected
                                     messagesModel.isSelected = selected
@@ -900,7 +900,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                     override fun onItemLongClick(view: View, position: Int) {
                         if (position >= 0) {
                             if (!messagingDisabled) {
-                                if (messages[position].customMessageType != MessageTypeUi.CONVERSATION_ACTION_MESSAGE) {
+                                if (messages[position].messageTypeUi != MessageTypeUi.CONVERSATION_ACTION_MESSAGE) {
                                     if (ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility == View.VISIBLE) {
                                         val messagesModel = messages[position]
                                         val selected = !messagesModel.isSelected
@@ -1739,7 +1739,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 RemoteMessageTypes.NormalMessage,
                 null,
                 null,
-                CustomMessageTypes.Gif.value,
+                CustomMessageTypes.Gif,
                 CustomMessageTypes.Gif.value,
                 false,
                 true,
@@ -1775,7 +1775,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 RemoteMessageTypes.NormalMessage,
                 null,
                 null,
-                CustomMessageTypes.Sticker.value,
+                CustomMessageTypes.Sticker,
                 CustomMessageTypes.Sticker.value,
                 false,
                 true,
@@ -1800,7 +1800,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             RemoteMessageTypes.NormalMessage,
             null,
             null,
-            CustomMessageTypes.Whiteboard.value,
+            CustomMessageTypes.Whiteboard,
             CustomMessageTypes.Whiteboard.value,
             false,
             true,
@@ -2127,7 +2127,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 messagesModel.isUploaded = true
                 messagesModel.isUploading = false
                 if (mediaUrl != null) {
-                    when (messagesModel.customMessageType) {
+                    when (messagesModel.messageTypeUi) {
                         MessageTypeUi.PHOTO_MESSAGE_SENT -> {
                             messagesModel.photoMainUrl = mediaUrl
                             messagesModel.photoThumbnailUrl = thumbnailUrl
@@ -2482,7 +2482,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
     }
 
     override fun fetchMessagesInfoRequest(messagesModel: MessagesModel) {
-        if (messagesModel.customMessageType == MessageTypeUi.TEXT_MESSAGE_SENT || messagesModel.customMessageType == MessageTypeUi.TEXT_MESSAGE_RECEIVED) {
+        if (messagesModel.messageTypeUi == MessageTypeUi.TEXT_MESSAGE_SENT || messagesModel.messageTypeUi == MessageTypeUi.TEXT_MESSAGE_RECEIVED) {
             //To handle  java.lang.IllegalArgumentException: class android.widget.ListView declares multiple JSON fields named mPendingCheckForTap for tagged users
             messagesModel.textMessage = SpannableString(messagesModel.textMessage.toString())
         }
@@ -2499,7 +2499,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
 
     override fun forwardMessageRequest(messagesModel: MessagesModel) {
         if (clickActionsNotBlocked()) {
-            if (messagesModel.customMessageType == MessageTypeUi.TEXT_MESSAGE_SENT || messagesModel.customMessageType == MessageTypeUi.TEXT_MESSAGE_RECEIVED) {
+            if (messagesModel.messageTypeUi == MessageTypeUi.TEXT_MESSAGE_SENT || messagesModel.messageTypeUi == MessageTypeUi.TEXT_MESSAGE_RECEIVED) {
                 //To handle  java.lang.IllegalArgumentException: class android.widget.ListView declares multiple JSON fields named mPendingCheckForTap for tagged users
                 messagesModel.textMessage = SpannableString(messagesModel.textMessage.toString())
             }
@@ -2559,8 +2559,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             RemoteMessageTypes.ReplyMessage,
             messageId,
             OriginalReplyMessageUtil(messageId, replyMessageDetails),
-
-            CustomMessageTypes.Replay.value,
+            CustomMessageTypes.Replay,
             replyMessage,
             false,
             true,
@@ -2784,7 +2783,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                     RemoteMessageTypes.NormalMessage,
                     null,
                     null,
-                    CustomMessageTypes.Audio.value,
+                    CustomMessageTypes.Audio,
                     CustomMessageTypes.Audio.value,
                     false,
                     true,
@@ -3314,7 +3313,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             RemoteMessageTypes.NormalMessage,
             null,
             null,
-            CustomMessageTypes.Video.value,
+            CustomMessageTypes.Video,
             CustomMessageTypes.Video.value,
             false,
             true,

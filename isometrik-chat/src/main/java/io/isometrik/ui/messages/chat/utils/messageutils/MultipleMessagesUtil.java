@@ -61,8 +61,8 @@ public class MultipleMessagesUtil {
   public boolean isCopyEnabled() {
     if (selectedMessages.size() == 0) return false;
     for (MessagesModel messagesModel : selectedMessages.values()) {
-      if (messagesModel.getCustomMessageType() != MessageTypeUi.TEXT_MESSAGE_SENT
-          && messagesModel.getCustomMessageType() != MessageTypeUi.TEXT_MESSAGE_RECEIVED) {
+      if (messagesModel.getMessageTypeUi() != MessageTypeUi.TEXT_MESSAGE_SENT
+          && messagesModel.getMessageTypeUi() != MessageTypeUi.TEXT_MESSAGE_RECEIVED) {
         return false;
       }
     }
@@ -111,8 +111,8 @@ public class MultipleMessagesUtil {
 
     StringBuilder text = new StringBuilder();
     for (MessagesModel messagesModel : selectedMessages.values()) {
-      if (messagesModel.getCustomMessageType() == MessageTypeUi.TEXT_MESSAGE_SENT
-          || messagesModel.getCustomMessageType() == MessageTypeUi.TEXT_MESSAGE_RECEIVED) {
+      if (messagesModel.getMessageTypeUi() == MessageTypeUi.TEXT_MESSAGE_SENT
+          || messagesModel.getMessageTypeUi() == MessageTypeUi.TEXT_MESSAGE_RECEIVED) {
         text.append(" \n").append(messagesModel.getTextMessage());
       }
     }

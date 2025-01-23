@@ -2,15 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/ism_white"
     >
 
   <androidx.appcompat.widget.AppCompatImageView
       android:id="@+id/ivGifSticker"
-      android:layout_width="@dimen/ism_dp_50"
-      android:layout_height="@dimen/ism_dp_50"
+      android:layout_width="@dimen/ism_dp_80"
+      android:layout_height="@dimen/ism_dp_80"
       android:layout_centerHorizontal="true"
-      android:layout_marginTop="@dimen/ism_dp_10"
+      android:layout_centerVertical="true"
+      android:layout_margin="@dimen/ism_dp_10"
       />
 
   <TextView
@@ -21,6 +21,7 @@
       android:layout_centerHorizontal="true"
       android:ellipsize="end"
       android:maxLines="1"
+      android:visibility="gone"
       android:textColor="@color/ism_black"
       android:textSize="@dimen/ism_sp_10"
       android:layout_marginBottom="@dimen/ism_dp_10"

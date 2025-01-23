@@ -2,13 +2,21 @@ package io.isometrik.samples.chat
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import io.isometrik.chat.enums.ConversationType
+import io.isometrik.samples.chat.databinding.CustomTopViewBinding
 import io.isometrik.ui.IsometrikChatSdk
 import io.isometrik.ui.conversations.list.ConversationsListActivity
 import io.isometrik.ui.conversations.newconversation.group.NewGroupConversationActivity
 import io.isometrik.ui.conversations.newconversation.onetoone.NewOneToOneConversationActivity
 import io.isometrik.ui.messages.chat.ChatActionsClickListener
+import io.isometrik.ui.messages.chat.MessagesModel
+import io.isometrik.ui.messages.chat.common.ChatConfig
+import io.isometrik.ui.messages.chat.common.ChatTopViewHandler
 import io.isometrik.ui.users.list.UsersActivity
 
 class SplashActivity : AppCompatActivity() {
@@ -18,7 +26,7 @@ class SplashActivity : AppCompatActivity() {
         val intent = if (IsometrikChatSdk.getInstance().userSession.userToken == null) {
             Intent(this@SplashActivity, UsersActivity::class.java)
         } else {
-            Intent(this@SplashActivity, ChatListActivity::class.java)
+            Intent(this@SplashActivity, ConversationsListActivity::class.java)
         }
         startActivity(intent)
 
@@ -64,6 +72,28 @@ class SplashActivity : AppCompatActivity() {
 
             }
         })
+
+        class MyCustomTopViewHandler : ChatTopViewHandler {
+
+            private var binding: CustomTopViewBinding? = null
+
+            override fun createTopView(parent: ViewGroup): View {
+                val inflater = LayoutInflater.from(parent.context)
+                binding = CustomTopViewBinding.inflate(inflater, parent, false)
+                return binding!!.root
+            }
+
+            override fun updateTopView(view: View, message: MessagesModel) {
+                binding?.apply {
+                    rootView.visibility = View.VISIBLE
+                    tvTitle.text = message.messageTypeUi.name
+                    Log.e("Type ${message.conversationTitle}",": ${message.customMessageType.value}")
+                }
+            }
+        }
+
+
+        ChatConfig.topViewHandler = MyCustomTopViewHandler()
 
         finish()
     }

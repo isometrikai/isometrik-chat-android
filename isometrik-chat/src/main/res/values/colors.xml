@@ -88,8 +88,8 @@
 <!--Sticker gif bottomsheet-->
   <color name="ism_gif_sticker_peek_grey">#9E9E9E</color>
   <color name="ism_gif_sticker_seperator_grey">#757575</color>
-  <color name="ism_gif_sticker_category_selected_black">#000000</color>
-  <color name="ism_gif_sticker_category_unselected_grey">#9E9E9E</color>
+  <color name="ism_gif_sticker_category_selected_black">#9E9E9E</color>
+  <color name="ism_gif_sticker_category_unselected_grey">#FFFFFF</color>
 
 <!--Whiteboard bottomsheet-->
   <color name="ism_whiteboard_tools_icon_selected_color">#757575</color>
@@ -120,5 +120,8 @@
 
   <color name="ism_conversation_bg">#FFFFFF</color>
   <color name="ism_send_message_bg">#EEEEEE</color>
+  <color name="ism_black_trans">#66000000</color>
+  <color name="ism_visual_text">#D7D7D7</color>
+
 
 </resources>

@@ -1,5 +1,6 @@
 package io.isometrik.ui.search.messages.utils;
 
+import io.isometrik.chat.enums.CustomMessageTypes;
 import io.isometrik.chat.response.message.utils.fetchmessages.UserMessage;
 import io.isometrik.chat.response.message.utils.schemas.Attachment;
 import io.isometrik.chat.enums.MessageTypeUi;
@@ -37,12 +38,14 @@ public class SearchAttachmentMessageUtil {
             .getUserId()
             .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId());
       }
-      switch (message.getCustomType()) {
+      CustomMessageTypes customMessageType = CustomMessageTypes.Companion.fromValue(message.getCustomType());
+      switch (customMessageType) {
 
-        case "AttachmentMessage:Text": {
+        case Text: {
 
           messagesModel = new MessagesModel(message.getMessageId(),
               selfMessage ? MessageTypeUi.TEXT_MESSAGE_SENT : MessageTypeUi.TEXT_MESSAGE_RECEIVED,
+                  customMessageType,
               selfMessage, message.getSentAt(), message.getParentMessageId() != null,
               TagUserUtil.parseMentionedUsers(message.getBody(),
                   ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
@@ -57,11 +60,12 @@ public class SearchAttachmentMessageUtil {
 
           break;
         }
-        case "AttachmentMessage:Image": {
+        case Image: {
           Attachment attachment = message.getAttachments().get(0);
 
           messagesModel = new MessagesModel(message.getMessageId(),
               selfMessage ? MessageTypeUi.PHOTO_MESSAGE_SENT : MessageTypeUi.PHOTO_MESSAGE_RECEIVED,
+                  customMessageType,
               selfMessage, message.getSentAt(), message.getParentMessageId() != null,
               FileUtils.getSizeOfFile(attachment.getSize()), false, false, true, false,
               attachment.getThumbnailUrl(), attachment.getMediaUrl(), attachment.getMimeType(),
@@ -77,11 +81,12 @@ public class SearchAttachmentMessageUtil {
 
           break;
         }
-        case "AttachmentMessage:Video": {
+        case Video: {
           Attachment attachment = message.getAttachments().get(0);
 
           messagesModel = new MessagesModel(message.getMessageId(),
               selfMessage ? MessageTypeUi.VIDEO_MESSAGE_SENT : MessageTypeUi.VIDEO_MESSAGE_RECEIVED,
+                  customMessageType,
               selfMessage, message.getSentAt(), message.getParentMessageId() != null,
               FileUtils.getSizeOfFile(attachment.getSize()), false, false, true, false,
               attachment.getThumbnailUrl(), attachment.getMediaUrl(), attachment.getMimeType(),
@@ -97,10 +102,11 @@ public class SearchAttachmentMessageUtil {
 
           break;
         }
-        case "AttachmentMessage:Audio": {
+        case Audio: {
           Attachment attachment = message.getAttachments().get(0);
           messagesModel = new MessagesModel(message.getMessageId(),
               selfMessage ? MessageTypeUi.AUDIO_MESSAGE_SENT : MessageTypeUi.AUDIO_MESSAGE_RECEIVED,
+                  customMessageType,
               selfMessage, message.getSentAt(), message.getParentMessageId() != null,
               FileUtils.getSizeOfFile(attachment.getSize()), false, false, true, false,
               attachment.getMediaUrl(), attachment.getName(), attachment.getMimeType(),
@@ -116,10 +122,11 @@ public class SearchAttachmentMessageUtil {
 
           break;
         }
-        case "AttachmentMessage:File": {
+        case File: {
           Attachment attachment = message.getAttachments().get(0);
           messagesModel = new MessagesModel(message.getMessageId(),
               selfMessage ? MessageTypeUi.FILE_MESSAGE_SENT : MessageTypeUi.FILE_MESSAGE_RECEIVED,
+                  customMessageType,
               selfMessage, message.getSentAt(), message.getParentMessageId() != null,
               FileUtils.getSizeOfFile(attachment.getSize()), false, false, true, false,
               attachment.getMediaUrl(), attachment.getName(), attachment.getMimeType(),
@@ -134,11 +141,12 @@ public class SearchAttachmentMessageUtil {
               message.getMessageUpdated() != null);
           break;
         }
-        case "AttachmentMessage:Location": {
+        case Location: {
           Attachment attachment = message.getAttachments().get(0);
 
           messagesModel = new MessagesModel(message.getMessageId(),
               selfMessage ? MessageTypeUi.LOCATION_MESSAGE_SENT : MessageTypeUi.LOCATION_MESSAGE_RECEIVED,
+                  customMessageType,
               selfMessage, message.getSentAt(), message.getParentMessageId() != null,
               String.valueOf(attachment.getLatitude()), attachment.getTitle(),
               String.valueOf(attachment.getLongitude()), attachment.getAddress(),
@@ -152,10 +160,11 @@ public class SearchAttachmentMessageUtil {
               message.getMessageUpdated() != null);
           break;
         }
-        case "AttachmentMessage:Sticker": {
+        case Sticker: {
           Attachment attachment = message.getAttachments().get(0);
           messagesModel = new MessagesModel(message.getMessageId(),
               selfMessage ? MessageTypeUi.STICKER_MESSAGE_SENT : MessageTypeUi.STICKER_MESSAGE_RECEIVED,
+                  customMessageType,
               selfMessage, message.getSentAt(), message.getParentMessageId() != null,
               attachment.getStillUrl(), attachment.getMediaUrl(),
               message.getSenderInfo().getUserName(),
@@ -170,10 +179,11 @@ public class SearchAttachmentMessageUtil {
 
           break;
         }
-        case "AttachmentMessage:Gif": {
+        case Gif: {
           Attachment attachment = message.getAttachments().get(0);
           messagesModel = new MessagesModel(message.getMessageId(),
-              selfMessage ? MessageTypeUi.GIF_MESSAGE_SENT : MessageTypeUi.GIF_MESSAGE_RECEIVED, selfMessage,
+              selfMessage ? MessageTypeUi.GIF_MESSAGE_SENT : MessageTypeUi.GIF_MESSAGE_RECEIVED,
+                  customMessageType, selfMessage,
               message.getSentAt(), message.getParentMessageId() != null, attachment.getStillUrl(),
               attachment.getMediaUrl(), message.getSenderInfo().getUserName(),
               message.getSenderInfo().getUserProfileImageUrl(),
@@ -187,11 +197,12 @@ public class SearchAttachmentMessageUtil {
 
           break;
         }
-        case "AttachmentMessage:Whiteboard": {
+        case Whiteboard: {
           Attachment attachment = message.getAttachments().get(0);
 
           messagesModel = new MessagesModel(message.getMessageId(),
               selfMessage ? MessageTypeUi.WHITEBOARD_MESSAGE_SENT : MessageTypeUi.WHITEBOARD_MESSAGE_RECEIVED,
+                  customMessageType,
               selfMessage, message.getSentAt(), message.getParentMessageId() != null,
               FileUtils.getSizeOfFile(attachment.getSize()), false, false, true, false,
               attachment.getThumbnailUrl(), attachment.getMediaUrl(), attachment.getMimeType(),
@@ -207,7 +218,7 @@ public class SearchAttachmentMessageUtil {
 
           break;
         }
-        case "AttachmentMessage:Contact": {
+        case Contact: {
           JSONObject messageMetadata = message.getMetaData();
 
           String contactName = "", contactIdentifier = "", contactImageUrl = "";
@@ -228,6 +239,7 @@ public class SearchAttachmentMessageUtil {
           }
           messagesModel = new MessagesModel(message.getMessageId(),
               selfMessage ? MessageTypeUi.CONTACT_MESSAGE_SENT : MessageTypeUi.CONTACT_MESSAGE_RECEIVED,
+                  customMessageType,
               selfMessage, message.getSentAt(), message.getParentMessageId() != null, contactName,
               contactIdentifier, contactImageUrl, message.getSenderInfo().getUserName(),
               message.getSenderInfo().getUserProfileImageUrl(),
@@ -239,10 +251,11 @@ public class SearchAttachmentMessageUtil {
           break;
         }
 
-        case "AttachmentMessage:Reply": {
+        case Replay: {
 
           messagesModel = new MessagesModel(message.getMessageId(),
                   selfMessage ? MessageTypeUi.TEXT_MESSAGE_SENT : MessageTypeUi.TEXT_MESSAGE_RECEIVED,
+                  customMessageType,
                   selfMessage, message.getSentAt(), message.getParentMessageId() != null,
                   TagUserUtil.parseMentionedUsers(message.getBody(),
                           ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(

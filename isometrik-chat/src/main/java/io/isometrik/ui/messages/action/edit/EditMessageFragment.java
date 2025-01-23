@@ -114,7 +114,7 @@ public class EditMessageFragment extends BottomSheetDialogFragment {
   public void updateParameters(MessagesModel messagesModel,
       MessageActionCallback editMessageCallback) {
 
-    if (messagesModel.getCustomMessageType() != MessageTypeUi.TEXT_MESSAGE_SENT) {
+    if (messagesModel.getMessageTypeUi() != MessageTypeUi.TEXT_MESSAGE_SENT) {
       close();
     } else {
       this.editMessageCallback = editMessageCallback;

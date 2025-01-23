@@ -451,7 +451,8 @@ int size= members.size();
       boolean selfMessage = sendMessageEvent.getSenderId()
           .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId());
 
-      switch (CustomMessageTypes.Companion.fromValue(sendMessageEvent.getCustomType())) {
+      CustomMessageTypes customMessageType = CustomMessageTypes.Companion.fromValue(sendMessageEvent.getCustomType());
+      switch (customMessageType) {
 
         case Text:
 
@@ -459,6 +460,7 @@ int size= members.size();
           boolean isQuoted = sendMessageEvent.getParentMessageId() != null;
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
               selfMessage ? MessageTypeUi.TEXT_MESSAGE_SENT : MessageTypeUi.TEXT_MESSAGE_RECEIVED,
+                  customMessageType,
               selfMessage, sendMessageEvent.getSentAt(), isQuoted,
               TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
                   sendMessageEvent.getMentionedUsers(), taggedUserCallback),
@@ -475,6 +477,7 @@ int size= members.size();
           boolean isQuoted = sendMessageEvent.getParentMessageId() != null;
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.PAYMENT_MESSAGE_SENT : MessageTypeUi.PAYMENT_MESSAGE_RECEIVED,
+                  customMessageType,
                   selfMessage, sendMessageEvent.getSentAt(), isQuoted,
                   TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
                           sendMessageEvent.getMentionedUsers(), taggedUserCallback),
@@ -491,6 +494,7 @@ int size= members.size();
           boolean isQuoted = sendMessageEvent.getParentMessageId() != null;
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.POST_MESSAGE_SENT : MessageTypeUi.POST_MESSAGE_RECEIVED,
+                  customMessageType,
                   selfMessage, sendMessageEvent.getSentAt(), isQuoted,
                   TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
                           sendMessageEvent.getMentionedUsers(), taggedUserCallback),
@@ -507,6 +511,7 @@ int size= members.size();
 
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
               selfMessage ? MessageTypeUi.PHOTO_MESSAGE_SENT : MessageTypeUi.PHOTO_MESSAGE_RECEIVED,
+                  customMessageType,
               selfMessage, sendMessageEvent.getSentAt(),
               sendMessageEvent.getParentMessageId() != null,
               FileUtils.getSizeOfFile(attachment.getSize()), false, false, true, false,
@@ -527,6 +532,7 @@ int size= members.size();
 
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
               selfMessage ? MessageTypeUi.VIDEO_MESSAGE_SENT : MessageTypeUi.VIDEO_MESSAGE_RECEIVED,
+                  customMessageType,
               selfMessage, sendMessageEvent.getSentAt(),
               sendMessageEvent.getParentMessageId() != null,
               FileUtils.getSizeOfFile(attachment.getSize()), false, false, true, false,
@@ -546,6 +552,7 @@ int size= members.size();
           Attachment attachment = sendMessageEvent.getAttachments().get(0);
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
               selfMessage ? MessageTypeUi.AUDIO_MESSAGE_SENT : MessageTypeUi.AUDIO_MESSAGE_RECEIVED,
+                  customMessageType,
               selfMessage, sendMessageEvent.getSentAt(),
               sendMessageEvent.getParentMessageId() != null,
               FileUtils.getSizeOfFile(attachment.getSize()), false, false, true, false,
@@ -565,6 +572,7 @@ int size= members.size();
           Attachment attachment = sendMessageEvent.getAttachments().get(0);
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
               selfMessage ? MessageTypeUi.FILE_MESSAGE_SENT : MessageTypeUi.FILE_MESSAGE_RECEIVED,
+                  customMessageType,
               selfMessage, sendMessageEvent.getSentAt(),
               sendMessageEvent.getParentMessageId() != null,
               FileUtils.getSizeOfFile(attachment.getSize()), false, false, true, false,
@@ -584,6 +592,7 @@ int size= members.size();
 
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
               selfMessage ? MessageTypeUi.LOCATION_MESSAGE_SENT : MessageTypeUi.LOCATION_MESSAGE_RECEIVED,
+                  customMessageType,
               selfMessage, sendMessageEvent.getSentAt(),
               sendMessageEvent.getParentMessageId() != null,
               String.valueOf(attachment.getLatitude()), attachment.getTitle(),
@@ -600,6 +609,7 @@ int size= members.size();
           Attachment attachment = sendMessageEvent.getAttachments().get(0);
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
               selfMessage ? MessageTypeUi.STICKER_MESSAGE_SENT : MessageTypeUi.STICKER_MESSAGE_RECEIVED,
+                  customMessageType,
               selfMessage, sendMessageEvent.getSentAt(),
               sendMessageEvent.getParentMessageId() != null, attachment.getStillUrl(),
               attachment.getMediaUrl(), sendMessageEvent.getSenderName(),
@@ -616,7 +626,8 @@ int size= members.size();
         case Gif: {
           Attachment attachment = sendMessageEvent.getAttachments().get(0);
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
-              selfMessage ? MessageTypeUi.GIF_MESSAGE_SENT : MessageTypeUi.GIF_MESSAGE_RECEIVED, selfMessage,
+              selfMessage ? MessageTypeUi.GIF_MESSAGE_SENT : MessageTypeUi.GIF_MESSAGE_RECEIVED,
+                  customMessageType, selfMessage,
               sendMessageEvent.getSentAt(), sendMessageEvent.getParentMessageId() != null,
               attachment.getStillUrl(), attachment.getMediaUrl(), sendMessageEvent.getSenderName(),
               sendMessageEvent.getSenderProfileImageUrl(), null, false, true, null,
@@ -634,6 +645,7 @@ int size= members.size();
 
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
               selfMessage ? MessageTypeUi.WHITEBOARD_MESSAGE_SENT : MessageTypeUi.WHITEBOARD_MESSAGE_RECEIVED,
+                  customMessageType,
               selfMessage, sendMessageEvent.getSentAt(),
               sendMessageEvent.getParentMessageId() != null,
               FileUtils.getSizeOfFile(attachment.getSize()), false, false, true, false,
@@ -668,6 +680,7 @@ int size= members.size();
           }
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
               selfMessage ? MessageTypeUi.CONTACT_MESSAGE_SENT : MessageTypeUi.CONTACT_MESSAGE_RECEIVED,
+                  customMessageType,
               selfMessage, sendMessageEvent.getSentAt(),
               sendMessageEvent.getParentMessageId() != null, contactName, contactIdentifier,
               contactImageUrl, sendMessageEvent.getSenderName(),
@@ -682,6 +695,7 @@ int size= members.size();
         case OfferSent: {
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.OFFER_SENT : MessageTypeUi.OFFER_RECEIVED,
+                  customMessageType,
                   selfMessage, sendMessageEvent.getSentAt(), false,
                   TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
                           sendMessageEvent.getMentionedUsers(), taggedUserCallback),
@@ -697,6 +711,7 @@ int size= members.size();
         case CounterOffer: {
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.COUNTER_OFFER_SENT : MessageTypeUi.COUNTER_OFFER_RECEIVED,
+                  customMessageType,
                   selfMessage, sendMessageEvent.getSentAt(), false,
                   TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
                           sendMessageEvent.getMentionedUsers(), taggedUserCallback),
@@ -712,6 +727,7 @@ int size= members.size();
         case EditOffer: {
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.EDIT_OFFER_SENT : MessageTypeUi.EDIT_OFFER_RECEIVED,
+                  customMessageType,
                   selfMessage, sendMessageEvent.getSentAt(), false,
                   TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
                           sendMessageEvent.getMentionedUsers(), taggedUserCallback),
@@ -727,6 +743,7 @@ int size= members.size();
         case AcceptOffer: {
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.ACCEPT_OFFER_SENT : MessageTypeUi.ACCEPT_OFFER_RECEIVED,
+                  customMessageType,
                   selfMessage, sendMessageEvent.getSentAt(), false,
                   TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
                           sendMessageEvent.getMentionedUsers(), taggedUserCallback),
@@ -743,6 +760,7 @@ int size= members.size();
         case CancelDeal: {
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.CANCEL_DEAL_SENT : MessageTypeUi.CANCEL_DEAL_RECEIVED,
+                  customMessageType,
                   selfMessage, sendMessageEvent.getSentAt(), false,
                   TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
                           sendMessageEvent.getMentionedUsers(), taggedUserCallback),
@@ -758,6 +776,7 @@ int size= members.size();
         case CancelOffer: {
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.CANCEL_OFFER_SENT : MessageTypeUi.CANCEL_OFFER_RECEIVED,
+                  customMessageType,
                   selfMessage, sendMessageEvent.getSentAt(), false,
                   TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
                           sendMessageEvent.getMentionedUsers(), taggedUserCallback),
@@ -773,6 +792,7 @@ int size= members.size();
         case BuyDirect: {
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.BUY_DIRECT_SENT : MessageTypeUi.BUY_DIRECT_RECEIVED,
+                  customMessageType,
                   selfMessage, sendMessageEvent.getSentAt(), false,
                   TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
                           sendMessageEvent.getMentionedUsers(), taggedUserCallback),
@@ -788,6 +808,7 @@ int size= members.size();
         case AcceptBuyDirect: {
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.ACCEPT_BUY_DIRECT_SENT : MessageTypeUi.ACCEPT_BUY_DIRECT_RECEIVED,
+                  customMessageType,
                   selfMessage, sendMessageEvent.getSentAt(), false,
                   TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
                           sendMessageEvent.getMentionedUsers(), taggedUserCallback),
@@ -803,6 +824,7 @@ int size= members.size();
         case CancelBuyDirect: {
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.CANCEL_BUY_DIRECT_SENT : MessageTypeUi.CANCEL_BUY_DIRECT_RECEIVED,
+                  customMessageType,
                   selfMessage, sendMessageEvent.getSentAt(), false,
                   TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
                           sendMessageEvent.getMentionedUsers(), taggedUserCallback),
@@ -818,6 +840,7 @@ int size= members.size();
         case PaymentEscrowed: {
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.PAYMENT_ESCROWED_SENT : MessageTypeUi.PAYMENT_ESCROWED_RECEIVED,
+                  customMessageType,
                   selfMessage, sendMessageEvent.getSentAt(), false,
                   TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
                           sendMessageEvent.getMentionedUsers(), taggedUserCallback),
@@ -833,6 +856,7 @@ int size= members.size();
         case DealComplete: {
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.DEAL_COMPLETE_SENT : MessageTypeUi.DEAL_COMPLETE_RECEIVED,
+                  customMessageType,
                   selfMessage, sendMessageEvent.getSentAt(), false,
                   TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
                           sendMessageEvent.getMentionedUsers(), taggedUserCallback),
