@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import io.isometrik.chat.enums.MessageTypeUi
+import io.isometrik.chat.response.conversation.utils.ConversationDetailsUtil
 import io.isometrik.samples.chat.databinding.ChatItemBinding
 import io.isometrik.samples.chat.databinding.CustomTopViewBinding
 import io.isometrik.ui.conversations.list.ChatListItemBinder
@@ -49,11 +50,11 @@ class ChatListActivity : AppCompatActivity() {
                 return binding!!.root
             }
 
-            override fun updateTopView(view: View, message: MessagesModel) {
+            override fun updateTopView(view: View, conversationDetailsUtil : ConversationDetailsUtil?, messages: List<MessagesModel>) {
                 binding?.apply {
                     rootView.visibility = View.VISIBLE
-                    tvTitle.text = message.messageTypeUi.name
-                    Log.e("Type ${message.conversationTitle}",": ${message.customMessageType.value}")
+                    tvTitle.text = conversationDetailsUtil?.conversationTitle
+                    Log.e("updateTopView ${conversationDetailsUtil?.conversationTitle}","messages size: ${messages.size}")
                 }
             }
         }
@@ -67,9 +68,9 @@ class ChatListActivity : AppCompatActivity() {
 //        ChatConfig.noConversationsImageResId = R.drawable.your_image
 //        ChatConfig.noConversationsImageResId = R.drawable.your_image
         ChatConfig.hideCreateChatOption = false
-//        ChatConfig.hideAudioCallOption = true
-//        ChatConfig.hideVideoCallOption = true
-//        ChatConfig.hideCaptureCameraOption = true
+        ChatConfig.hideAudioCallOption = false
+        ChatConfig.hideVideoCallOption = false
+        ChatConfig.hideCaptureCameraOption = false
         ChatConfig.hideRecordAudioOption = false
 
         AttachmentsConfig.hideCameraOption = true
@@ -94,12 +95,12 @@ class ChatListActivity : AppCompatActivity() {
             override fun bindData(context: Context, binding: ChatItemBinding, data: ConversationsModel) {
                 binding.chatName.text = data.lastMessageText
                 binding.chatLastMessage.text = data.lastMessageCustomType
-                Log.e(data.lastMessageText,"Status delivered: "+data.isLastMessageDeliveredToAll +" Type:"+data.lastMessageCustomType)
+                Log.e(data.lastMessageText,"Status delivered: "+data.isLastMessageDeliveredToAll +" Read:"+data.isLastMessageReadByAll)
 
             }
         }
 
-        val chatFragment = ConversationsListFragment()
+        val chatFragment = ConversationsListFragment.newInstance(customBinder)
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, chatFragment)

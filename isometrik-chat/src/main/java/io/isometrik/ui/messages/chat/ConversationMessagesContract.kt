@@ -10,6 +10,7 @@ import io.isometrik.chat.enums.PresignedUrlMediaTypes
 import io.isometrik.chat.response.message.utils.schemas.Attachment
 import io.isometrik.chat.response.message.utils.schemas.MentionedUser
 import io.isometrik.chat.enums.MessageTypeUi
+import io.isometrik.chat.response.conversation.utils.ConversationDetailsUtil
 import io.isometrik.ui.messages.chat.utils.enums.RemoteMessageTypes
 import io.isometrik.ui.messages.chat.utils.messageutils.MultipleMessagesUtil
 import io.isometrik.ui.messages.chat.utils.messageutils.OriginalReplyMessageUtil
@@ -616,6 +617,8 @@ interface ConversationMessagesContract {
             userName: String?, isOnline: Boolean, lastSeenAt: Long, conversationTitle: String?,
             membersCount: Int
         )
+
+        fun fetchedConversationDetails(conversationDetailsUtil: ConversationDetailsUtil)
 
         /**
          * Message to scroll to not found.

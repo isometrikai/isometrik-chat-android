@@ -2,6 +2,7 @@ package io.isometrik.ui.messages.chat.common
 
 import android.view.View
 import android.view.ViewGroup
+import io.isometrik.chat.response.conversation.utils.ConversationDetailsUtil
 import io.isometrik.ui.messages.chat.MessagesModel
 
 interface ChatTopViewHandler {
@@ -13,5 +14,5 @@ interface ChatTopViewHandler {
     /**
      * Called to update the top view whenever the message changes or a new message arrives.
      */
-    fun updateTopView(view: View, message: MessagesModel)
+    fun updateTopView(view: View, conversationDetailsUtil : ConversationDetailsUtil?, messages: List<MessagesModel>)
 }

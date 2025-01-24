@@ -1,5 +1,7 @@
 package io.isometrik.ui.conversations.list;
 
+import android.util.Log;
+
 import io.isometrik.chat.enums.ConversationType;
 import io.isometrik.chat.events.conversation.CreateConversationEvent;
 import io.isometrik.chat.response.conversation.utils.Conversation;
@@ -168,7 +170,8 @@ public class ConversationsModel {
             if(lastMessageDetails.has("customType")){
                 lastMessageCustomType = lastMessageDetails.getString("customType");
             }
-            if (!conversation.isGroup() ) {
+            Log.e("ConversationsModel__","getMembersCount: "+conversation.getMembersCount());
+            if (!conversation.isGroup() || conversation.getMembersCount() <= 2) {
 
                 if (lastMessageDetails.has("deliveredTo") && lastMessageDetails.getJSONArray("deliveredTo").length() == 1
                         && !lastMessageDetails.getJSONArray("deliveredTo").getJSONObject(0).getString("userId").isBlank()

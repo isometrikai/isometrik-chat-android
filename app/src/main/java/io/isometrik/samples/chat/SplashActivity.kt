@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import io.isometrik.chat.enums.ConversationType
+import io.isometrik.chat.response.conversation.utils.ConversationDetailsUtil
 import io.isometrik.samples.chat.databinding.CustomTopViewBinding
 import io.isometrik.ui.IsometrikChatSdk
 import io.isometrik.ui.conversations.list.ConversationsListActivity
@@ -26,7 +27,7 @@ class SplashActivity : AppCompatActivity() {
         val intent = if (IsometrikChatSdk.getInstance().userSession.userToken == null) {
             Intent(this@SplashActivity, UsersActivity::class.java)
         } else {
-            Intent(this@SplashActivity, ConversationsListActivity::class.java)
+            Intent(this@SplashActivity, ChatListActivity::class.java)
         }
         startActivity(intent)
 
@@ -73,27 +74,26 @@ class SplashActivity : AppCompatActivity() {
             }
         })
 
-        class MyCustomTopViewHandler : ChatTopViewHandler {
-
-            private var binding: CustomTopViewBinding? = null
-
-            override fun createTopView(parent: ViewGroup): View {
-                val inflater = LayoutInflater.from(parent.context)
-                binding = CustomTopViewBinding.inflate(inflater, parent, false)
-                return binding!!.root
-            }
-
-            override fun updateTopView(view: View, message: MessagesModel) {
-                binding?.apply {
-                    rootView.visibility = View.VISIBLE
-                    tvTitle.text = message.messageTypeUi.name
-                    Log.e("Type ${message.conversationTitle}",": ${message.customMessageType.value}")
-                }
-            }
-        }
-
-
-        ChatConfig.topViewHandler = MyCustomTopViewHandler()
+//        class MyCustomTopViewHandler : ChatTopViewHandler {
+//
+//            private var binding: CustomTopViewBinding? = null
+//
+//            override fun createTopView(parent: ViewGroup): View {
+//                val inflater = LayoutInflater.from(parent.context)
+//                binding = CustomTopViewBinding.inflate(inflater, parent, false)
+//                return binding!!.root
+//            }
+//
+//            override fun updateTopView(view: View, conversationDetailsUtil : ConversationDetailsUtil?, messages: List<MessagesModel>) {
+//                binding?.apply {
+//                    rootView.visibility = View.VISIBLE
+//                    tvTitle.text = conversationDetailsUtil?.conversationTitle
+//                }
+//            }
+//        }
+//
+//
+//        ChatConfig.topViewHandler = MyCustomTopViewHandler()
 
         finish()
     }

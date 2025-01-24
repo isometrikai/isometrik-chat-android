@@ -1971,10 +1971,11 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                 .fetchConversationDetails(
                         new FetchConversationDetailsQuery.Builder().setConversationId(conversationId)
                                 .setUserToken(userToken)
-                                .setIncludeMembers(false)
+                                .setIncludeMembers(true)
                                 .build(), (var1, var2) -> {
                             if (var1 != null) {
                                 ConversationDetailsUtil conversationDetailsUtil = var1.getConversationDetails();
+                                conversationMessagesView.fetchedConversationDetails(conversationDetailsUtil);
                                 messageDeliveryReadEventsEnabled =
                                         conversationDetailsUtil.getConfig().isReadEvents();
                                 typingEventsEnabled = conversationDetailsUtil.getConfig().isTypingEvents();

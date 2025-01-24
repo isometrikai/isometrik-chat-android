@@ -65,7 +65,7 @@ public class FetchConversationDetails {
       }
 
       Call<FetchConversationDetailsResult> call = retrofitManager.getConversationService()
-          .fetchConversationDetails(headers, conversationId, queryParams);
+          .fetchConversationDetails(headers, conversationId,queryParams);
 
       call.enqueue(new Callback<FetchConversationDetailsResult>() {
         @Override
