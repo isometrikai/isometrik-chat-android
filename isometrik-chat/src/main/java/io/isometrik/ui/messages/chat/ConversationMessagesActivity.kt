@@ -94,6 +94,7 @@ import io.isometrik.ui.messages.chat.messageBinders.WhiteboardReceivedBinder
 import io.isometrik.ui.messages.chat.messageBinders.WhiteboardSentBinder
 import io.isometrik.ui.messages.chat.utils.attachmentutils.PrepareAttachmentHelper
 import io.isometrik.chat.enums.MessageTypeUi
+import io.isometrik.chat.response.conversation.utils.ConversationDetailsUtil
 import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.messages.chat.common.ChatTopViewHandler
 import io.isometrik.ui.messages.chat.messageBinders.OfferReceivedBinder
@@ -194,6 +195,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
 
     private var topView: View? = null
     private var topViewHandler: ChatTopViewHandler? = null
+    private var conversationDetailsUtil : ConversationDetailsUtil? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -1244,9 +1246,9 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             if (s.length > 0) {
                 ismActivityMessagesBinding!!.rlRecordAudio.visibility = View.GONE
                 ismActivityMessagesBinding!!.ivCaptureImage.visibility = View.INVISIBLE
-                ismActivityMessagesBinding!!.ivSendMessage.visibility = View.VISIBLE
+//                ismActivityMessagesBinding!!.ivSendMessage.visibility = View.VISIBLE
             } else {
-                ismActivityMessagesBinding!!.ivSendMessage.visibility = View.GONE
+//                ismActivityMessagesBinding!!.ivSendMessage.visibility = View.INVISIBLE
                 ismActivityMessagesBinding.ivCaptureImage.visibility =
                     if (ChatConfig.hideCaptureCameraOption) View.INVISIBLE else View.VISIBLE
                 ismActivityMessagesBinding!!.rlRecordAudio.visibility = View.VISIBLE
@@ -2194,7 +2196,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                     messages.size - 1
                 )
             }
-            onMessageUpdated(messagesModel)
+            onMessageUpdated(conversationDetailsUtil,messages)
         }
     }
 
@@ -2206,7 +2208,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             messages.add(messagesModel)
             conversationMessagesAdapter!!.notifyItemInserted(messages.size - 1)
             scrollToLastMessage()
-            onMessageUpdated(messagesModel)
+            onMessageUpdated(conversationDetailsUtil,messages)
         }
     }
 
@@ -2295,12 +2297,8 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 if (ismActivityMessagesBinding!!.tvNoMessages.visibility == View.VISIBLE) {
                     ismActivityMessagesBinding!!.tvNoMessages.visibility = View.GONE
                 }
-                for (message in messages) {
-                    Log.e("CUSTOM_TYPE__","type: ${message.customMessageType}  ==> metaData: ${message.metaData}")
-                    if(message.metaData != null || message.customMessageType != null)
-                        onMessageUpdated(message)
-                }
             }
+            onMessageUpdated(conversationDetailsUtil,messages)
         }
     }
 
@@ -2989,6 +2987,11 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         }
     }
 
+    override fun fetchedConversationDetails(conversationDetailsUtil: ConversationDetailsUtil) {
+        this.conversationDetailsUtil = conversationDetailsUtil
+        onMessageUpdated(conversationDetailsUtil,messages)
+    }
+
     override fun messageToScrollToNotFound() {
         runOnUiThread {
             scrollToMessageNeeded = false
@@ -3352,9 +3355,9 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
     /**
      * Update the top view when a message changes or a new message arrives.
      */
-    fun onMessageUpdated(message: MessagesModel) {
+    fun onMessageUpdated(conversationDetailsUtil : ConversationDetailsUtil? , messages: List<MessagesModel>) {
         topView?.let { view ->
-            topViewHandler?.updateTopView(view, message)
+            topViewHandler?.updateTopView(view, conversationDetailsUtil,messages)
         }
     }
 
