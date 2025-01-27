@@ -20,7 +20,6 @@ import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.TextWatcher
 import android.text.style.StyleSpan
-import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
@@ -2558,7 +2557,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             RemoteMessageTypes.ReplyMessage,
             messageId,
             OriginalReplyMessageUtil(messageId, replyMessageDetails),
-            CustomMessageTypes.Replay,
+            CustomMessageTypes.Reply,
             replyMessage,
             false,
             true,

@@ -55,7 +55,7 @@ fun lastMessage(sendMessageEvent: SendMessageEvent): String? {
 
         }
 
-        Replay -> lastMessageText =
+        Reply -> lastMessageText =
             IsometrikChatSdk.getInstance().context.getString(R.string.ism_offer)
 
         Post -> lastMessageText =

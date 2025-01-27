@@ -251,7 +251,7 @@ public class SearchAttachmentMessageUtil {
           break;
         }
 
-        case Replay: {
+        case Reply: {
 
           messagesModel = new MessagesModel(message.getMessageId(),
                   selfMessage ? MessageTypeUi.TEXT_MESSAGE_SENT : MessageTypeUi.TEXT_MESSAGE_RECEIVED,

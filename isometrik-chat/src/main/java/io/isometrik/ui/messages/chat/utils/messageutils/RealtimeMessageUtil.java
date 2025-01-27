@@ -456,7 +456,7 @@ int size= members.size();
 
         case Text:
 
-        case Replay: {
+        case Reply: {
           boolean isQuoted = sendMessageEvent.getParentMessageId() != null;
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
               selfMessage ? MessageTypeUi.TEXT_MESSAGE_SENT : MessageTypeUi.TEXT_MESSAGE_RECEIVED,
@@ -958,7 +958,7 @@ int size= members.size();
         messageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_contact);
         break;
       }
-      case Replay:{
+      case Reply:{
         messagePlaceHolderImage = R.drawable.ism_ic_quote;
         messageText = sendMessageEvent.getBody();
       }
