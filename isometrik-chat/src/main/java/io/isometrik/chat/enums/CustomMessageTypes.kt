@@ -64,7 +64,7 @@ enum class CustomMessageTypes(
     /**
      * Reply custom message types.
      */
-    Replay("AttachmentMessage:Reply"),
+    Reply("AttachmentMessage:Reply"),
 
     /**
      * Post custom message types.
@@ -124,7 +124,6 @@ enum class CustomMessageTypes(
      * RejectBuyDirect custom message types.
      */
     RejectBuyDirect("REJECT_BUYDIRECT_REQUEST"),
-
     /**
      * PaymentEscrowed custom message types.
      */

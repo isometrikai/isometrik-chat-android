@@ -395,7 +395,7 @@ class HandlePushRemote {
                                 context.getString(R.string.ism_attachment_prefix) + context.getString(R.string.ism_contact)
                         }
 
-                        Replay -> message =
+                        Reply -> message =
                                 context.getString(R.string.ism_offer_prefix)
                         Payment -> message =
                                 context.getString(R.string.ism_offer_prefix)

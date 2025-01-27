@@ -15,9 +15,9 @@ object ChatConfig {
     var noConversationsStringResId = R.string.ism_no_conversations
     @DrawableRes
     var noConversationsImageResId = R.drawable.ism_ic_no_members
-    var hideCreateChatOption: Boolean = true
-    var hideAudioCallOption: Boolean = true
-    var hideVideoCallOption: Boolean = true
-    var hideCaptureCameraOption: Boolean = true
-    var hideRecordAudioOption: Boolean = true
+    var hideCreateChatOption: Boolean = false
+    var hideAudioCallOption: Boolean = false
+    var hideVideoCallOption: Boolean = false
+    var hideCaptureCameraOption: Boolean = false
+    var hideRecordAudioOption: Boolean = false
 }

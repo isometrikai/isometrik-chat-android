@@ -886,7 +886,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
                 IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_contact);
             break;
           }
-          case Replay: {
+          case Reply: {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_quote;
             lastMessageText = sendMessageEvent.getBody();
 
