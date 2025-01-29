@@ -31,7 +31,7 @@ Open your build.gradle file (app-level) and add the following line in the depend
 
 ```groovy
 dependencies {
-    implementation 'com.github.isometrikai:isometrik-chat-android:1.4.1'
+    implementation 'com.github.isometrikai:isometrik-chat-android:1.4.5'
 }
 ```
 ### Step 3: Sync Your Project
@@ -64,7 +64,7 @@ Configure the SDK in the first method called in your app, typically within the `
 - `projectId`
 - `keysetId`
 
-Provide these details using the parameters in the method below:
+Provide these details using the parameters in the method below: userName & password are OPTIONAL DON'T PASS UNTIL REQUIRED.
 
 ```java
 IsometrikChatSdk.getInstance()
@@ -74,8 +74,6 @@ IsometrikChatSdk.getInstance()
             getString(R.string.accountId),
             getString(R.string.projectId),
             getString(R.string.keysetId),
-            userName,
-            password,
             getString(R.string.license_key),
             BuildConfig.APPLICATION_ID,
             getString(R.string.app_name),
@@ -87,6 +85,16 @@ IsometrikChatSdk.getInstance()
                             .getUserSession()
                             .switchUser(isoMetricUserId, isoMetricToken, userName, userIdentifier,
                                     userProfilePic, false, new JSONObject(),true,0);
+
+```
+
+add `maps_api_key` in your base module `AndroidManifest.xml` file
+
+```java
+
+ <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="maps_api_key" />
 
 ```
 To handle SDK termination, call the following method, usually in the onTerminate() method of the Application class:
