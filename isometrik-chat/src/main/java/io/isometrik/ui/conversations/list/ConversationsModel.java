@@ -170,22 +170,31 @@ public class ConversationsModel {
             if(lastMessageDetails.has("customType")){
                 lastMessageCustomType = lastMessageDetails.getString("customType");
             }
-            Log.e("ConversationsModel__","getMembersCount: "+conversation.getMembersCount());
-            if (!conversation.isGroup() || conversation.getMembersCount() <= 2) {
-
+            if (!conversation.isGroup()) {
+                if (lastMessageDetails.has("deliveredTo") && lastMessageDetails.getJSONArray("deliveredTo").length() == 1
+                        && !lastMessageDetails.getJSONArray("deliveredTo").getJSONObject(0).getString("userId").isBlank()
+                        && lastMessageDetails.has("readBy") && lastMessageDetails.getJSONArray("readBy").length() == 1
+                        && !lastMessageDetails.getJSONArray("readBy").getJSONObject(0).getString("userId").isBlank()
+                ){
+                    lastMessageDeliveredToAll = true;
+                    lastMessageReadByAll = true;
+                }else if(lastMessageDetails.has("deliveredTo") && lastMessageDetails.getJSONArray("deliveredTo").length() == 1
+                        && !lastMessageDetails.getJSONArray("deliveredTo").getJSONObject(0).getString("userId").isBlank()
+                        && lastMessageDetails.has("readBy") && lastMessageDetails.getJSONArray("readBy").length() == 0){
+                    lastMessageDeliveredToAll = true;
+                    lastMessageReadByAll = false;
+                }else{
+                    lastMessageReadByAll = false;
+                    lastMessageDeliveredToAll = false;
+                }
+            }else if(conversation.isGroup() && conversation.getMembersCount() <= 2){
+                lastMessageDeliveredToAll = true;
                 if (lastMessageDetails.has("deliveredTo") && lastMessageDetails.getJSONArray("deliveredTo").length() == 1
                         && !lastMessageDetails.getJSONArray("deliveredTo").getJSONObject(0).getString("userId").isBlank()
                         && lastMessageDetails.has("readBy") && lastMessageDetails.getJSONArray("readBy").length() == 1
                         && !lastMessageDetails.getJSONArray("readBy").getJSONObject(0).getString("userId").isBlank()
                 ){
                     lastMessageReadByAll = true;
-                }else if(lastMessageDetails.has("deliveredTo") && lastMessageDetails.getJSONArray("deliveredTo").length() == 1
-                        && !lastMessageDetails.getJSONArray("deliveredTo").getJSONObject(0).getString("userId").isBlank()
-                        && lastMessageDetails.has("readBy") && lastMessageDetails.getJSONArray("readBy").length() == 0){
-                    lastMessageDeliveredToAll = true;
-                }else{
-                    lastMessageReadByAll = false;
-                    lastMessageDeliveredToAll = false;
                 }
             }
         } catch (JSONException ignore) {

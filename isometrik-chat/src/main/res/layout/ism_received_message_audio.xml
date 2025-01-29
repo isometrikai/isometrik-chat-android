@@ -176,14 +176,16 @@
             android:id="@+id/waveSeekBar"
             app:marker_color="@color/ism_red_dark"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/ism_dp_50"
+            android:layout_marginVertical="@dimen/ism_dp_15"
+            android:layout_height="30dp"
             app:wave_width="2dp"
-            android:padding="@dimen/ism_dp_5"
-            app:wave_gap="1dp"
+            android:layout_marginHorizontal="@dimen/ism_dp_5"
+            app:wave_gap="2dp"
             android:layout_toEndOf="@+id/ivPlayAudio"
-            app:wave_min_height="15dp"
-            app:wave_corner_radius="1dp"
+            app:wave_min_height="3dp"
+            app:wave_corner_radius="3dp"
             android:clickable="false"
+            android:layout_centerVertical="true"
             android:allowClickWhenDisabled="false"
             app:wave_background_color="@color/ism_identifier_text_grey"
             app:wave_progress_color="@color/ism_blue"
@@ -192,14 +194,12 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivPlayAudio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/waveSeekBar"
-            android:layout_alignBottom="@+id/waveSeekBar"
+            android:layout_width="@dimen/ism_dp_30"
+            android:layout_height="@dimen/ism_dp_30"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/ism_dp_5"
             app:srcCompat="@drawable/ism_ic_play_audio"
-            android:layout_margin="@dimen/ism_dp_8"
-            android:paddingStart="@dimen/ism_dp_5"
-            android:paddingEnd="@dimen/ism_dp_1"
+            android:layout_marginStart="@dimen/ism_dp_5"
             />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -223,6 +223,7 @@
             android:id="@+id/rlDownload"
             android:layout_below="@+id/waveSeekBar"
             android:layout_width="wrap_content"
+            android:visibility="gone"
             android:layout_height="wrap_content">
         <View
             android:id="@+id/divider"

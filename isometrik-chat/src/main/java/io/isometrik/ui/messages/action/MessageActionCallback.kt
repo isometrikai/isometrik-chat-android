@@ -1,5 +1,7 @@
 package io.isometrik.ui.messages.action
 
+import androidx.appcompat.widget.AppCompatImageView
+import io.isometrik.ui.libwave.WaveformSeekBar
 import io.isometrik.ui.messages.chat.MessagesModel
 import io.isometrik.ui.messages.reaction.add.ReactionModel
 import org.json.JSONObject
@@ -138,5 +140,16 @@ interface MessageActionCallback {
      * message reaction clicked
      * */
     fun onMessageReactionClicked(messageId: String, reactionModel: ReactionModel)
+
+    /**
+     * audio message play
+     * */
+    fun handleAudioMessagePlay(
+        message: MessagesModel,
+        downloaded: Boolean,
+        position: Int,
+        waveSeekBar: WaveformSeekBar,
+        ivPlayAudio: AppCompatImageView
+    )
 
 }

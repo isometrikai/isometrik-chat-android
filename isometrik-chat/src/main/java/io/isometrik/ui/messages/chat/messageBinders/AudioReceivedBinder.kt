@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Typeface
 import android.text.SpannableString
 import android.text.style.StyleSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -217,10 +216,19 @@ class AudioReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessageA
                     }
                 }
             }
-            ismReceivedMessageAudioBinding.rlAudio.setOnClickListener { v: View? ->
-                messageActionCallback.handleClickOnMessageCell(
+//            ismReceivedMessageAudioBinding.rlAudio.setOnClickListener { v: View? ->
+//                messageActionCallback.handleClickOnMessageCell(
+//                    message,
+//                    message.isDownloaded
+//                )
+//            }
+            ismReceivedMessageAudioBinding.ivPlayAudio.setOnClickListener { v: View? ->
+                messageActionCallback.handleAudioMessagePlay(
                     message,
-                    message.isDownloaded
+                    message.isDownloaded,
+                    position,
+                    ismReceivedMessageAudioBinding.waveSeekBar,
+                    ismReceivedMessageAudioBinding.ivPlayAudio
                 )
             }
 
@@ -228,37 +236,10 @@ class AudioReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessageA
                 CoroutineScope(Dispatchers.Main).launch {
                     val file = AudioFIleUtil.getOrDownloadAudioFile(mContext, message.audioUrl)
                     val amplitudes = AudioFIleUtil.extractAmplitudes(mContext, file)
-                    ismReceivedMessageAudioBinding.waveSeekBar.apply {
-                        sample = amplitudes.toIntArray()
-                    }
-
+                    AudioFIleUtil.applyWaveSeekbarConfig(ismReceivedMessageAudioBinding.waveSeekBar,amplitudes.toIntArray())
                 }
             } else {
-                ismReceivedMessageAudioBinding.waveSeekBar.apply {
-                    progress = 0F
-                    waveWidth = Utils.dp(context, 2)
-                    waveGap = Utils.dp(context, 1)
-                    waveMinHeight = Utils.dp(context, 5)
-                    waveCornerRadius = Utils.dp(context, 2)
-                    waveGravity = WaveGravity.CENTER
-                    waveBackgroundColor =
-                        ContextCompat.getColor(context, R.color.ism_identifier_text_grey)
-                    waveProgressColor =
-                        ContextCompat.getColor(context, R.color.ism_blue)
-                    sample = DummyDataUtil.getDummyWaveSample()
-//                marker = getDummyMarkerSample(ismSentMessageAudioBinding)
-                    onProgressChanged = object : SeekBarOnProgressChanged {
-                        override fun onProgressChanged(
-                            waveformSeekBar: WaveformSeekBar,
-                            progress: Float,
-                            fromUser: Boolean
-                        ) {
-                            if (fromUser)
-                                ismReceivedMessageAudioBinding.waveSeekBar.progress =
-                                    progress
-                        }
-                    }
-                }
+                AudioFIleUtil.applyWaveSeekbarConfig(ismReceivedMessageAudioBinding.waveSeekBar,DummyDataUtil.getDummyWaveSample())
             }
         } catch (ignore: Exception) {
         }

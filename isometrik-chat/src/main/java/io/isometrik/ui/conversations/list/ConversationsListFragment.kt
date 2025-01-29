@@ -237,7 +237,6 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
             conversations.clear()
         }
         conversations.addAll(conversationsModels)
-        if (activity != null) {
             requireActivity().runOnUiThread {
                 if (!resultsOnScroll) {
                     if (conversations.size > 0) {
@@ -272,7 +271,6 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
                 }
                 updateShimmerVisibility(false)
             }
-        }
     }
 
     private fun fetchConversations(

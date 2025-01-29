@@ -195,6 +195,9 @@ public class MessageActionFragment extends BottomSheetDialogFragment {
     } else {
       ismBottomsheetMessageActionsBinding.rlDownload.setVisibility(View.GONE);
     }
+    ismBottomsheetMessageActionsBinding.ivClose.setOnClickListener(v -> {
+      close();
+    });
 
     return ismBottomsheetMessageActionsBinding.getRoot();
   }
