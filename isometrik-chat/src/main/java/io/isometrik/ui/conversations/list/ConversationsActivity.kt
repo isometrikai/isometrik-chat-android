@@ -77,23 +77,23 @@ class ConversationsActivity : FragmentActivity(), ConversationsContract.View {
         }.attach()
 
         try {
-            if (!IsometrikChatSdk.getInstance().isometrik.isConnected) {
-                IsometrikChatSdk.getInstance()
+            if (!IsometrikChatSdk.instance.isometrik.isConnected) {
+                IsometrikChatSdk.instance
                     .isometrik
                     .executor
                     .execute {
-                        IsometrikChatSdk.getInstance()
+                        IsometrikChatSdk.instance
                             .isometrik
                             .createConnection(
-                                IsometrikChatSdk.getInstance().userSession.userId
-                                        + IsometrikChatSdk.getInstance().userSession.deviceId,
-                                IsometrikChatSdk.getInstance().userSession.userToken
+                                IsometrikChatSdk.instance.userSession.userId
+                                        + IsometrikChatSdk.instance.userSession.deviceId,
+                                IsometrikChatSdk.instance.userSession.userToken
                             )
                     }
             }
         } catch (ignore: Exception) {
         }
-        loadUserImage(IsometrikChatSdk.getInstance().userSession.userProfilePic)
+        loadUserImage(IsometrikChatSdk.instance.userSession.userProfilePic)
 
         ismActivityConversationsBinding!!.ivNext.setOnClickListener { v: View? ->
             startActivity(
@@ -161,7 +161,7 @@ class ConversationsActivity : FragmentActivity(), ConversationsContract.View {
             popup.show()
         }
 
-        IsometrikChatSdk.getInstance().isometrik.executor.execute {
+        IsometrikChatSdk.instance.isometrik.executor.execute {
             fetchUnreadConversationsCount()
             conversationsPresenter.fetchUserDetails()
         }
@@ -249,7 +249,7 @@ class ConversationsActivity : FragmentActivity(), ConversationsContract.View {
             } else {
                 PlaceholderUtils.setTextRoundDrawable(
                     this@ConversationsActivity,
-                    IsometrikChatSdk.getInstance().userSession.userName,
+                    IsometrikChatSdk.instance.userSession.userName,
                     ismActivityConversationsBinding!!.ivUserImage, 13
                 )
             }
@@ -309,7 +309,7 @@ class ConversationsActivity : FragmentActivity(), ConversationsContract.View {
      * Fetch all undelivered messages.
      */
     fun fetchAllUndeliveredMessages() {
-        IsometrikChatSdk.getInstance()
+        IsometrikChatSdk.instance
             .isometrik
             .executor
             .execute { conversationsPresenter!!.fetchAllUndeliveredMessages(0) }
