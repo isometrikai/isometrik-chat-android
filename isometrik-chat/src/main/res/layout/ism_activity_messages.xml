@@ -98,6 +98,7 @@
                 android:layout_toStartOf="@id/ivVideoCall"
                 android:padding="@dimen/ism_dp_10"
                 android:visibility="visible"
+                style="?actionButtonStyle"
                 app:srcCompat="@drawable/ism_ic_audio_call" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -107,6 +108,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@id/ivMore"
                 android:padding="@dimen/ism_dp_10"
+                style="?actionButtonStyle"
                 android:visibility="visible"
                 app:srcCompat="@drawable/ism_ic_video_call" />
 
@@ -117,6 +119,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:padding="@dimen/ism_dp_10"
+                style="?actionButtonStyle"
                 android:visibility="visible"
                 app:srcCompat="@drawable/ism_ic_more" />
 
@@ -139,6 +142,7 @@
                 android:background="@android:color/transparent"
                 android:padding="@dimen/ism_dp_16"
                 android:tint="@color/ism_text_black"
+                style="?actionButtonStyle"
                 app:srcCompat="@drawable/ism_ic_arrow_back" />
 
             <include

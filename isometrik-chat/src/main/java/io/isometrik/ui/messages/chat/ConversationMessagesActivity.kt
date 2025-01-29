@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.graphics.Typeface
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -20,6 +21,7 @@ import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.TextWatcher
 import android.text.style.StyleSpan
+import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
@@ -32,8 +34,10 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
@@ -94,6 +98,7 @@ import io.isometrik.ui.messages.chat.messageBinders.WhiteboardSentBinder
 import io.isometrik.ui.messages.chat.utils.attachmentutils.PrepareAttachmentHelper
 import io.isometrik.chat.enums.MessageTypeUi
 import io.isometrik.chat.response.conversation.utils.ConversationDetailsUtil
+import io.isometrik.ui.libwave.WaveformSeekBar
 import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.messages.chat.common.ChatTopViewHandler
 import io.isometrik.ui.messages.chat.messageBinders.OfferReceivedBinder
@@ -124,6 +129,10 @@ import io.isometrik.ui.messages.tag.MemberDetailsFragment
 import io.isometrik.ui.messages.tag.TagUserAdapter
 import io.isometrik.ui.messages.tag.TagUserModel
 import io.isometrik.ui.messages.tag.TaggedUserCallback
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.util.Arrays
 import java.util.concurrent.CopyOnWriteArrayList
@@ -194,7 +203,14 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
 
     private var topView: View? = null
     private var topViewHandler: ChatTopViewHandler? = null
-    private var conversationDetailsUtil : ConversationDetailsUtil? = null
+    private var conversationDetailsUtil: ConversationDetailsUtil? = null
+
+    private var mediaPlayer: MediaPlayer? = null
+    private var currentWaveSeekBar: WaveformSeekBar? = null
+    private var currentIvPlayAudio: AppCompatImageView? = null
+    private var isAudioPlaying = false
+    private var currentAudioPosition = -1
+    private var updateJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -1449,6 +1465,72 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         }
     }
 
+    override fun handleAudioMessagePlay(
+        message: MessagesModel,
+        downloaded: Boolean,
+        position: Int,
+        waveSeekBar: WaveformSeekBar,
+        ivPlayAudio: AppCompatImageView
+    ) {
+
+        // Stop and release the current media player
+        mediaPlayer?.stop()
+        mediaPlayer?.release()
+        mediaPlayer = null
+
+        // Reset the current WaveSeekBar progress
+        currentWaveSeekBar?.progress = 0F
+        currentWaveSeekBar = null
+        currentIvPlayAudio?.setImageResource(R.drawable.ism_ic_play_audio)
+        if(currentAudioPosition == position && isAudioPlaying){
+            isAudioPlaying = false
+            return
+        }
+        currentAudioPosition = position
+        ivPlayAudio.setImageResource(R.drawable.ism_ic_audio_buffer)
+        // Cancel the existing coroutine job if any
+        updateJob?.cancel()
+
+        if (position != -1) {
+
+            mediaPlayer = MediaPlayer().apply {
+                setDataSource(message.audioUrl)
+                prepare()
+                start()
+
+                setOnCompletionListener {
+                    waveSeekBar.progress = 0F
+                    isAudioPlaying = false
+                    with(Dispatchers.Main){
+                        currentIvPlayAudio?.setImageResource(R.drawable.ism_ic_play_audio)
+                    }
+                    updateJob?.cancel()
+                    Log.e("startProgressUpdate","==> Completed")
+                }
+            }
+            currentWaveSeekBar = waveSeekBar
+            isAudioPlaying = true
+            currentIvPlayAudio = ivPlayAudio
+            currentIvPlayAudio?.setImageResource(R.drawable.ism_ic_pause_audio)
+
+            // Start updating WaveSeekBar progress with coroutine
+            startProgressUpdate(waveSeekBar)
+        } else {
+            isAudioPlaying = false
+        }
+    }
+
+    private fun startProgressUpdate(waveSeekBar: WaveformSeekBar) {
+        updateJob = lifecycleScope.launch {
+            while (isAudioPlaying && mediaPlayer != null && currentWaveSeekBar == waveSeekBar) {
+                val progress = (mediaPlayer!!.currentPosition.toFloat() / mediaPlayer!!.duration)*100
+                waveSeekBar.progress = progress
+                Log.e("startProgressUpdate","==> ${progress}")
+                delay(100L) // Update every 100ms
+            }
+        }
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -2195,7 +2277,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                     messages.size - 1
                 )
             }
-            onMessageUpdated(conversationDetailsUtil,messages)
+            onMessageUpdated(conversationDetailsUtil, messages)
         }
     }
 
@@ -2207,7 +2289,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             messages.add(messagesModel)
             conversationMessagesAdapter!!.notifyItemInserted(messages.size - 1)
             scrollToLastMessage()
-            onMessageUpdated(conversationDetailsUtil,messages)
+            onMessageUpdated(conversationDetailsUtil, messages)
         }
     }
 
@@ -2297,7 +2379,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                     ismActivityMessagesBinding!!.tvNoMessages.visibility = View.GONE
                 }
             }
-            onMessageUpdated(conversationDetailsUtil,messages)
+            onMessageUpdated(conversationDetailsUtil, messages)
         }
     }
 
@@ -2747,6 +2829,9 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
     override fun onDestroy() {
         conversationId = null
         unregisterListeners()
+        mediaPlayer?.release()
+        mediaPlayer = null
+        updateJob?.cancel()
         super.onDestroy()
     }
 
@@ -2988,7 +3073,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
 
     override fun fetchedConversationDetails(conversationDetailsUtil: ConversationDetailsUtil) {
         this.conversationDetailsUtil = conversationDetailsUtil
-        onMessageUpdated(conversationDetailsUtil,messages)
+        onMessageUpdated(conversationDetailsUtil, messages)
     }
 
     override fun messageToScrollToNotFound() {
@@ -3354,9 +3439,12 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
     /**
      * Update the top view when a message changes or a new message arrives.
      */
-    fun onMessageUpdated(conversationDetailsUtil : ConversationDetailsUtil? , messages: List<MessagesModel>) {
+    fun onMessageUpdated(
+        conversationDetailsUtil: ConversationDetailsUtil?,
+        messages: List<MessagesModel>
+    ) {
         topView?.let { view ->
-            topViewHandler?.updateTopView(view, conversationDetailsUtil,messages)
+            topViewHandler?.updateTopView(view, conversationDetailsUtil, messages)
         }
     }
 
