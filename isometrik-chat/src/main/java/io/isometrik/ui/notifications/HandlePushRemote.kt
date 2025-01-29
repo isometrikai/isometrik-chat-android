@@ -40,13 +40,13 @@ class HandlePushRemote {
     fun handle(context: Context, remoteMessage : RemoteMessage, resultIntent : Intent){
         val data: Map<String, String?> = remoteMessage.getData()
         try {
-            if (IsometrikChatSdk.getInstance().userSession.userId != null) {
-                IsometrikChatSdk.getInstance()
+            if (IsometrikChatSdk.instance.userSession.userId != null) {
+                IsometrikChatSdk.instance
                     .isometrik
-                    .configuration.clientId = IsometrikChatSdk.getInstance().userSession.userId
-                IsometrikChatSdk.getInstance()
+                    .configuration.clientId = IsometrikChatSdk.instance.userSession.userId
+                IsometrikChatSdk.instance
                     .isometrik
-                    .configuration.userToken = IsometrikChatSdk.getInstance().userSession.userToken
+                    .configuration.userToken = IsometrikChatSdk.instance.userSession.userToken
                 var senderName: String? = null
                 var senderProfileImageUrl: String? = null
                 var senderId: String? = null
@@ -66,7 +66,7 @@ class HandlePushRemote {
                             senderId = data["userId"]
                             senderName = data["userName"]
                             senderProfileImageUrl = data["userProfileImageUrl"]
-                            message = IsometrikChatSdk.getInstance()
+                            message = IsometrikChatSdk.instance
                                 .context
                                 .getString(R.string.ism_member_observer_left, senderName)
                         }
@@ -75,7 +75,7 @@ class HandlePushRemote {
                             senderId = data["initiatorId"]
                             senderName = data["initiatorName"]
                             senderProfileImageUrl = data["initiatorProfileImageUrl"]
-                            message = IsometrikChatSdk.getInstance()
+                            message = IsometrikChatSdk.instance
                                 .context
                                 .getString(
                                     R.string.ism_blocked_user,
@@ -88,7 +88,7 @@ class HandlePushRemote {
                             senderId = data["initiatorId"]
                             senderName = data["initiatorName"]
                             senderProfileImageUrl = data["initiatorProfileImageUrl"]
-                            message = IsometrikChatSdk.getInstance()
+                            message = IsometrikChatSdk.instance
                                 .context
                                 .getString(
                                     R.string.ism_unblocked_user,
@@ -425,17 +425,17 @@ class HandlePushRemote {
                                 context.getString(R.string.ism_offer_prefix)
                     }
                     try {
-                        if (IsometrikChatSdk.getInstance().userSession.userToken != null) {
-                            if (senderId != null && senderId != IsometrikChatSdk.getInstance().userSession.userId) {
+                        if (IsometrikChatSdk.instance.userSession.userToken != null) {
+                            if (senderId != null && senderId != IsometrikChatSdk.instance.userSession.userId) {
                                 if (data["deliveryReadEventsEnabled"] == null || Boolean.parseBoolean(
                                         data["deliveryReadEventsEnabled"]
                                     )
                                 ) {
-                                    IsometrikChatSdk.getInstance()
+                                    IsometrikChatSdk.instance
                                         .isometrik
                                         .executor
                                         .execute {
-                                            IsometrikChatSdk.getInstance()
+                                            IsometrikChatSdk.instance
                                                 .isometrik
                                                 .remoteUseCases
                                                 .messageUseCases
@@ -445,7 +445,7 @@ class HandlePushRemote {
                                                             data["conversationId"]
                                                         )
                                                         .setUserToken(
-                                                            IsometrikChatSdk.getInstance()
+                                                            IsometrikChatSdk.instance
                                                                 .userSession.userToken
                                                         )
                                                         .setMessageId(data["messageId"])
@@ -454,7 +454,7 @@ class HandlePushRemote {
                                                     if (var1 != null) {
                                                         //Commented out intentionally to handle case when user receives few messages within 30 sec of killing app and hence for them push was not received and if lastupdated time updated for newer message from push, previous messages were not shown as delivered
 
-                                                        //IsometrikChatSdk.getInstance()
+                                                        //IsometrikChatSdk.instance
                                                         //    .getUserSession()
                                                         //    .setDeliveryStatusUpdatedUpto(sentAt);
                                                     }
@@ -467,7 +467,7 @@ class HandlePushRemote {
                     }
                 }
                 if (senderId != null) {
-                    if (IsometrikChatSdk.getInstance().userSession.userId != senderId) {
+                    if (IsometrikChatSdk.instance.userSession.userId != senderId) {
                         message = context.getString(R.string.ism_bullet) + message
                         var bitmap: Bitmap? = null
                         if (PlaceholderUtils.isValidImageUrl(senderProfileImageUrl)) {
@@ -690,7 +690,7 @@ class HandlePushRemote {
         if (notificationManager != null) {
             val notifications = notificationManager.activeNotifications
             for (notification in notifications) {
-                if (notification.packageName == IsometrikChatSdk.getInstance().applicationId && notification.tag != null && notification.tag == conversationId) {
+                if (notification.packageName == IsometrikChatSdk.instance.applicationId && notification.tag != null && notification.tag == conversationId) {
                     return notification.notification
                 }
             }

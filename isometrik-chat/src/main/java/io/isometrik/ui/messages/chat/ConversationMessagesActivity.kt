@@ -1120,10 +1120,10 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
 
         if (intent.getBooleanExtra("fromNotification", false)) {
             try {
-                IsometrikChatSdk.getInstance().isometrik.executor.execute {
-                    IsometrikChatSdk.getInstance().isometrik.createConnection(
-                        IsometrikChatSdk.getInstance().userSession.userId + IsometrikChatSdk.getInstance().userSession.deviceId,
-                        IsometrikChatSdk.getInstance().userSession.userToken
+                IsometrikChatSdk.instance.isometrik.executor.execute {
+                    IsometrikChatSdk.instance.isometrik.createConnection(
+                        IsometrikChatSdk.instance.userSession.userId + IsometrikChatSdk.instance.userSession.deviceId,
+                        IsometrikChatSdk.instance.userSession.userToken
                     )
                 }
             } catch (ignore: Exception) {
@@ -1211,20 +1211,20 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         }
 
         ismActivityMessagesBinding!!.ivAudioCall.setOnClickListener { v: View? ->
-            IsometrikChatSdk.getInstance().chatActionsClickListener.onCallClicked(
+            IsometrikChatSdk.instance.chatActionsClickListener?.onCallClicked(
                 true,
                 isometrikUserId!!,
-                conversationUserFullName + IsometrikChatSdk.getInstance().userSession.userName,
+                conversationUserFullName + IsometrikChatSdk.instance.userSession.userName,
                 conversationUserFullName!!,
                 conversationUserImageUrl!!
             )
         }
 
         ismActivityMessagesBinding!!.ivVideoCall.setOnClickListener { v: View? ->
-            IsometrikChatSdk.getInstance().chatActionsClickListener.onCallClicked(
+            IsometrikChatSdk.instance.chatActionsClickListener?.onCallClicked(
                 false,
                 isometrikUserId!!,
-                conversationUserFullName + IsometrikChatSdk.getInstance().userSession.userName,
+                conversationUserFullName + IsometrikChatSdk.instance.userSession.userName,
                 conversationUserFullName!!,
                 conversationUserImageUrl!!
             )
@@ -2569,7 +2569,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         val intent = Intent(this, MessageDeliveryStatusActivity::class.java)
         intent.putExtra(
             "message",
-            IsometrikChatSdk.getInstance().isometrik.gson.toJson(messagesModel)
+            IsometrikChatSdk.instance.isometrik.gson.toJson(messagesModel)
         )
         intent.putExtra("conversationId", conversationId)
         intent.putExtra("messageId", messagesModel.messageId)
@@ -2588,7 +2588,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             val intent = Intent(this, ForwardMessageActivity::class.java)
             intent.putExtra(
                 "message",
-                IsometrikChatSdk.getInstance().isometrik.gson.toJson(messagesModel)
+                IsometrikChatSdk.instance.isometrik.gson.toJson(messagesModel)
             )
             startActivity(intent)
         }
@@ -3285,7 +3285,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
     }
 
     override fun onUserBlocked() {
-        IsometrikChatSdk.getInstance().chatActionsClickListener.onBlockStatusUpdate(
+        IsometrikChatSdk.instance.chatActionsClickListener?.onBlockStatusUpdate(
             true,
             userPersonalUserId!!
         )
@@ -3294,7 +3294,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
     }
 
     override fun onUserUnBlocked() {
-        IsometrikChatSdk.getInstance().chatActionsClickListener.onBlockStatusUpdate(
+        IsometrikChatSdk.instance.chatActionsClickListener?.onBlockStatusUpdate(
             false,
             userPersonalUserId!!
         )

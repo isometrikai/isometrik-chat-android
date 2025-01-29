@@ -23,7 +23,7 @@ class GroupCastPresenter {
         members: List<Map<String, Any>>,
         metaData: JSONObject
     ) {
-        val userToken = IsometrikChatSdk.getInstance().userSession.userToken
+        val userToken = IsometrikChatSdk.instance.userSession.userToken
 
 
         val groupCastCreateQuery =
@@ -32,7 +32,7 @@ class GroupCastPresenter {
                 .setCustomType(CustomMessageTypes.Text.value)
                 .setMetaData(metaData)
 
-        IsometrikChatSdk.getInstance().getIsometrik().remoteUseCases
+        IsometrikChatSdk.instance.getIsometrik().remoteUseCases
             .groupCastUseCases
             .groupCastCreate(groupCastCreateQuery.build(),
                 CompletionHandler { var1: GroupCastCreateResult?, var2: IsometrikError ->
@@ -48,7 +48,7 @@ class GroupCastPresenter {
     fun groupCastMessage(
         message: String,
     ) {
-        val userToken = IsometrikChatSdk.getInstance().userSession.userToken
+        val userToken = IsometrikChatSdk.instance.userSession.userToken
 
         
 
@@ -60,7 +60,7 @@ class GroupCastPresenter {
                 .setShowInConversation(true)
                 .setEventForMessage(EventForMessage(true, true))
                 .setCustomType(CustomMessageTypes.Text.value)
-                .setDeviceId(IsometrikChatSdk.getInstance().userSession.deviceId)
+                .setDeviceId(IsometrikChatSdk.instance.userSession.deviceId)
 
         groupCastMessageQuery.showInConversation = true
         groupCastMessageQuery.sendPushForNewConversationCreated = true
@@ -70,7 +70,7 @@ class GroupCastPresenter {
         // so on..
 
 
-        IsometrikChatSdk.getInstance().getIsometrik().remoteUseCases
+        IsometrikChatSdk.instance.getIsometrik().remoteUseCases
             .groupCastUseCases
             .groupCastMessage(groupCastMessageQuery.build()
             ) { var1: GroupCastMessageResult?, var2: IsometrikError ->

@@ -56,7 +56,7 @@ object PlaceholderUtils {
         var firstName = firstName
         var initials = ""
         if (firstName != null) {
-            if (firstName == IsometrikChatSdk.getInstance().context.getString(R.string.ism_deleted_user)) {
+            if (firstName == IsometrikChatSdk.instance?.context?.getString(R.string.ism_deleted_user)) {
                 firstName = firstName.substring(1)
             }
             initials = if (firstName.length >= 2) {
@@ -101,7 +101,7 @@ object PlaceholderUtils {
         var firstName = firstName
         var initials = ""
         if (firstName != null) {
-            if (firstName == IsometrikChatSdk.getInstance().context.getString(R.string.ism_deleted_user)) {
+            if (firstName == IsometrikChatSdk.instance?.context?.getString(R.string.ism_deleted_user)) {
                 firstName = firstName.substring(1)
             }
             initials = if (firstName.length >= 2) {

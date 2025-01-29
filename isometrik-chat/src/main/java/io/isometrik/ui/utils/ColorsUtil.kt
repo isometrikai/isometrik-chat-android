@@ -26,5 +26,5 @@ object ColorsUtil {
     }
 
     @ColorInt
-    fun getThemeColor() = ContextCompat.getColor(IsometrikChatSdk.getInstance().context, ChatConfig.baseColor)
+    fun getThemeColor() = ContextCompat.getColor(IsometrikChatSdk.instance.context, ChatConfig.baseColor)
 }

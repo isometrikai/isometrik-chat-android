@@ -24,14 +24,14 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        val intent = if (IsometrikChatSdk.getInstance().userSession.userToken == null) {
+        val intent = if (IsometrikChatSdk.instance.userSession.userToken == null) {
             Intent(this@SplashActivity, UsersActivity::class.java)
         } else {
             Intent(this@SplashActivity, ChatListActivity::class.java)
         }
         startActivity(intent)
 
-        IsometrikChatSdk.getInstance().addClickListeners(object : ChatActionsClickListener {
+        IsometrikChatSdk.instance.addClickListeners(object : ChatActionsClickListener {
 
             override fun onCreateChatIconClicked(isGroup: Boolean) {
                 if (isGroup) {

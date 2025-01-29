@@ -259,7 +259,7 @@ class PostSentBinder : MessageItemBinder<MessagesModel, IsmSentMessagePostBindin
             }
 
             ismSentMessagePostBinding.rlPhoto.setOnClickListener { view: View? ->
-                IsometrikChatSdk.getInstance().chatActionsClickListener.onSharedPostClick(
+                IsometrikChatSdk.instance.chatActionsClickListener?.onSharedPostClick(
                     message.messageId
                 )
             }

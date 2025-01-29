@@ -15,8 +15,8 @@ import kotlin.concurrent.Volatile
  * The IsometrikUiSdk singleton to expose sdk functionality to other modules.
  */
 class IsometrikChatSdk private constructor() {
-    private var isometrik: Isometrik? = null
-    private var userSession: UserSession? = null
+    lateinit var isometrik: Isometrik
+    lateinit var userSession: UserSession
 
     /**
      * Gets application id.
@@ -33,7 +33,7 @@ class IsometrikChatSdk private constructor() {
      */
     var applicationName: String? = null
         private set
-    private var applicationContext: Context? = null
+    private lateinit var applicationContext: Context
     var chatActionsClickListener: ChatActionsClickListener? = null
         private set
 
@@ -172,6 +172,7 @@ class IsometrikChatSdk private constructor() {
      *
      * @return the isometrik
      */
+    @JvmName("fetchIsometrik")
     fun getIsometrik(): Isometrik {
         if (isometrik == null) {
             throw RuntimeException("Create configuration before trying to access isometrik object.")
@@ -185,6 +186,7 @@ class IsometrikChatSdk private constructor() {
      *
      * @return the user session
      */
+    @JvmName("fetchUserSession")
     fun getUserSession(): UserSession {
         if (userSession == null) {
             throw RuntimeException(
@@ -195,7 +197,7 @@ class IsometrikChatSdk private constructor() {
         return userSession!!
     }
 
-    val context: Context?
+    val context: Context
         /**
          * Gets context.
          *
@@ -205,7 +207,7 @@ class IsometrikChatSdk private constructor() {
             if (isometrik == null) {
                 throw RuntimeException("Create configuration before trying to access context object.")
             }
-            return applicationContext
+            return applicationContext!!
         }
 
     /**
@@ -242,11 +244,12 @@ class IsometrikChatSdk private constructor() {
     }
 
     companion object {
+
         @Volatile
         private var isometrikChatSdk: IsometrikChatSdk? = null
 
         @JvmStatic
-        val instance: IsometrikChatSdk?
+        val instance: IsometrikChatSdk
             /**
              * Gets instance.
              *
@@ -260,7 +263,7 @@ class IsometrikChatSdk private constructor() {
                         }
                     }
                 }
-                return isometrikChatSdk
+                return isometrikChatSdk!!
             }
     }
 }
