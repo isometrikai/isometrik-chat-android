@@ -18,6 +18,8 @@ class IsometrikChatSdk private constructor() {
     lateinit var isometrik: Isometrik
     lateinit var userSession: UserSession
 
+    var initialized = ::isometrik.isInitialized
+
     /**
      * Gets application id.
      *
