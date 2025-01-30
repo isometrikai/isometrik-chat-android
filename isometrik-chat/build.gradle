@@ -100,7 +100,9 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:33.2.0')
     implementation 'com.google.firebase:firebase-messaging'
     compileOnly 'com.github.lincollincol:amplituda:2.2.2'
-    implementation 'com.arthenica:ffmpeg-kit-full:5.1'
+//    implementation 'com.arthenica:ffmpeg-kit-full:5.1'
+    implementation 'com.arthenica:ffmpeg-kit-min:6.0-1'
+
 
 }
 
@@ -111,7 +113,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'io.isometrik.chat'
                 artifactId = 'android'
-                version = '1.2.1'
+                version = '1.4.8'
             }
         }
     }
