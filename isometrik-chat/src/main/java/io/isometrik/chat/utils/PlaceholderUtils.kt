@@ -139,6 +139,7 @@ object PlaceholderUtils {
      * @param fontSize the font size
      * @param radius the radius
      */
+    @JvmStatic
     fun setTextRoundRectangleDrawable(
         context: Context, firstName: String?,
         ivProfile: ImageView, fontSize: Int, radius: Int
