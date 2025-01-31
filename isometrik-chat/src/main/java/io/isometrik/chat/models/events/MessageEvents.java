@@ -6,6 +6,8 @@ import io.isometrik.chat.events.message.UpdateMessageDetailsEvent;
 import io.isometrik.chat.events.message.user.block.BlockUserInConversationEvent;
 import io.isometrik.chat.events.message.user.block.UnblockUserInConversationEvent;
 import io.isometrik.chat.models.message.delivery.operations.MarkMessagesAsDeliveredUtil;
+import io.isometrik.chat.utils.LogManger;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,9 +29,10 @@ public class MessageEvents {
    */
   public void handleMessageEvent(JSONObject jsonObject, @NotNull Isometrik isometrikInstance)
       throws JSONException {
-
     String action = "";
     if (jsonObject.has("action")) action = jsonObject.getString("action");
+
+    LogManger.INSTANCE.log("real:handleMessageEvent", "action "+action);
 
     switch (action) {
       case "messageDetailsUpdated":
@@ -63,6 +66,8 @@ public class MessageEvents {
       default:
         SendMessageEvent sendMessageEvent =
             isometrikInstance.getGson().fromJson(jsonObject.toString(), SendMessageEvent.class);
+
+        LogManger.INSTANCE.log("real:handleMessageEvent", "default sent");
 
         isometrikInstance.getRealtimeEventsListenerManager()
             .getMessageListenerManager()
