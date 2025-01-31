@@ -12,6 +12,7 @@ import io.isometrik.chat.Isometrik
 import io.isometrik.chat.enums.IMRealtimeEventsVerbosity
 import io.isometrik.chat.events.connection.ConnectEvent
 import io.isometrik.chat.events.connection.DisconnectEvent
+import io.isometrik.chat.utils.LogManger
 import io.isometrik.ui.messages.chat.common.ChatConfig
 import org.json.JSONException
 import org.json.JSONObject
@@ -72,21 +73,11 @@ class IsometrikConnection(private var isometrikInstance: Isometrik) {
         password: String
     ) {
         val uniqueClientId = clientId + "CHAT"
-        if (isometrikInstance.configuration.realtimeEventsVerbosity
-            == IMRealtimeEventsVerbosity.FULL
-        ) {
-            Log.d(
-                ISOMETRIK_MQTT_TAG,
-                " ClientId: $uniqueClientId username: $username password: $password baseConnectionPath: $baseConnectionPath"
-            )
-        }
+        LogManger.log(" ClientId: $uniqueClientId username: $username password: $password baseConnectionPath: $baseConnectionPath")
 
         if (mqttClient != null && mqttClient!!.state.isConnected) {
+            LogManger.log("  Already Connected ClientId: $uniqueClientId username: $username password: $password baseConnectionPath: $baseConnectionPath")
 
-            Log.d(
-                ISOMETRIK_MQTT_TAG,
-                "  Already Connected ClientId: $uniqueClientId username: $username password: $password baseConnectionPath: $baseConnectionPath"
-            )
         } else {
             mqttClient = MqttClient.builder()
                 .useMqttVersion3()
@@ -119,17 +110,14 @@ class IsometrikConnection(private var isometrikInstance: Isometrik) {
             .whenComplete { connAck: Mqtt3ConnAck?, throwable: Throwable? ->
                 if (throwable != null) {
                     // handle failure
-                    Log.d(ISOMETRIK_MQTT_TAG, "Connection failed due to $throwable")
+                    LogManger.log("Connection failed due to $throwable")
+
                     if (throwable.message?.contains("already connected") != true) {
                         scheduleReconnect(username, password, baseConnectionPath)
                     }
                 } else {
                     // matt connected
-                    if (isometrikInstance.configuration.realtimeEventsVerbosity
-                        == IMRealtimeEventsVerbosity.FULL
-                    ) {
-                        Log.d(ISOMETRIK_MQTT_TAG, "Connected")
-                    }
+                    LogManger.log("Connected")
 
                     // Set message listener
                     mqttClient!!.publishes(MqttGlobalPublishFilter.ALL, this::onMqttDataReceived)
@@ -147,29 +135,14 @@ class IsometrikConnection(private var isometrikInstance: Isometrik) {
         val topic = message.topic.toString()
 
         if (topic == messagingTopic) {
-            if (isometrikInstance.configuration.realtimeEventsVerbosity
-                == IMRealtimeEventsVerbosity.FULL
-            ) {
-                Log.d(
-                    "Realtime Event-Message",
-                    JSONObject(String(message.payloadAsBytes)).toString()
-                )
-            }
+            LogManger.log("Realtime Event-Message",JSONObject(String(message.payloadAsBytes)).toString())
             isometrikInstance.messageEvents
                 .handleMessageEvent(
                     JSONObject(String(message.payloadAsBytes)),
                     isometrikInstance
                 )
         } else if (topic == presenceEventsTopic) {
-            if (isometrikInstance.configuration.realtimeEventsVerbosity
-                == IMRealtimeEventsVerbosity.FULL
-            ) {
-                Log.d(
-                    "Realtime Event-Presence",
-                    JSONObject(String(message.payloadAsBytes)).toString()
-                )
-            }
-
+            LogManger.log("Realtime Event-Presence",JSONObject(String(message.payloadAsBytes)).toString())
             isometrikInstance.presenceEvents
                 .handlePresenceEvent(
                     JSONObject(String(message.payloadAsBytes)),
@@ -184,7 +157,8 @@ class IsometrikConnection(private var isometrikInstance: Isometrik) {
         password: String,
         baseConnectionPath: String
     ) {
-        Log.d(ISOMETRIK_MQTT_TAG, " Disconnected due to ${context.cause.message}")
+        LogManger.log(" Disconnected due to ${context.cause.message}")
+
         isometrikInstance.realtimeEventsListenerManager
             .connectionListenerManager
             .announce(DisconnectEvent(context.cause))
@@ -193,14 +167,16 @@ class IsometrikConnection(private var isometrikInstance: Isometrik) {
     }
 
     private fun scheduleReconnect(username: String, password: String, baseConnectionPath: String) {
-        if (mqttClient == null) {
+        if (mqttClient == null || ChatConfig.disableReScheduleMqtt) {
             return
         }
         if (scheduler == null || scheduler?.isShutdown == true) {
             scheduler = Executors.newSingleThreadScheduledExecutor()
         }
         ATTEMP++
-        Log.d(ISOMETRIK_MQTT_TAG, " scheduleReconnect")
+
+        LogManger.log("scheduleReconnect")
+
         scheduler?.schedule(
             { connectToBroker(username, password, baseConnectionPath) },
             ATTEMP * 10,
@@ -213,7 +189,7 @@ class IsometrikConnection(private var isometrikInstance: Isometrik) {
             ?.topicFilter(topic)
             ?.qos(MqttQos.AT_MOST_ONCE)
             ?.callback { publish ->
-                Log.e("MQTT_CHAT_SUBSCRIBE", "==> ${publish.topic}")
+                LogManger.log("MQTT_CHAT_SUBSCRIBE","==> ${publish.topic}")
             }
             ?.send()
 //            ?.whenComplete { subAck, throwable ->
@@ -271,6 +247,6 @@ class IsometrikConnection(private var isometrikInstance: Isometrik) {
     }
 
     companion object {
-        var ISOMETRIK_MQTT_TAG: String = "ISOMETRIK_MQTT: CHAT"
+        var ISM_TAG: String = "ISOMETRIK_MQTT: CHAT"
     }
 }

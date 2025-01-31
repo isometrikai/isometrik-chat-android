@@ -6,6 +6,7 @@ import io.isometrik.chat.enums.CustomMessageTypes;
 import io.isometrik.chat.response.message.utils.fetchmessages.Message;
 import io.isometrik.chat.response.message.utils.schemas.Attachment;
 import io.isometrik.chat.enums.MessageTypeUi;
+import io.isometrik.chat.utils.LogManger;
 import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.ui.messages.chat.MessagesModel;
 import io.isometrik.ui.messages.reaction.util.ReactionUtil;
@@ -40,10 +41,10 @@ public class ConversationAttachmentMessageUtil {
                     .equals(message.getSenderInfo().getUserId());
 
             //selfMessage = false;
-            Log.e("PAYMENT__","prepareMessageAttachmentModel getCustomType :"+message.getCustomType());
+            LogManger.INSTANCE.log("real:prepareMessageAttachmentModel"," "+message.getCustomType());
 
             CustomMessageTypes customMessageType = CustomMessageTypes.Companion.fromValue(message.getCustomType());
-            Log.e("PAYMENT__","prepareMessageAttachmentModel getCustomType value:"+customMessageType);
+
 
             switch (customMessageType) {
 
@@ -482,7 +483,6 @@ public class ConversationAttachmentMessageUtil {
                 }
 
                 case PaymentEscrowed: {
-                    Log.e("PAYMENT__","prepareMessageAttachmentModel PaymentEscrowed created:");
 
                     messagesModel = new MessagesModel(message.getMessageId(),
                             selfMessage ? MessageTypeUi.PAYMENT_ESCROWED_SENT : MessageTypeUi.PAYMENT_ESCROWED_RECEIVED,

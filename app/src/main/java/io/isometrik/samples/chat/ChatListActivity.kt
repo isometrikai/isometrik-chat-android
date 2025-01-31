@@ -30,10 +30,10 @@ class ChatListActivity : AppCompatActivity() {
             loadChatFragment()
         }
 
-        MessageBinderRegistry.registerBinder(
-            MessageTypeUi.PAYMENT_ESCROWED_SENT,
-            CustomTextSentBinder()
-        )
+//        MessageBinderRegistry.registerBinder(
+//            MessageTypeUi.PAYMENT_ESCROWED_SENT,
+//            CustomTextSentBinder()
+//        )
 
 //        MessageBinderRegistry.registerBinder(
 //            MessageTypeUi.TEXT_MESSAGE_RECEIVED,

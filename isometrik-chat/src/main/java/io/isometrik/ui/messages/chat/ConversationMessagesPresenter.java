@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import io.isometrik.chat.Isometrik;
 import io.isometrik.chat.builder.conversation.FetchConversationDetailsQuery;
@@ -37,6 +38,7 @@ import io.isometrik.chat.callbacks.ReactionEventCallback;
 import io.isometrik.chat.callbacks.UserEventCallback;
 import io.isometrik.chat.enums.AttachmentMessageType;
 import io.isometrik.chat.enums.ConversationType;
+import io.isometrik.chat.enums.IMRealtimeEventsVerbosity;
 import io.isometrik.chat.enums.PresignedUrlMediaTypes;
 import io.isometrik.chat.events.connection.ConnectEvent;
 import io.isometrik.chat.events.connection.ConnectionFailedEvent;
@@ -86,6 +88,7 @@ import io.isometrik.chat.response.message.utils.schemas.Attachment;
 import io.isometrik.chat.response.message.utils.schemas.EventForMessage;
 import io.isometrik.chat.response.message.utils.schemas.MentionedUser;
 import io.isometrik.chat.enums.MessageTypeUi;
+import io.isometrik.chat.utils.LogManger;
 import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.conversations.details.groupconversation.ConversationDetailsActivity;
@@ -1504,6 +1507,8 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                         .equals(IsometrikChatSdk.getInstance().getUserSession().getDeviceId()))) {
                     MessagesModel messageModel =
                             RealtimeMessageUtil.parseSendMessageEvent(sendMessageEvent, taggedUserCallback);
+
+                    LogManger.INSTANCE.log("real:messageSent"," "+messageModel);
 
                     if (messageModel != null) {
                         conversationMessagesView.addMessageInUI(messageModel);

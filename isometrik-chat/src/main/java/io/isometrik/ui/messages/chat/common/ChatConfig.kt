@@ -23,4 +23,5 @@ object ChatConfig {
     var hideVideoCallOption: Boolean = false
     var hideCaptureCameraOption: Boolean = false
     var hideRecordAudioOption: Boolean = false
+    var disableReScheduleMqtt: Boolean = false
 }
