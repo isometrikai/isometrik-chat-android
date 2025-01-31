@@ -31,7 +31,7 @@ public class UserSession {
 
     sharedPreferences = context.getSharedPreferences("UserSession", Context.MODE_PRIVATE);
     sharedPreferences.edit()
-        .putString("deviceId",
+        .putString("IsmDeviceId",
             Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID))
         .apply();
   }
@@ -78,7 +78,7 @@ public class UserSession {
    * @return the device id
    */
   public String getDeviceId() {
-    return sharedPreferences.getString("deviceId", null);
+    return sharedPreferences.getString("IsmDeviceId", null);
   }
 
   /**
@@ -173,7 +173,7 @@ public class UserSession {
     sharedPreferences.edit().putBoolean("userSelected", userSelected).apply();
     sharedPreferences.edit().putString("userMetadata", userMetadata.toString()).apply();
     sharedPreferences.edit().putBoolean("userNotification", notification).apply();
-    sharedPreferences.edit().putString("deviceId", Settings.Secure.getString(IsometrikChatSdk.getInstance().getContext().getContentResolver(), Settings.Secure.ANDROID_ID)).apply();
+    sharedPreferences.edit().putString("IsmDeviceId", Settings.Secure.getString(IsometrikChatSdk.getInstance().getContext().getContentResolver(), Settings.Secure.ANDROID_ID)).apply();
 
     if (deliveryStatusUpdatedUpto == 0) {
       sharedPreferences.edit()
