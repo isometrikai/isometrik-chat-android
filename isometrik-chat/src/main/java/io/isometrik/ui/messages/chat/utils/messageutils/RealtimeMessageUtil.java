@@ -1,5 +1,7 @@
 package io.isometrik.ui.messages.chat.utils.messageutils;
 
+import android.util.Log;
+
 import io.isometrik.chat.enums.CustomMessageTypes;
 import io.isometrik.chat.events.conversation.cleanup.ClearConversationEvent;
 import io.isometrik.chat.events.conversation.config.UpdateConversationDetailsEvent;
@@ -21,6 +23,7 @@ import io.isometrik.chat.events.message.user.block.UnblockUserInConversationEven
 import io.isometrik.chat.response.message.utils.fetchmessages.Config;
 import io.isometrik.chat.response.message.utils.fetchmessages.Details;
 import io.isometrik.chat.response.message.utils.schemas.Attachment;
+import io.isometrik.chat.utils.LogManger;
 import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.messages.chat.MessagesModel;
@@ -452,6 +455,8 @@ int size= members.size();
           .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId());
 
       CustomMessageTypes customMessageType = CustomMessageTypes.Companion.fromValue(sendMessageEvent.getCustomType());
+      LogManger.INSTANCE.log("real:parseSendMessageEvent"," "+customMessageType);
+
       switch (customMessageType) {
 
         case Text:
@@ -758,6 +763,8 @@ int size= members.size();
         }
 
         case CancelDeal: {
+          LogManger.INSTANCE.log("real:parsing"," CancelDeal");
+
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.CANCEL_DEAL_SENT : MessageTypeUi.CANCEL_DEAL_RECEIVED,
                   customMessageType,
@@ -770,6 +777,8 @@ int size= members.size();
                   sendMessageEvent.getMetaData())), sendMessageEvent.getMessageType(),
                   sendMessageEvent.getMetaData(), false, false, sendMessageEvent.getConversationId(),
                   false);
+
+          LogManger.INSTANCE.log("real:parsing"," CancelDeal Done");
 
           break;
         }
@@ -838,6 +847,8 @@ int size= members.size();
           break;
         }
         case PaymentEscrowed: {
+          LogManger.INSTANCE.log("real:parsing"," PaymentEscrowed ");
+
           messageModel = new MessagesModel(sendMessageEvent.getMessageId(),
                   selfMessage ? MessageTypeUi.PAYMENT_ESCROWED_SENT : MessageTypeUi.PAYMENT_ESCROWED_RECEIVED,
                   customMessageType,
@@ -850,6 +861,9 @@ int size= members.size();
                   sendMessageEvent.getMetaData())), sendMessageEvent.getMessageType(),
                   sendMessageEvent.getMetaData(), false, false, sendMessageEvent.getConversationId(),
                   false);
+
+          LogManger.INSTANCE.log("real:parsing"," PaymentEscrowed Done");
+
 
           break;
         }

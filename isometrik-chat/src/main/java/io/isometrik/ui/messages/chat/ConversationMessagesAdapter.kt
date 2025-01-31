@@ -61,12 +61,6 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
-        for ( binder in MessageBinderRegistry.getBinderList()){
-            Log.e("PAYMENT__","onCreateViewHolder forloop MessageBinderRegistry : key: ${binder.key} value: ${binder.value}")
-        }
-        Log.e("PAYMENT__","onCreateViewHolder viewType : $viewType")
-        Log.e("PAYMENT__","onCreateViewHolder viewType fromValue : ${MessageTypeUi.fromValue(viewType)}")
-        Log.e("PAYMENT__","onCreateViewHolder MessageBinderRegistry getBinder : ${MessageBinderRegistry.getBinder(MessageTypeUi.fromValue(viewType))}")
         val binder = MessageBinderRegistry.getBinder(MessageTypeUi.fromValue(viewType)) as? MessageItemBinder<T, VB>
             ?: itemBinders[MessageTypeUi.fromValue(viewType)] ?: defaultBinder
         val binding = binder.createBinding(parent, viewType)

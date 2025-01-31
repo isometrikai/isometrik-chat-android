@@ -50,28 +50,34 @@ import com.google.android.material.snackbar.Snackbar
 import io.isometrik.chat.R
 import io.isometrik.chat.databinding.IsmActivityMessagesBinding
 import io.isometrik.chat.enums.AttachmentMessageType
+import io.isometrik.chat.enums.CustomMessageTypes
+import io.isometrik.chat.enums.MessageTypeUi
 import io.isometrik.chat.enums.PresignedUrlMediaTypes
+import io.isometrik.chat.response.conversation.utils.ConversationDetailsUtil
 import io.isometrik.chat.utils.AlertProgress
 import io.isometrik.chat.utils.Constants
 import io.isometrik.chat.utils.FileUriUtils.getRealPath
 import io.isometrik.chat.utils.GalleryIntentsUtil
 import io.isometrik.chat.utils.KeyboardUtil
+import io.isometrik.chat.utils.LogManger.log
 import io.isometrik.chat.utils.MentionedUserSpan
 import io.isometrik.chat.utils.PlaceholderUtils
 import io.isometrik.chat.utils.RecyclerItemClickListener
 import io.isometrik.chat.utils.TagUserUtil
 import io.isometrik.chat.utils.TimeUtil
 import io.isometrik.chat.utils.Utilities
-import io.isometrik.chat.enums.CustomMessageTypes
 import io.isometrik.ui.IsometrikChatSdk
 import io.isometrik.ui.camera.CameraActivity
 import io.isometrik.ui.camera.VideoRecordingActivity
 import io.isometrik.ui.conversations.details.observers.ObserversActivity
+import io.isometrik.ui.libwave.WaveformSeekBar
 import io.isometrik.ui.messages.action.MessageActionCallback
 import io.isometrik.ui.messages.action.MessageActionFragment
 import io.isometrik.ui.messages.action.edit.EditMessageFragment
 import io.isometrik.ui.messages.action.replies.SendMessageReplyFragment
 import io.isometrik.ui.messages.chat.ConversationMessagesAdapter.OnScrollToMessageListener
+import io.isometrik.ui.messages.chat.common.ChatConfig
+import io.isometrik.ui.messages.chat.common.ChatTopViewHandler
 import io.isometrik.ui.messages.chat.messageBinders.AudioReceivedBinder
 import io.isometrik.ui.messages.chat.messageBinders.AudioSentBinder
 import io.isometrik.ui.messages.chat.messageBinders.ContactReceivedBinder
@@ -83,6 +89,8 @@ import io.isometrik.ui.messages.chat.messageBinders.GifReceivedBinder
 import io.isometrik.ui.messages.chat.messageBinders.GifSentBinder
 import io.isometrik.ui.messages.chat.messageBinders.LocationReceivedBinder
 import io.isometrik.ui.messages.chat.messageBinders.LocationSentBinder
+import io.isometrik.ui.messages.chat.messageBinders.OfferReceivedBinder
+import io.isometrik.ui.messages.chat.messageBinders.OfferSentBinder
 import io.isometrik.ui.messages.chat.messageBinders.PhotoReceivedBinder
 import io.isometrik.ui.messages.chat.messageBinders.PhotoSentBinder
 import io.isometrik.ui.messages.chat.messageBinders.PostReceivedBinder
@@ -96,13 +104,6 @@ import io.isometrik.ui.messages.chat.messageBinders.VideoSentBinder
 import io.isometrik.ui.messages.chat.messageBinders.WhiteboardReceivedBinder
 import io.isometrik.ui.messages.chat.messageBinders.WhiteboardSentBinder
 import io.isometrik.ui.messages.chat.utils.attachmentutils.PrepareAttachmentHelper
-import io.isometrik.chat.enums.MessageTypeUi
-import io.isometrik.chat.response.conversation.utils.ConversationDetailsUtil
-import io.isometrik.ui.libwave.WaveformSeekBar
-import io.isometrik.ui.messages.chat.common.ChatConfig
-import io.isometrik.ui.messages.chat.common.ChatTopViewHandler
-import io.isometrik.ui.messages.chat.messageBinders.OfferReceivedBinder
-import io.isometrik.ui.messages.chat.messageBinders.OfferSentBinder
 import io.isometrik.ui.messages.chat.utils.enums.RemoteMessageTypes
 import io.isometrik.ui.messages.chat.utils.messageutils.ContactUtil
 import io.isometrik.ui.messages.chat.utils.messageutils.MultipleMessagesUtil
@@ -2282,6 +2283,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
     }
 
     override fun addMessageInUI(messagesModel: MessagesModel) {
+        log("real:addMessageInUI", "Added in UI messagesModel")
         runOnUiThread {
             if (ismActivityMessagesBinding!!.tvNoMessages.visibility == View.VISIBLE) {
                 ismActivityMessagesBinding!!.tvNoMessages.visibility = View.GONE
