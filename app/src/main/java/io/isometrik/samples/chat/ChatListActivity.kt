@@ -72,6 +72,7 @@ class ChatListActivity : AppCompatActivity() {
         ChatConfig.hideVideoCallOption = false
         ChatConfig.hideCaptureCameraOption = false
         ChatConfig.hideRecordAudioOption = false
+        ChatConfig.disableReScheduleMqtt = true
 
         AttachmentsConfig.hideCameraOption = false
         AttachmentsConfig.hideRecordVideoOption = false
