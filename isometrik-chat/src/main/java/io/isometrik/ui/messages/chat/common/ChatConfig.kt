@@ -6,8 +6,9 @@ import androidx.annotation.StringRes
 import io.isometrik.chat.R
 
 object ChatConfig {
+    var mqttConnectionUrl: String? = null
     var baseUrl: String? = null
-    var port: Int? = null
+    var mqttPort: Int? = null
     var topViewHandler: ChatTopViewHandler? = null
     @ColorRes
     var baseColor = R.color.ism_theme_base

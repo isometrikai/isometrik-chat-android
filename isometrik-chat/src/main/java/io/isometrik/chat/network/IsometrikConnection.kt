@@ -91,8 +91,8 @@ class IsometrikConnection(private var isometrikInstance: Isometrik) {
             mqttClient = MqttClient.builder()
                 .useMqttVersion3()
                 .identifier(uniqueClientId)
-                .serverHost((ChatConfig.baseUrl ?: baseConnectionPath).replace("tcp://", ""))
-                .serverPort(ChatConfig.port ?: port)
+                .serverHost((baseConnectionPath).replace("tcp://", ""))
+                .serverPort(port)
                 .addDisconnectedListener { context ->
                     this@IsometrikConnection.onDisconnected(
                         context, username, password, baseConnectionPath
