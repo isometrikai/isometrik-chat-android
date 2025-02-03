@@ -254,6 +254,7 @@
             android:layout_centerVertical="true"
             android:background="@drawable/ism_create_conversation_circle"
             android:padding="@dimen/ism_dp_8"
+            android:visibility="gone"
             android:tint="@color/ism_white"
             app:srcCompat="@drawable/ism_ic_add_attachment" />
 
@@ -274,7 +275,8 @@
             android:id="@+id/rlSendMessages"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/ism_dp_5"
+            android:layout_marginVertical="@dimen/ism_dp_5"
+            android:layout_marginHorizontal="@dimen/ism_dp_10"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/ivAddAttachment"
             android:layout_toStartOf="@+id/ivSendMessage"
@@ -296,16 +298,31 @@
                 android:textColorHint="@color/ism_hint_grey"
                 android:textSize="@dimen/ism_sp_14" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivCaptureImage"
-                android:layout_width="@dimen/ism_dp_36"
-                android:layout_height="@dimen/ism_dp_36"
-                android:layout_centerVertical="true"
-                android:layout_margin="@dimen/ism_dp_8"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:layout_alignParentEnd="true"
-                android:elevation="@dimen/ism_dp_2"
-                app:srcCompat="@drawable/ism_ic_camera" />
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/ism_dp_8"
+                >
 
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivAddAttachment2"
+                    android:layout_width="@dimen/ism_dp_36"
+                    android:layout_height="@dimen/ism_dp_36"
+                    android:padding="@dimen/ism_dp_6"
+                    android:src="@drawable/ism_ic_attachment" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivCaptureImage"
+                    android:layout_width="@dimen/ism_dp_36"
+                    android:layout_height="@dimen/ism_dp_36"
+                    android:padding="@dimen/ism_dp_6"
+                    app:srcCompat="@drawable/ism_ic_camera" />
+
+
+            </LinearLayout>
 
         </RelativeLayout>
     </RelativeLayout>

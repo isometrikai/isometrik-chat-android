@@ -18,6 +18,7 @@ import io.isometrik.chat.databinding.IsmReceivedMessageTextBinding
 import io.isometrik.chat.utils.PlaceholderUtils
 import io.isometrik.ui.messages.action.MessageActionCallback
 import io.isometrik.ui.messages.chat.MessagesModel
+import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.messages.reaction.add.MessageReactionsAdapter
 
 class TextReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessageTextBinding> {
@@ -31,7 +32,7 @@ class TextReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessageTe
                           isMessagingDisabled : Boolean, messageActionCallback : MessageActionCallback
     ) {
         try {
-
+            ismReceivedMessageTextBinding.rlText.setBackgroundResource(ChatConfig.textReceivedBubbleResId)
             ismReceivedMessageTextBinding.ivEdited.visibility =
                 if (message.isEditedMessage) View.VISIBLE else View.GONE
 

@@ -181,6 +181,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
     private var conversationUserFullName: String? = null
     private var conversationImageUrl: String? = null
     private var conversationTitle: String? = null
+    private var lastMessageText: String? = null
 
     private var conversationDetailsActivityLauncher: ActivityResultLauncher<Intent>? = null
     private var userDetailsActivityLauncher: ActivityResultLauncher<Intent>? = null
@@ -197,6 +198,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
 
     private var messagingDisabled = false
     private var joiningAsObserver = false
+    private var opponentUserBlocked = false
     private var firstResume = true
 
     private var alertDialog: AlertDialog? = null
@@ -225,6 +227,9 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         conversationMessagesPresenter = ConversationMessagesPresenter(this, this)
 
         messagingDisabled = intent.extras!!.containsKey("messagingDisabled")
+        if (messagingDisabled) {
+            lastMessageText = intent.extras!!.getString("lastMessageText")
+        }
         joiningAsObserver = intent.extras!!.getBoolean("joinAsObserver", false)
 
 
@@ -351,6 +356,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
 
         if (messagingDisabled) {
             onMessagingStatusChanged(true)
+            opponentUserBlocked = !lastMessageText!!.startsWith("You")
         }
         updateConversationDetailsInHeader(true, isPrivateOneToOne, null, false, 0, null, 0)
 
@@ -402,7 +408,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
 
         ismActivityMessagesBinding!!.ibBack.setOnClickListener { v: View? -> onBackPressed() }
 
-        ismActivityMessagesBinding!!.ivAddAttachment.setOnClickListener { v: View? ->
+        ismActivityMessagesBinding!!.ivAddAttachment2.setOnClickListener { v: View? ->
             if (!isFinishing && !shareMediaFragment!!.isAdded) {
                 dismissAllDialogs()
                 shareMediaFragment!!.updateParameters(this)
@@ -797,9 +803,12 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             }
         }
 
+        Log.e("ivCaptureImage","set Click")
+
         ismActivityMessagesBinding!!.ivCaptureImage.setOnClickListener { v: View? ->
+            Log.e("ivCaptureImage","Clicked!!")
             checkImageCapturePermissions(
-                false
+                true
             )
         }
 
@@ -1147,6 +1156,13 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         }
 
         ismActivityMessagesBinding!!.ivMore.setOnClickListener { v: View? ->
+            if (opponentUserBlocked) { // condition used for opponentUser Blocked
+                Toast.makeText(
+                    this,
+                    R.string.ism_blocked_action,
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
             if ((ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility
                         == View.GONE) && clickActionsNotBlocked()
             ) {
@@ -1209,7 +1225,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 }
                 popup.show()
             }
-        }
+        }}
 
         ismActivityMessagesBinding!!.ivAudioCall.setOnClickListener { v: View? ->
             IsometrikChatSdk.instance.chatActionsClickListener?.onCallClicked(
@@ -1230,6 +1246,10 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 conversationUserImageUrl!!
             )
         }
+    }
+
+    override fun blockedStatus(blockByOpponentUser: Boolean) {
+        opponentUserBlocked = blockByOpponentUser
     }
 
     private fun showProgressDialog(message: String) {
@@ -1261,13 +1281,15 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
             if (s.length > 0) {
                 ismActivityMessagesBinding!!.rlRecordAudio.visibility = View.GONE
-                ismActivityMessagesBinding!!.ivCaptureImage.visibility = View.INVISIBLE
-//                ismActivityMessagesBinding!!.ivSendMessage.visibility = View.VISIBLE
+                ismActivityMessagesBinding!!.ivCaptureImage.visibility = View.GONE
+//                ismActivityMessagesBinding.ivAddAttachment2.visibility = View.GONE
             } else {
-//                ismActivityMessagesBinding!!.ivSendMessage.visibility = View.INVISIBLE
                 ismActivityMessagesBinding.ivCaptureImage.visibility =
-                    if (ChatConfig.hideCaptureCameraOption) View.INVISIBLE else View.VISIBLE
-                ismActivityMessagesBinding!!.rlRecordAudio.visibility = View.VISIBLE
+                    if (ChatConfig.hideCaptureCameraOption) View.GONE else View.VISIBLE
+                ismActivityMessagesBinding!!.rlRecordAudio.visibility
+                if (ChatConfig.hideRecordAudioOption) View.GONE else View.VISIBLE
+//                ismActivityMessagesBinding.ivAddAttachment2.visibility = View.VISIBLE
+
             }
             if (!joiningAsObserver) conversationMessagesPresenter!!.sendTypingMessage()
         }
@@ -2080,13 +2102,11 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
 
         // If there are any permissions not granted, request them
         if (!permissionsNotGranted.isEmpty()) {
-            if (requestPermissions) {
                 ActivityCompat.requestPermissions(
                     this,
                     permissionsNotGranted.toTypedArray<String>(),
                     PERMISSION_REQUEST_CODE // Use the new request code
                 )
-            }
         } else {
             // All permissions are granted, proceed with the action
             requestImageCapture()

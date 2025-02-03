@@ -14,6 +14,7 @@ import io.isometrik.chat.R
 import io.isometrik.chat.databinding.IsmSentMessageTextBinding
 import io.isometrik.ui.messages.action.MessageActionCallback
 import io.isometrik.ui.messages.chat.MessagesModel
+import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.messages.reaction.add.MessageReactionsAdapter
 
 class TextSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageTextBinding> {
@@ -27,6 +28,7 @@ class TextSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageTextBindin
                           isMessagingDisabled : Boolean, messageActionCallback : MessageActionCallback
     ) {
         try {
+            ismSentMessageTextBinding.rlText.setBackgroundResource(ChatConfig.textSentBubbleResId)
             ismSentMessageTextBinding.ivEdited.visibility =
                 if (message.isEditedMessage) View.VISIBLE else View.GONE
 

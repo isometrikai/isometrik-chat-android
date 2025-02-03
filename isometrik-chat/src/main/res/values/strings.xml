@@ -206,7 +206,7 @@
     <!-- Messages activity-->
 
     <string name="ism_unavailable">Unavailable</string>
-    <string name="ism_type_something_here">Send a message…</string>
+    <string name="ism_type_something_here">Type a message</string>
     <string name="ism_downloaded_successfully">%1$s downloaded successfully</string>
     <string name="ism_download_failed">%1$s download failed</string>
     <string name="ism_download_failed_due_to">%1$s download failed due to %2$s</string>
@@ -407,11 +407,14 @@
     <string name="ism_details_body">body</string>
     <string name="ism_updated_conversation_details">%1$s updated %2$s of conversation</string>
     <string name="ism_updated_message_details">%1$s updated %2$s of message</string>
-    <string name="ism_search_conversations">Search conversations…</string>
+    <string name="ism_search_conversations">Search</string>
     <string name="ism_search_public_conversations">Search public conversations…</string>
     <string name="ism_search_open_conversations">Search open conversations…</string>
     <string name="ism_blocked_user">%1$s blocked by %2$s</string>
     <string name="ism_unblocked_user">%1$s unblocked by %2$s</string>
+    <string name="ism_blocked_user_text">%1$s blocked %2$s</string>
+    <string name="ism_unblocked_user_text">%1$s unblocked %2$s</string>
+    <string name="ism_blocked_action">Action not allowed, the user has already blocked You</string>
     <string name="ism_member_observer_left">%1$s left as observer</string>
     <string name="ism_member_observer_joined">%1$s joined as observer</string>
     <string name="ism_hundred_unread_count">99+</string>
