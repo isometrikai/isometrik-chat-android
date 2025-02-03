@@ -1513,13 +1513,14 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
             LogManger.INSTANCE.log("real:messageSent", "IsometrikChatSdk.getInstance().getUserSession().getUserId() "+IsometrikChatSdk.getInstance().getUserSession().getUserId());
             LogManger.INSTANCE.log("real:messageSent", "sendMessageEvent.getDeviceId() "+sendMessageEvent.getDeviceId());
             LogManger.INSTANCE.log("real:messageSent", "IsometrikChatSdk.getInstance().getUserSession().getDeviceId() "+IsometrikChatSdk.getInstance().getUserSession().getDeviceId());
+            LogManger.INSTANCE.log("real:messageSent", "isSharedFromApp "+sendMessageEvent.getMetaData().has("isSharedFromApp"));
 
 
             if (sendMessageEvent.getConversationId().equals(conversationId)) {
                 if (sendMessageEvent.getAction() != null && (!sendMessageEvent.getSenderId()
                         .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())
                         || !sendMessageEvent.getDeviceId()
-                        .equals(IsometrikChatSdk.getInstance().getUserSession().getDeviceId()))) {
+                        .equals(IsometrikChatSdk.getInstance().getUserSession().getDeviceId()) || sendMessageEvent.getMetaData().has("isSharedFromApp"))) {
                     MessagesModel messageModel =
                             RealtimeMessageUtil.parseSendMessageEvent(sendMessageEvent, taggedUserCallback);
 
