@@ -6,11 +6,11 @@ import android.content.Intent
 import android.os.Bundle
 import io.isometrik.chat.enums.AttachmentMessageType
 import io.isometrik.chat.enums.CustomMessageTypes
+import io.isometrik.chat.enums.MessageTypeUi
 import io.isometrik.chat.enums.PresignedUrlMediaTypes
+import io.isometrik.chat.response.conversation.utils.ConversationDetailsUtil
 import io.isometrik.chat.response.message.utils.schemas.Attachment
 import io.isometrik.chat.response.message.utils.schemas.MentionedUser
-import io.isometrik.chat.enums.MessageTypeUi
-import io.isometrik.chat.response.conversation.utils.ConversationDetailsUtil
 import io.isometrik.ui.messages.chat.utils.enums.RemoteMessageTypes
 import io.isometrik.ui.messages.chat.utils.messageutils.MultipleMessagesUtil
 import io.isometrik.ui.messages.chat.utils.messageutils.OriginalReplyMessageUtil
@@ -697,6 +697,11 @@ interface ConversationMessagesContract {
          * On user unBlocked.
          */
         fun onUserUnBlocked()
+
+        /**
+         * Disables the block action when the opponent user blocks the current user.
+         */
+        fun blockedStatus(opponentUserBlocked: Boolean)
 
         /**
          * On conversation cleared successfully.

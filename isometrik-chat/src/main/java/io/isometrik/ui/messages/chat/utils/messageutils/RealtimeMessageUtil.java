@@ -352,10 +352,23 @@ int size= members.size();
    */
   public static MessagesModel parseUserBlockEvent(
       BlockUserInConversationEvent blockUserInConversationEvent) {
-    conversationActionMessage = IsometrikChatSdk.getInstance()
-        .getContext()
-        .getString(R.string.ism_blocked_user, blockUserInConversationEvent.getOpponentName(),
-            blockUserInConversationEvent.getInitiatorName());
+    String initiatorName = blockUserInConversationEvent.getInitiatorName();
+    String opponentName = blockUserInConversationEvent.getOpponentName();
+    String currentUserName = IsometrikChatSdk.getInstance().getUserSession().getUserName();
+
+    if (opponentName.equals(currentUserName)) {
+      conversationActionMessage = IsometrikChatSdk.getInstance().getContext().getString(
+              R.string.ism_blocked_user_text, initiatorName,"You");
+    } else if (initiatorName.equals(currentUserName)) {
+      conversationActionMessage = IsometrikChatSdk.getInstance()
+              .getContext()
+              .getString(R.string.ism_blocked_user_text, "You",
+                      opponentName);
+    } else {
+      conversationActionMessage = IsometrikChatSdk.getInstance()
+              .getContext()
+              .getString(R.string.ism_blocked_user, initiatorName, opponentName);
+    }
     messageModel =
         new MessagesModel(conversationActionMessage, null, blockUserInConversationEvent.getSentAt(),
             false, MessageTypeUi.CONVERSATION_ACTION_MESSAGE);
@@ -371,10 +384,20 @@ int size= members.size();
    */
   public static MessagesModel parseUserUnblockEvent(
       UnblockUserInConversationEvent unblockUserInConversationEvent) {
-    conversationActionMessage = IsometrikChatSdk.getInstance()
-        .getContext()
-        .getString(R.string.ism_unblocked_user, unblockUserInConversationEvent.getOpponentName(),
-            unblockUserInConversationEvent.getInitiatorName());
+    String initiatorName = unblockUserInConversationEvent.getInitiatorName();
+    String opponentName = unblockUserInConversationEvent.getOpponentName();
+    String currentUserName = IsometrikChatSdk.getInstance().getUserSession().getUserName();
+
+    if (opponentName.equals(currentUserName)) {
+      conversationActionMessage = IsometrikChatSdk.getInstance().getContext().getString(
+              R.string.ism_unblocked_user_text, initiatorName, "You");
+    } else if (initiatorName.equals(currentUserName)) {
+      conversationActionMessage = IsometrikChatSdk.getInstance().getContext().getString(
+              R.string.ism_unblocked_user_text, "You", opponentName);
+    } else {
+      conversationActionMessage = IsometrikChatSdk.getInstance().getContext().getString(
+              R.string.ism_unblocked_user, initiatorName, opponentName);
+    }
     messageModel = new MessagesModel(conversationActionMessage, null,
         unblockUserInConversationEvent.getSentAt(), false,
         MessageTypeUi.CONVERSATION_ACTION_MESSAGE);
@@ -417,7 +440,7 @@ int size= members.size();
   }
   //public static MessagesModel parseRemoveMessagesForEveryoneEvent(
   //    RemoveMessagesForEveryoneEvent removeMessagesForEveryoneEvent) {
-  //  conversationActionMessage = IsometrikUiSdk.getInstance()
+  //  conversationActionMessage = IsometrikChatSdk.getInstance()
   //      .getContext()
   //      .getString(R.string.ism_message_deleted_for_all,
   //          removeMessagesForEveryoneEvent.getUserName());
@@ -430,7 +453,7 @@ int size= members.size();
   //
   //public static MessagesModel parseRemoveMessagesForSelfEvent(
   //    RemoveMessagesForSelfEvent removeMessagesForSelfEvent) {
-  //  conversationActionMessage = IsometrikUiSdk.getInstance()
+  //  conversationActionMessage = IsometrikChatSdk.getInstance()
   //      .getContext()
   //      .getString(R.string.ism_message_deleted_locally, removeMessagesForSelfEvent.getUserName());
   //  messageModel =
@@ -980,8 +1003,8 @@ int size= members.size();
     if (messageText == null) {
       return null;
     } else {
-      return new LocalMessageNotificationUtil(sendMessageEvent.getSenderName() + ": " + messageText,
-          conversationTitle, conversationImageUrl, messagePlaceHolderImage);
+      return new LocalMessageNotificationUtil(/*sendMessageEvent.getSenderName() + ": " +*/messageText,
+              conversationTitle, conversationImageUrl, messagePlaceHolderImage);
     }
   }
 }

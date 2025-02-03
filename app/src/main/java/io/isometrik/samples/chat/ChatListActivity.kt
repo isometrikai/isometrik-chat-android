@@ -60,7 +60,7 @@ class ChatListActivity : AppCompatActivity() {
         }
 
 
-        ChatConfig.topViewHandler = MyCustomTopViewHandler()
+//        ChatConfig.topViewHandler = MyCustomTopViewHandler()
 
 //        ChatConfig.baseColor = R.color.ism_test_base
 //        ChatConfig.chatBackGroundColor = R.color.ism_theme_base
@@ -73,6 +73,8 @@ class ChatListActivity : AppCompatActivity() {
         ChatConfig.hideCaptureCameraOption = false
         ChatConfig.hideRecordAudioOption = false
         ChatConfig.disableReScheduleMqtt = true
+        ChatConfig.textSentBubbleResId = R.drawable.sent_message_bubble
+        ChatConfig.DEFAULT_PLACEHOLDER_IMAGE_URL = "https://www.gravatar.com/avatar/?d=identicon"
 
         AttachmentsConfig.hideCameraOption = false
         AttachmentsConfig.hideRecordVideoOption = false
@@ -101,7 +103,7 @@ class ChatListActivity : AppCompatActivity() {
             }
         }
 
-        val chatFragment = ConversationsListFragment.newInstance(customBinder)
+        val chatFragment = ConversationsListFragment()
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, chatFragment)

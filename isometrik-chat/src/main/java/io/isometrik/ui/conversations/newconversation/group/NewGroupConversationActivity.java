@@ -45,6 +45,7 @@ import com.bumptech.glide.Glide;
 import io.isometrik.chat.utils.KeyboardUtil;
 import io.isometrik.chat.utils.RecyclerItemClickListener;
 import io.isometrik.chat.utils.Utilities;
+import io.isometrik.ui.messages.chat.common.ChatConfig;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -330,7 +331,7 @@ public class NewGroupConversationActivity extends AppCompatActivity
               showProgressDialog(getString(R.string.ism_creating_conversation));
               newGroupConversationPresenter.createNewConversation(
                   ismActivityNewGroupConversationBinding.etConversationTitle.getText().toString(),
-                  Constants.DEFAULT_PLACEHOLDER_IMAGE_URL, conversationType,
+                      ChatConfig.INSTANCE.getDEFAULT_PLACEHOLDER_IMAGE_URL(), conversationType,
                   ismActivityNewGroupConversationBinding.cbNotifications.isChecked(),
                   ismActivityNewGroupConversationBinding.cbTypingMessage.isChecked(),
                   ismActivityNewGroupConversationBinding.cbDeliveryReadEvents.isChecked(),

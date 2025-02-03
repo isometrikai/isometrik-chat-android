@@ -20,7 +20,6 @@ import io.isometrik.chat.databinding.IsmFragmentConversationsBinding
 import io.isometrik.chat.enums.ConversationType
 import io.isometrik.chat.utils.AlertProgress
 import io.isometrik.chat.utils.RecyclerItemClickListener
-import io.isometrik.ui.IsometrikChatSdk
 import io.isometrik.ui.conversations.newconversation.type.SelectConversationTypeBottomSheet
 import io.isometrik.ui.messages.chat.ConversationMessagesActivity
 import io.isometrik.ui.messages.chat.common.ChatConfig
@@ -614,6 +613,7 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
 
             if (conversationsModel.isMessagingDisabled) {
                 intent.putExtra("messagingDisabled", true)
+                intent.putExtra("lastMessageText", conversationsModel.lastMessageText)
             }
         } else {
             intent.putExtra("conversationTitle", conversationsModel.conversationTitle)

@@ -10,8 +10,9 @@ import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import io.isometrik.chat.R
-import io.isometrik.ui.IsometrikChatSdk
+import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.utils.ColorsUtil
+import java.util.Locale
 
 /**
  * The helper class to generate dynamic placeholders using initials of text, code to check if image
@@ -36,8 +37,9 @@ object PlaceholderUtils {
      */
     @JvmStatic
     fun isValidImageUrl(url: String?): Boolean {
-        return !url.isNullOrEmpty() && url != Constants.DEFAULT_PLACEHOLDER_IMAGE_URL
+        return !url.isNullOrEmpty() && url != ChatConfig.DEFAULT_PLACEHOLDER_IMAGE_URL
     }
+
 
     /**
      * Sets text round drawable.
@@ -53,18 +55,7 @@ object PlaceholderUtils {
         context: Context, firstName: String?, ivProfile: ImageView,
         position: Int, fontSize: Int
     ) {
-        var firstName = firstName
-        var initials = ""
-        if (firstName != null) {
-            if (firstName == IsometrikChatSdk.instance?.context?.getString(R.string.ism_deleted_user)) {
-                firstName = firstName.substring(1)
-            }
-            initials = if (firstName.length >= 2) {
-                firstName.substring(0, 2)
-            } else {
-                initials + firstName[0]
-            }
-        }
+        val initials: String = extractInitials(firstName)
         try {
             val density = context.resources.displayMetrics.density
             ivProfile.setImageDrawable(
@@ -98,18 +89,8 @@ object PlaceholderUtils {
         context: Context, firstName: String?, ivProfile: ImageView,
         fontSize: Int
     ) {
-        var firstName = firstName
-        var initials = ""
-        if (firstName != null) {
-            if (firstName == IsometrikChatSdk.instance?.context?.getString(R.string.ism_deleted_user)) {
-                firstName = firstName.substring(1)
-            }
-            initials = if (firstName.length >= 2) {
-                firstName.substring(0, 2)
-            } else {
-                initials + firstName[0]
-            }
-        }
+        val initials = extractInitials(firstName)
+
         try {
             val density = context.resources.displayMetrics.density
             ivProfile.setImageDrawable(
@@ -129,6 +110,27 @@ object PlaceholderUtils {
         } catch (ignore: Exception) {
         }
     }
+
+    /**
+     * Extracts initials from the full name, using the first character from the first two words.
+     */
+    private fun extractInitials(fullName: String?): String {
+        if (!fullName.isNullOrEmpty()) {
+            val names = fullName.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            if (names.size >= 2) {
+                return (names[0][0].toString() + names[1][0]).uppercase(Locale.getDefault())
+            } else if (names.size == 1) {
+                val firstName = names[0]
+                return if (firstName.length >= 2) {
+                    firstName.substring(0, 2).uppercase(Locale.getDefault())
+                } else {
+                    firstName[0].toString().uppercase(Locale.getDefault())
+                }
+            }
+        }
+        return ""
+    }
+
 
     /**
      * Sets text round rectangle drawable.

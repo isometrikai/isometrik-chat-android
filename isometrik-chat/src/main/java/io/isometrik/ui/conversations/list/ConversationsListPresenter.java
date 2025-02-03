@@ -923,20 +923,32 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
     public void blockedUserInConversation(@NotNull Isometrik isometrik,
         @NotNull BlockUserInConversationEvent blockUserInConversationEvent) {
       if (conversationsListView != null) {
+        String lastMessageText;
+        String initiatorName = blockUserInConversationEvent.getInitiatorName();
+        String opponentName = blockUserInConversationEvent.getOpponentName();
+        String currentUserName = IsometrikChatSdk.getInstance().getUserSession().getUserName();
+
+        if (opponentName.equals(currentUserName)) {
+          lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(
+                  R.string.ism_unblocked_user_text, initiatorName,"You");
+        } else if (initiatorName.equals(currentUserName)) {
+          lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(
+                  R.string.ism_unblocked_user_text, "You",opponentName);
+        } else {
+          lastMessageText = IsometrikChatSdk.getInstance()
+                  .getContext()
+                  .getString(R.string.ism_unblocked_user,initiatorName, opponentName);
+        }
 
         conversationsListView.updateLastMessageInConversation(
-            blockUserInConversationEvent.getConversationId(), IsometrikChatSdk.getInstance()
-                .getContext()
-                .getString(R.string.ism_blocked_user,
-                    blockUserInConversationEvent.getOpponentName(),
-                    blockUserInConversationEvent.getInitiatorName()),
-            blockUserInConversationEvent.getInitiatorProfileImageUrl(),
-            TimeUtil.formatTimestampToOnlyDate(blockUserInConversationEvent.getSentAt()), null,
-            false, !blockUserInConversationEvent.getInitiatorId().equals(userId),
-            blockUserInConversationEvent.getInitiatorName(), true);
+                blockUserInConversationEvent.getConversationId(), lastMessageText,
+                blockUserInConversationEvent.getInitiatorProfileImageUrl(),
+                TimeUtil.formatTimestampToOnlyDate(blockUserInConversationEvent.getSentAt()), null,
+                false, !blockUserInConversationEvent.getInitiatorId().equals(userId),
+                blockUserInConversationEvent.getInitiatorName(), true);
         conversationsListView.onMessagingStatusChanged(
-            blockUserInConversationEvent.getConversationId(),
-            blockUserInConversationEvent.isMessagingDisabled());
+                blockUserInConversationEvent.getConversationId(),
+                blockUserInConversationEvent.isMessagingDisabled());
       }
     }
 
@@ -944,19 +956,31 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
     public void unblockedUserInConversation(@NotNull Isometrik isometrik,
         @NotNull UnblockUserInConversationEvent unblockUserInConversationEvent) {
       if (conversationsListView != null) {
+        String lastMessageText;
+        String initiatorName = unblockUserInConversationEvent.getInitiatorName();
+        String opponentName = unblockUserInConversationEvent.getOpponentName();
+        String currentUserName = IsometrikChatSdk.getInstance().getUserSession().getUserName();
+
+        if (opponentName.equals(currentUserName)) {
+          lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(
+                  R.string.ism_unblocked_user_text, initiatorName,"You");
+        } else if (initiatorName.equals(currentUserName)) {
+          lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(
+                  R.string.ism_unblocked_user_text, "You",opponentName);
+        } else {
+          lastMessageText = IsometrikChatSdk.getInstance()
+                  .getContext()
+                  .getString(R.string.ism_unblocked_user,initiatorName, opponentName);
+        }
         conversationsListView.updateLastMessageInConversation(
-            unblockUserInConversationEvent.getConversationId(), IsometrikChatSdk.getInstance()
-                .getContext()
-                .getString(R.string.ism_unblocked_user,
-                    unblockUserInConversationEvent.getOpponentName(),
-                    unblockUserInConversationEvent.getInitiatorName()),
-            unblockUserInConversationEvent.getInitiatorProfileImageUrl(),
-            TimeUtil.formatTimestampToOnlyDate(unblockUserInConversationEvent.getSentAt()), null,
-            false, !unblockUserInConversationEvent.getInitiatorId().equals(userId),
-            unblockUserInConversationEvent.getInitiatorName(), true);
+                unblockUserInConversationEvent.getConversationId(), lastMessageText,
+                unblockUserInConversationEvent.getInitiatorProfileImageUrl(),
+                TimeUtil.formatTimestampToOnlyDate(unblockUserInConversationEvent.getSentAt()), null,
+                false, !unblockUserInConversationEvent.getInitiatorId().equals(userId),
+                unblockUserInConversationEvent.getInitiatorName(), true);
         conversationsListView.onMessagingStatusChanged(
-            unblockUserInConversationEvent.getConversationId(),
-            unblockUserInConversationEvent.isMessagingDisabled());
+                unblockUserInConversationEvent.getConversationId(),
+                unblockUserInConversationEvent.isMessagingDisabled());
       }
     }
   };

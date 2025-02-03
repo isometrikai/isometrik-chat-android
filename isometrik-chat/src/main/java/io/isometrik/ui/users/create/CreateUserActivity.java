@@ -27,6 +27,7 @@ import io.isometrik.chat.R;
 import io.isometrik.ui.camera.CameraActivity;
 import io.isometrik.ui.conversations.list.ConversationsActivity;
 import io.isometrik.chat.databinding.IsmActivityCreateUserBinding;
+import io.isometrik.ui.messages.chat.common.ChatConfig;
 import io.isometrik.ui.users.list.UsersActivity;
 import io.isometrik.chat.utils.AlertProgress;
 import io.isometrik.chat.utils.Constants;
@@ -246,7 +247,7 @@ public class CreateUserActivity extends AppCompatActivity implements CreateUserC
               createUserPresenter.requestCreateUser(
                   ismActivityCreateUserBinding.etName.getText().toString(),
                   ismActivityCreateUserBinding.etUserIdentifier.getText().toString(),
-                  Constants.DEFAULT_PLACEHOLDER_IMAGE_URL,
+                      ChatConfig.INSTANCE.getDEFAULT_PLACEHOLDER_IMAGE_URL(),
                   ismActivityCreateUserBinding.etUserPassword.getText().toString(),
                   ismActivityCreateUserBinding.etUserMetadata.getText().toString());
             })

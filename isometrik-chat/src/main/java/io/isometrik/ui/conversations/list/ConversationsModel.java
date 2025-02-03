@@ -273,23 +273,45 @@ public class ConversationsModel {
                     }
                     case "userBlockConversation": {
                         lastMessagePlaceHolderImage = null;
-                        lastMessageSenderName = lastMessage.getString("initiatorName");
+                        String initiatorName = lastMessage.getString("initiatorName");
+                        String opponentName = lastMessage.getString("opponentName");
+                        String currentUserName = IsometrikChatSdk.getInstance().getUserSession().getUserName();
+
+                        lastMessageSenderName = initiatorName;
                         lastMessageSendersProfileImageUrl = lastMessage.getString("initiatorProfileImageUrl");
-                        lastMessageText = IsometrikChatSdk.getInstance()
-                                .getContext()
-                                .getString(R.string.ism_blocked_user, lastMessage.getString("opponentName"),
-                                        lastMessage.getString("initiatorName"));
+
+                        if (opponentName.equals(currentUserName)) {
+                            lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(
+                                    R.string.ism_blocked_user_text, initiatorName,"You");
+                        } else if (initiatorName.equals(currentUserName)) {
+                            lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(
+                                    R.string.ism_blocked_user_text, "You",opponentName);
+                        } else {
+                            lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(
+                                    R.string.ism_blocked_user, initiatorName, opponentName);
+                        }
                         break;
                     }
 
                     case "userUnblockConversation": {
                         lastMessagePlaceHolderImage = null;
-                        lastMessageSenderName = lastMessage.getString("initiatorName");
+                        String initiatorName = lastMessage.getString("initiatorName");
+                        String opponentName = lastMessage.getString("opponentName");
+                        String currentUserName = IsometrikChatSdk.getInstance().getUserSession().getUserName();
+
+                        lastMessageSenderName = initiatorName;
                         lastMessageSendersProfileImageUrl = lastMessage.getString("initiatorProfileImageUrl");
-                        lastMessageText = IsometrikChatSdk.getInstance()
-                                .getContext()
-                                .getString(R.string.ism_unblocked_user, lastMessage.getString("opponentName"),
-                                        lastMessage.getString("initiatorName"));
+
+                        if (opponentName.equals(currentUserName)) {
+                            lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(
+                                    R.string.ism_unblocked_user_text, initiatorName,"You");
+                        } else if (initiatorName.equals(currentUserName)) {
+                            lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(
+                                    R.string.ism_unblocked_user_text, "You",opponentName);
+                        } else {
+                            lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(
+                                    R.string.ism_unblocked_user, initiatorName, opponentName);
+                        }
                         break;
                     }
 

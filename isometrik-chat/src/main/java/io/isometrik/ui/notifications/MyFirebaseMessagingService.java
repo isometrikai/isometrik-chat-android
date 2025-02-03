@@ -89,9 +89,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
               senderId = data.get("initiatorId");
               senderName = data.get("initiatorName");
               senderProfileImageUrl = data.get("initiatorProfileImageUrl");
-              message = IsometrikChatSdk.getInstance()
-                  .getContext()
-                  .getString(R.string.ism_blocked_user, data.get("opponentName"), senderName);
+
+              if (data.get("opponentName").equals(IsometrikChatSdk.getInstance().getUserSession().getUserName())) {
+                message = IsometrikChatSdk.getInstance().getContext().getString(
+                        R.string.ism_blocked_user_text, data.get("initiatorName"),"You");
+              } else if (data.get("initiatorName").equals(IsometrikChatSdk.getInstance().getUserSession().getUserName())) {
+                message = IsometrikChatSdk.getInstance().getContext().getString(
+                        R.string.ism_blocked_user_text, "You",data.get("opponentName"));
+              } else {
+                message = IsometrikChatSdk.getInstance().getContext().getString(
+                        R.string.ism_blocked_user, data.get("initiatorName"), data.get("opponentName"));
+              }
               break;
             }
 
@@ -99,9 +107,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
               senderId = data.get("initiatorId");
               senderName = data.get("initiatorName");
               senderProfileImageUrl = data.get("initiatorProfileImageUrl");
-              message = IsometrikChatSdk.getInstance()
-                  .getContext()
-                  .getString(R.string.ism_unblocked_user, data.get("opponentName"), senderName);
+
+              if (data.get("opponentName").equals(IsometrikChatSdk.getInstance().getUserSession().getUserName())) {
+                message = IsometrikChatSdk.getInstance().getContext().getString(
+                        R.string.ism_unblocked_user_text, data.get("initiatorName"),"You");
+              } else if (data.get("initiatorName").equals(IsometrikChatSdk.getInstance().getUserSession().getUserName())) {
+                message = IsometrikChatSdk.getInstance().getContext().getString(
+                        R.string.ism_unblocked_user_text, "You",data.get("opponentName"));
+              } else {
+                message = IsometrikChatSdk.getInstance().getContext().getString(
+                        R.string.ism_unblocked_user, data.get("initiatorName"), data.get("opponentName"));
+              }
               break;
             }
             case "conversationCreated": {
@@ -417,7 +433,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                                 if (var1 != null) {
                                   //Commented out intentionally to handle case when user receives few messages within 30 sec of killing app and hence for them push was not received and if lastupdated time updated for newer message from push, previous messages were not shown as delivered
 
-                                  //IsometrikUiSdk.getInstance()
+                                  //IsometrikChatSdk.getInstance()
                                   //    .getUserSession()
                                   //    .setDeliveryStatusUpdatedUpto(sentAt);
                                 }
@@ -630,7 +646,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
    * @param conversationId the conversation id
    * @return the notification
    */
-  @RequiresApi(api = Build.VERSION_CODES.M)
   public Notification findActiveNotification(String conversationId) {
 
     NotificationManager notificationManager =

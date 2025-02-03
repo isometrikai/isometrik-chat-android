@@ -36,16 +36,35 @@ public class ConversationActionMessageUtil {
         break;
 
       case "userBlockConversation":
-        conversationActionMessage = IsometrikChatSdk.getInstance()
-            .getContext()
-            .getString(R.string.ism_blocked_user, message.getOpponentName(),
-                message.getInitiatorName());
+        if (message.getOpponentName().equals(IsometrikChatSdk.getInstance().getUserSession().getUserName())) {
+          conversationActionMessage = IsometrikChatSdk.getInstance()
+                  .getContext()
+                  .getString(R.string.ism_blocked_user_text, message.getInitiatorName(),"You");
+        } else if (message.getInitiatorName().equals(IsometrikChatSdk.getInstance().getUserSession().getUserName())) {
+          conversationActionMessage = IsometrikChatSdk.getInstance()
+                  .getContext()
+                  .getString(R.string.ism_blocked_user_text, "You",
+                          message.getOpponentName());
+        } else {
+          conversationActionMessage = IsometrikChatSdk.getInstance()
+                  .getContext()
+                  .getString(R.string.ism_blocked_user, message.getInitiatorName(),
+                          message.getOpponentName());
+        }
         break;
 
       case "userUnblockConversation":
-        conversationActionMessage = IsometrikChatSdk.getInstance().getContext()
-            .getString(R.string.ism_unblocked_user, message.getOpponentName(),
-                message.getInitiatorName());
+        if (message.getOpponentName().equals(IsometrikChatSdk.getInstance().getUserSession().getUserName())) {
+          conversationActionMessage = IsometrikChatSdk.getInstance().getContext()
+                  .getString(R.string.ism_unblocked_user_text, message.getInitiatorName(),"You");
+        } else if (message.getInitiatorName().equals(IsometrikChatSdk.getInstance().getUserSession().getUserName())) {
+          conversationActionMessage = IsometrikChatSdk.getInstance().getContext()
+                  .getString(R.string.ism_unblocked_user_text, "You",message.getOpponentName());
+        } else {
+          conversationActionMessage = IsometrikChatSdk.getInstance().getContext()
+                  .getString(R.string.ism_unblocked_user, message.getInitiatorName(),
+                          message.getOpponentName());
+        }
         break;
 
       case "conversationCreated":
@@ -126,13 +145,13 @@ public class ConversationActionMessageUtil {
         break;
 
       //case "reactionAdd":
-      //  conversationActionMessage = IsometrikUiSdk.getInstance()
+      //  conversationActionMessage = IsometrikChatSdk.getInstance()
       //      .getContext()
       //      .getString(R.string.ism_reaction_added, message.getUserName());
       //  break;
       //
       //case "reactionRemove": {
-      //  conversationActionMessage = IsometrikUiSdk.getInstance()
+      //  conversationActionMessage = IsometrikChatSdk.getInstance()
       //      .getContext()
       //      .getString(R.string.ism_reaction_removed, message.getUserName());
       //  break;
