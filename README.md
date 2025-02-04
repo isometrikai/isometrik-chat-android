@@ -31,7 +31,7 @@ Open your build.gradle file (app-level) and add the following line in the depend
 
 ```groovy
 dependencies {
-    implementation 'com.github.isometrikai:isometrik-chat-android:1.4.9'
+    implementation 'com.github.isometrikai:isometrik-chat-android:1.5.8'
 }
 ```
 ### Step 3: Sync Your Project
@@ -324,6 +324,15 @@ AttachmentsConfig.hideLocationOption = true
 AttachmentsConfig.hideContactOption = true
 AttachmentsConfig.hideStickerOption = true
 AttachmentsConfig.hideGIFOption = true
+
+```
+
+### Prevent Toast to show
+Provide list of exact message that should not show in app
+
+```kotlin
+
+ChatConfig.dontShowToastList = arrayListOf("conversation not found")
 
 ```
 

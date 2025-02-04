@@ -16,11 +16,11 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import io.isometrik.chat.R
 import io.isometrik.chat.databinding.IsmReceivedMessagePostBinding
 import io.isometrik.chat.utils.PlaceholderUtils
+import io.isometrik.chat.utils.TimeUtil
 import io.isometrik.ui.IsometrikChatSdk
 import io.isometrik.ui.messages.action.MessageActionCallback
 import io.isometrik.ui.messages.chat.MessagesModel
 import io.isometrik.ui.messages.reaction.add.MessageReactionsAdapter
-import io.isometrik.ui.utils.TimeUtil
 
 class PostReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessagePostBinding> {
 

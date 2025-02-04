@@ -31,4 +31,5 @@ object ChatConfig {
     var disableReScheduleMqtt: Boolean = false
 
     var DEFAULT_PLACEHOLDER_IMAGE_URL: String = Constants.DEFAULT_PLACEHOLDER_IMAGE_URL
+    var dontShowToastList : List<String> = arrayListOf()
 }

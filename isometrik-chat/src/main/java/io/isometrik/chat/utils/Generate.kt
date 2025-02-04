@@ -1,4 +1,4 @@
-package io.isometrik.ui.utils
+package io.isometrik.chat.utils
 
 import io.isometrik.chat.R
 import io.isometrik.chat.enums.CustomMessageTypes
