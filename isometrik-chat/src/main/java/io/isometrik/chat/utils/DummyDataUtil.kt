@@ -1,4 +1,4 @@
-package io.isometrik.ui.utils
+package io.isometrik.chat.utils
 
 import io.isometrik.chat.databinding.IsmSentMessageAudioBinding
 import java.util.HashMap

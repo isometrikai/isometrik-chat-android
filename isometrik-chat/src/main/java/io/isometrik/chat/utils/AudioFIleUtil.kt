@@ -1,8 +1,8 @@
-package io.isometrik.ui.utils
+package io.isometrik.chat.utils
 
 import android.content.Context
 import androidx.core.content.ContextCompat
-import com.arthenica.ffmpegkit.FFmpegKit
+//import com.arthenica.ffmpegkit.FFmpegKit
 import io.isometrik.chat.R
 import io.isometrik.ui.libwave.SeekBarOnProgressChanged
 import io.isometrik.ui.libwave.Utils
@@ -37,41 +37,41 @@ object AudioFIleUtil {
         return cacheFile
     }
 
-    fun extractAmplitudes(context: Context, audioFile: File): List<Int> {
-        val amplitudes = mutableListOf<Int>()
-        // Create output PCM file
-        val pcmFile = File(context.cacheDir, "${audioFile.name}.pcm")
-        var startReadingFile = false
-        if (pcmFile.exists()) {
-            startReadingFile = true
-        }else{
-            // Construct the FFmpeg command as a single string
-            val command =
-                "-i ${audioFile.absolutePath} -f s16le -ac 1 -ar 44100 ${pcmFile.absolutePath}"
-            // Execute the command
-            val result = FFmpegKit.execute(command)
-            if (result.returnCode.isValueSuccess) {
-                startReadingFile = true
-            } else {
-                println("FFmpeg Error: ${result.failStackTrace}")
-            }
-        }
-        if(startReadingFile){
-            pcmFile.inputStream().buffered().use { input ->
-                while (true) {
-                    // Read two bytes at a time for 16-bit PCM
-                    val low = input.read()
-                    val high = input.read()
-                    if (low == -1 || high == -1) break
-
-                    // Combine the bytes to form the amplitude value
-                    val amplitude = (high shl 8) or (low and 0xFF)
-                    amplitudes.add(amplitude)
-                }
-            }
-        }
-        return amplitudes
-    }
+//    fun extractAmplitudes(context: Context, audioFile: File): List<Int> {
+//        val amplitudes = mutableListOf<Int>()
+//        // Create output PCM file
+//        val pcmFile = File(context.cacheDir, "${audioFile.name}.pcm")
+//        var startReadingFile = false
+//        if (pcmFile.exists()) {
+//            startReadingFile = true
+//        }else{
+//            // Construct the FFmpeg command as a single string
+//            val command =
+//                "-i ${audioFile.absolutePath} -f s16le -ac 1 -ar 44100 ${pcmFile.absolutePath}"
+//            // Execute the command
+//            val result = FFmpegKit.execute(command)
+//            if (result.returnCode.isValueSuccess) {
+//                startReadingFile = true
+//            } else {
+//                println("FFmpeg Error: ${result.failStackTrace}")
+//            }
+//        }
+//        if(startReadingFile){
+//            pcmFile.inputStream().buffered().use { input ->
+//                while (true) {
+//                    // Read two bytes at a time for 16-bit PCM
+//                    val low = input.read()
+//                    val high = input.read()
+//                    if (low == -1 || high == -1) break
+//
+//                    // Combine the bytes to form the amplitude value
+//                    val amplitude = (high shl 8) or (low and 0xFF)
+//                    amplitudes.add(amplitude)
+//                }
+//            }
+//        }
+//        return amplitudes
+//    }
 
     fun applyWaveSeekbarConfig(waveSeekBar: WaveformSeekBar, amplitudes: IntArray){
         waveSeekBar.apply {

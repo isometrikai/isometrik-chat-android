@@ -7,7 +7,6 @@ import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -16,15 +15,12 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import io.isometrik.chat.R
 import io.isometrik.chat.databinding.IsmReceivedMessageAudioBinding
 import io.isometrik.chat.utils.PlaceholderUtils
-import io.isometrik.ui.libwave.SeekBarOnProgressChanged
-import io.isometrik.ui.libwave.Utils
-import io.isometrik.ui.libwave.WaveGravity
-import io.isometrik.ui.libwave.WaveformSeekBar
 import io.isometrik.ui.messages.action.MessageActionCallback
 import io.isometrik.ui.messages.chat.MessagesModel
 import io.isometrik.ui.messages.reaction.add.MessageReactionsAdapter
-import io.isometrik.ui.utils.AudioFIleUtil
-import io.isometrik.ui.utils.DummyDataUtil
+import io.isometrik.chat.utils.AudioFIleUtil
+import io.isometrik.chat.utils.DummyDataUtil
+import io.isometrik.chat.utils.getAmplitudeFromAudioUrl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -234,12 +230,21 @@ class AudioReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessageA
 
             if (message.isUploaded) {
                 CoroutineScope(Dispatchers.Main).launch {
-                    val file = AudioFIleUtil.getOrDownloadAudioFile(mContext, message.audioUrl)
-                    val amplitudes = AudioFIleUtil.extractAmplitudes(mContext, file)
-                    AudioFIleUtil.applyWaveSeekbarConfig(ismReceivedMessageAudioBinding.waveSeekBar,amplitudes.toIntArray())
+
+                    getAmplitudeFromAudioUrl( message.audioUrl) { amplitudes ->
+                        AudioFIleUtil.applyWaveSeekbarConfig(ismReceivedMessageAudioBinding.waveSeekBar,amplitudes.toIntArray())
+                        amplitudes.forEach { amplitude ->
+                            println("Amplitude: $amplitude")
+                        }
+                    }
+
+//                    val file = AudioFIleUtil.getOrDownloadAudioFile(mContext, message.audioUrl)
+//                    val amplitudes = AudioFIleUtil.extractAmplitudes(mContext, file)
+//                    AudioFIleUtil.applyWaveSeekbarConfig(ismReceivedMessageAudioBinding.waveSeekBar,amplitudes.toIntArray())
                 }
             } else {
-                AudioFIleUtil.applyWaveSeekbarConfig(ismReceivedMessageAudioBinding.waveSeekBar,DummyDataUtil.getDummyWaveSample())
+                AudioFIleUtil.applyWaveSeekbarConfig(ismReceivedMessageAudioBinding.waveSeekBar,
+                    DummyDataUtil.getDummyWaveSample())
             }
         } catch (ignore: Exception) {
         }

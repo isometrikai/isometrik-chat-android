@@ -1,4 +1,4 @@
-package io.isometrik.ui.utils
+package io.isometrik.chat.utils
 
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat

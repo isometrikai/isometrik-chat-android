@@ -13,11 +13,11 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
 import io.isometrik.chat.R
 import io.isometrik.chat.databinding.IsmSentMessagePostBinding
+import io.isometrik.chat.utils.TimeUtil
 import io.isometrik.ui.IsometrikChatSdk
 import io.isometrik.ui.messages.action.MessageActionCallback
 import io.isometrik.ui.messages.chat.MessagesModel
 import io.isometrik.ui.messages.reaction.add.MessageReactionsAdapter
-import io.isometrik.ui.utils.TimeUtil
 
 class PostSentBinder : MessageItemBinder<MessagesModel, IsmSentMessagePostBinding> {
 

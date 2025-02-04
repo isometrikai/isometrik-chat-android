@@ -86,6 +86,8 @@ class ChatListActivity : AppCompatActivity() {
 //        AttachmentsConfig.hideStickerOption = true
 //        AttachmentsConfig.hideGIFOption = true
 
+        ChatConfig.dontShowToastList = arrayListOf("conversation not found")
+
 
     }
 

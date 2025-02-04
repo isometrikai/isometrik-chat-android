@@ -2273,7 +2273,9 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         updateShimmerVisibility(false)
         runOnUiThread {
             if (errorMessage != null) {
-                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+                if(Utilities.showToast(errorMessage)){
+                    Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+                }
             } else {
                 Toast.makeText(
                     this,

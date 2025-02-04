@@ -11,7 +11,6 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import io.isometrik.chat.R
 import io.isometrik.ui.messages.chat.common.ChatConfig
-import io.isometrik.ui.utils.ColorsUtil
 import java.util.Locale
 
 /**
@@ -69,7 +68,7 @@ object PlaceholderUtils {
                     .endConfig()
                     .buildRound(
                         initials,
-                        io.isometrik.ui.utils.ColorsUtil.getThemeColor()
+                        ColorsUtil.getThemeColor()
                     )
             )
         } catch (ignore: Exception) {
@@ -206,7 +205,7 @@ object PlaceholderUtils {
                 .endConfig()
                 .buildRound(
                     initials,
-                    io.isometrik.ui.utils.ColorsUtil.getThemeColor()
+                    ColorsUtil.getThemeColor()
                 )
             return drawableToBitmap(drawable)
         } catch (ignore: Exception) {

@@ -11,15 +11,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import io.isometrik.chat.R
 import io.isometrik.chat.databinding.IsmSentMessageAudioBinding
-import io.isometrik.ui.libwave.SeekBarOnProgressChanged
-import io.isometrik.ui.libwave.Utils
-import io.isometrik.ui.libwave.WaveGravity
-import io.isometrik.ui.libwave.WaveformSeekBar
 import io.isometrik.ui.messages.action.MessageActionCallback
 import io.isometrik.ui.messages.chat.MessagesModel
 import io.isometrik.ui.messages.reaction.add.MessageReactionsAdapter
-import io.isometrik.ui.utils.AudioFIleUtil
-import io.isometrik.ui.utils.DummyDataUtil
+import io.isometrik.chat.utils.AudioFIleUtil
+import io.isometrik.chat.utils.DummyDataUtil
+import io.isometrik.chat.utils.getAmplitudeFromAudioUrl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -270,12 +267,21 @@ class AudioSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageAudioBind
 
             if (message.isUploaded) {
                 CoroutineScope(Dispatchers.Main).launch {
-                    val file = AudioFIleUtil.getOrDownloadAudioFile(mContext, message.audioUrl)
-                    val amplitudes = AudioFIleUtil.extractAmplitudes(mContext, file)
-                    AudioFIleUtil.applyWaveSeekbarConfig(ismSentMessageAudioBinding.waveSeekBar,amplitudes.toIntArray())
+
+                    getAmplitudeFromAudioUrl( message.audioUrl) { amplitudes ->
+                        AudioFIleUtil.applyWaveSeekbarConfig(ismSentMessageAudioBinding.waveSeekBar,amplitudes.toIntArray())
+                        amplitudes.forEach { amplitude ->
+                            println("Amplitude: $amplitude")
+                        }
+                    }
+
+//                    val file = AudioFIleUtil.getOrDownloadAudioFile(mContext, message.audioUrl)
+//                    val amplitudes = AudioFIleUtil.extractAmplitudes(mContext, file)
+//                    AudioFIleUtil.applyWaveSeekbarConfig(ismSentMessageAudioBinding.waveSeekBar,amplitudes.toIntArray())
                 }
             } else {
-                AudioFIleUtil.applyWaveSeekbarConfig(ismSentMessageAudioBinding.waveSeekBar,DummyDataUtil.getDummyWaveSample())
+                AudioFIleUtil.applyWaveSeekbarConfig(ismSentMessageAudioBinding.waveSeekBar,
+                    DummyDataUtil.getDummyWaveSample())
             }
 
         } catch (ignore: Exception) {
