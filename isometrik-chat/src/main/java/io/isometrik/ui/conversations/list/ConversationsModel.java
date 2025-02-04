@@ -2,6 +2,8 @@ package io.isometrik.ui.conversations.list;
 
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 import io.isometrik.chat.enums.ConversationType;
 import io.isometrik.chat.events.conversation.CreateConversationEvent;
 import io.isometrik.chat.response.conversation.utils.Conversation;
@@ -1068,6 +1070,7 @@ public class ConversationsModel {
         return lastMessageDeliveredToAll;
     }
 
+    @Nullable
     public String getLastMessageCustomType() {
         return lastMessageCustomType;
     }
