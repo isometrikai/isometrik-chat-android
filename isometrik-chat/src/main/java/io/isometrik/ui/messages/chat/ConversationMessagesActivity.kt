@@ -3,6 +3,7 @@ package io.isometrik.ui.messages.chat
 import android.Manifest
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -37,6 +38,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -3534,8 +3536,10 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         private const val VIDEO_RECORD_PERMISSIONS_REQUEST_CODE = 9
         private const val VIDEO_PREVIEW_REQUEST_CODE = 8 // New request code for video preview
 
-        fun startActivity(mIntent : Intent){
-            startActivity(mIntent)
+
+        fun openBrowser(context: Context, url: String) {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            context.startActivity(browserIntent)
         }
     }
 }
