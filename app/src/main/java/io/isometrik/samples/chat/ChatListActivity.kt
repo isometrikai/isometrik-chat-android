@@ -1,7 +1,10 @@
 package io.isometrik.samples.chat
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +17,7 @@ import io.isometrik.samples.chat.databinding.CustomTopViewBinding
 import io.isometrik.ui.conversations.list.ChatListItemBinder
 import io.isometrik.ui.conversations.list.ConversationsListFragment
 import io.isometrik.ui.conversations.list.ConversationsModel
+import io.isometrik.ui.messages.chat.ConversationMessagesActivity
 import io.isometrik.ui.messages.chat.MessagesModel
 import io.isometrik.ui.messages.chat.common.AttachmentsConfig
 import io.isometrik.ui.messages.chat.common.ChatConfig
@@ -54,13 +58,13 @@ class ChatListActivity : AppCompatActivity() {
                 binding?.apply {
                     rootView.visibility = View.VISIBLE
                     tvTitle.text = conversationDetailsUtil?.conversationTitle
-                    Log.e("updateTopView ${conversationDetailsUtil?.conversationTitle}","messages size: ${messages.size}")
+                    Log.e("updateTopView ${conversationDetailsUtil?.conversationTitle}","conversationId: ${conversationDetailsUtil?.conversationId}")
                 }
             }
         }
 
 
-//        ChatConfig.topViewHandler = MyCustomTopViewHandler()
+        ChatConfig.topViewHandler = MyCustomTopViewHandler()
 
 //        ChatConfig.baseColor = R.color.ism_test_base
 //        ChatConfig.chatBackGroundColor = R.color.ism_theme_base
@@ -74,7 +78,7 @@ class ChatListActivity : AppCompatActivity() {
         ChatConfig.hideRecordAudioOption = false
         ChatConfig.disableReScheduleMqtt = true
         ChatConfig.textSentBubbleResId = R.drawable.sent_message_bubble
-        ChatConfig.DEFAULT_PLACEHOLDER_IMAGE_URL = "https://www.gravatar.com/avatar/?d=identicon"
+//        ChatConfig.DEFAULT_PLACEHOLDER_IMAGE_URL = "https://www.gravatar.com/avatar/?d=identicon"
 
         AttachmentsConfig.hideCameraOption = false
         AttachmentsConfig.hideRecordVideoOption = false
@@ -89,6 +93,8 @@ class ChatListActivity : AppCompatActivity() {
         ChatConfig.dontShowToastList = arrayListOf("conversation not found")
 
 
+//        val i = Intent(this,ChatListActivity::class.java)
+//        ConversationMessagesActivity.startActivity(i)
     }
 
     private fun loadChatFragment() {
