@@ -93,8 +93,11 @@ class ChatListActivity : AppCompatActivity() {
         ChatConfig.dontShowToastList = arrayListOf("conversation not found")
 
 
-//        val i = Intent(this,ChatListActivity::class.java)
-//        ConversationMessagesActivity.startActivity(i)
+//        Handler(Looper.getMainLooper()).postDelayed({
+//            ConversationMessagesActivity.openBrowser(this,"https://assets.platform.kwibal.com/invoice/asset/buyerOD1738672668020062C.pdf")
+//        },15000)
+
+
     }
 
     private fun loadChatFragment() {
