@@ -3,8 +3,11 @@ package io.isometrik.ui.messages.chat.common
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import io.isometrik.chat.R
 import io.isometrik.chat.utils.Constants
+import io.isometrik.ui.messages.chat.ConversationMessagesActivity
 
 object ChatConfig {
     var mqttConnectionUrl: String? = null
@@ -32,4 +35,11 @@ object ChatConfig {
 
     var DEFAULT_PLACEHOLDER_IMAGE_URL: String = Constants.DEFAULT_PLACEHOLDER_IMAGE_URL
     var dontShowToastList : List<String> = arrayListOf()
+
+    private val _typingUiState = MutableLiveData<Boolean>()
+    val typingUiState: LiveData<Boolean> get() = _typingUiState
+
+    fun updateBottomTypingView(makeVisible : Boolean){
+        _typingUiState.value = makeVisible
+    }
 }

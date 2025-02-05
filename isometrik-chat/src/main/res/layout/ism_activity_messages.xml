@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rel_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/rel_root"
     android:background="@color/ism_white"
     android:keepScreenOn="true">
 
@@ -19,12 +20,21 @@
             android:layout_height="match_parent"
             android:background="@color/ism_white">
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivConversationImage"
+                android:layout_width="@dimen/ism_dp_45"
+                android:layout_height="@dimen/ism_dp_45"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/ism_dp_10"
+                android:layout_toEndOf="@+id/ibBack"
+                app:srcCompat="@drawable/ism_ic_profile" />
+
             <RelativeLayout
                 android:id="@+id/rlConversationDetails"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_toStartOf="@+id/ivRefreshOnlineStatus"
-                android:layout_toEndOf="@+id/ibBack">
+                android:layout_toEndOf="@+id/ivConversationImage">
 
                 <TextView
                     android:id="@+id/tvConversationOrUserName"
@@ -92,34 +102,35 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivAudioCall"
+                style="?actionButtonStyle"
                 android:layout_width="@dimen/ism_dp_40"
                 android:layout_height="@dimen/ism_dp_40"
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@id/ivVideoCall"
                 android:padding="@dimen/ism_dp_10"
                 android:visibility="visible"
-                style="?actionButtonStyle"
                 app:srcCompat="@drawable/ism_ic_audio_call" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivVideoCall"
+                style="?actionButtonStyle"
                 android:layout_width="@dimen/ism_dp_40"
                 android:layout_height="@dimen/ism_dp_40"
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@id/ivMore"
                 android:padding="@dimen/ism_dp_10"
-                style="?actionButtonStyle"
                 android:visibility="visible"
+                tools:visibility="visible"
                 app:srcCompat="@drawable/ism_ic_video_call" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivMore"
+                style="?actionButtonStyle"
                 android:layout_width="@dimen/ism_dp_40"
                 android:layout_height="@dimen/ism_dp_40"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:padding="@dimen/ism_dp_10"
-                style="?actionButtonStyle"
                 android:visibility="visible"
                 app:srcCompat="@drawable/ism_ic_more" />
 
@@ -135,14 +146,13 @@
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/ibBack"
+                style="?actionButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
-                android:layout_marginEnd="@dimen/ism_dp_5"
                 android:background="@android:color/transparent"
                 android:padding="@dimen/ism_dp_16"
                 android:tint="@color/ism_text_black"
-                style="?actionButtonStyle"
                 app:srcCompat="@drawable/ism_ic_arrow_back" />
 
             <include
@@ -242,32 +252,32 @@
         android:id="@+id/rlBottomLayout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:padding="@dimen/ism_dp_5"
+        android:layout_alignParentBottom="true"
         android:gravity="center_vertical"
-        android:layout_alignParentBottom="true">
+        android:padding="@dimen/ism_dp_5">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivAddAttachment"
             android:layout_width="@dimen/ism_dp_34"
             android:layout_height="@dimen/ism_dp_34"
-            android:layout_margin="@dimen/ism_dp_4"
             android:layout_centerVertical="true"
+            android:layout_margin="@dimen/ism_dp_4"
             android:background="@drawable/ism_create_conversation_circle"
             android:padding="@dimen/ism_dp_8"
-            android:visibility="gone"
             android:tint="@color/ism_white"
+            android:visibility="gone"
             app:srcCompat="@drawable/ism_ic_add_attachment" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivSendMessage"
             android:layout_width="@dimen/ism_dp_34"
             android:layout_height="@dimen/ism_dp_34"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="@dimen/ism_dp_10"
             android:background="@drawable/ism_create_conversation_circle"
             android:padding="@dimen/ism_dp_8"
             android:tint="@color/ism_white"
-            android:layout_marginHorizontal="@dimen/ism_dp_10"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
             android:visibility="visible"
             app:srcCompat="@drawable/ism_ic_send_message" />
 
@@ -275,11 +285,11 @@
             android:id="@+id/rlSendMessages"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginVertical="@dimen/ism_dp_5"
-            android:layout_marginHorizontal="@dimen/ism_dp_10"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/ivAddAttachment"
+            android:layout_marginHorizontal="@dimen/ism_dp_10"
+            android:layout_marginVertical="@dimen/ism_dp_5"
             android:layout_toStartOf="@+id/ivSendMessage"
+            android:layout_toEndOf="@+id/ivAddAttachment"
             android:background="@drawable/ism_send_message_background"
             android:elevation="@dimen/ism_dp_1">
 
@@ -287,13 +297,13 @@
                 android:id="@+id/etSendMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:background="@drawable/ism_send_message_background"
+                android:gravity="center_vertical"
                 android:hint="@string/ism_type_something_here"
                 android:maxLength="1000"
-                android:padding="@dimen/ism_dp_10"
-                android:layout_centerVertical="true"
                 android:maxLines="10"
-                android:gravity="center_vertical"
+                android:padding="@dimen/ism_dp_10"
                 android:textColor="@color/ism_hint_grey"
                 android:textColorHint="@color/ism_hint_grey"
                 android:textSize="@dimen/ism_sp_14" />
@@ -301,11 +311,10 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/ism_dp_8"
-                >
+                android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivAddAttachment2"
@@ -373,8 +382,8 @@
             android:layout_width="@dimen/ism_dp_36"
             android:layout_height="@dimen/ism_dp_36"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/ism_dp_2"
             android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/ism_dp_2"
             android:background="@drawable/ism_create_conversation_circle"
             android:padding="@dimen/ism_dp_8"
             android:scaleType="centerInside"

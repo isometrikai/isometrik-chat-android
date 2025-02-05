@@ -615,7 +615,7 @@ interface ConversationMessagesContract {
         fun updateConversationDetailsInHeader(
             local: Boolean, isPrivateOneToOne: Boolean,
             userName: String?, isOnline: Boolean, lastSeenAt: Long, conversationTitle: String?,
-            membersCount: Int
+            membersCount: Int, conversationImage : String
         )
 
         fun fetchedConversationDetails(conversationDetailsUtil: ConversationDetailsUtil)

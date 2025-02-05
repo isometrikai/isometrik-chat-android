@@ -335,4 +335,8 @@ public class ConversationDetailsUtil {
   public Boolean getMessagingDisabled() {
     return messagingDisabled;
   }
+
+  public void setConversationId(String conversationId) {
+    this.conversationId = conversationId;
+  }
 }

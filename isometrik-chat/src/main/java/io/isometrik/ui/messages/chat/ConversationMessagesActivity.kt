@@ -130,6 +130,7 @@ import io.isometrik.ui.messages.tag.MemberDetailsFragment
 import io.isometrik.ui.messages.tag.TagUserAdapter
 import io.isometrik.ui.messages.tag.TagUserModel
 import io.isometrik.ui.messages.tag.TaggedUserCallback
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -241,12 +242,22 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             ismActivityMessagesBinding.topViewContainer.addView(topView)
         }
 
+        ChatConfig.typingUiState.observe(this) { visiable ->
+            CoroutineScope(Dispatchers.Main).launch {
+                ismActivityMessagesBinding.rlBottomLayout.visibility =
+                    if (visiable) View.VISIBLE else View.GONE
+
+                ismActivityMessagesBinding.rlRecordAudio.visibility =
+                if (!ChatConfig.hideRecordAudioOption && visiable) View.VISIBLE else View.GONE
+            }
+        }
+
         ismActivityMessagesBinding.ivAudioCall.visibility =
             if (ChatConfig.hideAudioCallOption) View.GONE else View.VISIBLE
         ismActivityMessagesBinding.ivVideoCall.visibility =
             if (ChatConfig.hideVideoCallOption) View.GONE else View.VISIBLE
         ismActivityMessagesBinding.ivCaptureImage.visibility =
-            if (ChatConfig.hideCaptureCameraOption) View.INVISIBLE else View.VISIBLE
+            if (ChatConfig.hideCaptureCameraOption) View.GONE else View.VISIBLE
         ismActivityMessagesBinding.btRecord.visibility =
             if (ChatConfig.hideRecordAudioOption) View.GONE else View.VISIBLE
 
@@ -358,7 +369,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             onMessagingStatusChanged(true)
             opponentUserBlocked = !lastMessageText!!.startsWith("You")
         }
-        updateConversationDetailsInHeader(true, isPrivateOneToOne, null, false, 0, null, 0)
+        updateConversationDetailsInHeader(true, isPrivateOneToOne, null, false, 0, null, 0,conversationUserImageUrl.orEmpty())
 
         scrollToMessageNeeded = intent.getBooleanExtra("scrollToMessageNeeded", false)
         if (scrollToMessageNeeded) {
@@ -803,10 +814,8 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             }
         }
 
-        Log.e("ivCaptureImage","set Click")
 
         ismActivityMessagesBinding!!.ivCaptureImage.setOnClickListener { v: View? ->
-            Log.e("ivCaptureImage","Clicked!!")
             checkImageCapturePermissions(
                 true
             )
@@ -1163,69 +1172,70 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-            if ((ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility
-                        == View.GONE) && clickActionsNotBlocked()
-            ) {
-                val popup = PopupMenu(this, v)
-                val inflater = popup.menuInflater
-                if (messagingDisabled) {
-                    inflater.inflate(R.menu.ism_unblock_menu, popup.menu)
-                } else {
-                    inflater.inflate(R.menu.ism_block_menu, popup.menu)
-                }
-                popup.setOnMenuItemClickListener { item: MenuItem ->
-                    if (item.itemId == R.id.blockOrUnBlockUser) {
-                        if (messagingDisabled) {
-                            showProgressDialog(
-                                getString(
-                                    R.string.ism_unblocking_user,
-                                    conversationUserFullName
-                                )
-                            )
-                            conversationMessagesPresenter.unBlockUser(
-                                isometrikUserId,
-                                false,
-                                userPersonalUserId
-                            )
-                        } else {
-                            showProgressDialog(
-                                getString(
-                                    R.string.ism_blocking_user,
-                                    conversationUserFullName
-                                )
-                            )
-                            conversationMessagesPresenter.blockUser(
-                                isometrikUserId,
-                                true,
-                                userPersonalUserId
-                            )
-                        }
-                        return@setOnMenuItemClickListener true
+                if ((ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility
+                            == View.GONE) && clickActionsNotBlocked()
+                ) {
+                    val popup = PopupMenu(this, v)
+                    val inflater = popup.menuInflater
+                    if (messagingDisabled) {
+                        inflater.inflate(R.menu.ism_unblock_menu, popup.menu)
+                    } else {
+                        inflater.inflate(R.menu.ism_block_menu, popup.menu)
                     }
-                    if (item.itemId == R.id.clearChat) {
-                        // implement clear chat feature
-                        AlertDialog.Builder(this)
-                            .setTitle(getString(R.string.ism_clear_conversation))
-                            .setMessage(getString(R.string.ism_clear_conversation_alert))
-                            .setCancelable(true)
-                            .setPositiveButton(getString(R.string.ism_continue)) { dialog: DialogInterface, id: Int ->
-                                dialog.cancel()
-                                showProgressDialog(getString(R.string.ism_clearing_conversation))
-                                conversationMessagesPresenter.clearConversation(
-                                    conversationId
+                    popup.setOnMenuItemClickListener { item: MenuItem ->
+                        if (item.itemId == R.id.blockOrUnBlockUser) {
+                            if (messagingDisabled) {
+                                showProgressDialog(
+                                    getString(
+                                        R.string.ism_unblocking_user,
+                                        conversationUserFullName
+                                    )
+                                )
+                                conversationMessagesPresenter.unBlockUser(
+                                    isometrikUserId,
+                                    false,
+                                    userPersonalUserId
+                                )
+                            } else {
+                                showProgressDialog(
+                                    getString(
+                                        R.string.ism_blocking_user,
+                                        conversationUserFullName
+                                    )
+                                )
+                                conversationMessagesPresenter.blockUser(
+                                    isometrikUserId,
+                                    true,
+                                    userPersonalUserId
                                 )
                             }
-                            .setNegativeButton(
-                                getString(R.string.ism_cancel)
-                            ) { dialog: DialogInterface, id: Int -> dialog.cancel() }
-                            .create()
-                            .show()
+                            return@setOnMenuItemClickListener true
+                        }
+                        if (item.itemId == R.id.clearChat) {
+                            // implement clear chat feature
+                            AlertDialog.Builder(this)
+                                .setTitle(getString(R.string.ism_clear_conversation))
+                                .setMessage(getString(R.string.ism_clear_conversation_alert))
+                                .setCancelable(true)
+                                .setPositiveButton(getString(R.string.ism_continue)) { dialog: DialogInterface, id: Int ->
+                                    dialog.cancel()
+                                    showProgressDialog(getString(R.string.ism_clearing_conversation))
+                                    conversationMessagesPresenter.clearConversation(
+                                        conversationId
+                                    )
+                                }
+                                .setNegativeButton(
+                                    getString(R.string.ism_cancel)
+                                ) { dialog: DialogInterface, id: Int -> dialog.cancel() }
+                                .create()
+                                .show()
+                        }
+                        false
                     }
-                    false
+                    popup.show()
                 }
-                popup.show()
             }
-        }}
+        }
 
         ismActivityMessagesBinding!!.ivAudioCall.setOnClickListener { v: View? ->
             IsometrikChatSdk.instance.chatActionsClickListener?.onCallClicked(
@@ -1505,7 +1515,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         currentWaveSeekBar?.progress = 0F
         currentWaveSeekBar = null
         currentIvPlayAudio?.setImageResource(R.drawable.ism_ic_play_audio)
-        if(currentAudioPosition == position && isAudioPlaying){
+        if (currentAudioPosition == position && isAudioPlaying) {
             isAudioPlaying = false
             return
         }
@@ -1524,11 +1534,11 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 setOnCompletionListener {
                     waveSeekBar.progress = 0F
                     isAudioPlaying = false
-                    with(Dispatchers.Main){
+                    with(Dispatchers.Main) {
                         currentIvPlayAudio?.setImageResource(R.drawable.ism_ic_play_audio)
                     }
                     updateJob?.cancel()
-                    Log.e("startProgressUpdate","==> Completed")
+                    Log.e("startProgressUpdate", "==> Completed")
                 }
             }
             currentWaveSeekBar = waveSeekBar
@@ -1546,9 +1556,10 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
     private fun startProgressUpdate(waveSeekBar: WaveformSeekBar) {
         updateJob = lifecycleScope.launch {
             while (isAudioPlaying && mediaPlayer != null && currentWaveSeekBar == waveSeekBar) {
-                val progress = (mediaPlayer!!.currentPosition.toFloat() / mediaPlayer!!.duration)*100
+                val progress =
+                    (mediaPlayer!!.currentPosition.toFloat() / mediaPlayer!!.duration) * 100
                 waveSeekBar.progress = progress
-                Log.e("startProgressUpdate","==> ${progress}")
+                Log.e("startProgressUpdate", "==> ${progress}")
                 delay(100L) // Update every 100ms
             }
         }
@@ -2102,11 +2113,11 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
 
         // If there are any permissions not granted, request them
         if (!permissionsNotGranted.isEmpty()) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    permissionsNotGranted.toTypedArray<String>(),
-                    PERMISSION_REQUEST_CODE // Use the new request code
-                )
+            ActivityCompat.requestPermissions(
+                this,
+                permissionsNotGranted.toTypedArray<String>(),
+                PERMISSION_REQUEST_CODE // Use the new request code
+            )
         } else {
             // All permissions are granted, proceed with the action
             requestImageCapture()
@@ -2273,7 +2284,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         updateShimmerVisibility(false)
         runOnUiThread {
             if (errorMessage != null) {
-                if(Utilities.showToast(errorMessage)){
+                if (Utilities.showToast(errorMessage)) {
                     Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
                 }
             } else {
@@ -2995,13 +3006,15 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         isOnline: Boolean,
         lastSeenAt: Long,
         conversationTitle: String?,
-        participantsCount: Int
+        participantsCount: Int,
+        conversationImage : String
     ) {
         var userName: String? = userName
         var isOnline = isOnline
         var lastSeenAt = lastSeenAt
         var conversationTitle: String? = conversationTitle
         var participantsCount = participantsCount
+        var conversationImage = conversationImage
         if (isPrivateOneToOne) {
             if (local) {
                 userName = if (intent.extras!!.containsKey("userName")) {
@@ -3073,13 +3086,13 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                     }
                 }
             }
+            loadHeaderPic(conversationImage,conversationUserFullName.orEmpty())
+
         } else {
             if (local) {
                 conversationTitle = intent.extras!!.getString("conversationTitle")
             }
-            ismActivityMessagesBinding!!.tvConversationOrUserName.text = conversationTitle
-            ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.tvConversationTitle.text =
-                conversationTitle
+
             ismActivityMessagesBinding!!.ivOnlineStatus.visibility = View.GONE
 
             //            ismActivityMessagesBinding.ivRefreshOnlineStatus.setVisibility(View.GONE);
@@ -3090,8 +3103,41 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                     1
                 }
             }
-            ismActivityMessagesBinding!!.tvParticipantsCountOrOnlineStatus.text =
-                getString(R.string.ism_participants_count, participantsCount)
+            if(participantsCount <= 2){
+                ismActivityMessagesBinding!!.tvConversationOrUserName.text = userName.orEmpty()
+                ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.tvConversationTitle.text = userName.orEmpty()
+                ismActivityMessagesBinding!!.tvParticipantsCountOrOnlineStatus.text = conversationTitle
+            }else{
+                ismActivityMessagesBinding!!.tvConversationOrUserName.text = conversationTitle
+                ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.tvConversationTitle.text = conversationTitle
+                ismActivityMessagesBinding!!.tvParticipantsCountOrOnlineStatus.text =
+                    getString(R.string.ism_participants_count, participantsCount)
+            }
+
+
+            loadHeaderPic(conversationImage,conversationTitle.orEmpty())
+        }
+    }
+
+    private fun loadHeaderPic(picUrl : String, userName: String){
+        if (PlaceholderUtils.isValidImageUrl(picUrl)) {
+            try {
+                Glide.with(this)
+                    .load(picUrl)
+                    .placeholder(R.drawable.ism_ic_profile)
+                    .transform(CircleCrop())
+                    .into(ismActivityMessagesBinding.ivConversationImage)
+            } catch (ignore: IllegalArgumentException) {
+            } catch (ignore: NullPointerException) {
+            }
+        } else {
+            PlaceholderUtils.setTextRoundDrawable(
+                this,
+                userName,
+                ismActivityMessagesBinding.ivConversationImage,
+                0,
+                12
+            )
         }
     }
 
@@ -3487,5 +3533,9 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         private const val PERMISSION_REQUEST_CODE = 123
         private const val VIDEO_RECORD_PERMISSIONS_REQUEST_CODE = 9
         private const val VIDEO_PREVIEW_REQUEST_CODE = 8 // New request code for video preview
+
+        fun startActivity(mIntent : Intent){
+            startActivity(mIntent)
+        }
     }
 }

@@ -168,6 +168,16 @@ start new conversation from any action in your project
 
 ```
 
+open custom activity from `ConversationMessagesActivity`
+
+```kotlin
+
+  val i = Intent(this,ChatListActivity::class.java)
+  ConversationMessagesActivity.startActivity(i)
+
+```
+
+
 # Customization
 
 ## Handle a Custom Activity from Your Module
@@ -293,7 +303,7 @@ Check total message type of UI [here](isometrik-chat/src/main/java/io/isometrik/
 
 ### Change base colors, default text, drawables and visibility of options
 
-Modify below file to update base color and other customisation.
+Modify below file to update base color and other initial customisation.
 
 ```kotlin
 
@@ -309,6 +319,12 @@ ChatConfig.hideVideoCallOption = true
 ChatConfig.hideCaptureCameraOption = true
 ChatConfig.hideRecordAudioOption = true
 
+```
+Realtime update view
+
+```kotlin
+
+ ChatConfig.updateBottomTypingView(false)
 ```
 
 ### Manage attachments options visibility by below file
