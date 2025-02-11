@@ -1502,20 +1502,6 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
 
             LogManger.INSTANCE.log("real:messageSent", "In");
 
-            LogManger.INSTANCE.log("real:messageSent", "sendMessageEvent.getConversationId().equals(conversationId) 11 " + sendMessageEvent.getConversationId().equals(conversationId));
-            LogManger.INSTANCE.log("real:messageSent", "sendMessageEvent.getConversationId().equals(conversationId) 22 " + (sendMessageEvent.getAction() != null && (!sendMessageEvent.getSenderId()
-                    .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())
-                    || !sendMessageEvent.getDeviceId()
-                    .equals(IsometrikChatSdk.getInstance().getUserSession().getDeviceId()))));
-
-            LogManger.INSTANCE.log("real:messageSent", "sendMessageEvent.getAction() " + sendMessageEvent.getAction());
-            LogManger.INSTANCE.log("real:messageSent", "sendMessageEvent.getSenderId() " + sendMessageEvent.getSenderId());
-            LogManger.INSTANCE.log("real:messageSent", "IsometrikChatSdk.getInstance().getUserSession().getUserId() " + IsometrikChatSdk.getInstance().getUserSession().getUserId());
-            LogManger.INSTANCE.log("real:messageSent", "sendMessageEvent.getDeviceId() " + sendMessageEvent.getDeviceId());
-            LogManger.INSTANCE.log("real:messageSent", "IsometrikChatSdk.getInstance().getUserSession().getDeviceId() " + IsometrikChatSdk.getInstance().getUserSession().getDeviceId());
-            LogManger.INSTANCE.log("real:messageSent", "isSharedFromApp " + sendMessageEvent.getMetaData().has("isSharedFromApp"));
-
-
             if (sendMessageEvent.getConversationId().equals(conversationId)) {
                 if (sendMessageEvent.getAction() != null && (!sendMessageEvent.getSenderId()
                         .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())

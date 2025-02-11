@@ -24,7 +24,7 @@ public class AddReactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
    * @param mContext the m context
    * @param reactionsModels the reactions models
    */
-  AddReactionAdapter(Context mContext, ArrayList<ReactionModel> reactionsModels) {
+  public AddReactionAdapter(Context mContext, ArrayList<ReactionModel> reactionsModels) {
     this.mContext = mContext;
     this.reactionsModels = reactionsModels;
   }
