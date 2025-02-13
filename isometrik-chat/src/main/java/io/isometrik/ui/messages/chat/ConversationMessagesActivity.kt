@@ -124,6 +124,7 @@ import io.isometrik.ui.messages.media.stickers.StickersFragment
 import io.isometrik.ui.messages.media.visual.VisualMediaFragment
 import io.isometrik.ui.messages.media.whiteboard.WhiteboardFragment
 import io.isometrik.ui.messages.preview.PreviewMessageUtil
+import io.isometrik.ui.messages.reaction.FullScreenReactionDialog
 import io.isometrik.ui.messages.reaction.add.AddReactionFragment
 import io.isometrik.ui.messages.reaction.add.ReactionModel
 import io.isometrik.ui.messages.reaction.list.FetchReactionUsersFragment
@@ -165,6 +166,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
     private var tagUserAdapter: TagUserAdapter? = null
 
     private var addReactionFragment: AddReactionFragment? = null
+    private var  reactionDialog : FullScreenReactionDialog? = null
     private var fetchReactionUsersFragment: FetchReactionUsersFragment? = null
     private var gifsFragment: GifsFragment? = null
     private var stickersFragment: StickersFragment? = null
@@ -880,7 +882,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 })
         )
 
-        ismActivityMessagesBinding!!.ivSendMessage.setOnClickListener { v: View? ->
+        ismActivityMessagesBinding.ivSendMessage.setOnClickListener { v: View? ->
             if (ismActivityMessagesBinding!!.etSendMessage.text != null && ismActivityMessagesBinding!!.etSendMessage.text!!.length > 0) {
                 conversationMessagesPresenter.shareMessage(
                     RemoteMessageTypes.NormalMessage,
@@ -913,14 +915,14 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             }
         }
 
-        ismActivityMessagesBinding!!.rvMessages.addOnItemTouchListener(
+        ismActivityMessagesBinding.rvMessages.addOnItemTouchListener(
             RecyclerItemClickListener(
                 this,
-                ismActivityMessagesBinding!!.rvMessages,
+                ismActivityMessagesBinding.rvMessages,
                 object : RecyclerItemClickListener.OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {
                         if (position >= 0) {
-                            if (ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility == View.VISIBLE) {
+                            if (ismActivityMessagesBinding.vSelectMultipleMessagesHeader.root.visibility == View.VISIBLE) {
                                 if (messages[position].messageTypeUi != MessageTypeUi.CONVERSATION_ACTION_MESSAGE) {
                                     val messagesModel = messages[position]
                                     val selected = !messagesModel.isSelected
@@ -930,7 +932,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                                         selected
                                     )
                                     messages[position] = messagesModel
-                                    conversationMessagesAdapter!!.notifyItemChanged(position)
+                                    conversationMessagesAdapter.notifyItemChanged(position)
                                 }
                             }
                         }
@@ -940,7 +942,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                         if (position >= 0) {
                             if (!messagingDisabled) {
                                 if (messages[position].messageTypeUi != MessageTypeUi.CONVERSATION_ACTION_MESSAGE) {
-                                    if (ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility == View.VISIBLE) {
+                                    if (ismActivityMessagesBinding.vSelectMultipleMessagesHeader.root.visibility == View.VISIBLE) {
                                         val messagesModel = messages[position]
                                         val selected = !messagesModel.isSelected
                                         messagesModel.isSelected = selected
@@ -949,11 +951,13 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                                             selected
                                         )
                                         messages[position] = messagesModel
-                                        conversationMessagesAdapter!!.notifyItemChanged(position)
+                                        conversationMessagesAdapter.notifyItemChanged(position)
                                     } else {
                                         val messagesModel = messages[position]
                                         if (!messagesModel.isSentMessage || messagesModel.isMessageSentSuccessfully) {
                                             if (!joiningAsObserver && clickActionsNotBlocked()) {
+//                                                dismissAllDialogs()
+//                                                openReactionDialog(view)
                                                 if (!isFinishing && !messageActionFragment!!.isAdded) {
                                                     dismissAllDialogs()
                                                     messageActionFragment!!.updateParameters(
@@ -3518,6 +3522,11 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         topView?.let { view ->
             topViewHandler?.updateTopView(view, conversationDetailsUtil, messages)
         }
+    }
+
+    fun openReactionDialog(messageView: View){
+        reactionDialog = FullScreenReactionDialog(messageView)
+        reactionDialog?.show(supportFragmentManager, FullScreenReactionDialog.TAG)
     }
 
     companion object {

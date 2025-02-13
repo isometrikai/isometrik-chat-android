@@ -7,10 +7,14 @@ import io.isometrik.ui.IsometrikChatSdk;
 
 public class MyApplication extends Application {
 
+  private static MyApplication mInstance;
+  public static String APP_NAME = "chatDemo";
+
   @Override
   public void onCreate() {
     super.onCreate();
 
+    mInstance = this;
     IsometrikChatSdk.getInstance().sdkInitialize(this);
 
     IsometrikChatSdk.getInstance()
@@ -25,5 +29,13 @@ public class MyApplication extends Application {
   public void onTerminate() {
     IsometrikChatSdk.getInstance().onTerminate();
     super.onTerminate();
+  }
+
+  public static synchronized MyApplication getInstance() {
+    return mInstance;
+  }
+
+  public String getApiToken(){
+    return "token";
   }
 }
