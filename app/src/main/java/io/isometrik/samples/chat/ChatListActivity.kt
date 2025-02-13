@@ -1,28 +1,26 @@
 package io.isometrik.samples.chat
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import io.isometrik.chat.enums.MessageTypeUi
 import io.isometrik.chat.response.conversation.utils.ConversationDetailsUtil
+import io.isometrik.chat.utils.upload.CustomUploadHandler
+import io.isometrik.chat.utils.upload.UploadedMediaResponse
 import io.isometrik.samples.chat.databinding.ChatItemBinding
 import io.isometrik.samples.chat.databinding.CustomTopViewBinding
 import io.isometrik.ui.conversations.list.ChatListItemBinder
 import io.isometrik.ui.conversations.list.ConversationsListFragment
 import io.isometrik.ui.conversations.list.ConversationsModel
-import io.isometrik.ui.messages.chat.ConversationMessagesActivity
 import io.isometrik.ui.messages.chat.MessagesModel
 import io.isometrik.ui.messages.chat.common.AttachmentsConfig
 import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.messages.chat.common.ChatTopViewHandler
-import io.isometrik.ui.messages.chat.common.MessageBinderRegistry
+import java.util.function.Consumer
+
 
 class ChatListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -91,6 +89,25 @@ class ChatListActivity : AppCompatActivity() {
 //        AttachmentsConfig.hideGIFOption = true
 
         ChatConfig.dontShowToastList = arrayListOf("conversation not found")
+
+//        CustomUploadHandler.registerUploadHandler { mediaId: String, mediaPath: String, callback: Consumer<UploadedMediaResponse?> ->
+//            // Simulating a custom upload process (Replace this with actual upload logic)
+//            Thread {
+//                try {
+//                    Thread.sleep(2000) // Simulating network delay
+//
+//                    // Replace this with actual API call for media upload
+//                    val mediaUrl = "https://picsum.photos/300/200"
+//                    val thumbnailUrl = "https://picsum.photos/200/100"
+//
+//                    val response = UploadedMediaResponse(mediaId, mediaUrl, thumbnailUrl)
+//                    callback.accept(response)
+//                } catch (e: InterruptedException) {
+//                    e.printStackTrace()
+//                    callback.accept(null)
+//                }
+//            }.start()
+//        }
 
 
 //        Handler(Looper.getMainLooper()).postDelayed({

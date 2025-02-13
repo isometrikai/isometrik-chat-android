@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import io.isometrik.chat.Isometrik;
 import io.isometrik.chat.builder.conversation.FetchConversationDetailsQuery;
@@ -38,7 +37,6 @@ import io.isometrik.chat.callbacks.ReactionEventCallback;
 import io.isometrik.chat.callbacks.UserEventCallback;
 import io.isometrik.chat.enums.AttachmentMessageType;
 import io.isometrik.chat.enums.ConversationType;
-import io.isometrik.chat.enums.IMRealtimeEventsVerbosity;
 import io.isometrik.chat.enums.PresignedUrlMediaTypes;
 import io.isometrik.chat.events.connection.ConnectEvent;
 import io.isometrik.chat.events.connection.ConnectionFailedEvent;
@@ -89,6 +87,8 @@ import io.isometrik.chat.response.message.utils.schemas.EventForMessage;
 import io.isometrik.chat.response.message.utils.schemas.MentionedUser;
 import io.isometrik.chat.enums.MessageTypeUi;
 import io.isometrik.chat.utils.LogManger;
+import io.isometrik.chat.utils.upload.CustomUploadHandler;
+import io.isometrik.chat.utils.upload.UploadedMediaResponse;
 import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
 import io.isometrik.ui.conversations.details.groupconversation.ConversationDetailsActivity;
@@ -103,7 +103,6 @@ import io.isometrik.ui.messages.chat.utils.messageutils.LocalMessageNotification
 import io.isometrik.ui.messages.chat.utils.messageutils.MultipleMessagesUtil;
 import io.isometrik.ui.messages.chat.utils.messageutils.OriginalReplyMessageUtil;
 import io.isometrik.ui.messages.chat.utils.messageutils.RealtimeMessageUtil;
-import io.isometrik.ui.messages.media.audio.util.AudioFileUtil;
 import io.isometrik.ui.messages.media.audio.util.RecordAudioUtil;
 import io.isometrik.ui.messages.reaction.add.ReactionModel;
 import io.isometrik.ui.messages.reaction.util.ReactionUtil;
@@ -541,132 +540,158 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
         }
     }
 
-    private void requestPresignedUrls(String conversationId, RemoteMessageTypes messageType, String parentMessageId, String customType, String messageBody, boolean encrypted,
-                                      boolean showInConversation, Boolean sendPushNotification, Boolean updateUnreadCount,
-                                      JSONObject messageMetadata, ArrayList<MentionedUser> mentionedUsers,
-
-                                      PresignedUrlMediaTypes presignedUrlMediaTypes, Map<String, Map<String, String>> mediaDetailsMap, AttachmentMessageType attachmentMessageType,
+    private void requestPresignedUrls(String conversationId, RemoteMessageTypes messageType, String parentMessageId,
+                                      String customType, String messageBody, boolean encrypted, boolean showInConversation,
+                                      Boolean sendPushNotification, Boolean updateUnreadCount, JSONObject messageMetadata,
+                                      ArrayList<MentionedUser> mentionedUsers, PresignedUrlMediaTypes presignedUrlMediaTypes,
+                                      Map<String, Map<String, String>> mediaDetailsMap, AttachmentMessageType attachmentMessageType,
                                       boolean isWhiteboard, MessagesModel messageModel) {
 
-        ArrayList<FetchAttachmentPresignedUrlsQuery.PresignUrlRequest> presignedUrlRequests = new ArrayList<>();
-        FetchAttachmentPresignedUrlsQuery.PresignUrlRequest presignUrlRequest;
+        List<FetchAttachmentPresignedUrlsQuery.PresignUrlRequest> presignedUrlRequests = new ArrayList<>();
 
-        //noinspection rawtypes
-        for (Map.Entry mapElement : mediaDetailsMap.entrySet()) {
-            String mediaId = (String) mapElement.getKey();
+        // Collect presigned URL requests
+        for (Map.Entry<String, Map<String, String>> entry : mediaDetailsMap.entrySet()) {
+            String mediaId = entry.getKey();
+            String mediaPath = entry.getValue().get("mediaPath");
 
-            @SuppressWarnings("unchecked")
-            String mediaPath = ((Map<String, String>) (mapElement.getValue())).get("mediaPath");
-
-            presignUrlRequest = new FetchAttachmentPresignedUrlsQuery.PresignUrlRequest(mediaId,
-                    PresignedUrlUtils.getMediaName(mediaPath), presignedUrlMediaTypes.getValue());
-            presignedUrlRequests.add(presignUrlRequest);
+            FetchAttachmentPresignedUrlsQuery.PresignUrlRequest request = new FetchAttachmentPresignedUrlsQuery.PresignUrlRequest(
+                    mediaId, PresignedUrlUtils.getMediaName(mediaPath), presignedUrlMediaTypes.getValue()
+            );
+            presignedUrlRequests.add(request);
         }
 
-        FetchAttachmentPresignedUrlsQuery.Builder fetchAttachmentPresignedUrlsQuery = new FetchAttachmentPresignedUrlsQuery.Builder().setUserToken(userToken)
+        FetchAttachmentPresignedUrlsQuery fetchQuery = new FetchAttachmentPresignedUrlsQuery.Builder()
+                .setUserToken(userToken)
                 .setConversationId(conversationId)
-                .setPresignUrlRequests(presignedUrlRequests);
+                .setPresignUrlRequests(presignedUrlRequests)
+                .build();
 
         isometrik.getRemoteUseCases()
                 .getMessageUseCases()
-                .fetchAttachmentPresignedUrls(fetchAttachmentPresignedUrlsQuery.build(), (var1, var2) -> {
-                    if (var1 != null) {
-
-                        ArrayList<FetchAttachmentPresignedUrlsResult.PresignedUrl> presignedUrls = var1.getPresignedUrls();
-                        UploadMediaQuery uploadMediaQuery;
-                        FetchAttachmentPresignedUrlsResult.PresignedUrl presignedUrl;
-
-                        Map<String, String> mediaDetailMap;
-                        for (int i = 0; i < presignedUrls.size(); i++) {
-                            presignedUrl = presignedUrls.get(i);
-
-                            mediaDetailMap = mediaDetailsMap.get(presignedUrl.getMediaId());
-                            mediaDetailMap.put("mediaUrl", presignedUrl.getMediaUrl());
-                            mediaDetailMap.put("thumbnailUrl", presignedUrl.getThumbnailUrl());
-
-                            mediaDetailsMap.put(presignedUrl.getMediaId(), mediaDetailMap);
-
-                            uploadMediaQuery = new UploadMediaQuery.Builder().setMediaId(presignedUrl.getMediaId())
-                                    .setMediaPath(mediaDetailMap.get("mediaPath"))
-                                    .setPresignedUrl(presignedUrl.getMediaPresignedUrl())
-                                    .setUploadProgressListener(uploadProgressListener)
-                                    .setLocalMessageId(mediaDetailMap.get("localMessageId"))
-                                    .build();
-
-                            Map<String, String> finalMediaDetailMap = mediaDetailMap;
-                            isometrik.getRemoteUseCases()
-                                    .getUploadUseCases()
-                                    .uploadMedia(uploadMediaQuery, (var11, var22) -> {
-
-                                        if (var11 != null) {
-
-                                            SendMessageQuery.Builder sendMessageQuery = new SendMessageQuery.Builder().setUserToken(userToken)
-                                                    .setConversationId(conversationId)
-                                                    .setEncrypted(encrypted)
-                                                    .setBody(messageBody)
-                                                    .setMessageType(messageType.getValue())
-                                                    .setShowInConversation(showInConversation)
-                                                    .setNotificationTitle(IsometrikChatSdk.getInstance().getUserSession().getUserName())
-                                                    .setNotificationBody(NotificationBodyUtils.getNotificationBody(messageModel, null))
-                                                    .setDeviceId(IsometrikChatSdk.getInstance().getUserSession().getDeviceId());
-
-                                            Map<String, String> mediaMapInner = mediaDetailsMap.get(var11.getMediaId());
-
-                                            Attachment mediaAttachment = PrepareAttachmentHelper.prepareMediaAttachment(var11.getMediaId(),
-                                                    mediaMapInner.get("mediaUrl"), mediaMapInner.get("mediaUrl"),
-                                                    mediaMapInner.get("mediaPath"), attachmentMessageType);
-
-                                            sendMessageQuery.setAttachments(Collections.singletonList(mediaAttachment));
-
-                                            if (customType != null) {
-                                                sendMessageQuery.setCustomType(customType);
-                                            }
-                                            if (mentionedUsers != null) {
-                                                sendMessageQuery.setMentionedUsers(mentionedUsers);
-                                            }
-                                            if (messageMetadata != null) {
-                                                sendMessageQuery.setMetaData(messageMetadata);
-                                            }
-                                            if (parentMessageId != null) {
-                                                sendMessageQuery.setParentMessageId(parentMessageId);
-                                            }
-                                            if (sendPushNotification != null && updateUnreadCount != null) {
-                                                sendMessageQuery.setEventForMessage(new EventForMessage(sendPushNotification, updateUnreadCount));
-                                            }
-
-                                            List<String> searchableTags = SearchTagUtils.generateSearchTags(mediaAttachment, isWhiteboard);
-
-                                            if (!searchableTags.isEmpty()) {
-                                                sendMessageQuery.setSearchableTags(searchableTags);
-                                            }
-                                            isometrik.getRemoteUseCases()
-                                                    .getMessageUseCases()
-                                                    .sendMessage(sendMessageQuery.build(), (var111, var222) -> {
-                                                        Map<String, String> mediaMap = mediaDetailsMap.get(var11.getMediaId());
-                                                        if (customType != null && customType.equals(CustomMessageTypes.Audio.value)) {
-                                                            AudioFileUtil.deleteRecordingFile(audioFilePath);
-                                                        }
-                                                        if (var111 != null) {
-
-                                                            uploadMessagePositions.remove(mediaMap.get("localMessageId"));
-                                                            conversationMessagesView.onMessageSentSuccessfully(mediaMap.get("localMessageId"), var111.getMessageId(),
-                                                                    mediaMap.get("mediaUrl"), mediaMap.get("mediaUrl"));
-                                                        } else {
-                                                            conversationMessagesView.onFailedToSendMessage(
-                                                                    mediaMap.get("localMessageId"), var222.getErrorMessage());
-                                                        }
-                                                    });
-                                        } else {
-                                            conversationMessagesView.onFailedToSendMessage(
-                                                    finalMediaDetailMap.get("localMessageId"), var22.getErrorMessage());
-                                        }
-                                    });
-                        }
+                .fetchAttachmentPresignedUrls(fetchQuery, (result, error) -> {
+                    if (result != null) {
+                        handleMediaUpload(result.getPresignedUrls(), conversationId, messageType, parentMessageId,
+                                customType, messageBody, encrypted, showInConversation, sendPushNotification,
+                                updateUnreadCount, messageMetadata, mentionedUsers, mediaDetailsMap,
+                                attachmentMessageType, isWhiteboard, messageModel);
                     } else {
-                        conversationMessagesView.onError(var2.getErrorMessage());
+                        conversationMessagesView.onError(error.getErrorMessage());
                     }
                 });
     }
+
+    /**
+     * Handles media upload, allowing custom upload logic if registered.
+     */
+    private void handleMediaUpload(List<FetchAttachmentPresignedUrlsResult.PresignedUrl> presignedUrls,
+                                   String conversationId, RemoteMessageTypes messageType, String parentMessageId,
+                                   String customType, String messageBody, boolean encrypted, boolean showInConversation,
+                                   Boolean sendPushNotification, Boolean updateUnreadCount, JSONObject messageMetadata,
+                                   ArrayList<MentionedUser> mentionedUsers, Map<String, Map<String, String>> mediaDetailsMap,
+                                   AttachmentMessageType attachmentMessageType, boolean isWhiteboard, MessagesModel messageModel) {
+
+        for (FetchAttachmentPresignedUrlsResult.PresignedUrl presignedUrl : presignedUrls) {
+            Map<String, String> mediaDetailMap = mediaDetailsMap.get(presignedUrl.getMediaId());
+            mediaDetailMap.put("mediaUrl", presignedUrl.getMediaUrl());
+            mediaDetailMap.put("thumbnailUrl", presignedUrl.getThumbnailUrl());
+
+            if (CustomUploadHandler.isRegistered()) {
+                // Use custom upload flow from base module
+                CustomUploadHandler.uploadMedia(presignedUrl.getMediaId(), mediaDetailMap.get("mediaPath"), uploadedMediaResponse -> {
+                    if (uploadedMediaResponse != null) {
+                        // Use the uploaded URL provided by the base module
+                        mediaDetailMap.put("mediaUrl", uploadedMediaResponse.getMediaUrl());
+                        mediaDetailMap.put("thumbnailUrl", uploadedMediaResponse.getThumbnailUrl());
+                        mediaDetailsMap.put(presignedUrl.getMediaId(), mediaDetailMap);
+
+
+                        // Continue with sending the message after upload
+                        sendMessageAfterUpload(uploadedMediaResponse,conversationId, messageType, parentMessageId,
+                                customType, messageBody, encrypted, showInConversation, sendPushNotification,
+                                updateUnreadCount, messageMetadata, mentionedUsers,mediaDetailsMap,
+                                attachmentMessageType, isWhiteboard, messageModel);
+                    } else {
+                        conversationMessagesView.onFailedToSendMessage(
+                                mediaDetailMap.get("localMessageId"), "Custom Upload Failed");
+                    }
+                });
+
+            } else {
+                // Use default presigned URL upload
+                UploadMediaQuery uploadMediaQuery = new UploadMediaQuery.Builder()
+                        .setMediaId(presignedUrl.getMediaId())
+                        .setMediaPath(mediaDetailMap.get("mediaPath"))
+                        .setPresignedUrl(presignedUrl.getMediaPresignedUrl())
+                        .setUploadProgressListener(uploadProgressListener)
+                        .setLocalMessageId(mediaDetailMap.get("localMessageId"))
+                        .build();
+
+                isometrik.getRemoteUseCases()
+                        .getUploadUseCases()
+                        .uploadMedia(uploadMediaQuery, (uploadResult, uploadError) -> {
+                            if (uploadResult != null) {
+                                UploadedMediaResponse uploadedMediaResponse = new UploadedMediaResponse(
+                                        uploadResult.getMediaId(), mediaDetailMap.get("mediaUrl"), mediaDetailMap.get("thumbnailUrl")
+                                );
+                                sendMessageAfterUpload(uploadedMediaResponse, conversationId, messageType, parentMessageId,
+                                        customType, messageBody, encrypted, showInConversation, sendPushNotification,
+                                        updateUnreadCount, messageMetadata, mentionedUsers, mediaDetailsMap,
+                                        attachmentMessageType, isWhiteboard, messageModel);
+                            } else {
+                                conversationMessagesView.onFailedToSendMessage(mediaDetailMap.get("localMessageId"),
+                                        uploadError.getErrorMessage());
+                            }
+                        });
+            }
+
+        }
+    }
+
+    /**
+     * Sends the message after media upload is complete.
+     */
+    private void sendMessageAfterUpload(UploadedMediaResponse uploadedMediaResponse, String conversationId,
+                                        RemoteMessageTypes messageType, String parentMessageId, String customType,
+                                        String messageBody, boolean encrypted, boolean showInConversation,
+                                        Boolean sendPushNotification, Boolean updateUnreadCount, JSONObject messageMetadata,
+                                        ArrayList<MentionedUser> mentionedUsers, Map<String, Map<String, String>> mediaDetailsMap,
+                                        AttachmentMessageType attachmentMessageType, boolean isWhiteboard, MessagesModel messageModel) {
+
+        Map<String, String> mediaMap = mediaDetailsMap.get(uploadedMediaResponse.getMediaId());
+
+        SendMessageQuery.Builder sendMessageQuery = new SendMessageQuery.Builder()
+                .setUserToken(userToken)
+                .setConversationId(conversationId)
+                .setEncrypted(encrypted)
+                .setBody(messageBody)
+                .setMessageType(messageType.getValue())
+                .setShowInConversation(showInConversation)
+                .setNotificationTitle(IsometrikChatSdk.getInstance().getUserSession().getUserName())
+                .setNotificationBody(NotificationBodyUtils.getNotificationBody(messageModel, null))
+                .setDeviceId(IsometrikChatSdk.getInstance().getUserSession().getDeviceId());
+
+        Attachment mediaAttachment = PrepareAttachmentHelper.prepareMediaAttachment(uploadedMediaResponse.getMediaId(),
+                uploadedMediaResponse.getMediaUrl(), uploadedMediaResponse.getThumbnailUrl(), mediaMap.get("mediaPath"),
+                attachmentMessageType);
+
+        sendMessageQuery.setAttachments(Collections.singletonList(mediaAttachment));
+
+        isometrik.getRemoteUseCases()
+                .getMessageUseCases()
+                .sendMessage(sendMessageQuery.build(), (response, error) -> {
+                    if (response != null) {
+                        uploadMessagePositions.remove(mediaMap.get("localMessageId"));
+                        conversationMessagesView.onMessageSentSuccessfully(mediaMap.get("localMessageId"),
+                                response.getMessageId(),
+                                uploadedMediaResponse.getMediaUrl(),
+                                uploadedMediaResponse.getThumbnailUrl());
+                    } else {
+                        conversationMessagesView.onFailedToSendMessage(mediaMap.get("localMessageId"), error.getErrorMessage());
+                    }
+                });
+    }
+
+
 
     private boolean messagesRefreshRequired;
     private final ConnectionEventCallback connectionEventCallback = new ConnectionEventCallback() {
@@ -1502,8 +1527,23 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
 
             LogManger.INSTANCE.log("real:messageSent", "In");
 
+            LogManger.INSTANCE.log("real:messageSent", "sendMessageEvent.getConversationId().equals(conversationId) 11 " + sendMessageEvent.getConversationId().equals(conversationId));
+            LogManger.INSTANCE.log("real:messageSent", "sendMessageEvent.getConversationId().equals(conversationId) 22 " + (sendMessageEvent.getAction() != null || (!sendMessageEvent.getSenderId()
+                    .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())
+                    || !sendMessageEvent.getDeviceId()
+                    .equals(IsometrikChatSdk.getInstance().getUserSession().getDeviceId()))));
+
+            LogManger.INSTANCE.log("real:messageSent", "sendMessageEvent.getAction() " + sendMessageEvent.getAction());
+            LogManger.INSTANCE.log("real:messageSent", "sendMessageEvent.getSenderId() " + sendMessageEvent.getSenderId());
+            LogManger.INSTANCE.log("real:messageSent", "IsometrikChatSdk.getInstance().getUserSession().getUserId() " + IsometrikChatSdk.getInstance().getUserSession().getUserId());
+            LogManger.INSTANCE.log("real:messageSent", "sendMessageEvent.getDeviceId() " + sendMessageEvent.getDeviceId());
+            LogManger.INSTANCE.log("real:messageSent", "IsometrikChatSdk.getInstance().getUserSession().getDeviceId() " + IsometrikChatSdk.getInstance().getUserSession().getDeviceId());
+            LogManger.INSTANCE.log("real:messageSent", "isSharedFromApp " + sendMessageEvent.getMetaData().has("isSharedFromApp"));
+
+
+
             if (sendMessageEvent.getConversationId().equals(conversationId)) {
-                if (sendMessageEvent.getAction() != null && (!sendMessageEvent.getSenderId()
+                if (sendMessageEvent.getAction() != null || (!sendMessageEvent.getSenderId()
                         .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())
                         || !sendMessageEvent.getDeviceId()
                         .equals(IsometrikChatSdk.getInstance().getUserSession().getDeviceId()) || sendMessageEvent.getMetaData().has("isSharedFromApp"))) {
