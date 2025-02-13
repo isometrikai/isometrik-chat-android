@@ -12,6 +12,9 @@ import io.isometrik.chat.utils.upload.CustomUploadHandler
 import io.isometrik.chat.utils.upload.UploadedMediaResponse
 import io.isometrik.samples.chat.databinding.ChatItemBinding
 import io.isometrik.samples.chat.databinding.CustomTopViewBinding
+import io.isometrik.samples.chat.upload.TusPreferencesURLStore
+import io.isometrik.samples.chat.upload.UploadManager
+import io.isometrik.samples.chat.upload.startUploadingVideoAndThumbnail
 import io.isometrik.ui.conversations.list.ChatListItemBinder
 import io.isometrik.ui.conversations.list.ConversationsListFragment
 import io.isometrik.ui.conversations.list.ConversationsModel
@@ -19,10 +22,16 @@ import io.isometrik.ui.messages.chat.MessagesModel
 import io.isometrik.ui.messages.chat.common.AttachmentsConfig
 import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.messages.chat.common.ChatTopViewHandler
+import io.tus.java.client.TusClient
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.net.URL
 import java.util.function.Consumer
 
 
 class ChatListActivity : AppCompatActivity() {
+    private lateinit var client: TusClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -30,6 +39,20 @@ class ChatListActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             loadChatFragment()
+        }
+
+        try {
+            val pref = getSharedPreferences("tus", 0)
+            client = TusClient()
+            client.setUploadCreationURL(URL("url"))
+            // Set custom headers directly on the TUS client
+            val headers: MutableMap<String, String> = HashMap()
+            headers["authorization"] = MyApplication.getInstance().getApiToken()
+            headers["lang"] = "en"
+            // Set the headers on the TUS client
+            client.setHeaders(headers)
+            client.enableResuming(TusPreferencesURLStore(pref))
+        } catch (e: Exception) {
         }
 
 //        MessageBinderRegistry.registerBinder(
@@ -90,24 +113,40 @@ class ChatListActivity : AppCompatActivity() {
 
         ChatConfig.dontShowToastList = arrayListOf("conversation not found")
 
-//        CustomUploadHandler.registerUploadHandler { mediaId: String, mediaPath: String, callback: Consumer<UploadedMediaResponse?> ->
-//            // Simulating a custom upload process (Replace this with actual upload logic)
-//            Thread {
-//                try {
-//                    Thread.sleep(2000) // Simulating network delay
+        CustomUploadHandler.registerUploadHandler { mediaId: String, mediaPath: String, callback: Consumer<UploadedMediaResponse?> ->
+            CoroutineScope(Dispatchers.IO).launch {
+                val uploadManager = UploadManager(client)
+              val result = startUploadingVideoAndThumbnail(
+                    mediaPath,
+                    "video",
+                    uploadManager,
+                    true
+                )
+
+
+                  System.out.println("Uploaded video URL: " + result.videoUrl)
+                  System.out.println("Uploaded thumbnail URL: " + result.thumbnailUrl)
+
+                  val response = UploadedMediaResponse(mediaId, result.videoUrl, result.thumbnailUrl)
+                  callback.accept(response)
+
+            }
+
+//            try {
+//                Thread.sleep(2000) // Simulating network delay
 //
-//                    // Replace this with actual API call for media upload
-//                    val mediaUrl = "https://picsum.photos/300/200"
-//                    val thumbnailUrl = "https://picsum.photos/200/100"
+//                // Replace this with actual API call for media upload
+//                val mediaUrl = "https://picsum.photos/300/200"
+//                val thumbnailUrl = "https://picsum.photos/200/100"
 //
-//                    val response = UploadedMediaResponse(mediaId, mediaUrl, thumbnailUrl)
-//                    callback.accept(response)
-//                } catch (e: InterruptedException) {
-//                    e.printStackTrace()
-//                    callback.accept(null)
-//                }
-//            }.start()
-//        }
+//                val response = UploadedMediaResponse(mediaId, mediaUrl, thumbnailUrl)
+//                callback.accept(response)
+//            } catch (e: InterruptedException) {
+//                e.printStackTrace()
+//                callback.accept(null)
+//            }
+
+        }
 
 
 //        Handler(Looper.getMainLooper()).postDelayed({

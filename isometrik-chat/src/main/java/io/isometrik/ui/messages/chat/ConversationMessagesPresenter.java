@@ -676,6 +676,28 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
 
         sendMessageQuery.setAttachments(Collections.singletonList(mediaAttachment));
 
+        if (customType != null) {
+            sendMessageQuery.setCustomType(customType);
+        }
+        if (mentionedUsers != null) {
+            sendMessageQuery.setMentionedUsers(mentionedUsers);
+        }
+        if (messageMetadata != null) {
+            sendMessageQuery.setMetaData(messageMetadata);
+        }
+        if (parentMessageId != null) {
+            sendMessageQuery.setParentMessageId(parentMessageId);
+        }
+        if (sendPushNotification != null && updateUnreadCount != null) {
+            sendMessageQuery.setEventForMessage(new EventForMessage(sendPushNotification, updateUnreadCount));
+        }
+
+        List<String> searchableTags = SearchTagUtils.generateSearchTags(mediaAttachment, isWhiteboard);
+
+        if (!searchableTags.isEmpty()) {
+            sendMessageQuery.setSearchableTags(searchableTags);
+        }
+
         isometrik.getRemoteUseCases()
                 .getMessageUseCases()
                 .sendMessage(sendMessageQuery.build(), (response, error) -> {
@@ -1542,8 +1564,11 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
 
 
 
+            /*
+            in Fax getAction() getting null for other user message, so realtime message not getting
+            * */
             if (sendMessageEvent.getConversationId().equals(conversationId)) {
-                if (sendMessageEvent.getAction() != null || (!sendMessageEvent.getSenderId()
+                if (/*sendMessageEvent.getAction() != null ||*/ (!sendMessageEvent.getSenderId()
                         .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())
                         || !sendMessageEvent.getDeviceId()
                         .equals(IsometrikChatSdk.getInstance().getUserSession().getDeviceId()) || sendMessageEvent.getMetaData().has("isSharedFromApp"))) {
