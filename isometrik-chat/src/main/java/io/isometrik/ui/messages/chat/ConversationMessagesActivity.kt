@@ -38,8 +38,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
@@ -1262,6 +1262,8 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 conversationUserImageUrl!!
             )
         }
+
+        startDetailsApiPolling()
     }
 
     override fun blockedStatus(blockByOpponentUser: Boolean) {
@@ -2197,15 +2199,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
 
     private fun requestImageCapture() {
         KeyboardUtil.hideKeyboard(this)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            cameraActivityLauncher!!.launch(Intent(this, CameraActivity::class.java))
-        } else {
-            Toast.makeText(
-                this@ConversationMessagesActivity,
-                R.string.ism_image_capture_not_supported,
-                Toast.LENGTH_SHORT
-            ).show()
-        }
+        cameraActivityLauncher!!.launch(Intent(this, CameraActivity::class.java))
     }
 
     private fun requestContactShare() {
@@ -3527,6 +3521,25 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
     fun openReactionDialog(messageView: View){
         reactionDialog = FullScreenReactionDialog(messageView)
         reactionDialog?.show(supportFragmentManager, FullScreenReactionDialog.TAG)
+    }
+
+    private fun startDetailsApiPolling() {
+        /**
+         * used for getting user current status(online-offline)
+        * */
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.RESUMED) {
+                while (true) {
+                    try {
+                        if (ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility == View.GONE && clickActionsNotBlocked()) {
+                            conversationMessagesPresenter.requestConversationDetails()
+                        }
+                    } catch (e: Exception) {
+                    }
+                    delay(15_000) // Wait for 15 seconds before the next call
+                }
+            }
+        }
     }
 
     companion object {

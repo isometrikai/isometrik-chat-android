@@ -17,6 +17,7 @@ import io.isometrik.chat.databinding.IsmReceivedMessageFileBinding
 import io.isometrik.chat.utils.PlaceholderUtils
 import io.isometrik.ui.messages.action.MessageActionCallback
 import io.isometrik.ui.messages.chat.MessagesModel
+import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.messages.reaction.add.MessageReactionsAdapter
 
 class FileReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessageFileBinding> {
@@ -136,6 +137,10 @@ class FileReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessageFi
             } else {
                 ismReceivedMessageFileBinding.tvSenderName.text =
                     message.senderName
+            }
+            if(ChatConfig.hideSenderNameInMessageCell){
+                ismReceivedMessageFileBinding.tvSenderName.visibility = View.GONE
+                ismReceivedMessageFileBinding.tvComma.visibility = View.GONE
             }
             if (PlaceholderUtils.isValidImageUrl(message.senderImageUrl)) {
                 try {

@@ -20,6 +20,7 @@ import io.isometrik.chat.utils.Constants
 import io.isometrik.chat.utils.PlaceholderUtils
 import io.isometrik.ui.messages.action.MessageActionCallback
 import io.isometrik.ui.messages.chat.MessagesModel
+import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.messages.reaction.add.MessageReactionsAdapter
 
 class LocationReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessageLocationBinding> {
@@ -174,6 +175,11 @@ class LocationReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessa
                     message.senderName
                 )
             }
+            if(ChatConfig.hideSenderNameInMessageCell){
+                ismReceivedMessageLocationBinding.tvSenderName.visibility = View.GONE
+                ismReceivedMessageLocationBinding.tvComma.visibility = View.GONE
+            }
+
             if (PlaceholderUtils.isValidImageUrl(message.senderImageUrl)) {
                 try {
                     Glide.with(mContext)

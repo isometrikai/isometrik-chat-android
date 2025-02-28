@@ -29,6 +29,7 @@ object ChatConfig {
     var hideCreateChatOption: Boolean = false
     var hideAudioCallOption: Boolean = false
     var hideVideoCallOption: Boolean = false
+    var hideSenderNameInMessageCell: Boolean = true
     var hideCaptureCameraOption: Boolean = false
     var hideRecordAudioOption: Boolean = false
     var disableReScheduleMqtt: Boolean = false

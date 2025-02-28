@@ -20,6 +20,7 @@ import io.isometrik.chat.utils.TimeUtil
 import io.isometrik.ui.IsometrikChatSdk
 import io.isometrik.ui.messages.action.MessageActionCallback
 import io.isometrik.ui.messages.chat.MessagesModel
+import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.messages.reaction.add.MessageReactionsAdapter
 
 class PostReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessagePostBinding> {
@@ -138,6 +139,10 @@ class PostReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessagePo
             } else {
                 ismReceivedMessagePostBinding.tvSenderName.text =
                     message.senderName
+            }
+            if(ChatConfig.hideSenderNameInMessageCell){
+                ismReceivedMessagePostBinding.tvSenderName.visibility = View.GONE
+                ismReceivedMessagePostBinding.tvComma.visibility = View.GONE
             }
             if (PlaceholderUtils.isValidImageUrl(message.senderImageUrl)) {
                 try {

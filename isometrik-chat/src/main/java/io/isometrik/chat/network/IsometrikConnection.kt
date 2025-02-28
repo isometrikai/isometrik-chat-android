@@ -14,6 +14,10 @@ import io.isometrik.chat.events.connection.ConnectEvent
 import io.isometrik.chat.events.connection.DisconnectEvent
 import io.isometrik.chat.utils.LogManger
 import io.isometrik.ui.messages.chat.common.ChatConfig
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.concurrent.Executors

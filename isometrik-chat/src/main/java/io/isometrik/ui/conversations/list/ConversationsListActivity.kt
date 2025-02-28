@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -22,6 +23,7 @@ import io.isometrik.chat.R
 import io.isometrik.chat.databinding.IsmActivityConversationsListBinding
 import io.isometrik.chat.utils.PlaceholderUtils
 import io.isometrik.ui.IsometrikChatSdk
+import io.isometrik.ui.IsometrikChatSdk.Companion.instance
 import io.isometrik.ui.conversations.newconversation.type.SelectConversationTypeActivity
 import io.isometrik.ui.messages.broadcast.BroadcastMessageActivity
 import io.isometrik.ui.messages.mentioned.MentionedMessagesActivity

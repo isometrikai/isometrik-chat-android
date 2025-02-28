@@ -18,6 +18,7 @@ import io.isometrik.chat.databinding.IsmReceivedMessageVideoBinding
 import io.isometrik.chat.utils.PlaceholderUtils
 import io.isometrik.ui.messages.action.MessageActionCallback
 import io.isometrik.ui.messages.chat.MessagesModel
+import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.messages.reaction.add.MessageReactionsAdapter
 
 class VideoReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessageVideoBinding> {
@@ -135,6 +136,10 @@ class VideoReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessageV
             } else {
                 ismReceivedMessageVideoBinding.tvSenderName.text =
                     message.senderName
+            }
+            if(ChatConfig.hideSenderNameInMessageCell){
+                ismReceivedMessageVideoBinding.tvSenderName.visibility = View.GONE
+                ismReceivedMessageVideoBinding.tvComma.visibility = View.GONE
             }
             if (PlaceholderUtils.isValidImageUrl(message.senderImageUrl)) {
                 try {
