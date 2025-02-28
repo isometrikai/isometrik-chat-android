@@ -102,8 +102,7 @@ dependencies {
     compileOnly 'com.github.lincollincol:amplituda:2.2.2'
     implementation 'androidx.media3:media3-exoplayer:1.4.0'
 
-//    implementation 'com.arthenica:ffmpeg-kit-full:5.1'
-//    implementation 'com.arthenica:ffmpeg-kit-min:6.0-1'
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.2"
 
 
 }

@@ -18,6 +18,7 @@ import io.isometrik.chat.databinding.IsmReceivedMessageWhiteboardBinding
 import io.isometrik.chat.utils.PlaceholderUtils
 import io.isometrik.ui.messages.action.MessageActionCallback
 import io.isometrik.ui.messages.chat.MessagesModel
+import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.messages.reaction.add.MessageReactionsAdapter
 
 class WhiteboardReceivedBinder :
@@ -137,6 +138,11 @@ class WhiteboardReceivedBinder :
                 ismReceivedMessageWhiteboardBinding.tvSenderName.text =
                     message.senderName
             }
+            if(ChatConfig.hideSenderNameInMessageCell){
+                ismReceivedMessageWhiteboardBinding.tvSenderName.visibility = View.GONE
+                ismReceivedMessageWhiteboardBinding.tvComma.visibility = View.GONE
+            }
+
             if (PlaceholderUtils.isValidImageUrl(message.senderImageUrl)) {
                 try {
                     Glide.with(mContext)

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,7 @@ import io.isometrik.chat.databinding.IsmFragmentConversationsBinding
 import io.isometrik.chat.enums.ConversationType
 import io.isometrik.chat.utils.AlertProgress
 import io.isometrik.chat.utils.RecyclerItemClickListener
+import io.isometrik.ui.IsometrikChatSdk.Companion.instance
 import io.isometrik.ui.conversations.newconversation.type.SelectConversationTypeBottomSheet
 import io.isometrik.ui.messages.chat.ConversationMessagesActivity
 import io.isometrik.ui.messages.chat.common.ChatConfig

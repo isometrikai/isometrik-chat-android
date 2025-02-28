@@ -103,6 +103,8 @@ class PhotoSentBinder : MessageItemBinder<MessagesModel, IsmSentMessagePhotoBind
                 ismSentMessagePhotoBinding.ivForward.visibility =
                     View.GONE
             } else {
+                ismSentMessagePhotoBinding.ivSelectedStatus.visibility =
+                    View.GONE
                 if (message.isMessageSentSuccessfully) {
                     ismSentMessagePhotoBinding.ivForward.visibility =
                         View.VISIBLE

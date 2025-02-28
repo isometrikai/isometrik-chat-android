@@ -17,6 +17,7 @@ import io.isometrik.chat.databinding.IsmReceivedMessageContactBinding
 import io.isometrik.chat.utils.PlaceholderUtils
 import io.isometrik.ui.messages.action.MessageActionCallback
 import io.isometrik.ui.messages.chat.MessagesModel
+import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.messages.reaction.add.MessageReactionsAdapter
 
 class ContactReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessageContactBinding> {
@@ -135,6 +136,10 @@ class ContactReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessag
             } else {
                 ismReceivedMessageContactBinding.tvSenderName.text =
                     message.senderName
+            }
+            if(ChatConfig.hideSenderNameInMessageCell){
+                ismReceivedMessageContactBinding.tvSenderName.visibility = View.GONE
+                ismReceivedMessageContactBinding.tvComma.visibility = View.GONE
             }
             if (PlaceholderUtils.isValidImageUrl(message.senderImageUrl)) {
                 try {

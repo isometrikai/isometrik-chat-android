@@ -19,6 +19,7 @@ import io.isometrik.chat.databinding.IsmReceivedMessageGifBinding
 import io.isometrik.chat.utils.PlaceholderUtils
 import io.isometrik.ui.messages.action.MessageActionCallback
 import io.isometrik.ui.messages.chat.MessagesModel
+import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.messages.reaction.add.MessageReactionsAdapter
 
 class GifReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessageGifBinding> {
@@ -143,6 +144,10 @@ class GifReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessageGif
             } else {
                 ismReceivedMessageGifBinding.tvSenderName.text =
                     message.senderName
+            }
+            if(ChatConfig.hideSenderNameInMessageCell){
+                ismReceivedMessageGifBinding.tvSenderName.visibility = View.GONE
+                ismReceivedMessageGifBinding.tvComma.visibility = View.GONE
             }
             if (PlaceholderUtils.isValidImageUrl(message.senderImageUrl)) {
                 try {

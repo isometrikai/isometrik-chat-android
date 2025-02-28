@@ -1,6 +1,7 @@
 package io.isometrik.samples.chat;
 
 import android.app.Application;
+import android.util.Log;
 
 
 import io.isometrik.ui.IsometrikChatSdk;
@@ -30,6 +31,21 @@ public class MyApplication extends Application {
     IsometrikChatSdk.getInstance().onTerminate();
     super.onTerminate();
   }
+
+  @Override
+  public void onTrimMemory(int level) {
+    super.onTrimMemory(level);
+    if(level == TRIM_MEMORY_COMPLETE || level == TRIM_MEMORY_UI_HIDDEN){
+//      IsometrikChatSdk.getInstance().onTerminate();
+    }
+  }
+
+  @Override
+  public void onLowMemory() {
+    super.onLowMemory();
+  }
+
+
 
   public static synchronized MyApplication getInstance() {
     return mInstance;

@@ -154,6 +154,7 @@ public class ConversationsModel {
      * @param canObserve   the can observe
      */
     public ConversationsModel(Conversation conversation, boolean canJoin, boolean canObserve) {
+        Log.e("ConversationsModel","==> 11"+lastMessageText);
         this.canJoin = canJoin;
         remoteUserTyping = false;
         messagingDisabled = conversation.isMessagingDisabled();
@@ -201,6 +202,9 @@ public class ConversationsModel {
             }
         } catch (JSONException ignore) {
         }
+
+        Log.e("ConversationsModel","==> 22"+lastMessageText);
+
     }
 
     /**
@@ -564,15 +568,24 @@ public class ConversationsModel {
                                     .getContext()
                                     .getString(R.string.ism_details_searchable_tags);
                         }
+//                        if (details.has("body")) {
+//                            detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
+//                                    .getContext()
+//                                    .getString(R.string.ism_details_body);
+//                        }
                         if (details.has("body")) {
-                            detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
+                            detailsUpdated = details.getString("body");
+                            lastMessageText = IsometrikChatSdk.getInstance()
                                     .getContext()
-                                    .getString(R.string.ism_details_body);
+                                    .getString(R.string.ism_updated_message_details, lastMessage.getString("userName"),
+                                            detailsUpdated);
+                        }else{
+
+                            lastMessageText = IsometrikChatSdk.getInstance()
+                                    .getContext()
+                                    .getString(R.string.ism_updated_message_details, lastMessage.getString("userName"),
+                                            detailsUpdated.substring(2));
                         }
-                        lastMessageText = IsometrikChatSdk.getInstance()
-                                .getContext()
-                                .getString(R.string.ism_updated_message_details, lastMessage.getString("userName"),
-                                        detailsUpdated.substring(2));
                         break;
                     }
                 }

@@ -178,6 +178,11 @@ class TextReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessageTe
                 ismReceivedMessageTextBinding.tvSenderName.text =
                     message.senderName
             }
+            if(ChatConfig.hideSenderNameInMessageCell){
+                ismReceivedMessageTextBinding.tvSenderName.visibility = View.GONE
+                ismReceivedMessageTextBinding.tvComma.visibility = View.GONE
+            }
+
             if (PlaceholderUtils.isValidImageUrl(message.senderImageUrl)) {
                 try {
                     Glide.with(mContext)

@@ -21,6 +21,7 @@ import io.isometrik.ui.messages.reaction.add.MessageReactionsAdapter
 import io.isometrik.chat.utils.AudioFIleUtil
 import io.isometrik.chat.utils.DummyDataUtil
 import io.isometrik.chat.utils.getAmplitudeFromAudioUrl
+import io.isometrik.ui.messages.chat.common.ChatConfig
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -140,6 +141,10 @@ class AudioReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessageA
             } else {
                 ismReceivedMessageAudioBinding.tvSenderName.text =
                     message.senderName
+            }
+            if(ChatConfig.hideSenderNameInMessageCell){
+                ismReceivedMessageAudioBinding.tvSenderName.visibility = View.GONE
+                ismReceivedMessageAudioBinding.tvComma.visibility = View.GONE
             }
             if (PlaceholderUtils.isValidImageUrl(message.senderImageUrl)) {
                 try {

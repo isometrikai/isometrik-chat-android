@@ -31,7 +31,6 @@ import java.util.concurrent.Executors;
 /**
  * The activity to open camera and capture image.
  */
-@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class CameraActivity extends AppCompatActivity {
 
   private ActivityResultLauncher<Intent> capturedImagePreviewActivityLauncher;
@@ -57,22 +56,18 @@ public class CameraActivity extends AppCompatActivity {
 
             setResult(Activity.RESULT_OK,
                 new Intent().putExtra("capturedImagePath", capturedImagePath));
+            supportFinishAfterTransition();
+
           } else {
             setResult(Activity.RESULT_CANCELED, new Intent());
           }
 
-          supportFinishAfterTransition();
         });
 
-    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
       startCamera();
       ismActivityCameraBinding.ivCapture.setOnClickListener(v -> captureImage());
-    } else {
-      Toast.makeText(CameraActivity.this, R.string.ism_image_capture_not_supported,
-          Toast.LENGTH_SHORT).show();
-    }
 
-    ismActivityCameraBinding.ibBack.setOnClickListener(v -> onBackPressed());
+      ismActivityCameraBinding.ibBack.setOnClickListener(v -> onBackPressed());
     ismActivityCameraBinding.ivSwitchCamera.setOnClickListener(v -> switchCamera());
   }
 
@@ -83,7 +78,6 @@ public class CameraActivity extends AppCompatActivity {
     supportFinishAfterTransition();
   }
 
-  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
   private void startCamera() {
 
     cameraProviderFuture = ProcessCameraProvider.getInstance(this);
@@ -100,7 +94,6 @@ public class CameraActivity extends AppCompatActivity {
     }, ContextCompat.getMainExecutor(this));
   }
 
-  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
   private void bindPreview(@NonNull ProcessCameraProvider cameraProvider) {
 
     Preview preview = new Preview.Builder().build();
@@ -117,7 +110,6 @@ public class CameraActivity extends AppCompatActivity {
     cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture);
   }
 
-  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
   private void captureImage() {
 
     try {
@@ -155,7 +147,6 @@ public class CameraActivity extends AppCompatActivity {
 
   @Override
   protected void onDestroy() {
-    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
       ProcessCameraProvider cameraProvider;
       try {
         if (cameraProviderFuture != null) {
@@ -165,8 +156,7 @@ public class CameraActivity extends AppCompatActivity {
       } catch (ExecutionException | InterruptedException e) {
         e.printStackTrace();
       }
-    }
-    super.onDestroy();
+      super.onDestroy();
   }
 
   /**
