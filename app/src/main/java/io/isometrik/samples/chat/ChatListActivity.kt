@@ -91,6 +91,7 @@ class ChatListActivity : AppCompatActivity() {
         ChatConfig.hideCaptureCameraOption = false
         ChatConfig.hideRecordAudioOption = false
         ChatConfig.disableReScheduleMqtt = true
+        ChatConfig.hideSubHeader = true
         ChatConfig.textSentBubbleResId = R.drawable.sent_message_bubble
 //        ChatConfig.DEFAULT_PLACEHOLDER_IMAGE_URL = "https://www.gravatar.com/avatar/?d=identicon"
 

@@ -33,6 +33,9 @@ object ChatConfig {
     var hideCaptureCameraOption: Boolean = false
     var hideRecordAudioOption: Boolean = false
     var disableReScheduleMqtt: Boolean = false
+    var disableOfflineLabel: Boolean = false
+    var hideSubHeader: Boolean = false
+    var disableTopHeaderClickAction: Boolean = false
 
     var DEFAULT_PLACEHOLDER_IMAGE_URL: String = Constants.DEFAULT_PLACEHOLDER_IMAGE_URL
     var dontShowToastList : List<String> = arrayListOf()
