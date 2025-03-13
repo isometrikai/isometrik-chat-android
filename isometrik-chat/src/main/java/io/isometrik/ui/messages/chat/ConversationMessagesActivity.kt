@@ -825,22 +825,25 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             )
         }
 
-        ismActivityMessagesBinding!!.rlConversationDetails.setOnClickListener { v: View? ->
-            if (ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility == View.GONE && clickActionsNotBlocked()) {
-                KeyboardUtil.hideKeyboard(this)
+        if(!ChatConfig.disableTopHeaderClickAction){
+            ismActivityMessagesBinding!!.rlConversationDetails.setOnClickListener { v: View? ->
+                if (ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility == View.GONE && clickActionsNotBlocked()) {
+                    KeyboardUtil.hideKeyboard(this)
 
-                val intent =
-                    conversationMessagesPresenter.getConversationDetailsIntent(
-                        this,
-                        isPrivateOneToOne
-                    )
-                if (isPrivateOneToOne) {
-                    if (!messagingDisabled) userDetailsActivityLauncher!!.launch(intent)
-                } else {
-                    if (!joiningAsObserver) conversationDetailsActivityLauncher!!.launch(intent)
+                    val intent =
+                        conversationMessagesPresenter.getConversationDetailsIntent(
+                            this,
+                            isPrivateOneToOne
+                        )
+                    if (isPrivateOneToOne) {
+                        if (!messagingDisabled) userDetailsActivityLauncher!!.launch(intent)
+                    } else {
+                        if (!joiningAsObserver) conversationDetailsActivityLauncher!!.launch(intent)
+                    }
                 }
             }
         }
+
         ismActivityMessagesBinding!!.etSendMessage.addTextChangedListener(sendMessageTextWatcher)
 
         ismActivityMessagesBinding!!.vTagUsers.rvUsers.addOnItemTouchListener(
@@ -3095,6 +3098,10 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
 
             ismActivityMessagesBinding!!.ivOnlineStatus.visibility = View.GONE
 
+            if(ChatConfig.hideSubHeader){
+                ismActivityMessagesBinding!!.tvParticipantsCountOrOnlineStatus.visibility =  View.GONE
+            }
+
             //            ismActivityMessagesBinding.ivRefreshOnlineStatus.setVisibility(View.GONE);
             if (local) {
                 participantsCount = if (intent.extras!!.containsKey("participantsCount")) {
@@ -3197,10 +3204,13 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
     }
 
     override fun connectionStateChanged(connected: Boolean) {
-        runOnUiThread {
-            ismActivityMessagesBinding!!.incConnectionState.tvConnectionState.visibility =
-                if (connected) View.GONE else View.VISIBLE
+        if(!ChatConfig.disableOfflineLabel){
+            runOnUiThread {
+                ismActivityMessagesBinding!!.incConnectionState.tvConnectionState.visibility =
+                    if (connected) View.GONE else View.VISIBLE
+            }
         }
+
     }
 
     private fun updateShimmerVisibility(visible: Boolean) {

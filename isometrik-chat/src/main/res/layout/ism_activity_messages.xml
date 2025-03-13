@@ -33,6 +33,7 @@
                 android:id="@+id/rlConversationDetails"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:layout_toStartOf="@+id/ivRefreshOnlineStatus"
                 android:layout_toEndOf="@+id/ivConversationImage">
 
@@ -40,7 +41,6 @@
                     android:id="@+id/tvConversationOrUserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ism_dp_5"
                     android:layout_marginEnd="@dimen/ism_dp_13"
                     android:ellipsize="end"
                     android:maxLines="1"
@@ -56,6 +56,7 @@
                     android:layout_below="@+id/tvConversationOrUserName"
                     android:layout_marginTop="@dimen/ism_dp_5"
                     android:layout_marginEnd="@dimen/ism_dp_5"
+                    tools:visibility="visible"
                     app:srcCompat="@drawable/ism_user_online_status_circle" />
 
                 <TextView
@@ -68,6 +69,7 @@
                     android:layout_toEndOf="@+id/ivOnlineStatus"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    tools:visibility="visible"
                     android:text="@string/ism_participants_count"
                     android:textColor="@color/ism_conversation_details_grey" />
 
