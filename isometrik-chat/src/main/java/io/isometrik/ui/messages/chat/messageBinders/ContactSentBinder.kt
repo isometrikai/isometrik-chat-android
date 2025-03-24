@@ -99,27 +99,27 @@ class ContactSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageContact
                     message.isSelected
                 ismSentMessageContactBinding.ivSelectedStatus.visibility =
                     View.VISIBLE
-                ismSentMessageContactBinding.ivForward.visibility =
-                    View.GONE
+//                ismSentMessageContactBinding.ivForward.visibility =
+//                    View.GONE
             } else {
                 ismSentMessageContactBinding.ivSelectedStatus.visibility =
                     View.GONE
                 if (message.isMessageSentSuccessfully) {
-                    ismSentMessageContactBinding.ivForward.visibility =
-                        View.VISIBLE
+//                    ismSentMessageContactBinding.ivForward.visibility =
+//                        View.VISIBLE
                     ismSentMessageContactBinding.ivForward.setOnClickListener { v: View? ->
                         messageActionCallback.forwardMessageRequest(
                             message
                         )
                     }
                 } else {
-                    ismSentMessageContactBinding.ivForward.visibility =
-                        View.GONE
+//                    ismSentMessageContactBinding.ivForward.visibility =
+//                        View.GONE
                 }
             }
             if (isMessagingDisabled) {
-                ismSentMessageContactBinding.ivForward.visibility =
-                    View.GONE
+//                ismSentMessageContactBinding.ivForward.visibility =
+//                    View.GONE
             }
             if (message.isQuotedMessage) {
                 ismSentMessageContactBinding.vParentMessage.root.visibility =

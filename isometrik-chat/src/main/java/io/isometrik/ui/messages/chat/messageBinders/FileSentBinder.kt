@@ -98,27 +98,27 @@ class FileSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageFileBindin
                     message.isSelected
                 ismSentMessageFileBinding.ivSelectedStatus.visibility =
                     View.VISIBLE
-                ismSentMessageFileBinding.ivForward.visibility =
-                    View.GONE
+//                ismSentMessageFileBinding.ivForward.visibility =
+//                    View.GONE
             } else {
                 ismSentMessageFileBinding.ivSelectedStatus.visibility =
                     View.GONE
                 if (message.isMessageSentSuccessfully) {
-                    ismSentMessageFileBinding.ivForward.visibility =
-                        View.VISIBLE
+//                    ismSentMessageFileBinding.ivForward.visibility =
+//                        View.VISIBLE
                     ismSentMessageFileBinding.ivForward.setOnClickListener { v: View? ->
                         messageActionCallback.forwardMessageRequest(
                             message
                         )
                     }
                 } else {
-                    ismSentMessageFileBinding.ivForward.visibility =
-                        View.GONE
+//                    ismSentMessageFileBinding.ivForward.visibility =
+//                        View.GONE
                 }
             }
             if (isMessagingDisabled) {
-                ismSentMessageFileBinding.ivForward.visibility =
-                    View.GONE
+//                ismSentMessageFileBinding.ivForward.visibility =
+//                    View.GONE
             }
             if (message.isQuotedMessage) {
                 ismSentMessageFileBinding.vParentMessage.root.visibility =

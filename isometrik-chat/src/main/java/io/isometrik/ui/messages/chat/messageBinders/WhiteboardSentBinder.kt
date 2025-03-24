@@ -106,8 +106,8 @@ class WhiteboardSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageWhit
                 ismSentMessageWhiteboardBinding.ivSelectedStatus.visibility =
                     View.GONE
                 if (message.isMessageSentSuccessfully) {
-                    ismSentMessageWhiteboardBinding.ivForward.visibility =
-                        View.VISIBLE
+//                    ismSentMessageWhiteboardBinding.ivForward.visibility =
+//                        View.VISIBLE
                     ismSentMessageWhiteboardBinding.ivForward.setOnClickListener { v: View? ->
                         messageActionCallback.forwardMessageRequest(
                             message

@@ -106,8 +106,8 @@ class VideoSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageVideoBind
                 ismSentMessageVideoBinding.ivSelectedStatus.visibility =
                     View.GONE
                 if (message.isMessageSentSuccessfully) {
-                    ismSentMessageVideoBinding.ivForward.visibility =
-                        View.VISIBLE
+//                    ismSentMessageVideoBinding.ivForward.visibility =
+//                        View.VISIBLE
                     ismSentMessageVideoBinding.ivForward.setOnClickListener { v: View? ->
                         messageActionCallback.forwardMessageRequest(
                             message

@@ -107,27 +107,27 @@ class AudioSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageAudioBind
                     message.isSelected
                 ismSentMessageAudioBinding.ivSelectedStatus.visibility =
                     View.VISIBLE
-                ismSentMessageAudioBinding.ivForward.visibility =
-                    View.GONE
+//                ismSentMessageAudioBinding.ivForward.visibility =
+//                    View.GONE
             } else {
                 ismSentMessageAudioBinding.ivSelectedStatus.visibility =
                     View.GONE
                 if (message.isMessageSentSuccessfully) {
-                    ismSentMessageAudioBinding.ivForward.visibility =
-                        View.VISIBLE
+//                    ismSentMessageAudioBinding.ivForward.visibility =
+//                        View.VISIBLE
                     ismSentMessageAudioBinding.ivForward.setOnClickListener { v: View? ->
                         messageActionCallback.forwardMessageRequest(
                             message
                         )
                     }
                 } else {
-                    ismSentMessageAudioBinding.ivForward.visibility =
-                        View.GONE
+//                    ismSentMessageAudioBinding.ivForward.visibility =
+//                        View.GONE
                 }
             }
             if (isMessagingDisabled) {
-                ismSentMessageAudioBinding.ivForward.visibility =
-                    View.GONE
+//                ismSentMessageAudioBinding.ivForward.visibility =
+//                    View.GONE
             }
             if (message.isQuotedMessage) {
                 ismSentMessageAudioBinding.vParentMessage.root.visibility =
