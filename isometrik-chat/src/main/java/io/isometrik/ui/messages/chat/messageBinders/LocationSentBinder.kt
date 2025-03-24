@@ -133,9 +133,9 @@ class LocationSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageLocati
                     View.GONE
                 )
                 if (message.isMessageSentSuccessfully) {
-                    ismSentMessageLocationBinding.ivForward.setVisibility(
-                        View.VISIBLE
-                    )
+//                    ismSentMessageLocationBinding.ivForward.setVisibility(
+//                        View.VISIBLE
+//                    )
                     ismSentMessageLocationBinding.ivForward.setOnClickListener { v ->
                         messageActionCallback.forwardMessageRequest(
                             message

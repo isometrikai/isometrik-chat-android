@@ -106,8 +106,8 @@ class GifSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageGifBinding>
                 ismSentMessageGifBinding.ivSelectedStatus.visibility =
                     View.GONE
                 if (message.isMessageSentSuccessfully) {
-                    ismSentMessageGifBinding.ivForward.visibility =
-                        View.VISIBLE
+//                    ismSentMessageGifBinding.ivForward.visibility =
+//                        View.VISIBLE
                     ismSentMessageGifBinding.ivForward.setOnClickListener { v: View? ->
                         messageActionCallback.forwardMessageRequest(
                             message

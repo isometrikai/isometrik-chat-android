@@ -105,8 +105,8 @@ class StickerSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageSticker
                 ismSentMessageStickerBinding.ivSelectedStatus.visibility =
                     View.GONE
                 if (message.isMessageSentSuccessfully) {
-                    ismSentMessageStickerBinding.ivForward.visibility =
-                        View.VISIBLE
+//                    ismSentMessageStickerBinding.ivForward.visibility =
+//                        View.VISIBLE
                     ismSentMessageStickerBinding.ivForward.setOnClickListener { v: View? ->
                         messageActionCallback.forwardMessageRequest(
                             message

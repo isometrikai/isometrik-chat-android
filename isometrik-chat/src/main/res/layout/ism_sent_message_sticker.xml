@@ -97,6 +97,7 @@
           android:layout_height="wrap_content"
           android:layout_marginEnd="@dimen/ism_dp_5"
           android:focusable="true"
+          android:visibility="gone"
           android:clickable="true"
           android:padding="@dimen/ism_dp_8"
           android:tint="@color/ism_forward_reaction_edited_grey"

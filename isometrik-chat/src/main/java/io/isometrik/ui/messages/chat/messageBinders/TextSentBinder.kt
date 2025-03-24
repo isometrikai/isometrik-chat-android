@@ -111,27 +111,27 @@ class TextSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageTextBindin
                     message.isSelected
                 ismSentMessageTextBinding.ivSelectedStatus.visibility =
                     View.VISIBLE
-                ismSentMessageTextBinding.ivForward.visibility =
-                    View.GONE
+//                ismSentMessageTextBinding.ivForward.visibility =
+//                    View.GONE
             } else {
                 ismSentMessageTextBinding.ivSelectedStatus.visibility =
                     View.GONE
                 if (message.isMessageSentSuccessfully) {
-                    ismSentMessageTextBinding.ivForward.visibility =
-                        View.VISIBLE
+//                    ismSentMessageTextBinding.ivForward.visibility =
+//                        View.VISIBLE
                     ismSentMessageTextBinding.ivForward.setOnClickListener { v: View? ->
                         messageActionCallback.forwardMessageRequest(
                             message
                         )
                     }
                 } else {
-                    ismSentMessageTextBinding.ivForward.visibility =
-                        View.GONE
+//                    ismSentMessageTextBinding.ivForward.visibility =
+//                        View.GONE
                 }
             }
             if (isMessagingDisabled) {
-                ismSentMessageTextBinding.ivForward.visibility =
-                    View.GONE
+//                ismSentMessageTextBinding.ivForward.visibility =
+//                    View.GONE
             }
             if (message.isQuotedMessage) {
                 ismSentMessageTextBinding.vParentMessage.root.visibility =

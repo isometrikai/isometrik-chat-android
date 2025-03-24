@@ -3358,10 +3358,10 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
     }
 
     override fun updateVisibilityOfObserversIcon() {
-        runOnUiThread {
-            ismActivityMessagesBinding!!.ivObservers.visibility =
-                View.VISIBLE
-        }
+//        runOnUiThread {
+//            ismActivityMessagesBinding!!.ivObservers.visibility =
+//                View.VISIBLE
+//        }
     }
 
     override fun onUserBlocked() {
@@ -3436,7 +3436,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
 
     override fun onJoinedAsObserverSuccessfully() {
         runOnUiThread {
-            ismActivityMessagesBinding!!.ivObservers.visibility = View.VISIBLE
+//            ismActivityMessagesBinding!!.ivObservers.visibility = View.VISIBLE
             updateShimmerVisibility(false)
         }
     }

@@ -103,8 +103,8 @@ class OfferSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageOfferBind
                 ismSentMessageOfferBinding.ivSelectedStatus.visibility =
                     View.GONE
                 if (message.isMessageSentSuccessfully) {
-                    ismSentMessageOfferBinding.ivForward.visibility =
-                        View.VISIBLE
+//                    ismSentMessageOfferBinding.ivForward.visibility =
+//                        View.VISIBLE
                     ismSentMessageOfferBinding.ivForward.setOnClickListener { v: View? ->
                         messageActionCallback.forwardMessageRequest(
                             message
