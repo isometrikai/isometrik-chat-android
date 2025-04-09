@@ -538,10 +538,14 @@ public class ConversationsModel {
                                     .getString(R.string.ism_details_searchable_tags);
                         }
 
-                        lastMessageText = IsometrikChatSdk.getInstance()
-                                .getContext()
-                                .getString(R.string.ism_updated_conversation_details,
-                                        lastMessage.getString("userName"), detailsUpdated.substring(2));
+                        if(detailsUpdated.length() > 2){
+                            lastMessageText = IsometrikChatSdk.getInstance()
+                                    .getContext()
+                                    .getString(R.string.ism_updated_conversation_details,
+                                            lastMessage.getString("userName"), detailsUpdated.substring(2));
+                        }else{
+                            lastMessageText = "Conversation updated";
+                        }
                         break;
                     }
 
