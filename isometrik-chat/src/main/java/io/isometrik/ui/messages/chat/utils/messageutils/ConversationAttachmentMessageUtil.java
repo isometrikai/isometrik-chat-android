@@ -3,6 +3,7 @@ package io.isometrik.ui.messages.chat.utils.messageutils;
 import android.util.Log;
 
 import io.isometrik.chat.enums.CustomMessageTypes;
+import io.isometrik.chat.enums.CustomTypeInfo;
 import io.isometrik.chat.response.message.utils.fetchmessages.Message;
 import io.isometrik.chat.response.message.utils.schemas.Attachment;
 import io.isometrik.chat.enums.MessageTypeUi;
@@ -521,6 +522,39 @@ public class ConversationAttachmentMessageUtil {
                             message.getMessageUpdated() != null);
                     break;
 
+                }
+
+                case Custom: {
+                    // Get custom type information
+                    CustomTypeInfo customTypeInfo = CustomMessageTypes.Companion.getCustomTypeInfo(message.getCustomType());
+                    
+                    // Create message model for custom type
+                    messagesModel = new MessagesModel(
+                        message.getMessageId(),
+                        selfMessage ? MessageTypeUi.CUSTOM_MESSAGE_SENT : MessageTypeUi.CUSTOM_MESSAGE_RECEIVED,
+                        customMessageType,
+                        selfMessage,
+                        message.getSentAt(),
+                        message.getParentMessageId() != null,
+                            TagUserUtil.parseMentionedUsers(message.getBody(),
+                                    ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
+                                            message.getMentionedUsers()), taggedUserCallback),
+                        message.getSenderInfo().getUserName(),
+                        message.getSenderInfo().getUserProfileImageUrl(),
+                        ReactionUtil.parseReactionMessages(message.getReactions()),
+                        true,
+                        null,
+                        (message.getParentMessageId() == null) ? null
+                            : (new OriginalReplyMessageUtil(message.getParentMessageId(),
+                            message.getMetaData())),
+                        message.getMessageType(),
+                        message.getMetaData(),
+                        message.isDeliveredToAll(),
+                        message.isReadByAll(),
+                        message.getConversationId(),
+                        message.getMessageUpdated() != null
+                    );
+                    break;
                 }
 
             }

@@ -423,6 +423,9 @@ class HandlePushRemote {
                                 context.getString(R.string.ism_offer_prefix)
                         DealComplete -> message =
                                 context.getString(R.string.ism_offer_prefix)
+
+                        Custom -> message =
+                            context.getString(R.string.ism_offer_prefix)
                     }
                     try {
                         if (IsometrikChatSdk.instance.userSession.userToken != null) {

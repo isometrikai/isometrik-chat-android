@@ -1,10 +1,8 @@
 package io.isometrik.chat.enums
 
-
 /**
  * The enum MessageType for UI in conversation Screen.
  */
-
 enum class MessageTypeUi(val value: Int) {
     TEXT_MESSAGE_SENT(0),
     PHOTO_MESSAGE_SENT(1),
@@ -27,8 +25,8 @@ enum class MessageTypeUi(val value: Int) {
     LOCATION_MESSAGE_RECEIVED(18),
     CONTACT_MESSAGE_RECEIVED(19),
     CONVERSATION_ACTION_MESSAGE(20),
-    REPLAY_MESSAGE_SENT (21),
-    REPLAY_MESSAGE_RECEIVED (22),
+    REPLAY_MESSAGE_SENT(21),
+    REPLAY_MESSAGE_RECEIVED(22),
     POST_MESSAGE_SENT(23),
     POST_MESSAGE_RECEIVED(24),
     OFFER_SENT(25),
@@ -56,11 +54,55 @@ enum class MessageTypeUi(val value: Int) {
     RECORD_VIDEO_SENT(47),
     CAMERA_PHOTO_SENT(48),
     PAYMENT_MESSAGE_SENT(49),
-    PAYMENT_MESSAGE_RECEIVED(50);
+    PAYMENT_MESSAGE_RECEIVED(50),
+    CUSTOM_MESSAGE_SENT(51),
+    CUSTOM_MESSAGE_RECEIVED(52);
 
     companion object {
+        private val customTypes = mutableMapOf<String, MessageTypeUi>()
+
+        /**
+         * Register a custom message type for UI.
+         * @param typeName The name of the custom message type
+         * @param isSent Whether the message is sent or received
+         * @return The registered MessageTypeUi instance
+         */
+        @JvmStatic
+        fun registerCustomType(typeName: String, isSent: Boolean): MessageTypeUi {
+            val customType = if (isSent) CUSTOM_MESSAGE_SENT else CUSTOM_MESSAGE_RECEIVED
+            customTypes[typeName] = customType
+            return customType
+        }
+
+        /**
+         * Get the enum type from its integer value.
+         * @param value the integer value
+         * @return the matching enum type or CONVERSATION_ACTION_MESSAGE if no match is found
+         */
+        @JvmStatic
         fun fromValue(value: Int): MessageTypeUi {
-            return values().find { it.value == value }?: CONVERSATION_ACTION_MESSAGE
+            return values().find { it.value == value } ?: CONVERSATION_ACTION_MESSAGE
+        }
+
+        /**
+         * Get the UI message type for a custom message type.
+         * @param customType The custom message type
+         * @param isSent Whether the message is sent or received
+         * @return The corresponding UI message type
+         */
+        @JvmStatic
+        fun getUiTypeForCustomType(customType: String, isSent: Boolean): MessageTypeUi {
+            return if (isSent) CUSTOM_MESSAGE_SENT else CUSTOM_MESSAGE_RECEIVED
+        }
+
+        /**
+         * Check if a message type is a custom type.
+         * @param type The message type to check
+         * @return true if it's a custom type, false otherwise
+         */
+        @JvmStatic
+        fun isCustomType(type: MessageTypeUi): Boolean {
+            return type == CUSTOM_MESSAGE_SENT || type == CUSTOM_MESSAGE_RECEIVED
         }
     }
 }

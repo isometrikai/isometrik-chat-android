@@ -1,4 +1,3 @@
-
 # Isometrik Chat Android
 
 A simple chat library for Android applications.
@@ -350,6 +349,22 @@ Provide list of exact message that should not show in app
 
 ChatConfig.dontShowToastList = arrayListOf("conversation not found")
 
+```
+
+## Custom Message Types
+
+The SDK allows you to register and handle custom message types for your chat application. This feature enables you to extend the chat functionality with your own message types while maintaining compatibility with the existing system.
+
+### Registering Custom Message Types
+
+To register a custom message type, use the `registerCustomType` method from `CustomMessageTypes`:
+
+```kotlin
+// Register a custom message type
+CustomMessageTypes.registerCustomType(
+    typeName = "POLL",  // The name of your custom message type
+    value = "poll_message"  // The value string for the custom message type
+)
 ```
 
 

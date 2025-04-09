@@ -3,6 +3,7 @@ package io.isometrik.ui.messages.chat.utils.messageutils;
 import android.util.Log;
 
 import io.isometrik.chat.enums.CustomMessageTypes;
+import io.isometrik.chat.enums.CustomTypeInfo;
 import io.isometrik.chat.events.conversation.cleanup.ClearConversationEvent;
 import io.isometrik.chat.events.conversation.config.UpdateConversationDetailsEvent;
 import io.isometrik.chat.events.conversation.config.UpdateConversationImageEvent;
@@ -905,6 +906,37 @@ int size= members.size();
                   false);
 
           break;
+        }
+        case Custom: {
+            // Get custom type information
+            CustomTypeInfo customTypeInfo = CustomMessageTypes.Companion.getCustomTypeInfo(sendMessageEvent.getCustomType());
+            
+            // Create message model for custom type
+            messageModel = new MessagesModel(
+                sendMessageEvent.getMessageId(),
+                selfMessage ? MessageTypeUi.CUSTOM_MESSAGE_SENT : MessageTypeUi.CUSTOM_MESSAGE_RECEIVED,
+                customMessageType,
+                selfMessage,
+                sendMessageEvent.getSentAt(),
+                sendMessageEvent.getParentMessageId() != null,
+                    TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
+                            sendMessageEvent.getMentionedUsers(), taggedUserCallback),
+                sendMessageEvent.getSenderName(),
+                sendMessageEvent.getSenderProfileImageUrl(),
+                null,
+                true,
+                null,
+                (sendMessageEvent.getParentMessageId() == null) ? null
+                    : (new OriginalReplyMessageUtil(sendMessageEvent.getParentMessageId(),
+                    sendMessageEvent.getMetaData())),
+                sendMessageEvent.getMessageType(),
+                sendMessageEvent.getMetaData(),
+                false,
+                false,
+                sendMessageEvent.getConversationId(),
+                false
+            );
+            break;
         }
       }
     }

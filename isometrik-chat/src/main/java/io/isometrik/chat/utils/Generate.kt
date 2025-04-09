@@ -11,7 +11,6 @@ fun lastMessage(sendMessageEvent: SendMessageEvent): String? {
 
     when (CustomMessageTypes.fromValue(sendMessageEvent.customType)) {
         Text -> {
-
             lastMessageText = sendMessageEvent.body
         }
 
@@ -52,7 +51,6 @@ fun lastMessage(sendMessageEvent: SendMessageEvent): String? {
 
         Contact -> {
             lastMessageText = IsometrikChatSdk.instance.context.getString(R.string.ism_contact)
-
         }
 
         Reply -> lastMessageText =
@@ -99,6 +97,15 @@ fun lastMessage(sendMessageEvent: SendMessageEvent): String? {
 
         DealComplete -> lastMessageText =
             IsometrikChatSdk.instance.context.getString(R.string.ism_offer)
+
+        Custom -> {
+            // Handle custom message types
+            val customTypeInfo = CustomMessageTypes.getCustomTypeInfo(sendMessageEvent.customType)
+            lastMessageText = // Use display name if available, otherwise use type name
+                customTypeInfo?.typeName
+                    ?: (// Fallback to message body or default string
+                            sendMessageEvent.body ?: IsometrikChatSdk.instance.context.getString(R.string.ism_custom_message))
+        }
     }
 
     return lastMessageText

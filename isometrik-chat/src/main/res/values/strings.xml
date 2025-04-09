@@ -638,4 +638,7 @@
 
     <string name="ism_offer">Offer</string>
 
+    <!-- Custom Messages -->
+    <string name="ism_custom_message">Custom Message</string>
+
 </resources>

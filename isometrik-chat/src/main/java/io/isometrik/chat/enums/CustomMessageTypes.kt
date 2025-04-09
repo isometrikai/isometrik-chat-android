@@ -1,6 +1,14 @@
 package io.isometrik.chat.enums
 
 /**
+ * Data class to store information about custom message types.
+ */
+data class CustomTypeInfo(
+    val typeName: String,
+    val value: String
+)
+
+/**
  * The enum Custom message types for various media types.
  */
 enum class CustomMessageTypes(
@@ -120,10 +128,12 @@ enum class CustomMessageTypes(
      * CancelBuyDirect custom message types.
      */
     CancelBuyDirect("CANCEL_BUYDIRECT_REQUEST"),
+
     /**
      * RejectBuyDirect custom message types.
      */
     RejectBuyDirect("REJECT_BUYDIRECT_REQUEST"),
+
     /**
      * PaymentEscrowed custom message types.
      */
@@ -132,18 +142,67 @@ enum class CustomMessageTypes(
     /**
      * DealComplete custom message types.
      */
-    DealComplete("DEAL_COMPLETE");
+    DealComplete("DEAL_COMPLETE"),
+
+    /**
+     * Custom message type for dynamic types.
+     */
+    Custom("CUSTOM_MESSAGE_TYPE");
 
     companion object {
+        private val customTypes = mutableMapOf<String, CustomTypeInfo>()
+
+        /**
+         * Register a custom message type.
+         * @param typeName The name of the custom message type
+         * @param value The value string for the custom message type
+         * @return The registered CustomMessageTypes instance
+         */
+        @JvmStatic
+        fun registerCustomType(typeName: String, value: String): CustomMessageTypes {
+            customTypes[value] = CustomTypeInfo(typeName, value)
+            return CustomMessageTypes.Custom
+        }
+
         /**
          * Get the enum type from its string value.
          *
          * @param value the string value
-         * @return the matching enum type or null if no match is found
+         * @return the matching enum type or Text if no match is found
          */
+        @JvmStatic
         fun fromValue(value: String): CustomMessageTypes {
-            return values().find { it.value == value }?:Text
+            return values().find { it.value == value } 
+                ?: if (customTypes.containsKey(value)) Custom else Text
+        }
+
+        /**
+         * Check if a message type is a custom type.
+         * @param value The value to check
+         * @return true if it's a custom type, false otherwise
+         */
+        @JvmStatic
+        fun isCustomType(value: String): Boolean {
+            return customTypes.containsKey(value)
+        }
+
+        /**
+         * Get custom type information.
+         * @param value The value of the custom type
+         * @return CustomTypeInfo if found, null otherwise
+         */
+        @JvmStatic
+        fun getCustomTypeInfo(value: String): CustomTypeInfo? {
+            return customTypes[value]
+        }
+
+        /**
+         * Get all registered custom types.
+         * @return Map of custom type values to their CustomTypeInfo
+         */
+        @JvmStatic
+        fun getCustomTypes(): Map<String, CustomTypeInfo> {
+            return customTypes.toMap()
         }
     }
-
 }
