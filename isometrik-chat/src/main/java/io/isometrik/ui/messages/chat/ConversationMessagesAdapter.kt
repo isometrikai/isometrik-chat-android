@@ -80,15 +80,21 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
 
         log("ChatSDK:", "onBindViewHolder found $binder")
 
-        binder.bindData(
-            holder.itemView.context,
-            holder.binding,
-            message,
-            position,
-            multipleMessagesSelectModeOn,
-            isMessagingDisabled,
-            messageActionCallback
-        )
+        try {
+            binder.bindData(
+                holder.itemView.context,
+                holder.binding,
+                message,
+                position,
+                multipleMessagesSelectModeOn,
+                isMessagingDisabled,
+                messageActionCallback
+            )
+        }catch (e : Exception){
+            log("ChatSDK:", "onBindViewHolder Exception: $e")
+
+        }
+        log("ChatSDK:", "onBindViewHolder finish ")
     }
 
 

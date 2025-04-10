@@ -36,6 +36,11 @@ public class ConversationAttachmentMessageUtil {
         MessagesModel messagesModel = null;
 
         if (message.getCustomType() != null) {
+            LogManger.INSTANCE.log("ChatSDK:"," message userid : "+message.getSenderInfo().getUserId());
+            LogManger.INSTANCE.log("ChatSDK:"," database userid : "+IsometrikChatSdk.getInstance()
+                    .getUserSession()
+                    .getUserId());
+
             boolean selfMessage = IsometrikChatSdk.getInstance()
                     .getUserSession()
                     .getUserId()

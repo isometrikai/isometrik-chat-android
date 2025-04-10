@@ -65,15 +65,15 @@ class ChatListActivity : AppCompatActivity() {
         )
 
 
-        MessageBinderRegistry.registerBinder(
-            MessageTypeUi.PAYMENT_ESCROWED_SENT,
-            CustomTextSentBinder()
-        )
-
-        MessageBinderRegistry.registerBinder(
-            MessageTypeUi.TEXT_MESSAGE_RECEIVED,
-            CustomTextSentBinder()
-        )
+//        MessageBinderRegistry.registerBinder(
+//            MessageTypeUi.PAYMENT_ESCROWED_SENT,
+//            CustomTextSentBinder()
+//        )
+//
+//        MessageBinderRegistry.registerBinder(
+//            MessageTypeUi.TEXT_MESSAGE_RECEIVED,
+//            CustomTextSentBinder()
+//        )
 
         class MyCustomTopViewHandler : ChatTopViewHandler {
 
