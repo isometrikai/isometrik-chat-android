@@ -1,10 +1,10 @@
 package io.isometrik.ui.messages.chat
 
-import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import io.isometrik.chat.enums.MessageTypeUi
+import io.isometrik.chat.utils.LogManger.log
 import io.isometrik.ui.messages.action.MessageActionCallback
 import io.isometrik.ui.messages.chat.common.MessageBinderRegistry
 import io.isometrik.ui.messages.chat.messageBinders.MessageItemBinder
@@ -61,6 +61,7 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
+        log("ChatSDK:", "onCreateViewHolder $viewType")
         val binder = MessageBinderRegistry.getBinder(MessageTypeUi.fromValue(viewType)) as? MessageItemBinder<T, VB>
             ?: itemBinders[MessageTypeUi.fromValue(viewType)] ?: defaultBinder
         val binding = binder.createBinding(parent, viewType)
@@ -70,10 +71,14 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         val message = messages[position]
         val viewType = getItemViewType(position)
+        log("ChatSDK:", "onBindViewHolder $viewType")
+
         val binder =
             (MessageBinderRegistry.getBinder(MessageTypeUi.fromValue(viewType)) ?: itemBinders[MessageTypeUi.fromValue(viewType)] ?: defaultBinder)
                     as? MessageItemBinder<T, VB>
                 ?: throw IllegalArgumentException("Invalid binder for viewType: $viewType")
+
+        log("ChatSDK:", "onBindViewHolder found $binder")
 
         binder.bindData(
             holder.itemView.context,

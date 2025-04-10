@@ -424,7 +424,7 @@ class HandlePushRemote {
                         DealComplete -> message =
                                 context.getString(R.string.ism_offer_prefix)
 
-                        Custom -> message =
+                        else -> message =
                             context.getString(R.string.ism_offer_prefix)
                     }
                     try {

@@ -2,8 +2,9 @@ package io.isometrik.ui.messages.chat.common
 
 import io.isometrik.chat.enums.CustomMessageTypes
 import io.isometrik.chat.enums.MessageTypeUi
+import io.isometrik.chat.utils.LogManger
+import io.isometrik.chat.utils.LogManger.log
 import io.isometrik.ui.messages.chat.messageBinders.MessageItemBinder
-import io.isometrik.ui.messages.chat.MessagesModel
 
 object MessageBinderRegistry {
     private val binders = mutableMapOf<MessageTypeUi, MessageItemBinder<*, *>>()
@@ -25,10 +26,13 @@ object MessageBinderRegistry {
      * @return The registered binder or null if not found
      */
     fun getBinder(messageType: MessageTypeUi, customType: String? = null, isSent: Boolean = true): MessageItemBinder<*, *>? {
-        // First check for custom type binder
+        log("ChatSDK:", "getBinder() messageType: $messageType")
         if (messageType == MessageTypeUi.CUSTOM_MESSAGE_SENT || messageType == MessageTypeUi.CUSTOM_MESSAGE_RECEIVED) {
             customType?.let {
-                return CustomMessageTypes.getCustomBinder(it, isSent)
+                 val binder = CustomMessageTypes.getCustomBinder(it, messageType == MessageTypeUi.CUSTOM_MESSAGE_SENT)
+                log("ChatSDK:", "getBinder() customType: $customType")
+
+                return binder
             }
         }
         // Fall back to regular binder

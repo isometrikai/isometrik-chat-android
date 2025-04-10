@@ -42,10 +42,10 @@ public class ConversationAttachmentMessageUtil {
                     .equals(message.getSenderInfo().getUserId());
 
             //selfMessage = false;
-            LogManger.INSTANCE.log("real:prepareMessageAttachmentModel"," "+message.getCustomType());
+            LogManger.INSTANCE.log("ChatSDK:"," "+message.getCustomType());
 
             CustomMessageTypes customMessageType = CustomMessageTypes.Companion.fromValue(message.getCustomType());
-
+            LogManger.INSTANCE.log("ChatSDK:","customMessageType "+customMessageType);
 
             switch (customMessageType) {
 
@@ -524,7 +524,9 @@ public class ConversationAttachmentMessageUtil {
 
                 }
 
-                case Custom: {
+                 default: {
+                     LogManger.INSTANCE.log("ChatSDK:","default prepare start");
+
                     // Get custom type information
                     CustomTypeInfo customTypeInfo = CustomMessageTypes.Companion.getCustomTypeInfo(message.getCustomType());
                     
@@ -554,6 +556,9 @@ public class ConversationAttachmentMessageUtil {
                         message.getConversationId(),
                         message.getMessageUpdated() != null
                     );
+
+                     LogManger.INSTANCE.log("ChatSDK:","default prepare finish");
+
                     break;
                 }
 

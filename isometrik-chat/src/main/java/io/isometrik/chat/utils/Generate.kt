@@ -98,7 +98,7 @@ fun lastMessage(sendMessageEvent: SendMessageEvent): String? {
         DealComplete -> lastMessageText =
             IsometrikChatSdk.instance.context.getString(R.string.ism_offer)
 
-        Custom -> {
+        else -> {
             // Handle custom message types
             val customTypeInfo = CustomMessageTypes.getCustomTypeInfo(sendMessageEvent.customType)
             lastMessageText = // Use display name if available, otherwise use type name

@@ -907,7 +907,7 @@ int size= members.size();
 
           break;
         }
-        case Custom: {
+         default: {
             // Get custom type information
             CustomTypeInfo customTypeInfo = CustomMessageTypes.Companion.getCustomTypeInfo(sendMessageEvent.getCustomType());
             
