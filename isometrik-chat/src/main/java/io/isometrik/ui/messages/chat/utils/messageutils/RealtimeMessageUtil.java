@@ -936,6 +936,8 @@ int size= members.size();
                 sendMessageEvent.getConversationId(),
                 false
             );
+           messageModel.setDynamicCustomType(sendMessageEvent.getCustomType());
+
             break;
         }
       }

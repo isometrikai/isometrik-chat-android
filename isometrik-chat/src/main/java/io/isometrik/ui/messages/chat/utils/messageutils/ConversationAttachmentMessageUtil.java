@@ -562,6 +562,7 @@ public class ConversationAttachmentMessageUtil {
                         message.getMessageUpdated() != null
                     );
 
+                     messagesModel.setDynamicCustomType(message.getCustomType());
                      LogManger.INSTANCE.log("ChatSDK:","default prepare finish");
 
                     break;
