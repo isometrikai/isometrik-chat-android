@@ -367,6 +367,63 @@ CustomMessageTypes.registerCustomType(
 )
 ```
 
+### Registering Custom Views for Custom Message Types
+
+You can register custom views for your custom message types using the `registerCustomBinder` method:
+
+```kotlin
+// Create your custom binders
+class PollMessageSentBinder : MessageItemBinder<MessagesModel, PollMessageBinding> {
+    override fun createBinding(parent: ViewGroup): PollMessageBinding {
+        return PollMessageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    }
+
+    override fun bindData(context: Context, binding: PollMessageBinding, data: MessagesModel) {
+        // Bind your custom view data here
+        binding.pollQuestion.text = data.textMessage
+        // ... bind other data
+    }
+}
+
+class PollMessageReceivedBinder : MessageItemBinder<MessagesModel, PollMessageBinding> {
+    // Similar implementation for received messages
+}
+
+// Register the binders for your custom type
+CustomMessageTypes.registerCustomBinder(
+    value = "poll_message",
+    sentBinder = PollMessageSentBinder(),
+    receivedBinder = PollMessageReceivedBinder()
+)
+```
+
+### Example Usage
+
+Here's a complete example of how to use custom message types with custom views:
+
+```kotlin
+// Register the custom type
+CustomMessageTypes.registerCustomType(
+    typeName = "POLL",
+    value = "poll_message"
+)
+
+// Register custom binders
+CustomMessageTypes.registerCustomBinder(
+    value = "poll_message",
+    sentBinder = PollMessageSentBinder(),
+    receivedBinder = PollMessageReceivedBinder()
+)
+
+```
+
+### Best Practices
+
+1. Choose descriptive and unique `typeName` values that clearly indicate the purpose of your custom message type
+2. Use consistent `value` strings across your application for the same type of custom message
+3. Include relevant metadata in the message to support your custom message type's functionality
+4. Create separate binders for sent and received messages to handle different UI requirements
+5. Make sure your custom views handle all possible states of the message (loading, error, etc.)
 
 # Technical details
 

@@ -1,5 +1,8 @@
 package io.isometrik.chat.enums
 
+import io.isometrik.ui.messages.chat.MessagesModel
+import io.isometrik.ui.messages.chat.messageBinders.MessageItemBinder
+
 /**
  * Data class to store information about custom message types.
  */
@@ -151,6 +154,7 @@ enum class CustomMessageTypes(
 
     companion object {
         private val customTypes = mutableMapOf<String, CustomTypeInfo>()
+        private val customTypeBinders = mutableMapOf<String, MessageItemBinder<out MessagesModel, *>>()
 
         /**
          * Register a custom message type.
@@ -162,6 +166,30 @@ enum class CustomMessageTypes(
         fun registerCustomType(typeName: String, value: String): CustomMessageTypes {
             customTypes[value] = CustomTypeInfo(typeName, value)
             return CustomMessageTypes.Custom
+        }
+
+        /**
+         * Register a custom binder for a custom message type.
+         * @param value The value of the custom type
+         * @param sentBinder The binder for sent messages
+         * @param receivedBinder The binder for received messages
+         */
+        @JvmStatic
+        fun registerCustomBinder(value: String, sentBinder: MessageItemBinder<out MessagesModel, *>, receivedBinder: MessageItemBinder<out MessagesModel, *>) {
+            customTypeBinders[value] = sentBinder
+            customTypeBinders["${value}_received"] = receivedBinder
+        }
+
+        /**
+         * Get the binder for a custom message type.
+         * @param value The value of the custom type
+         * @param isSent Whether the message is sent or received
+         * @return The registered binder or null if not found
+         */
+        @JvmStatic
+        fun getCustomBinder(value: String, isSent: Boolean): MessageItemBinder<*, *>? {
+            val key = if (isSent) value else "${value}_received"
+            return customTypeBinders[key]
         }
 
         /**

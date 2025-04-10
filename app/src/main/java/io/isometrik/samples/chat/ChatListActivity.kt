@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import io.isometrik.chat.enums.CustomMessageTypes
+import io.isometrik.chat.enums.MessageTypeUi
 import io.isometrik.chat.response.conversation.utils.ConversationDetailsUtil
 import io.isometrik.samples.chat.databinding.ChatItemBinding
 import io.isometrik.samples.chat.databinding.CustomTopViewBinding
@@ -19,6 +21,7 @@ import io.isometrik.ui.messages.chat.MessagesModel
 import io.isometrik.ui.messages.chat.common.AttachmentsConfig
 import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.messages.chat.common.ChatTopViewHandler
+import io.isometrik.ui.messages.chat.common.MessageBinderRegistry
 import io.tus.java.client.TusClient
 import java.net.URL
 
@@ -48,15 +51,29 @@ class ChatListActivity : AppCompatActivity() {
         } catch (e: Exception) {
         }
 
-//        MessageBinderRegistry.registerBinder(
-//            MessageTypeUi.PAYMENT_ESCROWED_SENT,
-//            CustomTextSentBinder()
-//        )
 
-//        MessageBinderRegistry.registerBinder(
-//            MessageTypeUi.TEXT_MESSAGE_RECEIVED,
-//            CustomTextSentBinder()
-//        )
+        CustomMessageTypes.registerCustomType(
+            typeName = "POLL",
+            value = "poll_message"
+        )
+
+      // Register custom binders
+        CustomMessageTypes.registerCustomBinder(
+            value = "poll_message",
+            sentBinder = CustomTextSentBinder(),
+            receivedBinder = CustomTextSentBinder()
+        )
+
+
+        MessageBinderRegistry.registerBinder(
+            MessageTypeUi.PAYMENT_ESCROWED_SENT,
+            CustomTextSentBinder()
+        )
+
+        MessageBinderRegistry.registerBinder(
+            MessageTypeUi.TEXT_MESSAGE_RECEIVED,
+            CustomTextSentBinder()
+        )
 
         class MyCustomTopViewHandler : ChatTopViewHandler {
 
