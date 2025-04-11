@@ -3523,9 +3523,14 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         conversationDetailsUtil: ConversationDetailsUtil?,
         messages: List<MessagesModel>
     ) {
-        for ( message in messages){
-            log("ChatSDK:", "onMessageUpdated  customMessageType: ${message.customMessageType.value}  dynamicCustomType: ${message.dynamicCustomType}")
+        try {
+            for ( message in messages){
+                log("ChatSDK:", "onMessageUpdated  customMessageType: ${message?.customMessageType?.value}  dynamicCustomType: ${message?.dynamicCustomType}")
+            }
+        }catch (e : Exception){
+            log("ChatSDK:", "onMessageUpdated  customMessageType: Exception: "+e)
         }
+
 
         topView?.let { view ->
             topViewHandler?.updateTopView(view, conversationDetailsUtil, messages)
