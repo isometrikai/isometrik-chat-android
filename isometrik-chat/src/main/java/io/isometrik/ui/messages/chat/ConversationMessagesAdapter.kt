@@ -128,10 +128,21 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
         val message = messages[position]
         val viewType = getItemViewType(position)
         log("ChatSDK:", "onBindViewHolder $viewType")
+        log("ChatSDK:", "onBindViewHolder MessageTypeUi.values().size ${MessageTypeUi.values().size}")
 
-        val messageType = MessageTypeUi.fromValue(viewType)
-        val messagesModel = message as? MessagesModel
-        val binder = getBinder(messageType, messagesModel?.dynamicCustomType)
+        val (messageType, customType) = if (viewType > MessageTypeUi.values().size) {
+            // This is a custom message type
+            val customType = customMessageTypeMap.entries.find { it.value == viewType }?.key
+            val baseType = if (customType?.contains("sent") == true) {
+                MessageTypeUi.CUSTOM_MESSAGE_SENT
+            } else {
+                MessageTypeUi.CUSTOM_MESSAGE_RECEIVED
+            }
+            Pair(baseType, customType)
+        } else {
+            Pair(MessageTypeUi.fromValue(viewType), null)
+        }
+        val binder = getBinder(messageType, customType)
 
         log("ChatSDK:", "onBindViewHolder found $binder")
 

@@ -3523,6 +3523,10 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         conversationDetailsUtil: ConversationDetailsUtil?,
         messages: List<MessagesModel>
     ) {
+        for ( message in messages){
+            log("ChatSDK:", "onMessageUpdated  customMessageType: ${message.customMessageType.value}  dynamicCustomType: ${message.dynamicCustomType}")
+        }
+
         topView?.let { view ->
             topViewHandler?.updateTopView(view, conversationDetailsUtil, messages)
         }
