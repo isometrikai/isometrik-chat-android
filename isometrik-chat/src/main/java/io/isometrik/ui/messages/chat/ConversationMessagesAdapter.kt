@@ -33,6 +33,8 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
     private val messageActionCallback: MessageActionCallback
 ) : RecyclerView.Adapter<ConversationMessagesAdapter<T, VB>.MessageViewHolder>() {
 
+    private val customMessageTypeMap = mutableMapOf<String, Int>()
+    private var nextCustomTypeId = MessageTypeUi.values().size + 10
     inner class MessageViewHolder(val binding: VB) : RecyclerView.ViewHolder(binding.root)
 
     //private final float thumbnailSizeMultiplier = Constants.THUMBNAIL_SIZE_MULTIPLIER;
@@ -81,16 +83,19 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
     override fun getItemViewType(position: Int): Int {
         val message = messages[position]
         return (message as? MessagesModel)?.let { messagesModel ->
-            // For custom messages, generate a unique view type based on dynamicCustomType
-            if (messagesModel.messageTypeUi == MessageTypeUi.CUSTOM_MESSAGE_SENT || 
-                messagesModel.messageTypeUi == MessageTypeUi.CUSTOM_MESSAGE_RECEIVED) {
-                // Generate a unique view type by combining the base type and a hash of the custom type
-                val baseType = messagesModel.messageTypeUi.value
-                val customTypeHash = messagesModel.dynamicCustomType?.hashCode() ?: 0
-                // Use bit shifting to combine the values, ensuring they don't overlap
-                return (baseType shl 16) or (customTypeHash and 0xFFFF)
+            log("ChatSDK:", "getItemViewType() messagesModel.messageTypeUi: ${messagesModel.messageTypeUi}")
+
+            when (messagesModel.messageTypeUi) {
+                MessageTypeUi.CUSTOM_MESSAGE_SENT, MessageTypeUi.CUSTOM_MESSAGE_RECEIVED -> {
+                    log("ChatSDK:", "getItemViewType() messagesModel.dynamicCustomType: ${messagesModel.dynamicCustomType}")
+
+                    messagesModel.dynamicCustomType?.let { customType ->
+                        // Get or create a unique ID for this custom type
+                        customMessageTypeMap.getOrPut(customType) { nextCustomTypeId++ }
+                    } ?: messagesModel.messageTypeUi.value
+                }
+                else -> messagesModel.messageTypeUi.value
             }
-            return messagesModel.messageTypeUi.value
         } ?: 20 // conversation type
     }
 
@@ -99,26 +104,21 @@ class ConversationMessagesAdapter<T, VB : ViewBinding>(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
-        log("ChatSDK:", "onCreateViewHolder $viewType")
-        
-        // For custom messages, extract the original message type and custom type
-        val (messageType, customType) = if ((viewType shr 16) == MessageTypeUi.CUSTOM_MESSAGE_SENT.value || 
-                            (viewType shr 16) == MessageTypeUi.CUSTOM_MESSAGE_RECEIVED.value) {
-            // Extract the base message type and custom type
-            val baseType = MessageTypeUi.fromValue(viewType shr 16)
-            // Find the message with this custom type to get the actual dynamicCustomType
-            val customType = messages.find { message ->
-                (message as? MessagesModel)?.let { model ->
-                    model.messageTypeUi == baseType && 
-                    (model.dynamicCustomType?.hashCode() ?: 0) == (viewType and 0xFFFF)
-                } ?: false
-            }?.let { (it as? MessagesModel)?.dynamicCustomType }
-            
+        log("ChatSDK:", "onCreateViewHolder $viewType  customMessageTypeMap.size: ${customMessageTypeMap.size}")
+
+        val (messageType, customType) = if (viewType > MessageTypeUi.values().size) {
+            // This is a custom message type
+            val customType = customMessageTypeMap.entries.find { it.value == viewType }?.key
+            val baseType = if (customType?.contains("sent") == true) {
+                MessageTypeUi.CUSTOM_MESSAGE_SENT
+            } else {
+                MessageTypeUi.CUSTOM_MESSAGE_RECEIVED
+            }
             Pair(baseType, customType)
         } else {
             Pair(MessageTypeUi.fromValue(viewType), null)
         }
-        
+
         val binder = getBinder(messageType, customType)
         val binding = binder.createBinding(parent, viewType)
         return MessageViewHolder(binding)

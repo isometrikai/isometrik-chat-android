@@ -22,12 +22,11 @@ import io.isometrik.ui.messages.chat.common.AttachmentsConfig
 import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.messages.chat.common.ChatTopViewHandler
 import io.isometrik.ui.messages.chat.common.MessageBinderRegistry
-import io.tus.java.client.TusClient
 import java.net.URL
 
 
 class ChatListActivity : AppCompatActivity() {
-    private lateinit var client: TusClient
+//    private lateinit var client: TusClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,29 +36,29 @@ class ChatListActivity : AppCompatActivity() {
             loadChatFragment()
         }
 
-        try {
-            val pref = getSharedPreferences("tus", 0)
-            client = TusClient()
-            client.setUploadCreationURL(URL("url"))
-            // Set custom headers directly on the TUS client
-            val headers: MutableMap<String, String> = HashMap()
-            headers["authorization"] = MyApplication.getInstance().getApiToken()
-            headers["lang"] = "en"
-            // Set the headers on the TUS client
-            client.setHeaders(headers)
-            client.enableResuming(TusPreferencesURLStore(pref))
-        } catch (e: Exception) {
-        }
+//        try {
+//            val pref = getSharedPreferences("tus", 0)
+//            client = TusClient()
+//            client.setUploadCreationURL(URL("url"))
+//            // Set custom headers directly on the TUS client
+//            val headers: MutableMap<String, String> = HashMap()
+//            headers["authorization"] = MyApplication.getInstance().getApiToken()
+//            headers["lang"] = "en"
+//            // Set the headers on the TUS client
+//            client.setHeaders(headers)
+//            client.enableResuming(TusPreferencesURLStore(pref))
+//        } catch (e: Exception) {
+//        }
 
 
         CustomMessageTypes.registerCustomType(
-            typeName = "POLL",
-            value = "poll_message"
+            typeName = "SimpleText",
+            value = "AttachmentMessage:Text"
         )
 
       // Register custom binders
         CustomMessageTypes.registerCustomBinder(
-            value = "poll_message",
+            value = "AttachmentMessage:Text",
             sentBinder = CustomTextSentBinder(),
             receivedBinder = CustomTextSentBinder()
         )
