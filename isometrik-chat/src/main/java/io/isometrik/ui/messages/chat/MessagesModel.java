@@ -1571,6 +1571,7 @@ public class MessagesModel implements Serializable {
         this.readByAll = readByAll;
         this.conversationId = conversationId;
         this.editedMessage = editedMessage;
+        this.metaData = messageMetadata;
     }
 
     /**
