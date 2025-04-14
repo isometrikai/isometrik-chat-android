@@ -417,6 +417,14 @@ CustomMessageTypes.registerCustomBinder(
 
 ```
 
+
+## Update existing message with new data in ChatScreen
+
+```kotlin
+    ChatConfig.replaceMessageModelInChatScreen(newMessagesModel)
+
+```
+
 ### Best Practices
 
 1. Choose descriptive and unique `typeName` values that clearly indicate the purpose of your custom message type

@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import io.isometrik.chat.R
 import io.isometrik.chat.utils.Constants
 import io.isometrik.ui.messages.chat.ConversationMessagesActivity
+import io.isometrik.ui.messages.chat.MessagesModel
 
 object ChatConfig {
     var mqttConnectionUrl: String? = null
@@ -46,5 +47,12 @@ object ChatConfig {
 
     fun updateBottomTypingView(makeVisible : Boolean){
         _typingUiState.value = makeVisible
+    }
+
+    private val _messageModelReplace = MutableLiveData<MessagesModel>()
+    val messageModelReplace: LiveData<MessagesModel> get() = _messageModelReplace
+
+    fun replaceMessageModelInChatScreen(newMessagesModel: MessagesModel){
+        _messageModelReplace.value = newMessagesModel
     }
 }
