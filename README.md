@@ -318,6 +318,9 @@ ChatConfig.hideVideoCallOption = true
 ChatConfig.hideCaptureCameraOption = true
 ChatConfig.hideRecordAudioOption = true
 
+// if conversation initiated but not started then don't show in UI
+ChatConfig.hideNotStartedConversationInChatList = true
+
 ```
 Realtime update view
 

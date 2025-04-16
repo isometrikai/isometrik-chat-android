@@ -54,6 +54,7 @@ import io.isometrik.chat.response.message.utils.fetchmessages.Config;
 import io.isometrik.chat.response.message.utils.fetchmessages.Details;
 import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.R;
+import io.isometrik.ui.messages.chat.common.ChatConfig;
 import io.isometrik.ui.messages.reaction.util.ReactionPlaceHolderIconHelper;
 import io.isometrik.chat.utils.Constants;
 import io.isometrik.chat.utils.TimeUtil;
@@ -334,24 +335,29 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
                 int size = conversations.size();
 
                 for (int i = 0; i < size; i++) {
-
-                  conversationsModels.add(
-                      new ConversationsModel(conversations.get(i), false, false));
+                  try {
+                    if (ChatConfig.INSTANCE.getHideNotStartedConversationInChatList() && conversations.get(i) != null && conversations.get(i).getLastMessageDetails() != null && conversations.get(i).getLastMessageDetails().has("action") && conversations.get(i).getLastMessageDetails().getString("action").equals("conversationCreated")) {
+                   // if conversation initiated but not started then don't show in UI
+                    } else {
+                      conversationsModels.add(new ConversationsModel(conversations.get(i), false, false));
+                    }
+                  } catch (Exception e) {
+                    conversationsModels.add(new ConversationsModel(conversations.get(i), false, false));
+                    e.printStackTrace();
+                  }
                 }
                 if (size < PAGE_SIZE) {
 
                   isLastPage = true;
                 }
                 if (conversationsListView != null) {
-                  conversationsListView.onConversationsFetchedSuccessfully(conversationsModels,
-                      onScroll);
+                  conversationsListView.onConversationsFetchedSuccessfully(conversationsModels, onScroll);
                 }
               } else {
                 if (!onScroll) {
                   //No conversations found
                   if (conversationsListView != null) {
-                    conversationsListView.onConversationsFetchedSuccessfully(new ArrayList<>(),
-                        false);
+                    conversationsListView.onConversationsFetchedSuccessfully(new ArrayList<>(), false);
                   }
                 } else {
                   isLastPage = true;
@@ -362,8 +368,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
                 if (!onScroll) {
                   //No conversations found
                   if (conversationsListView != null) {
-                    conversationsListView.onConversationsFetchedSuccessfully(new ArrayList<>(),
-                        false);
+                    conversationsListView.onConversationsFetchedSuccessfully(new ArrayList<>(), false);
                   }
                 }
               } else {

@@ -3154,9 +3154,13 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             } catch (ignore: NullPointerException) {
             }
         } else {
+            var mUserName = userName
+            if(mUserName.isBlank()){
+                mUserName = "##"
+            }
             PlaceholderUtils.setTextRoundDrawable(
                 this,
-                userName,
+                mUserName,
                 ismActivityMessagesBinding.ivConversationImage,
                 0,
                 12
