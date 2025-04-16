@@ -246,6 +246,10 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             ismActivityMessagesBinding.topViewContainer.addView(topView)
         }
 
+        ChatConfig.messageModelReplace.observe(this){ newMessageModel ->
+            onMessageReplace(newMessageModel)
+        }
+
         ChatConfig.typingUiState.observe(this) { visiable ->
             CoroutineScope(Dispatchers.Main).launch {
                 ismActivityMessagesBinding.rlBottomLayout.visibility =
@@ -2937,6 +2941,18 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                     messagesModel.textMessage = SpannableString(updatedMessage)
                     messages[i] = messagesModel
                     conversationMessagesAdapter!!.notifyItemChanged(i)
+                    break
+                }
+            }
+        }
+    }
+
+    fun onMessageReplace(newMessageModel: MessagesModel) {
+        CoroutineScope(Dispatchers.Main).launch {
+            for (i in messages.indices.reversed()) {
+                if (messages[i].messageId != null && messages[i].messageId == newMessageModel.messageId) {
+                    messages[i] = newMessageModel
+                    conversationMessagesAdapter?.notifyItemChanged(i)
                     break
                 }
             }

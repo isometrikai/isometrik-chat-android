@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import io.isometrik.chat.enums.CustomMessageTypes
+import io.isometrik.chat.enums.MessageTypeUi
 import io.isometrik.chat.response.conversation.utils.ConversationDetailsUtil
 import io.isometrik.samples.chat.databinding.ChatItemBinding
 import io.isometrik.samples.chat.databinding.CustomTopViewBinding
@@ -19,12 +21,12 @@ import io.isometrik.ui.messages.chat.MessagesModel
 import io.isometrik.ui.messages.chat.common.AttachmentsConfig
 import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.messages.chat.common.ChatTopViewHandler
-import io.tus.java.client.TusClient
+import io.isometrik.ui.messages.chat.common.MessageBinderRegistry
 import java.net.URL
 
 
 class ChatListActivity : AppCompatActivity() {
-    private lateinit var client: TusClient
+//    private lateinit var client: TusClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -34,25 +36,39 @@ class ChatListActivity : AppCompatActivity() {
             loadChatFragment()
         }
 
-        try {
-            val pref = getSharedPreferences("tus", 0)
-            client = TusClient()
-            client.setUploadCreationURL(URL("url"))
-            // Set custom headers directly on the TUS client
-            val headers: MutableMap<String, String> = HashMap()
-            headers["authorization"] = MyApplication.getInstance().getApiToken()
-            headers["lang"] = "en"
-            // Set the headers on the TUS client
-            client.setHeaders(headers)
-            client.enableResuming(TusPreferencesURLStore(pref))
-        } catch (e: Exception) {
-        }
+//        try {
+//            val pref = getSharedPreferences("tus", 0)
+//            client = TusClient()
+//            client.setUploadCreationURL(URL("url"))
+//            // Set custom headers directly on the TUS client
+//            val headers: MutableMap<String, String> = HashMap()
+//            headers["authorization"] = MyApplication.getInstance().getApiToken()
+//            headers["lang"] = "en"
+//            // Set the headers on the TUS client
+//            client.setHeaders(headers)
+//            client.enableResuming(TusPreferencesURLStore(pref))
+//        } catch (e: Exception) {
+//        }
+
+
+        CustomMessageTypes.registerCustomType(
+            typeName = "SimpleText",
+            value = "AttachmentMessage:Text"
+        )
+
+      // Register custom binders
+        CustomMessageTypes.registerCustomBinder(
+            value = "AttachmentMessage:Text",
+            sentBinder = CustomTextSentBinder(),
+            receivedBinder = CustomTextSentBinder()
+        )
+
 
 //        MessageBinderRegistry.registerBinder(
 //            MessageTypeUi.PAYMENT_ESCROWED_SENT,
 //            CustomTextSentBinder()
 //        )
-
+//
 //        MessageBinderRegistry.registerBinder(
 //            MessageTypeUi.TEXT_MESSAGE_RECEIVED,
 //            CustomTextSentBinder()

@@ -670,6 +670,20 @@ public class MessagesModel implements Serializable {
      *
      * @return the custom message type
      */
+
+    /**
+     * dynamicCustomType use for the message type which register by end user
+    * */
+    private  String dynamicCustomType;
+
+    public String getDynamicCustomType() {
+        return dynamicCustomType;
+    }
+
+    public void setDynamicCustomType(String dynamicCustomType) {
+        this.dynamicCustomType = dynamicCustomType;
+    }
+
     public MessageTypeUi getMessageTypeUi() {
         return messageTypeUi;
     }
@@ -1557,6 +1571,7 @@ public class MessagesModel implements Serializable {
         this.readByAll = readByAll;
         this.conversationId = conversationId;
         this.editedMessage = editedMessage;
+        this.metaData = messageMetadata;
     }
 
     /**
