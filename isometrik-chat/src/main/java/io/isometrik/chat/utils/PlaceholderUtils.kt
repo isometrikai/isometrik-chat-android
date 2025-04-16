@@ -114,21 +114,32 @@ object PlaceholderUtils {
      * Extracts initials from the full name, using the first character from the first two words.
      */
     private fun extractInitials(fullName: String?): String {
-        if (!fullName.isNullOrEmpty()) {
-            val names = fullName.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            if (names.size >= 2) {
-                return (names[0][0].toString() + names[1][0]).uppercase(Locale.getDefault())
+        if (!fullName.isNullOrBlank()) {
+            val names = fullName.trim()
+                .split("\\s+".toRegex())
+                .filter { it.isNotBlank() }
+
+            return if (names.size >= 2) {
+                (names[0][0].toString() + names[1][0]).uppercase(Locale.getDefault())
             } else if (names.size == 1) {
                 val firstName = names[0]
-                return if (firstName.length >= 2) {
+                if (firstName.length >= 2) {
                     firstName.substring(0, 2).uppercase(Locale.getDefault())
-                } else {
+                } else if (firstName.isNotEmpty()) {
                     firstName[0].toString().uppercase(Locale.getDefault())
+                } else {
+                    "#" // <- make sure this exists
                 }
+            } else {
+                "#" // <- also needed if size is 0
             }
         }
-        return ""
+        return "#"
     }
+
+
+
+
 
 
     /**
