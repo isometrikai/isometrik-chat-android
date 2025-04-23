@@ -214,6 +214,19 @@ interface ConversationsListContract {
             fetchRemoteConversationIfNotFoundLocally: Boolean
         )
 
+        fun updateLastMessageInConversation(
+            conversationId: String,
+            lastMessageText: String,
+            lastMessageSendersProfileImageUrl: String,
+            lastMessageTime: String,
+            lastMessagePlaceHolderImage: Int?,
+            lastMessageWasReactionMessage: Boolean,
+            updateUnreadMessagesCount: Boolean,
+            lastMessageSendersName: String,
+            fetchRemoteConversationIfNotFoundLocally: Boolean,
+            customType : String
+        )
+
         /**
          * On conversation settings updated.
          *

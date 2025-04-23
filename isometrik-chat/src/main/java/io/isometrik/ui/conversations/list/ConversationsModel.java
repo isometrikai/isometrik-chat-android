@@ -1091,4 +1091,8 @@ public class ConversationsModel {
     public String getLastMessageCustomType() {
         return lastMessageCustomType;
     }
+
+    public void setLastMessageCustomType(String lastMessageCustomType) {
+        this.lastMessageCustomType = lastMessageCustomType;
+    }
 }
