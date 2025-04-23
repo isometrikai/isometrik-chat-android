@@ -479,6 +479,49 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
         }
     }
 
+    override fun updateLastMessageInConversation(
+        conversationId: String, lastMessageText: String,
+        lastMessageSendersProfileImageUrl: String, lastMessageTime: String,
+        lastMessagePlaceHolderImage: Int?, lastMessageWasReactionMessage: Boolean,
+        updateUnreadMessagesCount: Boolean, lastMessageSendersName: String,
+        fetchRemoteConversationIfNotFoundLocally: Boolean,customType : String
+    ) {
+        if (activity != null) {
+            requireActivity().runOnUiThread {
+                val position = conversationsListPresenter!!.fetchConversationPositionInList(
+                    conversations,
+                    conversationId, fetchRemoteConversationIfNotFoundLocally
+                )
+                if (position != -1) {
+                    val conversationsModel = conversations[position]
+                    conversationsModel.lastMessageText = lastMessageText
+                    conversationsModel.lastMessageSendersProfileImageUrl =
+                        lastMessageSendersProfileImageUrl
+                    conversationsModel.lastMessageSenderName = lastMessageSendersName
+                    conversationsModel.lastMessageTime = lastMessageTime
+                    conversationsModel.lastMessagePlaceHolderImage = lastMessagePlaceHolderImage
+                    conversationsModel.isLastMessageWasReactionMessage =
+                        lastMessageWasReactionMessage
+                    if (updateUnreadMessagesCount
+                        && conversationsModel.isMessageDeliveryReadEventsEnabled
+                    ) {
+                        if (conversationsModel.unreadMessagesCount == 0) {
+                            fetchUnreadConversationsCount()
+                        }
+                        conversationsModel.unreadMessagesCount =
+                            conversationsModel.unreadMessagesCount + 1
+                    }
+                    conversationsModel.lastMessageCustomType = customType
+
+                        conversations.removeAt(position)
+                    conversationsAdapter!!.notifyItemRemoved(position)
+                    conversations.add(0, conversationsModel)
+                    conversationsAdapter!!.notifyItemInserted(0)
+                }
+            }
+        }
+    }
+
     override fun onConversationSettingsUpdated(
         conversationId: String, typingEvents: Boolean,
         readEvents: Boolean?

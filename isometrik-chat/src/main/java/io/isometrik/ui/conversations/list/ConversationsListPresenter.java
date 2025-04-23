@@ -894,7 +894,11 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
           case Reply: {
             lastMessagePlaceHolderImage = R.drawable.ism_ic_quote;
             lastMessageText = sendMessageEvent.getBody();
+            break;
 
+          }
+          default:{
+            lastMessageText  = "Data update";
           }
         }
         if (lastMessageText != null) {
@@ -905,7 +909,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
               TimeUtil.formatTimestampToOnlyDate(sendMessageEvent.getSentAt()),
               lastMessagePlaceHolderImage, false,
               sendMessageEvent.getEvents().getUpdateUnreadCount() && !sendMessageEvent.getSenderId()
-                  .equals(userId), sendMessageEvent.getSenderName(), true);
+                  .equals(userId), sendMessageEvent.getSenderName(), true, sendMessageEvent.getCustomType());
         }
       }
     }
