@@ -30,7 +30,7 @@ Open your build.gradle file (app-level) and add the following line in the depend
 
 ```groovy
 dependencies {
-    implementation 'com.github.isometrikai:isometrik-chat-android:1.6.3'
+    implementation 'com.github.isometrikai:isometrik-chat-android:1.8.2'
 }
 ```
 ### Step 3: Sync Your Project

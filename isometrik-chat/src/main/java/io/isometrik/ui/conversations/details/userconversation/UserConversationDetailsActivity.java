@@ -26,6 +26,7 @@ import io.isometrik.ui.conversations.gallery.GalleryMediaItemsActivity;
 import io.isometrik.ui.conversations.gallery.GalleryModel;
 import io.isometrik.ui.conversations.newconversation.group.NewGroupConversationActivity;
 import io.isometrik.chat.databinding.IsmActivityUserConversationDetailsBinding;
+import io.isometrik.ui.messages.chat.common.ChatConfig;
 import io.isometrik.ui.messages.preview.PreviewMessageUtil;
 import io.isometrik.ui.messages.preview.image.PreviewImagePopup;
 import io.isometrik.chat.utils.AlertProgress;
@@ -75,7 +76,7 @@ public class UserConversationDetailsActivity extends AppCompatActivity
         userImageUrl = extras.getString("userImageUrl");
         isOnline = extras.getBoolean("isOnline", false);
         userId = extras.getString("userId");
-        if (userId != null && !userId.isEmpty()) {
+        if (userId != null && !userId.isEmpty() && !ChatConfig.INSTANCE.getHideViewSocialProfileOption()) {
             ismActivityUserConversationDetailsBinding.rlViewSocialProfile.setVisibility(View.VISIBLE);
         } else {
             ismActivityUserConversationDetailsBinding.rlViewSocialProfile.setVisibility(View.GONE);
