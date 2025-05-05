@@ -38,6 +38,7 @@ object ChatConfig {
     var hideSubHeader: Boolean = false
     var disableTopHeaderClickAction: Boolean = false
     var hideNotStartedConversationInChatList: Boolean = false
+    var hideViewSocialProfileOption: Boolean = true
 
     var DEFAULT_PLACEHOLDER_IMAGE_URL: String = Constants.DEFAULT_PLACEHOLDER_IMAGE_URL
     var dontShowToastList : List<String> = arrayListOf()
