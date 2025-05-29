@@ -21,13 +21,15 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.FutureTarget;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import io.isometrik.chat.builder.message.delivery.MarkMessageAsDeliveredQuery;
-import io.isometrik.ui.IsometrikChatSdk;
+
 import io.isometrik.chat.R;
-import io.isometrik.ui.messages.chat.ConversationMessagesActivity;
-import com.bumptech.glide.Glide;
+import io.isometrik.chat.builder.message.delivery.MarkMessageAsDeliveredQuery;
 import io.isometrik.chat.utils.NotificationUtil;
 import io.isometrik.chat.utils.PlaceholderUtils;
+import io.isometrik.ui.IsometrikChatSdk;
+import io.isometrik.ui.messages.chat.ConversationMessagesActivity;
+
+import com.bumptech.glide.Glide;
 import java.util.List;
 import java.util.Map;
 import org.jetbrains.annotations.NotNull;
@@ -44,7 +46,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
   @Override
   public void onMessageReceived(@NotNull RemoteMessage remoteMessage) {
     super.onMessageReceived(remoteMessage);
+    onChatMessageReceived(remoteMessage);
+  }
 
+  public static void onChatMessageReceived(@NotNull RemoteMessage remoteMessage){
     Map<String, String> data = remoteMessage.getData();
     try {
 
@@ -89,17 +94,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
               senderId = data.get("initiatorId");
               senderName = data.get("initiatorName");
               senderProfileImageUrl = data.get("initiatorProfileImageUrl");
-
-              if (data.get("opponentName").equals(IsometrikChatSdk.getInstance().getUserSession().getUserName())) {
-                message = IsometrikChatSdk.getInstance().getContext().getString(
-                        R.string.ism_blocked_user_text, data.get("initiatorName"),"You");
-              } else if (data.get("initiatorName").equals(IsometrikChatSdk.getInstance().getUserSession().getUserName())) {
-                message = IsometrikChatSdk.getInstance().getContext().getString(
-                        R.string.ism_blocked_user_text, "You",data.get("opponentName"));
-              } else {
-                message = IsometrikChatSdk.getInstance().getContext().getString(
-                        R.string.ism_blocked_user, data.get("initiatorName"), data.get("opponentName"));
-              }
+              message = IsometrikChatSdk.getInstance()
+                  .getContext()
+                  .getString(R.string.ism_blocked_user, data.get("opponentName"), senderName);
               break;
             }
 
@@ -107,24 +104,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
               senderId = data.get("initiatorId");
               senderName = data.get("initiatorName");
               senderProfileImageUrl = data.get("initiatorProfileImageUrl");
-
-              if (data.get("opponentName").equals(IsometrikChatSdk.getInstance().getUserSession().getUserName())) {
-                message = IsometrikChatSdk.getInstance().getContext().getString(
-                        R.string.ism_unblocked_user_text, data.get("initiatorName"),"You");
-              } else if (data.get("initiatorName").equals(IsometrikChatSdk.getInstance().getUserSession().getUserName())) {
-                message = IsometrikChatSdk.getInstance().getContext().getString(
-                        R.string.ism_unblocked_user_text, "You",data.get("opponentName"));
-              } else {
-                message = IsometrikChatSdk.getInstance().getContext().getString(
-                        R.string.ism_unblocked_user, data.get("initiatorName"), data.get("opponentName"));
-              }
+              message = IsometrikChatSdk.getInstance()
+                  .getContext()
+                  .getString(R.string.ism_unblocked_user, data.get("opponentName"), senderName);
               break;
             }
             case "conversationCreated": {
               senderId = data.get("userId");
               senderName = data.get("userName");
               senderProfileImageUrl = data.get("userProfileImageUrl");
-              message = getString(R.string.ism_created_conversation, senderName);
+              message = IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_created_conversation, senderName);
               conversationDetails = new JSONObject(data.get("conversationDetails"));
               break;
             }
@@ -133,7 +124,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
               senderId = data.get("initiatorId");
               senderName = data.get("initiatorName");
               senderProfileImageUrl = data.get("initiatorProfileImageUrl");
-              message = getString(R.string.ism_made_admin, data.get("memberName"), senderName);
+              message = IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_made_admin, data.get("memberName"), senderName);
               break;
             }
 
@@ -141,7 +134,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
               senderId = data.get("initiatorId");
               senderName = data.get("initiatorName");
               senderProfileImageUrl = data.get("initiatorProfileImageUrl");
-              message = getString(R.string.ism_removed_admin, data.get("memberName"), senderName);
+              message = IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_removed_admin, data.get("memberName"), senderName);
               break;
             }
 
@@ -149,7 +144,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
               senderId = data.get("userId");
               senderName = data.get("userName");
               senderProfileImageUrl = data.get("userProfileImageUrl");
-              message = getString(R.string.ism_member_joined_public, senderName);
+              message = IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_member_joined_public, senderName);
               break;
             }
 
@@ -157,7 +154,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
               senderId = data.get("userId");
               senderName = data.get("userName");
               senderProfileImageUrl = data.get("userProfileImageUrl");
-              message = getString(R.string.ism_member_left, senderName);
+              message = IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_member_left, senderName);
               break;
             }
 
@@ -174,7 +173,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                       .append(members.getJSONObject(i).getString("memberName"));
                 }
                 message =
-                    getString(R.string.ism_members_added, senderName, membersAdded.substring(2));
+                        IsometrikChatSdk.getInstance()
+                                .getContext()
+                                .getString(R.string.ism_members_added, senderName, membersAdded.substring(2));
               } catch (JSONException ignore) {
               }
               break;
@@ -192,7 +193,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                       .append(members.getJSONObject(i).getString("memberName"));
                 }
 
-                message = getString(R.string.ism_members_removed, senderName,
+                message = IsometrikChatSdk.getInstance()
+                        .getContext()
+                        .getString(R.string.ism_members_removed, senderName,
                     membersRemoved.substring(2));
               } catch (JSONException ignore) {
               }
@@ -203,7 +206,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
               senderId = data.get("userId");
               senderName = data.get("userName");
               senderProfileImageUrl = data.get("userProfileImageUrl");
-              message = getString(R.string.ism_updated_conversation_image, senderName);
+              message = IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_updated_conversation_image, senderName);
               break;
             }
 
@@ -211,7 +216,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
               senderId = data.get("userId");
               senderName = data.get("userName");
               senderProfileImageUrl = data.get("userProfileImageUrl");
-              message = getString(R.string.ism_updated_conversation_title, senderName,
+              message = IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_updated_conversation_title, senderName,
                   data.get("conversationTitle"));
               break;
             }
@@ -221,7 +228,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
               senderName = data.get("userName");
               senderProfileImageUrl = data.get("userProfileImageUrl");
 
-              message = getString(R.string.ism_reaction_added_notification, senderName,
+              message = IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_reaction_added_notification, senderName,
                   data.get("reactionType"));
               break;
             }
@@ -231,7 +240,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
               senderName = data.get("userName");
               senderProfileImageUrl = data.get("userProfileImageUrl");
 
-              message = getString(R.string.ism_reaction_removed_notification, senderName,
+              message = IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_reaction_removed_notification, senderName,
                   data.get("reactionType"));
               break;
             }
@@ -239,7 +250,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
               senderId = data.get("userId");
               senderName = data.get("userName");
               senderProfileImageUrl = data.get("userProfileImageUrl");
-              message = getString(R.string.ism_message_deleted_locally, senderName);
+              message = IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_message_deleted_locally, senderName);
               break;
             }
 
@@ -247,7 +260,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
               senderId = data.get("userId");
               senderName = data.get("userName");
               senderProfileImageUrl = data.get("userProfileImageUrl");
-              message = getString(R.string.ism_message_deleted_for_all, senderName);
+              message = IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_message_deleted_for_all, senderName);
               break;
             }
 
@@ -261,18 +276,26 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 String settingsUpdated = "";
                 if (config.has("config.typingEvents")) {
                   settingsUpdated =
-                      settingsUpdated + ", " + getString(R.string.ism_settings_typing);
+                      settingsUpdated + ", " + IsometrikChatSdk.getInstance()
+                              .getContext()
+                              .getString(R.string.ism_settings_typing);
                 }
                 if (config.has("config.readEvents")) {
-                  settingsUpdated = settingsUpdated + ", " + getString(
+                  settingsUpdated = settingsUpdated + ", " + IsometrikChatSdk.getInstance()
+                          .getContext()
+                          .getString(
                       R.string.ism_settings_read_delivery_events);
                 }
                 if (config.has("config.pushNotifications")) {
                   settingsUpdated =
-                      settingsUpdated + ", " + getString(R.string.ism_settings_notifications);
+                      settingsUpdated + ", " + IsometrikChatSdk.getInstance()
+                              .getContext()
+                              .getString(R.string.ism_settings_notifications);
                 }
 
-                message = getString(R.string.ism_updated_settings, senderName,
+                message = IsometrikChatSdk.getInstance()
+                        .getContext()
+                        .getString(R.string.ism_updated_settings, senderName,
                     settingsUpdated.substring(2));
               } catch (JSONException ignore) {
               }
@@ -289,17 +312,25 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 String detailsUpdated = "";
                 if (details.has("customType")) {
                   detailsUpdated =
-                      detailsUpdated + ", " + getString(R.string.ism_details_custom_type);
+                      detailsUpdated + ", " + IsometrikChatSdk.getInstance()
+                              .getContext()
+                              .getString(R.string.ism_details_custom_type);
                 }
                 if (details.has("metadata")) {
-                  detailsUpdated = detailsUpdated + ", " + getString(R.string.ism_details_metadata);
+                  detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
+                          .getContext()
+                          .getString(R.string.ism_details_metadata);
                 }
                 if (details.has("searchableTags")) {
                   detailsUpdated =
-                      detailsUpdated + ", " + getString(R.string.ism_details_searchable_tags);
+                      detailsUpdated + ", " + IsometrikChatSdk.getInstance()
+                              .getContext()
+                              .getString(R.string.ism_details_searchable_tags);
                 }
 
-                message = getString(R.string.ism_updated_conversation_details, senderName,
+                message = IsometrikChatSdk.getInstance()
+                        .getContext()
+                        .getString(R.string.ism_updated_conversation_details, senderName,
                     detailsUpdated.substring(2));
               } catch (JSONException ignore) {
               }
@@ -315,20 +346,30 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 String detailsUpdated = "";
                 if (details.has("customType")) {
                   detailsUpdated =
-                      detailsUpdated + ", " + getString(R.string.ism_details_custom_type);
+                      detailsUpdated + ", " + IsometrikChatSdk.getInstance()
+                              .getContext()
+                              .getString(R.string.ism_details_custom_type);
                 }
                 if (details.has("metadata")) {
-                  detailsUpdated = detailsUpdated + ", " + getString(R.string.ism_details_metadata);
+                  detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
+                          .getContext()
+                          .getString(R.string.ism_details_metadata);
                 }
                 if (details.has("searchableTags")) {
                   detailsUpdated =
-                      detailsUpdated + ", " + getString(R.string.ism_details_searchable_tags);
+                      detailsUpdated + ", " + IsometrikChatSdk.getInstance()
+                              .getContext()
+                              .getString(R.string.ism_details_searchable_tags);
                 }
                 if (details.has("body")) {
-                  detailsUpdated = detailsUpdated + ", " + getString(R.string.ism_details_body);
+                  detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
+                          .getContext()
+                          .getString(R.string.ism_details_body);
                 }
 
-                message = getString(R.string.ism_updated_message_details, senderName,
+                message = IsometrikChatSdk.getInstance()
+                        .getContext()
+                        .getString(R.string.ism_updated_message_details, senderName,
                     detailsUpdated.substring(2));
               } catch (JSONException ignore) {
               }
@@ -349,11 +390,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                   //action not received for normal messages
 
                   if ("forward".equals(data.get("action"))) {
-                    prefix = getString(R.string.ism_forward_heading);
+                    prefix = IsometrikChatSdk.getInstance()
+                            .getContext()
+                            .getString(R.string.ism_forward_heading);
                   }
                 }
-              } else {
-                prefix = getString(R.string.ism_quote_heading);
               }
 
               message = data.get("body");
@@ -363,49 +404,78 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
               break;
             }
             case "AttachmentMessage:Image": {
-              message = getString(R.string.ism_attachment_photo)+" " + getString(R.string.ism_photo);
+              message = IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_attachment_prefix) + IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_photo);
               break;
             }
             case "AttachmentMessage:Video": {
-              message = getString(R.string.ism_attachment_video)+" " + getString(R.string.ism_video);
+              message = IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_attachment_prefix) + IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_video);
               break;
             }
             case "AttachmentMessage:Audio": {
-              message = getString(R.string.ism_attachment_audio)+" " + getString(
+              message = IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_attachment_prefix) + IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(
                   R.string.ism_audio_recording);
               break;
             }
             case "AttachmentMessage:File": {
-              message = getString(R.string.ism_attachment_file)+" " + getString(R.string.ism_file);
+              message = IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_attachment_prefix) + IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_file);
               break;
             }
             case "AttachmentMessage:Sticker": {
-              message = getString(R.string.ism_attachment_prefix) + getString(R.string.ism_sticker);
+              message = IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_attachment_prefix) + IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_sticker);
               break;
             }
             case "AttachmentMessage:Gif": {
-              message = getString(R.string.ism_attachment_prefix) + getString(R.string.ism_gif);
+              message = IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_attachment_prefix) + IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_gif);
               break;
             }
             case "AttachmentMessage:Whiteboard": {
               message =
-                  getString(R.string.ism_attachment_prefix) + getString(R.string.ism_whiteboard);
+                      IsometrikChatSdk.getInstance()
+                              .getContext()
+                              .getString(R.string.ism_attachment_prefix) + IsometrikChatSdk.getInstance()
+                              .getContext()
+                              .getString(R.string.ism_whiteboard);
               break;
             }
             case "AttachmentMessage:Location": {
               message =
-                  getString(R.string.ism_attachment_location)+" " + getString(R.string.ism_location);
+                      IsometrikChatSdk.getInstance()
+                              .getContext()
+                              .getString(R.string.ism_attachment_prefix) + IsometrikChatSdk.getInstance()
+                              .getContext()
+                              .getString(R.string.ism_location);
               break;
             }
             case "AttachmentMessage:Contact": {
-              message = getString(R.string.ism_attachment_prefix) + getString(R.string.ism_contact);
-              break;
-            }
-            case "AttachmentMessage:Reply":{
-              String prefix = null;
-              prefix = getString(R.string.ism_quote_heading);
-              message = data.get("body");
-              message = prefix + ": " + message;
+              message = IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_attachment_prefix) + IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_contact);
               break;
             }
           }
@@ -447,14 +517,19 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         if (senderId != null) {
           if (!IsometrikChatSdk.getInstance().getUserSession().getUserId().equals(senderId)) {
-            message = getString(R.string.ism_bullet) + message;
+            message = IsometrikChatSdk.getInstance()
+                    .getContext()
+                    .getString(R.string.ism_bullet) + message;
 
             Bitmap bitmap = null;
             if (PlaceholderUtils.isValidImageUrl(senderProfileImageUrl)) {
 
-              int density = (int) getResources().getDisplayMetrics().density;
+              int density = (int) IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getResources().getDisplayMetrics().density;
 
-              FutureTarget<Bitmap> futureTarget = Glide.with(this)
+              FutureTarget<Bitmap> futureTarget = Glide.with(IsometrikChatSdk.getInstance()
+                              .getContext())
                   .asBitmap()
                   .load(senderProfileImageUrl)
                   .transform(new CircleCrop())
@@ -510,13 +585,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
               if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 Notification.Builder recoveredBuilder =
-                    Notification.Builder.recoverBuilder(this, existingNotification);
+                    Notification.Builder.recoverBuilder(IsometrikChatSdk.getInstance()
+                            .getContext(), existingNotification);
 
                 android.app.Person senderPerson;
                 if (person.getIcon() != null) {
                   senderPerson = new android.app.Person.Builder().setKey(person.getKey())
                       .setName(person.getName())
-                      .setIcon(person.getIcon().toIcon(this))
+                      .setIcon(person.getIcon().toIcon(IsometrikChatSdk.getInstance()
+                              .getContext()))
                       .build();
                 } else {
                   senderPerson = new android.app.Person.Builder().setKey(person.getKey())
@@ -537,7 +614,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     previousMessagePerson = new android.app.Person.Builder().setKey(
                             previousMessage.getPerson().getKey())
                         .setName(previousMessage.getPerson().getName())
-                        .setIcon(previousMessage.getPerson().getIcon().toIcon(this))
+                        .setIcon(previousMessage.getPerson().getIcon().toIcon(IsometrikChatSdk.getInstance()
+                                .getContext()))
                         .build();
                   } else {
                     previousMessagePerson = new android.app.Person.Builder().setKey(
@@ -554,13 +632,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     new Notification.MessagingStyle.Message(message, sentAt, senderPerson));
                 recoveredBuilder.setStyle(messagingStyle);
                 NotificationManagerCompat notificationManager =
-                    NotificationManagerCompat.from(this);
+                    NotificationManagerCompat.from(IsometrikChatSdk.getInstance()
+                            .getContext());
                 notificationManager.notify(conversationId,
                     NotificationUtil.getNotificationId(conversationId), recoveredBuilder.build());
               }
             } else {
 
-              String channelId = getString(R.string.ism_channel_id);
+              String channelId = IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_channel_id);
               NotificationCompat.MessagingStyle.Message notificationMessage =
                   new NotificationCompat.MessagingStyle.Message(message, sentAt, person);
 
@@ -568,7 +649,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                   new NotificationCompat.MessagingStyle(person).setConversationTitle(
                       conversationTitle).setGroupConversation(true).addMessage(notificationMessage);
 
-              Intent resultIntent = new Intent(this, ConversationMessagesActivity.class);
+              Intent resultIntent = new Intent(IsometrikChatSdk.getInstance()
+                      .getContext(), ConversationMessagesActivity.class);
               resultIntent.putExtra("conversationId", conversationId);
               resultIntent.putExtra("fromNotification", true);
               resultIntent.putExtra("conversationTitle", conversationTitle);
@@ -582,35 +664,44 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
               if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 resultPendingIntent =
-                    PendingIntent.getActivity(this, (int) System.currentTimeMillis(), resultIntent,
+                    PendingIntent.getActivity(IsometrikChatSdk.getInstance()
+                                    .getContext(), (int) System.currentTimeMillis(), resultIntent,
                         PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
               } else {
                 resultPendingIntent =
-                    PendingIntent.getActivity(this, (int) System.currentTimeMillis(), resultIntent,
+                    PendingIntent.getActivity(IsometrikChatSdk.getInstance()
+                                    .getContext(), (int) System.currentTimeMillis(), resultIntent,
                         PendingIntent.FLAG_UPDATE_CURRENT);
               }
 
               Notification notification =
-                  new NotificationCompat.Builder(this, channelId).setSmallIcon(
+                  new NotificationCompat.Builder(IsometrikChatSdk.getInstance()
+                          .getContext(), channelId).setSmallIcon(
                           R.drawable.ism_notification_small_icon)
-                      .setColor(ContextCompat.getColor(this, R.color.ism_notification_icon))
                       .setLargeIcon(
-                          BitmapFactory.decodeResource(getResources(), R.mipmap.ism_ic_launcher))
+                          BitmapFactory.decodeResource(IsometrikChatSdk.getInstance()
+                                  .getContext()
+                                  .getResources(), R.mipmap.ism_ic_launcher))
                       .setStyle(messagingStyle)
                       .setPriority(NotificationCompat.PRIORITY_HIGH)
                       .setDefaults(NotificationCompat.DEFAULT_ALL)
-                      .setGroup(getString(R.string.ism_group_name))
+                      .setGroup(IsometrikChatSdk.getInstance()
+                              .getContext()
+                              .getString(R.string.ism_group_name))
                       .setAutoCancel(true)
                       .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                       .setContentIntent(resultPendingIntent)
                       .build();
 
-              NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+              NotificationManagerCompat notificationManager = NotificationManagerCompat.from(IsometrikChatSdk.getInstance()
+                      .getContext());
 
               // Since android Oreo notification channel is needed.
               if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationChannel channel =
-                    new NotificationChannel(channelId, getString(R.string.ism_channel_name),
+                    new NotificationChannel(channelId, IsometrikChatSdk.getInstance()
+                            .getContext()
+                            .getString(R.string.ism_channel_name),
                         NotificationManager.IMPORTANCE_HIGH);
                 channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
                 notificationManager.createNotificationChannel(channel);
@@ -620,18 +711,26 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                   NotificationUtil.getNotificationId(conversationId), notification);
 
               Notification summaryNotification =
-                  new NotificationCompat.Builder(this, channelId).setContentTitle(
-                          getString(R.string.ism_summary_title))
+                  new NotificationCompat.Builder(IsometrikChatSdk.getInstance()
+                          .getContext(), channelId).setContentTitle(
+                                  IsometrikChatSdk.getInstance()
+                                          .getContext()
+                                          .getString(R.string.ism_summary_title))
                       //set content text to support devices running API level < 24
-                      .setContentText(getString(R.string.ism_summary_text))
+                      .setContentText(IsometrikChatSdk.getInstance()
+                              .getContext()
+                              .getString(R.string.ism_summary_text))
                       .setSmallIcon(R.drawable.ism_notification_small_icon)
-                      .setColor(ContextCompat.getColor(this, R.color.ism_notification_icon))
-                      .setGroup(getString(R.string.ism_group_name))
+                      .setGroup(IsometrikChatSdk.getInstance()
+                              .getContext()
+                              .getString(R.string.ism_group_name))
                       .setGroupSummary(true)
                       //.setGroupAlertBehavior(NotificationCompat.GROUP_ALERT_CHILDREN)
                       .build();
 
-              notificationManager.notify(getString(R.string.ism_summary), 1, summaryNotification);
+              notificationManager.notify(IsometrikChatSdk.getInstance()
+                      .getContext()
+                      .getString(R.string.ism_summary), 1, summaryNotification);
             }
           }
         }
@@ -646,10 +745,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
    * @param conversationId the conversation id
    * @return the notification
    */
-  public Notification findActiveNotification(String conversationId) {
+  @RequiresApi(api = Build.VERSION_CODES.M)
+  public static Notification findActiveNotification(String conversationId) {
 
     NotificationManager notificationManager =
-        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        (NotificationManager) IsometrikChatSdk.getInstance()
+                .getContext()
+                .getSystemService(Context.NOTIFICATION_SERVICE);
 
     if (notificationManager != null) {
 
