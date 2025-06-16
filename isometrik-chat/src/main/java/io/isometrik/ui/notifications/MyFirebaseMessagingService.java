@@ -10,6 +10,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.service.notification.StatusBarNotification;
+
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
@@ -46,10 +48,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
   @Override
   public void onMessageReceived(@NotNull RemoteMessage remoteMessage) {
     super.onMessageReceived(remoteMessage);
-    onChatMessageReceived(remoteMessage);
+    onChatMessageReceived(remoteMessage, R.drawable.ism_notification_small_icon, R.mipmap.ism_ic_launcher);
   }
 
-  public static void onChatMessageReceived(@NotNull RemoteMessage remoteMessage){
+  public static void onChatMessageReceived(@NotNull RemoteMessage remoteMessage, int smallIconResId, int largeIconResId){
     Map<String, String> data = remoteMessage.getData();
     try {
 
@@ -677,11 +679,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
               Notification notification =
                   new NotificationCompat.Builder(IsometrikChatSdk.getInstance()
                           .getContext(), channelId).setSmallIcon(
-                          R.drawable.ism_notification_small_icon)
+                                  smallIconResId)
                       .setLargeIcon(
                           BitmapFactory.decodeResource(IsometrikChatSdk.getInstance()
                                   .getContext()
-                                  .getResources(), R.mipmap.ism_ic_launcher))
+                                  .getResources(), largeIconResId))
                       .setStyle(messagingStyle)
                       .setPriority(NotificationCompat.PRIORITY_HIGH)
                       .setDefaults(NotificationCompat.DEFAULT_ALL)
@@ -720,7 +722,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                       .setContentText(IsometrikChatSdk.getInstance()
                               .getContext()
                               .getString(R.string.ism_summary_text))
-                      .setSmallIcon(R.drawable.ism_notification_small_icon)
+                      .setSmallIcon(smallIconResId)
                       .setGroup(IsometrikChatSdk.getInstance()
                               .getContext()
                               .getString(R.string.ism_group_name))
