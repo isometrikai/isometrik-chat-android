@@ -34,7 +34,8 @@ allprojects {
 Add the library to your app-level `build.gradle`:
 ```groovy
 dependencies {
-    implementation 'com.github.isometrikai:isometrik-chat-android:1.8.3'
+    implementation 'com.github.isometrikai:isometrik-chat-android:x.x.x' 
+    // replace x.x.x with lastes 
 }
 ```
 Sync your project.
