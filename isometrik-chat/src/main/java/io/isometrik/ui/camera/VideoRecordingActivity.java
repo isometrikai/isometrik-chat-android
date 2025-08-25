@@ -53,6 +53,9 @@ public class VideoRecordingActivity extends AppCompatActivity implements Surface
         binding.ivSwitchCamera.setOnClickListener(view -> {
             switchCamera();
         });
+        binding.ibBack.setOnClickListener(view ->{
+            onBackPressed();
+        });
     }
 
     private void switchCamera() {

@@ -17,6 +17,8 @@ import io.isometrik.chat.databinding.IsmConversationItemBinding
 import io.isometrik.chat.utils.PlaceholderUtils
 
 class DefaultChatListItemBinder : ChatListItemBinder<ConversationsModel, IsmConversationItemBinding> {
+    val hideMessagekeywords = listOf("blocked you", "unblocked you")
+
     override fun createBinding(parent: ViewGroup): IsmConversationItemBinding {
         val inflater = LayoutInflater.from(parent.context)
         return IsmConversationItemBinding.inflate(inflater, parent, false)
@@ -34,9 +36,10 @@ class DefaultChatListItemBinder : ChatListItemBinder<ConversationsModel, IsmConv
                 ismConversationItemBinding.tvConversationTitle.text =
                     conversationsModel.conversationTitle
             }
-
-            ismConversationItemBinding.tvLastMessage.text =
-                conversationsModel.lastMessageText
+            if (!containsKeyword(conversationsModel.lastMessageText, hideMessagekeywords)) {
+                ismConversationItemBinding.tvLastMessage.text =
+                    conversationsModel.lastMessageText
+            }
             if (conversationsModel.isCanJoin) {
                 ismConversationItemBinding.tvJoinConversation.visibility = View.VISIBLE
             } else {
@@ -160,6 +163,10 @@ class DefaultChatListItemBinder : ChatListItemBinder<ConversationsModel, IsmConv
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    fun containsKeyword(sentence: String, keywords: List<String>): Boolean {
+        return keywords.any { keyword -> sentence.contains(keyword, ignoreCase = true) }
     }
 
 }

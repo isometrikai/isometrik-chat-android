@@ -11,7 +11,7 @@ import io.isometrik.ui.messages.chat.MessagesModel
 class ConversationActionBinder :
     MessageItemBinder<MessagesModel, IsmConversationActionMessageBinding> {
 
-    val keywords = listOf("searchable tags")
+    val hideMessagekeywords = listOf("searchable tags", "blocked you", "unblocked you")
 
     override fun createBinding(
         parent: ViewGroup,
@@ -30,7 +30,7 @@ class ConversationActionBinder :
         isMessagingDisabled: Boolean, messageActionCallback: MessageActionCallback
     ) {
         try {
-            if (!containsKeyword(message.conversationActionMessage, keywords)) {
+            if (!containsKeyword(message.conversationActionMessage, hideMessagekeywords)) {
                 ismConversationActionMessageBinding.tvActionMessage.text =
                     message.conversationActionMessage
             } else {
