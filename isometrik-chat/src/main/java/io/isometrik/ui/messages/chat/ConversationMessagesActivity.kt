@@ -1311,7 +1311,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             } else {
                 ismActivityMessagesBinding.ivCaptureImage.visibility =
                     if (ChatConfig.hideCaptureCameraOption) View.GONE else View.VISIBLE
-                ismActivityMessagesBinding!!.rlRecordAudio.visibility
+                ismActivityMessagesBinding!!.rlRecordAudio.visibility =
                 if (ChatConfig.hideRecordAudioOption) View.GONE else View.VISIBLE
 //                ismActivityMessagesBinding.ivAddAttachment2.visibility = View.VISIBLE
 

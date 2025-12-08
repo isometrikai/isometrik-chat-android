@@ -302,6 +302,7 @@
                 android:layout_centerVertical="true"
                 android:background="@drawable/ism_send_message_background"
                 android:gravity="center_vertical"
+                android:backgroundTint="@android:color/transparent"
                 android:hint="@string/ism_type_something_here"
                 android:maxLength="1000"
                 android:maxLines="10"
