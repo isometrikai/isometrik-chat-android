@@ -1,5 +1,6 @@
 package io.isometrik.samples.chat
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -56,6 +57,7 @@ class SplashActivity : AppCompatActivity() {
             }
 
             override fun onCallClicked(
+                context: Context,
                 isAudio: Boolean,
                 userId: String,
                 meetingDescription: String,
