@@ -1252,6 +1252,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
 
         ismActivityMessagesBinding!!.ivAudioCall.setOnClickListener { v: View? ->
             IsometrikChatSdk.instance.chatActionsClickListener?.onCallClicked(
+                this@ConversationMessagesActivity,
                 true,
                 isometrikUserId!!,
                 conversationUserFullName + IsometrikChatSdk.instance.userSession.userName,
@@ -1262,6 +1263,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
 
         ismActivityMessagesBinding!!.ivVideoCall.setOnClickListener { v: View? ->
             IsometrikChatSdk.instance.chatActionsClickListener?.onCallClicked(
+                this@ConversationMessagesActivity,
                 false,
                 isometrikUserId!!,
                 conversationUserFullName + IsometrikChatSdk.instance.userSession.userName,
