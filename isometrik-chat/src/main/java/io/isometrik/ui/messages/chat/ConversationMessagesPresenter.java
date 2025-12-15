@@ -1321,7 +1321,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                     MessagesModel messagesModel =
                             RealtimeMessageUtil.parseLeaveConversationEvent(leaveConversationEvent);
                     try {
-                        if (conversationId != null && leaveConversationEvent.getConversationId().equals(conversationId)) {
+                        if (leaveConversationEvent.getConversationId() != null && conversationId != null && leaveConversationEvent.getConversationId().equals(conversationId)) {
                             if (leaveConversationEvent.getUserId()
                                     .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
                                 conversationMessagesView.closeConversation();
