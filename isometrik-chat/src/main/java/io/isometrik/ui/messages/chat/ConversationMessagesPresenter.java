@@ -1551,6 +1551,9 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
 
         @Override
         public void messageSent(@NotNull Isometrik isometrik, @NotNull SendMessageEvent sendMessageEvent) {
+            if(sendMessageEvent.getConversationId() == null){
+                return;
+            }
 
             LogManger.INSTANCE.log("real:messageSent", "In");
 
