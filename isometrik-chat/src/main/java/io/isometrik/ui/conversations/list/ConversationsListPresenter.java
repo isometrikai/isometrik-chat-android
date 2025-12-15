@@ -617,7 +617,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
         @Override
         public void conversationLeft(@NotNull Isometrik isometrik,
             @NotNull LeaveConversationEvent leaveConversationEvent) {
-          if (conversationsListView != null) {
+          if (conversationsListView != null && leaveConversationEvent.getConversationId() != null) {
             if (leaveConversationEvent.getUserId().equals(userId)) {
               conversationsListView.removeConversation(leaveConversationEvent.getConversationId());
               conversationsListView.fetchUnreadConversationsCount();
