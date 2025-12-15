@@ -814,7 +814,7 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
     @Override
     public void messageSent(@NotNull Isometrik isometrik,
         @NotNull SendMessageEvent sendMessageEvent) {
-      if (conversationsListView != null) {
+      if (conversationsListView != null && sendMessageEvent.getCustomType() != null) {
         Integer lastMessagePlaceHolderImage = null;
         String lastMessageText = null;
 
