@@ -1320,32 +1320,37 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                 public void conversationLeft(@NotNull Isometrik isometrik, @NotNull LeaveConversationEvent leaveConversationEvent) {
                     MessagesModel messagesModel =
                             RealtimeMessageUtil.parseLeaveConversationEvent(leaveConversationEvent);
-                    if (leaveConversationEvent.getConversationId().equals(conversationId)) {
-                        if (leaveConversationEvent.getUserId()
-                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
-                            conversationMessagesView.closeConversation();
+                    try {
+                        if (conversationId != null && leaveConversationEvent.getConversationId().equals(conversationId)) {
+                            if (leaveConversationEvent.getUserId()
+                                    .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
+                                conversationMessagesView.closeConversation();
+                            } else {
+                                conversationMessagesView.addMessageInUI(messagesModel);
+
+                                conversationMessagesView.updateParticipantsCount(
+                                        leaveConversationEvent.getMembersCount());
+
+                                updateLastReadInConversation();
+                            }
                         } else {
-                            conversationMessagesView.addMessageInUI(messagesModel);
+                            if (!leaveConversationEvent.getUserId()
+                                    .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
-                            conversationMessagesView.updateParticipantsCount(
-                                    leaveConversationEvent.getMembersCount());
-
-                            updateLastReadInConversation();
+                                conversationMessagesView.showMessageNotification(
+                                        leaveConversationEvent.getConversationId(),
+                                        leaveConversationEvent.getConversationTitle(),
+                                        messagesModel.getConversationActionMessage(),
+                                        leaveConversationEvent.isPrivateOneToOne(), null, false,
+                                        leaveConversationEvent.getConversationImageUrl(),
+                                        leaveConversationEvent.getUserProfileImageUrl(),
+                                        leaveConversationEvent.getUserName());
+                            }
                         }
-                    } else {
-                        if (!leaveConversationEvent.getUserId()
-                                .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
+                    } catch (Exception e) {
 
-                            conversationMessagesView.showMessageNotification(
-                                    leaveConversationEvent.getConversationId(),
-                                    leaveConversationEvent.getConversationTitle(),
-                                    messagesModel.getConversationActionMessage(),
-                                    leaveConversationEvent.isPrivateOneToOne(), null, false,
-                                    leaveConversationEvent.getConversationImageUrl(),
-                                    leaveConversationEvent.getUserProfileImageUrl(),
-                                    leaveConversationEvent.getUserName());
-                        }
                     }
+
                 }
 
                 @Override
