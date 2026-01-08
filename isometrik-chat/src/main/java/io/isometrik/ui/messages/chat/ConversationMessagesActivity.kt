@@ -1273,6 +1273,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         }
 
         startDetailsApiPolling()
+        ismActivityMessagesBinding.tvParticipantsCountOrOnlineStatus.isSelected = true
     }
 
     override fun blockedStatus(blockByOpponentUser: Boolean) {

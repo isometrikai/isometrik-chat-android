@@ -216,72 +216,87 @@ public class PreviewMessageUtil {
 
     private static void handlePhotoClick(Activity activity, String mediaUrl, String mimeType,
                                          boolean localMedia) {
+        Intent intent = new Intent(activity, PreviewImageActivity.class);
+        intent.putExtra("imageUrl", mediaUrl);
+        activity.startActivity(intent);
 
-        new AlertDialog.Builder(activity).setTitle(
-                        activity.getString(R.string.ism_open_media_alert_heading))
-                .setMessage(activity.getString(R.string.ism_open_media_alert_message))
-                .setCancelable(true)
-                .setPositiveButton(activity.getString(R.string.ism_open_in_app), (dialog, id) -> {
-                    dialog.cancel();
-                    Intent intent = new Intent(activity, PreviewImageActivity.class);
-                    intent.putExtra("imageUrl", mediaUrl);
-
-                    activity.startActivity(intent);
-                })
-                .setNegativeButton(activity.getString(R.string.ism_open_in_other_apps), (dialog, id) -> {
-                    dialog.cancel();
-                    handleFileClick(activity, mediaUrl, mimeType, localMedia);
-                })
-                .create()
-                .show();
+//        new AlertDialog.Builder(activity).setTitle(
+//                        activity.getString(R.string.ism_open_media_alert_heading))
+//                .setMessage(activity.getString(R.string.ism_open_media_alert_message))
+//                .setCancelable(true)
+//                .setPositiveButton(activity.getString(R.string.ism_open_in_app), (dialog, id) -> {
+//                    dialog.cancel();
+//                    Intent intent = new Intent(activity, PreviewImageActivity.class);
+//                    intent.putExtra("imageUrl", mediaUrl);
+//
+//                    activity.startActivity(intent);
+//                })
+//                .setNegativeButton(activity.getString(R.string.ism_open_in_other_apps), (dialog, id) -> {
+//                    dialog.cancel();
+//                    handleFileClick(activity, mediaUrl, mimeType, localMedia);
+//                })
+//                .create()
+//                .show();
     }
 
     private static void handleVideoClick(Activity activity, String videoThumbnailUrl,
                                          String videoMainUrl, String mimeType, boolean localMedia) {
 
-        new AlertDialog.Builder(activity).setTitle(
-                        activity.getString(R.string.ism_open_media_alert_heading))
-                .setMessage(activity.getString(R.string.ism_open_media_alert_message))
-                .setCancelable(true)
-                .setPositiveButton(activity.getString(R.string.ism_open_in_app), (dialog, id) -> {
+        Intent intent = new Intent(activity, PreviewVideoActivity.class);
+        intent.putExtra("videoMainUrl", videoMainUrl);
+        intent.putExtra("videoThumbnailUrl", videoThumbnailUrl);
 
-                    dialog.cancel();
-                    Intent intent = new Intent(activity, PreviewVideoActivity.class);
-                    intent.putExtra("videoMainUrl", videoMainUrl);
-                    intent.putExtra("videoThumbnailUrl", videoThumbnailUrl);
+        activity.startActivity(intent);
 
-                    activity.startActivity(intent);
-                })
-                .setNegativeButton(activity.getString(R.string.ism_open_in_other_apps), (dialog, id) -> {
-                    dialog.cancel();
-                    handleFileClick(activity, videoMainUrl, mimeType, localMedia);
-                })
-                .create()
-                .show();
+//        new AlertDialog.Builder(activity).setTitle(
+//                        activity.getString(R.string.ism_open_media_alert_heading))
+//                .setMessage(activity.getString(R.string.ism_open_media_alert_message))
+//                .setCancelable(true)
+//                .setPositiveButton(activity.getString(R.string.ism_open_in_app), (dialog, id) -> {
+//
+//                    dialog.cancel();
+//                    Intent intent = new Intent(activity, PreviewVideoActivity.class);
+//                    intent.putExtra("videoMainUrl", videoMainUrl);
+//                    intent.putExtra("videoThumbnailUrl", videoThumbnailUrl);
+//
+//                    activity.startActivity(intent);
+//                })
+//                .setNegativeButton(activity.getString(R.string.ism_open_in_other_apps), (dialog, id) -> {
+//                    dialog.cancel();
+//                    handleFileClick(activity, videoMainUrl, mimeType, localMedia);
+//                })
+//                .create()
+//                .show();
     }
 
     private static void handleAudioClick(Activity activity, String audioUrl, String audioName,
                                          String mimeType, boolean localMedia) {
 
-        new AlertDialog.Builder(activity).setTitle(
-                        activity.getString(R.string.ism_open_media_alert_heading))
-                .setMessage(activity.getString(R.string.ism_open_media_alert_message))
-                .setCancelable(true)
-                .setPositiveButton(activity.getString(R.string.ism_open_in_app), (dialog, id) -> {
+        Intent intent = new Intent(activity, PreviewAudioActivity.class);
+        intent.putExtra("audioUrl", audioUrl);
+        intent.putExtra("audioName", audioName);
 
-                    dialog.cancel();
-                    Intent intent = new Intent(activity, PreviewAudioActivity.class);
-                    intent.putExtra("audioUrl", audioUrl);
-                    intent.putExtra("audioName", audioName);
+        activity.startActivity(intent);
 
-                    activity.startActivity(intent);
-                })
-                .setNegativeButton(activity.getString(R.string.ism_open_in_other_apps), (dialog, id) -> {
-                    dialog.cancel();
-                    handleFileClick(activity, audioUrl, mimeType, localMedia);
-                })
-                .create()
-                .show();
+//        new AlertDialog.Builder(activity).setTitle(
+//                        activity.getString(R.string.ism_open_media_alert_heading))
+//                .setMessage(activity.getString(R.string.ism_open_media_alert_message))
+//                .setCancelable(true)
+//                .setPositiveButton(activity.getString(R.string.ism_open_in_app), (dialog, id) -> {
+//
+//                    dialog.cancel();
+//                    Intent intent = new Intent(activity, PreviewAudioActivity.class);
+//                    intent.putExtra("audioUrl", audioUrl);
+//                    intent.putExtra("audioName", audioName);
+//
+//                    activity.startActivity(intent);
+//                })
+//                .setNegativeButton(activity.getString(R.string.ism_open_in_other_apps), (dialog, id) -> {
+//                    dialog.cancel();
+//                    handleFileClick(activity, audioUrl, mimeType, localMedia);
+//                })
+//                .create()
+//                .show();
     }
 
     private static void handleFileClick(Activity activity, String fileUrl, String mimeType,

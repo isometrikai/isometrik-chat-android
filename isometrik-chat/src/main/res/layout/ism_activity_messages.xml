@@ -61,15 +61,17 @@
 
                 <TextView
                     android:id="@+id/tvParticipantsCountOrOnlineStatus"
-                    android:layout_width="wrap_content"
+                    android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvConversationOrUserName"
                     android:layout_marginTop="@dimen/ism_dp_1"
                     android:layout_marginEnd="@dimen/ism_dp_13"
                     android:layout_toEndOf="@+id/ivOnlineStatus"
-                    android:ellipsize="end"
-                    android:maxLines="1"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:singleLine="true"
                     tools:visibility="visible"
+                    android:marqueeRepeatLimit="marquee_forever"
                     android:text="@string/ism_participants_count"
                     android:textColor="@color/ism_conversation_details_grey" />
 
