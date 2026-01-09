@@ -217,6 +217,18 @@
               android:text="@string/ism_send_message"
               />
 
+          <include
+              android:id="@+id/vLinkPreview"
+              layout="@layout/ism_link_preview_layout"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@+id/tvTextMessage"
+              android:layout_alignStart="@+id/tvTextMessage"
+              android:layout_alignEnd="@+id/tvTextMessage"
+              android:layout_marginTop="@dimen/ism_dp_8"
+              android:visibility="gone"
+              />
+
       </RelativeLayout>
 
       <androidx.recyclerview.widget.RecyclerView

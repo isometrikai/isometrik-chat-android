@@ -1,7 +1,9 @@
 package io.isometrik.ui.messages.chat.messageBinders
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Typeface
+import android.net.Uri
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.style.StyleSpan
@@ -15,11 +17,16 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import io.isometrik.chat.R
 import io.isometrik.chat.databinding.IsmReceivedMessageTextBinding
+import io.isometrik.chat.utils.LinkPreviewUtil
 import io.isometrik.chat.utils.PlaceholderUtils
 import io.isometrik.ui.messages.action.MessageActionCallback
 import io.isometrik.ui.messages.chat.MessagesModel
 import io.isometrik.ui.messages.chat.common.ChatConfig
 import io.isometrik.ui.messages.reaction.add.MessageReactionsAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class TextReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessageTextBinding> {
 
@@ -204,10 +211,18 @@ class TextReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessageTe
             }
             ismReceivedMessageTextBinding.tvMessageTime.text =
                 message.messageTime
-            ismReceivedMessageTextBinding.tvTextMessage.text =
-                message.textMessage
+            
+            // Set text message with clickable links
+            val textMessage = message.textMessage?.toString() ?: ""
+            val spannableText = SpannableString(textMessage)
+            LinkPreviewUtil.makeLinksClickable(spannableText)
+            ismReceivedMessageTextBinding.tvTextMessage.text = spannableText
             ismReceivedMessageTextBinding.tvTextMessage.movementMethod =
                 LinkMovementMethod.getInstance()
+            
+            // Handle link preview
+            handleLinkPreview(mContext, textMessage, ismReceivedMessageTextBinding, multipleMessagesSelectModeOn)
+            
             ismReceivedMessageTextBinding.ivReaction.setOnClickListener { v: View? ->
                 messageActionCallback.addReactionForMessage(
                     message.messageId
@@ -218,6 +233,86 @@ class TextReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessageTe
                     View.GONE
             }
         } catch (ignore: Exception) {
+        }
+    }
+
+    private fun handleLinkPreview(
+        context: Context,
+        textMessage: String,
+        binding: IsmReceivedMessageTextBinding,
+        multipleMessagesSelectModeOn: Boolean
+    ) {
+        if (multipleMessagesSelectModeOn) {
+            binding.vLinkPreview.root.visibility = View.GONE
+            return
+        }
+
+        val url = LinkPreviewUtil.extractFirstUrl(textMessage)
+        if (url == null) {
+            binding.vLinkPreview.root.visibility = View.GONE
+            return
+        }
+
+        // Show loading state
+        binding.vLinkPreview.root.visibility = View.VISIBLE
+        binding.vLinkPreview.ivPreviewImage.visibility = View.GONE
+        binding.vLinkPreview.tvPreviewTitle.visibility = View.GONE
+        binding.vLinkPreview.tvPreviewDescription.visibility = View.GONE
+        binding.vLinkPreview.tvPreviewUrl.text = url
+
+        // Fetch link preview in background
+        CoroutineScope(Dispatchers.Main).launch {
+            val preview = withContext(Dispatchers.IO) {
+                LinkPreviewUtil.fetchLinkPreview(url)
+            }
+
+            if (preview != null) {
+                // Show title
+                if (!preview.title.isNullOrEmpty()) {
+                    binding.vLinkPreview.tvPreviewTitle.text = preview.title
+                    binding.vLinkPreview.tvPreviewTitle.visibility = View.VISIBLE
+                }
+
+                // Show description
+                if (!preview.description.isNullOrEmpty()) {
+                    binding.vLinkPreview.tvPreviewDescription.text = preview.description
+                    binding.vLinkPreview.tvPreviewDescription.visibility = View.VISIBLE
+                }
+
+                // Show image
+                if (!preview.imageUrl.isNullOrEmpty()) {
+                    try {
+                        Glide.with(context)
+                            .load(preview.imageUrl)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.ism_ic_profile)
+                            .into(binding.vLinkPreview.ivPreviewImage)
+                        binding.vLinkPreview.ivPreviewImage.visibility = View.VISIBLE
+                    } catch (e: Exception) {
+                        binding.vLinkPreview.ivPreviewImage.visibility = View.GONE
+                    }
+                }
+
+                // Set click listener to open URL
+                binding.vLinkPreview.root.setOnClickListener {
+                    try {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(preview.url))
+                        context.startActivity(intent)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            } else {
+                // If preview fetch failed, still show URL and make it clickable
+                binding.vLinkPreview.root.setOnClickListener {
+                    try {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                        context.startActivity(intent)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }
         }
     }
 }
