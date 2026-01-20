@@ -1,6 +1,8 @@
 package io.isometrik.ui.messages.chat.messageBinders
 
 import android.content.Context
+import android.text.SpannableString
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +15,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
 import io.isometrik.chat.R
 import io.isometrik.chat.databinding.IsmSentMessagePhotoBinding
+import io.isometrik.chat.utils.LinkPreviewUtil
 import io.isometrik.ui.messages.action.MessageActionCallback
 import io.isometrik.ui.messages.chat.MessagesModel
 import io.isometrik.ui.messages.reaction.add.MessageReactionsAdapter
@@ -297,6 +300,20 @@ class PhotoSentBinder : MessageItemBinder<MessagesModel, IsmSentMessagePhotoBind
 
             ismSentMessagePhotoBinding.tvPhotoSize.text =
                 message.mediaSizeInMB
+
+            // Display caption if available
+            if (message.textMessage != null && message.textMessage.toString().isNotBlank()) {
+                val captionText = message.textMessage.toString()
+                val spannableText = SpannableString(captionText)
+                LinkPreviewUtil.makeLinksClickable(spannableText)
+                ismSentMessagePhotoBinding.tvCaption.text = spannableText
+                ismSentMessagePhotoBinding.tvCaption.setMovementMethod(
+                    LinkMovementMethod.getInstance()
+                )
+                ismSentMessagePhotoBinding.tvCaption.visibility = View.VISIBLE
+            } else {
+                ismSentMessagePhotoBinding.tvCaption.visibility = View.GONE
+            }
 
             ismSentMessagePhotoBinding.rlPhoto.setOnClickListener { v: View? ->
                 messageActionCallback.handleClickOnMessageCell(

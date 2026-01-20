@@ -24,36 +24,64 @@
       />
 
   <RelativeLayout
-      android:layout_width="wrap_content"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:background="@drawable/ism_done_curved_background"
-      android:id="@+id/rlDone"
-      android:layout_alignParentEnd="true"
       android:layout_alignParentBottom="true"
-      android:layout_margin="@dimen/ism_dp_30"
+      android:background="@color/ism_black"
+      android:paddingStart="@dimen/ism_dp_16"
+      android:paddingEnd="@dimen/ism_dp_16"
+      android:paddingTop="@dimen/ism_dp_16"
+      android:paddingBottom="@dimen/ism_dp_16"
       >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etCaption"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/ism_done"
-        android:textAllCaps="false"
-        android:textColor="@color/ism_white"
-        android:textSize="@dimen/ism_sp_12"
-        android:id="@+id/tvDone"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="@dimen/ism_dp_14"
+        android:layout_toStartOf="@+id/rlDone"
+        android:layout_marginEnd="@dimen/ism_dp_16"
+        android:background="@drawable/ism_send_message_background"
+        android:hint="@string/ism_add_caption"
+        android:maxLength="1000"
+        android:maxLines="3"
+        android:padding="@dimen/ism_dp_10"
+        android:textColor="@color/ism_black"
+        android:textColorHint="@color/ism_hint_grey"
+        android:textSize="@dimen/ism_sp_14"
         />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ism_ic_chevron"
-        android:layout_toEndOf="@+id/tvDone"
-        android:layout_marginEnd="@dimen/ism_dp_5"
-        android:layout_marginTop="@dimen/ism_dp_6"
-        android:layout_marginBottom="@dimen/ism_dp_6"
-        />
+        android:background="@drawable/ism_done_curved_background"
+        android:id="@+id/rlDone"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/ism_done"
+          android:textAllCaps="false"
+          android:textColor="@color/ism_white"
+          android:textSize="@dimen/ism_sp_12"
+          android:id="@+id/tvDone"
+          android:layout_centerVertical="true"
+          android:layout_marginStart="@dimen/ism_dp_14"
+          />
+
+      <androidx.appcompat.widget.AppCompatImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:srcCompat="@drawable/ism_ic_chevron"
+          android:layout_toEndOf="@+id/tvDone"
+          android:layout_marginEnd="@dimen/ism_dp_5"
+          android:layout_marginTop="@dimen/ism_dp_6"
+          android:layout_marginBottom="@dimen/ism_dp_6"
+          />
+
+    </RelativeLayout>
 
   </RelativeLayout>
 

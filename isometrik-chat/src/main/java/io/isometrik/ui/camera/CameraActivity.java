@@ -53,9 +53,17 @@ public class CameraActivity extends AppCompatActivity {
         registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
 
           if (result.getResultCode() == Activity.RESULT_OK) {
-
+            String caption = "";
+            if (result.getData() != null && result.getData().hasExtra("caption")) {
+              caption = result.getData().getStringExtra("caption");
+              if (caption == null) {
+                caption = "";
+              }
+            }
             setResult(Activity.RESULT_OK,
-                new Intent().putExtra("capturedImagePath", capturedImagePath));
+                new Intent()
+                    .putExtra("capturedImagePath", capturedImagePath)
+                    .putExtra("caption", caption));
             supportFinishAfterTransition();
 
           } else {

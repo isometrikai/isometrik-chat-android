@@ -67,6 +67,9 @@ public class SearchAttachmentMessageUtil {
               selfMessage ? MessageTypeUi.PHOTO_MESSAGE_SENT : MessageTypeUi.PHOTO_MESSAGE_RECEIVED,
                   customMessageType,
               selfMessage, message.getSentAt(), message.getParentMessageId() != null,
+                  TagUserUtil.parseMentionedUsers(message.getBody(),
+                          ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
+                                  message.getMentionedUsers()), null),
               FileUtils.getSizeOfFile(attachment.getSize()), false, false, true, false,
               attachment.getThumbnailUrl(), attachment.getMediaUrl(), attachment.getMimeType(),
               attachment.getExtension(), message.getSenderInfo().getUserName(),
@@ -88,6 +91,9 @@ public class SearchAttachmentMessageUtil {
               selfMessage ? MessageTypeUi.VIDEO_MESSAGE_SENT : MessageTypeUi.VIDEO_MESSAGE_RECEIVED,
                   customMessageType,
               selfMessage, message.getSentAt(), message.getParentMessageId() != null,
+                  TagUserUtil.parseMentionedUsers(message.getBody(),
+                          ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
+                                  message.getMentionedUsers()), null),
               FileUtils.getSizeOfFile(attachment.getSize()), false, false, true, false,
               attachment.getThumbnailUrl(), attachment.getMediaUrl(), attachment.getMimeType(),
               attachment.getExtension(), message.getSenderInfo().getUserName(),
@@ -204,6 +210,9 @@ public class SearchAttachmentMessageUtil {
               selfMessage ? MessageTypeUi.WHITEBOARD_MESSAGE_SENT : MessageTypeUi.WHITEBOARD_MESSAGE_RECEIVED,
                   customMessageType,
               selfMessage, message.getSentAt(), message.getParentMessageId() != null,
+                  TagUserUtil.parseMentionedUsers(message.getBody(),
+                          ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
+                                  message.getMentionedUsers()), null),
               FileUtils.getSizeOfFile(attachment.getSize()), false, false, true, false,
               attachment.getThumbnailUrl(), attachment.getMediaUrl(), attachment.getMimeType(),
               attachment.getExtension(), message.getSenderInfo().getUserName(),

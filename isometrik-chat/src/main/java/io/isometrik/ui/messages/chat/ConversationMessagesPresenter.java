@@ -298,7 +298,9 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                                 new LocalMediaAttachmentHelper(mediaPaths.get(i));
                         messageModel =
                                 new MessagesModel(null, messageTypeUi, customMessageType, true, System.currentTimeMillis(),
-                                        parentMessageId != null, localMediaAttachmentHelper.getSizeInMb(), false, false,
+                                        parentMessageId != null,
+                                        TagUserUtil.parseMentionedUsers(messageBody, mentionedUsers, taggedUserCallback),
+                                        localMediaAttachmentHelper.getSizeInMb(), false, false,
                                         false, true, localMediaAttachmentHelper.getThumbnailUrl(),
                                         localMediaAttachmentHelper.getMediaUrl(),
                                         localMediaAttachmentHelper.getMimeType(),

@@ -457,6 +457,7 @@
     <!--  Message reply fragment-->
     <string name="ism_message_reply_hint">Reply to message…</string>
     <string name="ism_type_reply">Type something to reply to message</string>
+    <string name="ism_add_caption">Add a caption…</string>
 
     <!--  Messages action header-->
     <string name="ism_download_heading">Download media</string>
