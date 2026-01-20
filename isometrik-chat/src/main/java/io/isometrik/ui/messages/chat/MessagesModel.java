@@ -1404,7 +1404,7 @@ public class MessagesModel implements Serializable {
      */
     //Video/photo/whiteboard message
     public MessagesModel(String messageId, MessageTypeUi messageTypeUi, CustomMessageTypes customMessageType, boolean isSentMessage,
-                         long messageTime, boolean isQuotedMessage, String mediaSizeInMB, boolean isDownloaded,
+                         long messageTime, boolean isQuotedMessage, SpannableString textMessage, String mediaSizeInMB, boolean isDownloaded,
                          boolean isDownloading, boolean isUploaded, boolean isUploading, String thumbnailUrl,
                          String mainUrl, String mimeType, String mediaExtension, String senderName,
                          String senderImageUrl, ArrayList<ReactionModel> reactions, boolean messageSentSuccessfully,
@@ -1431,6 +1431,7 @@ public class MessagesModel implements Serializable {
                     originalReplyMessageUtil.getOriginalMessageAttachmentUrl();
             parentMessageId = originalReplyMessageUtil.getParentMessageId();
         }
+        this.textMessage = textMessage;
         this.mediaSizeInMB = mediaSizeInMB;
         this.isDownloaded = isDownloaded;
         this.isDownloading = isDownloading;

@@ -41,7 +41,12 @@ public class CapturedImagePreviewActivity extends AppCompatActivity {
     ismActivityCaptureImageResultBinding.ibBack.setOnClickListener(v -> onBackPressed());
 
     ismActivityCaptureImageResultBinding.rlDone.setOnClickListener(v -> {
-      setResult(Activity.RESULT_OK, new Intent());
+      String caption = ismActivityCaptureImageResultBinding.etCaption.getText() != null
+          ? ismActivityCaptureImageResultBinding.etCaption.getText().toString().trim()
+          : "";
+      Intent resultIntent = new Intent();
+      resultIntent.putExtra("caption", caption);
+      setResult(Activity.RESULT_OK, resultIntent);
       supportFinishAfterTransition();
     });
   }

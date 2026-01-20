@@ -484,12 +484,14 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         ) { result: ActivityResult ->
             if (result.resultCode == RESULT_OK) {
                 if (result.data != null) {
+                    val caption = result.data!!.getStringExtra("caption")
+                    val messageBody = if (caption.isNullOrBlank()) null else caption
                     conversationMessagesPresenter.shareMessage(
                         RemoteMessageTypes.NormalMessage,
                         null,
                         null,
                         CustomMessageTypes.Image,
-                        CustomMessageTypes.Image.value,
+                        messageBody,
                         false,
                         true,
                         true,
