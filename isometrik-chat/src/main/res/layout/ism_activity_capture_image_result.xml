@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_toStartOf="@+id/rlDone"
         android:layout_marginEnd="@dimen/ism_dp_16"
-        android:background="@drawable/ism_send_message_background"
+        android:background="@drawable/ism_caption_background"
         android:hint="@string/ism_add_caption"
         android:maxLength="1000"
         android:maxLines="3"
