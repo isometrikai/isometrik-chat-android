@@ -11,8 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 
 import io.isometrik.chat.R;
-import io.isometrik.chat.databinding.IsmActivityCaptureImageResultBinding;
-
+import io.isometrik.chat.databinding.IsmActivityCaptureImagePreviewBinding;
 /**
  * The activity to preview the captured image with option to discard image.
  */
@@ -23,26 +22,25 @@ public class CapturedImagePreviewActivity extends AppCompatActivity {
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    IsmActivityCaptureImageResultBinding
-        ismActivityCaptureImageResultBinding = IsmActivityCaptureImageResultBinding.inflate(getLayoutInflater());
-    View view = ismActivityCaptureImageResultBinding.getRoot();
-    setContentView(view);
+    IsmActivityCaptureImagePreviewBinding
+            ismActivityCaptureImagePreviewBinding  = IsmActivityCaptureImagePreviewBinding.inflate(getLayoutInflater());
+    setContentView(    ismActivityCaptureImagePreviewBinding.getRoot());
 
     try {
       Glide.with(this)
           .load(getIntent().getExtras().getString("capturedImagePath"))
           .placeholder(R.drawable.ism_ic_conversation_image)
-          .into(ismActivityCaptureImageResultBinding.ivPreview);
+          .into(    ismActivityCaptureImagePreviewBinding.ivPreview);
     } catch (IllegalArgumentException | NullPointerException ignore) {
     }
 
     builder = new AlertDialog.Builder(this);
 
-    ismActivityCaptureImageResultBinding.ibBack.setOnClickListener(v -> onBackPressed());
+        ismActivityCaptureImagePreviewBinding.ibBack.setOnClickListener(v -> onBackPressed());
 
-    ismActivityCaptureImageResultBinding.rlDone.setOnClickListener(v -> {
-      String caption = ismActivityCaptureImageResultBinding.etCaption.getText() != null
-          ? ismActivityCaptureImageResultBinding.etCaption.getText().toString().trim()
+        ismActivityCaptureImagePreviewBinding.rlDone.setOnClickListener(v -> {
+      String caption =     ismActivityCaptureImagePreviewBinding.etCaption.getText() != null
+          ?     ismActivityCaptureImagePreviewBinding.etCaption.getText().toString().trim()
           : "";
       Intent resultIntent = new Intent();
       resultIntent.putExtra("caption", caption);
