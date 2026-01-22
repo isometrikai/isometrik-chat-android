@@ -1259,7 +1259,8 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 isometrikUserId!!,
                 conversationUserFullName + IsometrikChatSdk.instance.userSession.userName,
                 conversationUserFullName!!,
-                conversationUserImageUrl!!
+                conversationUserImageUrl!!,
+                conversationId!!
             )
         }
 
@@ -1270,7 +1271,8 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 isometrikUserId!!,
                 conversationUserFullName + IsometrikChatSdk.instance.userSession.userName,
                 conversationUserFullName!!,
-                conversationUserImageUrl!!
+                conversationUserImageUrl!!,
+                conversationId!!
             )
         }
 

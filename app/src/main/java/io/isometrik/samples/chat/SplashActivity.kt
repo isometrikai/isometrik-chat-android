@@ -62,7 +62,8 @@ class SplashActivity : AppCompatActivity() {
                 userId: String,
                 meetingDescription: String,
                 opponentName: String,
-                opponentImageUrl: String
+                opponentImageUrl: String,
+                conversationId: String
             ) {
 
             }
