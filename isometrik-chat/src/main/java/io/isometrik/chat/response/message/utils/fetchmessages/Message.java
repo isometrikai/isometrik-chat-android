@@ -84,7 +84,7 @@ public class Message {
   @SerializedName("initiatorIdentifier")
   @Expose
   private String initiatorIdentifier;
-  @SerializedName("initiatorProfileImageUrl")
+  @SerializedName(value = "initiatorProfileImageUrl", alternate = "initiatorImageUrl")
   @Expose
   private String initiatorProfileImageUrl;
   @SerializedName("config")
@@ -135,6 +135,9 @@ public class Message {
   @SerializedName("senderInfo")
   @Expose
   private SenderInfo senderInfo;
+  @SerializedName("initiatorMetaData")
+  @Expose
+  private SenderInfo initiatorMetaData;
   @SerializedName("mentionedUsers")
   @Expose
   private ArrayList<MentionedUser> mentionedUsers;
@@ -461,6 +464,9 @@ public class Message {
    * @return the message type
    */
   public Integer getMessageType() {
+    if(messageType == null){
+      return 0;
+    }
     return messageType;
   }
 
@@ -534,6 +540,10 @@ public class Message {
    */
   public SenderInfo getSenderInfo() {
     return senderInfo;
+  }
+
+  public SenderInfo getInitiatorMetaData(){
+    return initiatorMetaData;
   }
 
   /**

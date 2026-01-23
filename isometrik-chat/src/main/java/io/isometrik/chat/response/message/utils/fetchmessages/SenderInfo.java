@@ -21,7 +21,7 @@ public class SenderInfo {
   @SerializedName("userId")
   @Expose
   private String userId;
-  @SerializedName("online")
+  @SerializedName(value = "online", alternate = "userOnlineStatus")
   @Expose
   private boolean online;
   @SerializedName("lastSeen")

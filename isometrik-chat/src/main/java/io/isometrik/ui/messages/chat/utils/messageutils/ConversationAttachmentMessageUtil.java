@@ -40,11 +40,19 @@ public class ConversationAttachmentMessageUtil {
             LogManger.INSTANCE.log("ChatSDK:"," database userid : "+IsometrikChatSdk.getInstance()
                     .getUserSession()
                     .getUserId());
+            String messageSenderId = "";
+            if(message.getSenderInfo().getUserId() != null){
+                messageSenderId = message.getSenderInfo().getUserId();
+            }else if(message.getInitiatorId() != null){
+                messageSenderId = message.getInitiatorId();
+            }else if(message.getInitiatorMetaData().getUserId() != null){
+                messageSenderId = message.getInitiatorMetaData().getUserId();
+            }
 
-            boolean selfMessage = IsometrikChatSdk.getInstance()
+            boolean  selfMessage = IsometrikChatSdk.getInstance()
                     .getUserSession()
                     .getUserId()
-                    .equals(message.getSenderInfo().getUserId());
+                    .equals(messageSenderId);
 
             //selfMessage = false;
             LogManger.INSTANCE.log("ChatSDK:"," "+message.getCustomType());
@@ -538,6 +546,125 @@ public class ConversationAttachmentMessageUtil {
 
                 }
 
+                case AudioCall: {
+                    try {
+                        messagesModel = new MessagesModel(
+                                message.getMessageId(),
+                                selfMessage ? MessageTypeUi.AUDIO_CALL_SENT : MessageTypeUi.AUDIO_CALL_RECEIVED,
+                                customMessageType,
+                                selfMessage,
+                                message.getSentAt(),
+                                message.getParentMessageId() != null,
+                                null,
+                                message.getSenderInfo().getUserName(),
+                                message.getSenderInfo().getUserProfileImageUrl(),
+                                ReactionUtil.parseReactionMessages(message.getReactions()),
+                                true,
+                                null,
+                                (message.getParentMessageId() == null) ? null
+                                        : (new OriginalReplyMessageUtil(message.getParentMessageId(),
+                                        message.getMetaData())),
+                                message.getMessageType() ,
+                                message.getMetaData(),
+                                message.isDeliveredToAll(),
+                                message.isReadByAll(),
+                                message.getConversationId(),
+                                message.getMessageUpdated() != null
+                        );
+                        messagesModel.setDynamicCustomType(message.getCustomType());
+
+                        // Populate call-related fields
+                        messagesModel.setInitiatorId(message.getInitiatorId());
+                        messagesModel.setInitiatorName(message.getInitiatorName());
+                        messagesModel.setInitiatorImageUrl(message.getInitiatorProfileImageUrl());
+                        messagesModel.setAction(message.getAction());
+
+                        // Parse call-related fields from metadata
+                        JSONObject metadata = message.getMetaData();
+                        if (metadata != null) {
+                            try {
+                                if (metadata.has("missedByMembers")) {
+                                    messagesModel.setMissedByMembers(metadata.getJSONArray("missedByMembers"));
+                                }
+                                if (metadata.has("callDurations")) {
+                                    messagesModel.setCallDurations(metadata.getJSONArray("callDurations"));
+                                }
+                                if (metadata.has("audioOnly")) {
+                                    messagesModel.setAudioOnly(metadata.getBoolean("audioOnly"));
+                                }
+                                if (metadata.has("meetingId")) {
+                                    messagesModel.setMeetingId(metadata.getString("meetingId"));
+                                }
+                            } catch (JSONException e) {
+                                LogManger.INSTANCE.log("ChatSDK:", "Error parsing call fields from metadata: " + e.getMessage());
+                            }
+                        }
+                    } catch (Exception e) {
+                        Log.e("ChatSDK:", "Error preparing message:"+e);
+                    }
+
+                    break;
+                }
+                case VideoCall: {
+                    messagesModel = new MessagesModel(
+                        message.getMessageId(),
+                        selfMessage ? MessageTypeUi.VIDEO_CALL_SENT : MessageTypeUi.VIDEO_CALL_RECEIVED,
+                        customMessageType,
+                        selfMessage,
+                        message.getSentAt(),
+                        message.getParentMessageId() != null,
+                       null,
+                        message.getSenderInfo().getUserName(),
+                        message.getSenderInfo().getUserProfileImageUrl(),
+                        ReactionUtil.parseReactionMessages(message.getReactions()),
+                        true,
+                        null,
+                        (message.getParentMessageId() == null) ? null
+                                : (new OriginalReplyMessageUtil(message.getParentMessageId(),
+                                message.getMetaData())),
+                        message.getMessageType(),
+                        message.getMetaData(),
+                        message.isDeliveredToAll(),
+                        message.isReadByAll(),
+                        message.getConversationId(),
+                        message.getMessageUpdated() != null
+                    );
+
+                    messagesModel.setDynamicCustomType(message.getCustomType());
+
+                    // Populate call-related fields
+                    messagesModel.setInitiatorId(message.getInitiatorId());
+                    messagesModel.setInitiatorName(message.getInitiatorName());
+                    messagesModel.setInitiatorImageUrl(message.getInitiatorProfileImageUrl());
+                    messagesModel.setAction(message.getAction());
+
+                    // Parse call-related fields from metadata
+                    JSONObject metadata = message.getMetaData();
+                    if (metadata != null) {
+                        try {
+                            if (metadata.has("missedByMembers")) {
+                                messagesModel.setMissedByMembers(metadata.getJSONArray("missedByMembers"));
+                            }
+                            if (metadata.has("callDurations")) {
+                                messagesModel.setCallDurations(metadata.getJSONArray("callDurations"));
+                            }
+                            if (metadata.has("audioOnly")) {
+                                messagesModel.setAudioOnly(metadata.getBoolean("audioOnly"));
+                            }
+                            if (metadata.has("meetingId")) {
+                                messagesModel.setMeetingId(metadata.getString("meetingId"));
+                            }
+                        } catch (JSONException e) {
+                            LogManger.INSTANCE.log("ChatSDK:", "Error parsing call fields from metadata: " + e.getMessage());
+                        }
+                    }
+
+                    break;
+                }
+                case Custom: {
+                    // Fall through to default for other custom types
+                }
+
                  default: {
                      LogManger.INSTANCE.log("ChatSDK:","default prepare start");
 
@@ -552,9 +679,7 @@ public class ConversationAttachmentMessageUtil {
                         selfMessage,
                         message.getSentAt(),
                         message.getParentMessageId() != null,
-                            TagUserUtil.parseMentionedUsers(message.getBody(),
-                                    ParseMentionedUsersFromFetchMessagesResponseUtil.parseMentionedUsers(
-                                            message.getMentionedUsers()), taggedUserCallback),
+                            null,
                         message.getSenderInfo().getUserName(),
                         message.getSenderInfo().getUserProfileImageUrl(),
                         ReactionUtil.parseReactionMessages(message.getReactions()),
