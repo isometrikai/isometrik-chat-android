@@ -894,8 +894,12 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
 
                         for (int i = 0; i < messages.size(); i++) {
                             message = messages.get(i);
+                            boolean isAudioVideoCall = false;
+                            if(message.getCustomType() != null && (message.getCustomType().equals(CustomMessageTypes.AudioCall.value)) || message.getCustomType().equals(CustomMessageTypes.VideoCall.value)){
+                                isAudioVideoCall = true;
+                            }
 
-                            if (message.getConversationStatusMessage() != null) {
+                            if (message.getConversationStatusMessage() != null && !isAudioVideoCall) {
                                 String conversationActionMessage =
                                         ConversationActionMessageUtil.parseConversationActionMessage(message);
 

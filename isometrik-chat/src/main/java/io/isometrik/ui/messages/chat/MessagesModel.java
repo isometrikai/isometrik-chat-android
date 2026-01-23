@@ -934,6 +934,14 @@ public class MessagesModel implements Serializable {
     private String longitude;
     private String locationDescription;
 
+    //For VideoCall/AudioCall messages
+    private String initiatorId;
+    private JSONArray missedByMembers = new JSONArray();
+    private JSONArray callDurations = new JSONArray();
+    private boolean audioOnly;
+    private String action;
+    private String meetingId;
+
     /**
      * Gets video thumbnail url.
      *
@@ -1094,6 +1102,114 @@ public class MessagesModel implements Serializable {
      */
     public String getLocationDescription() {
         return locationDescription;
+    }
+
+    /**
+     * Gets initiator id.
+     *
+     * @return the initiator id
+     */
+    public String getInitiatorId() {
+        return initiatorId;
+    }
+
+    /**
+     * Sets initiator id.
+     *
+     * @param initiatorId the initiator id
+     */
+    public void setInitiatorId(String initiatorId) {
+        this.initiatorId = initiatorId;
+    }
+
+    /**
+     * Gets missed by members.
+     *
+     * @return the missed by members
+     */
+    public JSONArray getMissedByMembers() {
+        return missedByMembers;
+    }
+
+    /**
+     * Sets missed by members.
+     *
+     * @param missedByMembers the missed by members
+     */
+    public void setMissedByMembers(JSONArray missedByMembers) {
+        this.missedByMembers = missedByMembers;
+    }
+
+    /**
+     * Gets call durations.
+     *
+     * @return the call durations
+     */
+    public JSONArray getCallDurations() {
+        return callDurations;
+    }
+
+    /**
+     * Sets call durations.
+     *
+     * @param callDurations the call durations
+     */
+    public void setCallDurations(JSONArray callDurations) {
+        this.callDurations = callDurations;
+    }
+
+    /**
+     * Is audio only boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isAudioOnly() {
+        return audioOnly;
+    }
+
+    /**
+     * Sets audio only.
+     *
+     * @param audioOnly the audio only
+     */
+    public void setAudioOnly(boolean audioOnly) {
+        this.audioOnly = audioOnly;
+    }
+
+    /**
+     * Gets action.
+     *
+     * @return the action
+     */
+    public String getAction() {
+        return action;
+    }
+
+    /**
+     * Sets action.
+     *
+     * @param action the action
+     */
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    /**
+     * Gets meeting id.
+     *
+     * @return the meeting id
+     */
+    public String getMeetingId() {
+        return meetingId;
+    }
+
+    /**
+     * Sets meeting id.
+     *
+     * @param meetingId the meeting id
+     */
+    public void setMeetingId(String meetingId) {
+        this.meetingId = meetingId;
     }
 
     /**
