@@ -461,6 +461,9 @@ public class Message {
    * @return the message type
    */
   public Integer getMessageType() {
+    if(messageType == null){
+      return 0;
+    }
     return messageType;
   }
 
