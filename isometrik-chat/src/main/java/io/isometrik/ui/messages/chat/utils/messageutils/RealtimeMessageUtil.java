@@ -913,6 +913,124 @@ int size= members.size();
 
           break;
         }
+        case AudioCall: {
+          MessageTypeUi messageTypeUi = selfMessage ? MessageTypeUi.AUDIO_CALL_SENT : MessageTypeUi.AUDIO_CALL_RECEIVED;
+          
+          messageModel = new MessagesModel(
+              sendMessageEvent.getMessageId(),
+              messageTypeUi,
+              customMessageType,
+              selfMessage,
+              sendMessageEvent.getSentAt(),
+              sendMessageEvent.getParentMessageId() != null,
+              TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
+                      sendMessageEvent.getMentionedUsers(), taggedUserCallback),
+              sendMessageEvent.getSenderName(),
+              sendMessageEvent.getSenderProfileImageUrl(),
+              null,
+              true,
+              null,
+              (sendMessageEvent.getParentMessageId() == null) ? null
+                  : (new OriginalReplyMessageUtil(sendMessageEvent.getParentMessageId(),
+                  sendMessageEvent.getMetaData())),
+              sendMessageEvent.getMessageType(),
+              sendMessageEvent.getMetaData(),
+              false,
+              false,
+              sendMessageEvent.getConversationId(),
+              false
+          );
+
+          messageModel.setDynamicCustomType(sendMessageEvent.getCustomType());
+
+          // Populate call-related fields
+          JSONObject metadata = sendMessageEvent.getMetaData();
+          if (metadata != null) {
+              try {
+                  if (metadata.has("initiatorId")) {
+                      messageModel.setInitiatorId(metadata.getString("initiatorId"));
+                  }
+                  if (metadata.has("action")) {
+                      messageModel.setAction(metadata.getString("action"));
+                  }
+                  if (metadata.has("missedByMembers")) {
+                      messageModel.setMissedByMembers(metadata.getJSONArray("missedByMembers"));
+                  }
+                  if (metadata.has("callDurations")) {
+                      messageModel.setCallDurations(metadata.getJSONArray("callDurations"));
+                  }
+                  if (metadata.has("audioOnly")) {
+                      messageModel.setAudioOnly(metadata.getBoolean("audioOnly"));
+                  }
+                  if (metadata.has("meetingId")) {
+                      messageModel.setMeetingId(metadata.getString("meetingId"));
+                  }
+              } catch (JSONException e) {
+                  LogManger.INSTANCE.log("ChatSDK:", "Error parsing call fields from metadata: " + e.getMessage());
+              }
+          }
+
+          break;
+        }
+        case VideoCall: {
+          MessageTypeUi messageTypeUi = selfMessage ? MessageTypeUi.VIDEO_CALL_SENT : MessageTypeUi.VIDEO_CALL_RECEIVED;
+          
+          messageModel = new MessagesModel(
+              sendMessageEvent.getMessageId(),
+              messageTypeUi,
+              customMessageType,
+              selfMessage,
+              sendMessageEvent.getSentAt(),
+              sendMessageEvent.getParentMessageId() != null,
+              TagUserUtil.parseMentionedUsers(sendMessageEvent.getBody(),
+                      sendMessageEvent.getMentionedUsers(), taggedUserCallback),
+              sendMessageEvent.getSenderName(),
+              sendMessageEvent.getSenderProfileImageUrl(),
+              null,
+              true,
+              null,
+              (sendMessageEvent.getParentMessageId() == null) ? null
+                  : (new OriginalReplyMessageUtil(sendMessageEvent.getParentMessageId(),
+                  sendMessageEvent.getMetaData())),
+              sendMessageEvent.getMessageType(),
+              sendMessageEvent.getMetaData(),
+              false,
+              false,
+              sendMessageEvent.getConversationId(),
+              false
+          );
+
+          messageModel.setDynamicCustomType(sendMessageEvent.getCustomType());
+
+          // Populate call-related fields
+          JSONObject metadata = sendMessageEvent.getMetaData();
+          if (metadata != null) {
+              try {
+                  if (metadata.has("initiatorId")) {
+                      messageModel.setInitiatorId(metadata.getString("initiatorId"));
+                  }
+                  if (metadata.has("action")) {
+                      messageModel.setAction(metadata.getString("action"));
+                  }
+                  if (metadata.has("missedByMembers")) {
+                      messageModel.setMissedByMembers(metadata.getJSONArray("missedByMembers"));
+                  }
+                  if (metadata.has("callDurations")) {
+                      messageModel.setCallDurations(metadata.getJSONArray("callDurations"));
+                  }
+                  if (metadata.has("audioOnly")) {
+                      messageModel.setAudioOnly(metadata.getBoolean("audioOnly"));
+                  }
+                  if (metadata.has("meetingId")) {
+                      messageModel.setMeetingId(metadata.getString("meetingId"));
+                  }
+              } catch (JSONException e) {
+                  LogManger.INSTANCE.log("ChatSDK:", "Error parsing call fields from metadata: " + e.getMessage());
+              }
+          }
+
+          break;
+        }
          default: {
             // Get custom type information
             CustomTypeInfo customTypeInfo = CustomMessageTypes.Companion.getCustomTypeInfo(sendMessageEvent.getCustomType());
@@ -1038,6 +1156,17 @@ int size= members.size();
       case Reply:{
         messagePlaceHolderImage = R.drawable.ism_ic_quote;
         messageText = sendMessageEvent.getBody();
+        break;
+      }
+      case AudioCall: {
+        messagePlaceHolderImage = R.drawable.ism_ic_audio_call;
+        messageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_audio_recording);
+        break;
+      }
+      case VideoCall: {
+        messagePlaceHolderImage = R.drawable.ism_ic_video;
+        messageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_video);
+        break;
       }
     }
     if (messageText == null) {

@@ -20,7 +20,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * The helper class for inflating conversation items for open/public and all conversations, search
+ * The helper class for inflating conversation items for open/public and all
+ * conversations, search
  * conversation results and conversation created event.
  */
 public class ConversationsModel {
@@ -56,16 +57,13 @@ public class ConversationsModel {
 
         if (conversationType == ConversationType.PrivateConversation.getValue()) {
             if (createConversationEvent.getConversationDetails().isGroup()) {
-                conversationTypeText =
-                        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_private);
+                conversationTypeText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_private);
             } else {
-                conversationTypeText =
-                        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_1_1);
+                conversationTypeText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_1_1);
 
             }
         } else if (conversationType == ConversationType.PublicConversation.getValue()) {
-            conversationTypeText =
-                    IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_public);
+            conversationTypeText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_public);
         } else if (conversationType == ConversationType.OpenConversation.getValue()) {
             conversationTypeText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_open);
         }
@@ -73,12 +71,9 @@ public class ConversationsModel {
         lastMessageTime = TimeUtil.formatTimestampToOnlyDate(
                 createConversationEvent.getConversationDetails().getCreatedAt());
 
-        messageDeliveryReadEventsEnabled =
-                createConversationEvent.getConversationDetails().getConfig().isReadEvents();
-        typingEventsEnabled =
-                createConversationEvent.getConversationDetails().getConfig().isTypingEvents();
-        privateOneToOneConversation =
-                createConversationEvent.getConversationDetails().isPrivateOneToOne();
+        messageDeliveryReadEventsEnabled = createConversationEvent.getConversationDetails().getConfig().isReadEvents();
+        typingEventsEnabled = createConversationEvent.getConversationDetails().getConfig().isTypingEvents();
+        privateOneToOneConversation = createConversationEvent.getConversationDetails().isPrivateOneToOne();
         unreadMessagesCount = (IsometrikChatSdk.getInstance()
                 .getUserSession()
                 .getUserId()
@@ -99,8 +94,8 @@ public class ConversationsModel {
                     .getUserId()
                     .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
-                List<ConversationMember> members =
-                        createConversationEvent.getConversationDetails().getConversationMembers();
+                List<ConversationMember> members = createConversationEvent.getConversationDetails()
+                        .getConversationMembers();
 
                 for (int i = 0; i < members.size(); i++) {
 
@@ -121,23 +116,20 @@ public class ConversationsModel {
                 }
             } else {
 
-                opponentId =
-                        createConversationEvent.getConversationDetails().getOpponentDetails().getUserId();
-                opponentIdentifier = createConversationEvent.getConversationDetails().getOpponentDetails().getUserIdentifier();
+                opponentId = createConversationEvent.getConversationDetails().getOpponentDetails().getUserId();
+                opponentIdentifier = createConversationEvent.getConversationDetails().getOpponentDetails()
+                        .getUserIdentifier();
                 conversationImageUrl = createConversationEvent.getConversationDetails()
                         .getOpponentDetails()
                         .getUserProfileImageUrl();
-                conversationTitle =
-                        createConversationEvent.getConversationDetails().getOpponentDetails().getUserName();
+                conversationTitle = createConversationEvent.getConversationDetails().getOpponentDetails().getUserName();
                 online = createConversationEvent.getConversationDetails().getOpponentDetails().isOnline();
 
-                lastSeenAt =
-                        createConversationEvent.getConversationDetails().getOpponentDetails().getLastSeen();
+                lastSeenAt = createConversationEvent.getConversationDetails().getOpponentDetails().getLastSeen();
             }
         } else {
 
-            conversationImageUrl =
-                    createConversationEvent.getConversationDetails().getConversationImageUrl();
+            conversationImageUrl = createConversationEvent.getConversationDetails().getConversationImageUrl();
             conversationTitle = createConversationEvent.getConversationDetails().getConversationTitle();
         }
 
@@ -154,7 +146,7 @@ public class ConversationsModel {
      * @param canObserve   the can observe
      */
     public ConversationsModel(Conversation conversation, boolean canJoin, boolean canObserve) {
-        Log.e("ConversationsModel","==> 11"+lastMessageText);
+        Log.e("ConversationsModel", "==> 11" + lastMessageText);
         this.canJoin = canJoin;
         remoteUserTyping = false;
         messagingDisabled = conversation.isMessagingDisabled();
@@ -170,40 +162,45 @@ public class ConversationsModel {
         metaData = conversation.getMetaData();
         JSONObject lastMessageDetails = conversation.getLastMessageDetails();
         try {
-            if(lastMessageDetails.has("customType")){
+            if (lastMessageDetails.has("customType")) {
                 lastMessageCustomType = lastMessageDetails.getString("customType");
             }
             if (!conversation.isGroup()) {
-                if (lastMessageDetails.has("deliveredTo") && lastMessageDetails.getJSONArray("deliveredTo").length() == 1
-                        && !lastMessageDetails.getJSONArray("deliveredTo").getJSONObject(0).getString("userId").isBlank()
+                if (lastMessageDetails.has("deliveredTo")
+                        && lastMessageDetails.getJSONArray("deliveredTo").length() == 1
+                        && !lastMessageDetails.getJSONArray("deliveredTo").getJSONObject(0).getString("userId")
+                                .isBlank()
                         && lastMessageDetails.has("readBy") && lastMessageDetails.getJSONArray("readBy").length() == 1
-                        && !lastMessageDetails.getJSONArray("readBy").getJSONObject(0).getString("userId").isBlank()
-                ){
+                        && !lastMessageDetails.getJSONArray("readBy").getJSONObject(0).getString("userId").isBlank()) {
                     lastMessageDeliveredToAll = true;
                     lastMessageReadByAll = true;
-                }else if(lastMessageDetails.has("deliveredTo") && lastMessageDetails.getJSONArray("deliveredTo").length() == 1
-                        && !lastMessageDetails.getJSONArray("deliveredTo").getJSONObject(0).getString("userId").isBlank()
-                        && lastMessageDetails.has("readBy") && lastMessageDetails.getJSONArray("readBy").length() == 0){
+                } else if (lastMessageDetails.has("deliveredTo")
+                        && lastMessageDetails.getJSONArray("deliveredTo").length() == 1
+                        && !lastMessageDetails.getJSONArray("deliveredTo").getJSONObject(0).getString("userId")
+                                .isBlank()
+                        && lastMessageDetails.has("readBy")
+                        && lastMessageDetails.getJSONArray("readBy").length() == 0) {
                     lastMessageDeliveredToAll = true;
                     lastMessageReadByAll = false;
-                }else{
+                } else {
                     lastMessageReadByAll = false;
                     lastMessageDeliveredToAll = false;
                 }
-            }else if(conversation.isGroup() && conversation.getMembersCount() <= 2){
+            } else if (conversation.isGroup() && conversation.getMembersCount() <= 2) {
                 lastMessageDeliveredToAll = true;
-                if (lastMessageDetails.has("deliveredTo") && lastMessageDetails.getJSONArray("deliveredTo").length() == 1
-                        && !lastMessageDetails.getJSONArray("deliveredTo").getJSONObject(0).getString("userId").isBlank()
+                if (lastMessageDetails.has("deliveredTo")
+                        && lastMessageDetails.getJSONArray("deliveredTo").length() == 1
+                        && !lastMessageDetails.getJSONArray("deliveredTo").getJSONObject(0).getString("userId")
+                                .isBlank()
                         && lastMessageDetails.has("readBy") && lastMessageDetails.getJSONArray("readBy").length() == 1
-                        && !lastMessageDetails.getJSONArray("readBy").getJSONObject(0).getString("userId").isBlank()
-                ){
+                        && !lastMessageDetails.getJSONArray("readBy").getJSONObject(0).getString("userId").isBlank()) {
                     lastMessageReadByAll = true;
                 }
             }
         } catch (JSONException ignore) {
         }
 
-        Log.e("ConversationsModel","==> 22"+lastMessageText);
+        Log.e("ConversationsModel", "==> 22" + lastMessageText);
 
     }
 
@@ -212,7 +209,7 @@ public class ConversationsModel {
      *
      * @param conversation the conversation
      */
-    //For search results
+    // For search results
     public ConversationsModel(Conversation conversation) {
         canJoin = false;
         messagingDisabled = conversation.isMessagingDisabled();
@@ -229,15 +226,12 @@ public class ConversationsModel {
 
         if (conversationType == ConversationType.PrivateConversation.getValue()) {
             if (conversation.isGroup()) {
-                conversationTypeText =
-                        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_private);
+                conversationTypeText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_private);
             } else {
-                conversationTypeText =
-                        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_1_1);
+                conversationTypeText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_1_1);
             }
         } else if (conversationType == ConversationType.PublicConversation.getValue()) {
-            conversationTypeText =
-                    IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_public);
+            conversationTypeText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_public);
         } else if (conversationType == ConversationType.OpenConversation.getValue()) {
             conversationTypeText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_open);
         }
@@ -288,10 +282,10 @@ public class ConversationsModel {
 
                         if (opponentName.equals(currentUserName)) {
                             lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(
-                                    R.string.ism_blocked_user_text, initiatorName,"You");
+                                    R.string.ism_blocked_user_text, initiatorName, "You");
                         } else if (initiatorName.equals(currentUserName)) {
                             lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(
-                                    R.string.ism_blocked_user_text, "You",opponentName);
+                                    R.string.ism_blocked_user_text, "You", opponentName);
                         } else {
                             lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(
                                     R.string.ism_blocked_user, initiatorName, opponentName);
@@ -310,10 +304,10 @@ public class ConversationsModel {
 
                         if (opponentName.equals(currentUserName)) {
                             lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(
-                                    R.string.ism_unblocked_user_text, initiatorName,"You");
+                                    R.string.ism_unblocked_user_text, initiatorName, "You");
                         } else if (initiatorName.equals(currentUserName)) {
                             lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(
-                                    R.string.ism_unblocked_user_text, "You",opponentName);
+                                    R.string.ism_unblocked_user_text, "You", opponentName);
                         } else {
                             lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(
                                     R.string.ism_unblocked_user, initiatorName, opponentName);
@@ -441,9 +435,8 @@ public class ConversationsModel {
                     case "reactionAdd": {
                         lastMessageWasReactionMessage = true;
                         lastMessageSenderName = lastMessage.getString("userName");
-                        lastMessagePlaceHolderImage =
-                                ReactionPlaceHolderIconHelper.fetchLastMessagePlaceHolderIcon(
-                                        lastMessage.getString("reactionType"));
+                        lastMessagePlaceHolderImage = ReactionPlaceHolderIconHelper.fetchLastMessagePlaceHolderIcon(
+                                lastMessage.getString("reactionType"));
                         lastMessageSendersProfileImageUrl = lastMessage.getString("userProfileImageUrl");
                         lastMessageText = IsometrikChatSdk.getInstance()
                                 .getContext()
@@ -454,9 +447,8 @@ public class ConversationsModel {
                     case "reactionRemove": {
                         lastMessageWasReactionMessage = true;
                         lastMessageSenderName = lastMessage.getString("userName");
-                        lastMessagePlaceHolderImage =
-                                ReactionPlaceHolderIconHelper.fetchLastMessagePlaceHolderIcon(
-                                        lastMessage.getString("reactionType"));
+                        lastMessagePlaceHolderImage = ReactionPlaceHolderIconHelper.fetchLastMessagePlaceHolderIcon(
+                                lastMessage.getString("reactionType"));
                         lastMessageSendersProfileImageUrl = lastMessage.getString("userProfileImageUrl");
                         lastMessageText = IsometrikChatSdk.getInstance()
                                 .getContext()
@@ -538,12 +530,12 @@ public class ConversationsModel {
                                     .getString(R.string.ism_details_searchable_tags);
                         }
 
-                        if(detailsUpdated.length() > 2){
+                        if (detailsUpdated.length() > 2) {
                             lastMessageText = IsometrikChatSdk.getInstance()
                                     .getContext()
                                     .getString(R.string.ism_updated_conversation_details,
                                             lastMessage.getString("userName"), detailsUpdated.substring(2));
-                        }else{
+                        } else {
                             lastMessageText = "Conversation updated";
                         }
                         break;
@@ -572,18 +564,18 @@ public class ConversationsModel {
                                     .getContext()
                                     .getString(R.string.ism_details_searchable_tags);
                         }
-//                        if (details.has("body")) {
-//                            detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
-//                                    .getContext()
-//                                    .getString(R.string.ism_details_body);
-//                        }
+                        // if (details.has("body")) {
+                        // detailsUpdated = detailsUpdated + ", " + IsometrikChatSdk.getInstance()
+                        // .getContext()
+                        // .getString(R.string.ism_details_body);
+                        // }
                         if (details.has("body")) {
                             detailsUpdated = details.getString("body");
                             lastMessageText = IsometrikChatSdk.getInstance()
                                     .getContext()
                                     .getString(R.string.ism_updated_message_details, lastMessage.getString("userName"),
                                             detailsUpdated);
-                        }else{
+                        } else {
 
                             lastMessageText = IsometrikChatSdk.getInstance()
                                     .getContext()
@@ -602,7 +594,7 @@ public class ConversationsModel {
                         if (lastMessage.isNull("parentMessageId")) {
 
                             if (!lastMessage.isNull("action")) {
-                                //action not received for normal messages
+                                // action not received for normal messages
 
                                 if ("forward".equals(lastMessage.getString("action"))) {
                                     lastMessagePlaceHolderImage = R.drawable.ism_ic_forward;
@@ -617,8 +609,7 @@ public class ConversationsModel {
                     }
                     case "AttachmentMessage:Image": {
                         lastMessagePlaceHolderImage = R.drawable.ism_ic_picture;
-                        lastMessageText =
-                                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_photo);
+                        lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_photo);
                         break;
                     }
                     case "AttachmentMessage:Payment Request": {
@@ -636,35 +627,33 @@ public class ConversationsModel {
                             if (isExpired) {
                                 lastMessageText = "This payment request has expired.";
                             } else {
-                                lastMessageText = userId.equals(IsometrikChatSdk.getInstance().getUserSession().getUserId()) ?
-                                        "You sent a payment request." :
-                                        lastMessageSenderName + " sent you a payment request.";
+                                lastMessageText = userId
+                                        .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())
+                                                ? "You sent a payment request."
+                                                : lastMessageSenderName + " sent you a payment request.";
                             }
                         }
                         break;
                     }
                     case "AttachmentMessage:Video": {
                         lastMessagePlaceHolderImage = R.drawable.ism_ic_video;
-                        lastMessageText =
-                                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_video);
+                        lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_video);
                         break;
                     }
                     case "AttachmentMessage:Audio": {
                         lastMessagePlaceHolderImage = R.drawable.ism_ic_mic;
-                        lastMessageText =
-                                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_audio_recording);
+                        lastMessageText = IsometrikChatSdk.getInstance().getContext()
+                                .getString(R.string.ism_audio_recording);
                         break;
                     }
                     case "AttachmentMessage:File": {
                         lastMessagePlaceHolderImage = R.drawable.ism_ic_file;
-                        lastMessageText =
-                                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_file);
+                        lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_file);
                         break;
                     }
                     case "AttachmentMessage:Sticker": {
                         lastMessagePlaceHolderImage = R.drawable.ism_ic_sticker;
-                        lastMessageText =
-                                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_sticker);
+                        lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_sticker);
                         break;
                     }
                     case "AttachmentMessage:Gif": {
@@ -674,20 +663,18 @@ public class ConversationsModel {
                     }
                     case "AttachmentMessage:Whiteboard": {
                         lastMessagePlaceHolderImage = R.drawable.ism_ic_whiteboard;
-                        lastMessageText =
-                                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_whiteboard);
+                        lastMessageText = IsometrikChatSdk.getInstance().getContext()
+                                .getString(R.string.ism_whiteboard);
                         break;
                     }
                     case "AttachmentMessage:Location": {
                         lastMessagePlaceHolderImage = R.drawable.ism_ic_location;
-                        lastMessageText =
-                                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_location);
+                        lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_location);
                         break;
                     }
                     case "AttachmentMessage:Contact": {
                         lastMessagePlaceHolderImage = R.drawable.ism_ic_contact;
-                        lastMessageText =
-                                IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_contact);
+                        lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_contact);
                         break;
                     }
                     case "AttachmentMessage:Reply": {
@@ -708,8 +695,7 @@ public class ConversationsModel {
 
             lastSeenAt = conversation.getOpponentDetails().getLastSeen();
             if (opponentId == null) {
-                conversationTitle =
-                        IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
+                conversationTitle = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_deleted_user);
                 messagingDisabled = true;
             }
         } else {
@@ -896,7 +882,8 @@ public class ConversationsModel {
     /**
      * Sets last message senders profile image url.
      *
-     * @param lastMessageSendersProfileImageUrl the last message senders profile image url
+     * @param lastMessageSendersProfileImageUrl the last message senders profile
+     *                                          image url
      */
     public void setLastMessageSendersProfileImageUrl(String lastMessageSendersProfileImageUrl) {
         this.lastMessageSendersProfileImageUrl = lastMessageSendersProfileImageUrl;
@@ -923,7 +910,8 @@ public class ConversationsModel {
     /**
      * Sets message delivery read events enabled.
      *
-     * @param messageDeliveryReadEventsEnabled the message delivery read events enabled
+     * @param messageDeliveryReadEventsEnabled the message delivery read events
+     *                                         enabled
      */
     public void setMessageDeliveryReadEventsEnabled(boolean messageDeliveryReadEventsEnabled) {
         this.messageDeliveryReadEventsEnabled = messageDeliveryReadEventsEnabled;
