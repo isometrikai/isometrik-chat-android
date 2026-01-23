@@ -148,6 +148,16 @@ enum class CustomMessageTypes(
     DealComplete("DEAL_COMPLETE"),
 
     /**
+     * AudioCall custom message types.
+     */
+    AudioCall("AudioCall"),
+
+    /**
+     * VideoCall custom message types.
+     */
+    VideoCall("VideoCall"),
+
+    /**
      * Custom message type for dynamic types.
      */
     Custom("CUSTOM_MESSAGE_TYPE");

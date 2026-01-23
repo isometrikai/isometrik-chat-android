@@ -16,7 +16,8 @@ import io.isometrik.chat.R
 import io.isometrik.chat.databinding.IsmConversationItemBinding
 import io.isometrik.chat.utils.PlaceholderUtils
 
-class DefaultChatListItemBinder : ChatListItemBinder<ConversationsModel, IsmConversationItemBinding> {
+class DefaultChatListItemBinder :
+        ChatListItemBinder<ConversationsModel, IsmConversationItemBinding> {
     val hideMessagekeywords = listOf("blocked you", "unblocked you")
 
     override fun createBinding(parent: ViewGroup): IsmConversationItemBinding {
@@ -24,21 +25,26 @@ class DefaultChatListItemBinder : ChatListItemBinder<ConversationsModel, IsmConv
         return IsmConversationItemBinding.inflate(inflater, parent, false)
     }
 
-    override fun bindData(mContext: Context, ismConversationItemBinding: IsmConversationItemBinding, conversationsModel: ConversationsModel) {
+    override fun bindData(
+            mContext: Context,
+            ismConversationItemBinding: IsmConversationItemBinding,
+            conversationsModel: ConversationsModel
+    ) {
 
         try {
             if (conversationsModel.isMessagingDisabled) {
-                val spannableString =
-                    SpannableString(conversationsModel.conversationTitle)
+                val spannableString = SpannableString(conversationsModel.conversationTitle)
                 spannableString.setSpan(StyleSpan(Typeface.ITALIC), 0, spannableString.length, 0)
                 ismConversationItemBinding.tvConversationTitle.text = spannableString
             } else {
                 ismConversationItemBinding.tvConversationTitle.text =
-                    conversationsModel.conversationTitle
+                        conversationsModel.conversationTitle
             }
-            if (!containsKeyword(conversationsModel.lastMessageText, hideMessagekeywords)) {
-                ismConversationItemBinding.tvLastMessage.text =
-                    conversationsModel.lastMessageText
+            val lastMessageText = conversationsModel.lastMessageText
+            if (lastMessageText != null && !containsKeyword(lastMessageText, hideMessagekeywords)) {
+                ismConversationItemBinding.tvLastMessage.text = lastMessageText
+            } else if (lastMessageText == null) {
+                ismConversationItemBinding.tvLastMessage.text = ""
             }
             if (conversationsModel.isCanJoin) {
                 ismConversationItemBinding.tvJoinConversation.visibility = View.VISIBLE
@@ -46,12 +52,13 @@ class DefaultChatListItemBinder : ChatListItemBinder<ConversationsModel, IsmConv
                 ismConversationItemBinding.tvJoinConversation.visibility = View.GONE
             }
 
-            ismConversationItemBinding.tvLastMessageTime.text =
-                conversationsModel.lastMessageTime
+            ismConversationItemBinding.tvLastMessageTime.text = conversationsModel.lastMessageTime
 
             if (conversationsModel.unreadMessagesCount > 0) {
                 ismConversationItemBinding.tvUnreadMessagesCount.text =
-                    if (conversationsModel.unreadMessagesCount > 99) mContext.getString(R.string.ism_hundred_unread_count) else conversationsModel.unreadMessagesCount.toString()
+                        if (conversationsModel.unreadMessagesCount > 99)
+                                mContext.getString(R.string.ism_hundred_unread_count)
+                        else conversationsModel.unreadMessagesCount.toString()
                 ismConversationItemBinding.tvUnreadMessagesCount.visibility = View.VISIBLE
             } else {
                 ismConversationItemBinding.tvUnreadMessagesCount.visibility = View.GONE
@@ -59,38 +66,43 @@ class DefaultChatListItemBinder : ChatListItemBinder<ConversationsModel, IsmConv
             if (PlaceholderUtils.isValidImageUrl(conversationsModel.conversationImageUrl)) {
                 try {
                     Glide.with(mContext)
-                        .load(conversationsModel.conversationImageUrl)
-                        .placeholder(R.drawable.ism_ic_profile)
-                        .transform(CircleCrop())
-                        .into(ismConversationItemBinding.ivConversationImage)
-                } catch (ignore: IllegalArgumentException) {
-                } catch (ignore: NullPointerException) {
-                }
+                            .load(conversationsModel.conversationImageUrl)
+                            .placeholder(R.drawable.ism_ic_profile)
+                            .transform(CircleCrop())
+                            .into(ismConversationItemBinding.ivConversationImage)
+                } catch (ignore: IllegalArgumentException) {} catch (
+                        ignore: NullPointerException) {}
             } else {
                 PlaceholderUtils.setTextRoundDrawable(
-                    mContext, conversationsModel.conversationTitle,
-                    ismConversationItemBinding.ivConversationImage, /*position*/-1, 16
+                        mContext,
+                        conversationsModel.conversationTitle,
+                        ismConversationItemBinding.ivConversationImage, /*position*/
+                        -1,
+                        16
                 )
             }
             if (conversationsModel.isPrivateOneToOneConversation) {
                 if (conversationsModel.isMessagingDisabled) {
                     ismConversationItemBinding.ivOnlineStatus.setImageDrawable(
-                        ContextCompat.getDrawable(mContext, R.drawable.ism_ic_messaging_disabled)
+                            ContextCompat.getDrawable(
+                                    mContext,
+                                    R.drawable.ism_ic_messaging_disabled
+                            )
                     )
                 } else {
                     if (conversationsModel.isOnline) {
                         ismConversationItemBinding.ivOnlineStatus.setImageDrawable(
-                            ContextCompat.getDrawable(
-                                mContext,
-                                R.drawable.ism_user_online_status_circle
-                            )
+                                ContextCompat.getDrawable(
+                                        mContext,
+                                        R.drawable.ism_user_online_status_circle
+                                )
                         )
                     } else {
                         ismConversationItemBinding.ivOnlineStatus.setImageDrawable(
-                            ContextCompat.getDrawable(
-                                mContext,
-                                R.drawable.ism_user_offline_status_circle
-                            )
+                                ContextCompat.getDrawable(
+                                        mContext,
+                                        R.drawable.ism_user_offline_status_circle
+                                )
                         )
                     }
                 }
@@ -98,23 +110,24 @@ class DefaultChatListItemBinder : ChatListItemBinder<ConversationsModel, IsmConv
             } else {
                 if (conversationsModel.lastMessageSendersProfileImageUrl != null) {
                     if (PlaceholderUtils.isValidImageUrl(
-                            conversationsModel.lastMessageSendersProfileImageUrl
-                        )
+                                    conversationsModel.lastMessageSendersProfileImageUrl
+                            )
                     ) {
                         try {
                             Glide.with(mContext)
-                                .load(conversationsModel.lastMessageSendersProfileImageUrl)
-                                .placeholder(R.drawable.ism_ic_profile)
-                                .transform(CircleCrop())
-                                .into(ismConversationItemBinding.ivOnlineStatus)
-                        } catch (ignore: IllegalArgumentException) {
-                        } catch (ignore: NullPointerException) {
-                        }
+                                    .load(conversationsModel.lastMessageSendersProfileImageUrl)
+                                    .placeholder(R.drawable.ism_ic_profile)
+                                    .transform(CircleCrop())
+                                    .into(ismConversationItemBinding.ivOnlineStatus)
+                        } catch (ignore: IllegalArgumentException) {} catch (
+                                ignore: NullPointerException) {}
                     } else {
                         PlaceholderUtils.setTextRoundDrawable(
-                            mContext,
-                            conversationsModel.lastMessageSenderName,
-                            ismConversationItemBinding.ivOnlineStatus, /*position + 1*/-1, 5
+                                mContext,
+                                conversationsModel.lastMessageSenderName,
+                                ismConversationItemBinding.ivOnlineStatus, /*position + 1*/
+                                -1,
+                                5
                         )
                     }
                     ismConversationItemBinding.ivOnlineStatus.visibility = View.VISIBLE
@@ -126,19 +139,18 @@ class DefaultChatListItemBinder : ChatListItemBinder<ConversationsModel, IsmConv
             if (conversationsModel.lastMessagePlaceHolderImage != null) {
                 try {
                     Glide.with(mContext)
-                        .load(conversationsModel.lastMessagePlaceHolderImage)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .into(ismConversationItemBinding.ivLastMessageType)
-                } catch (ignore: IllegalArgumentException) {
-                } catch (ignore: NullPointerException) {
-                }
+                            .load(conversationsModel.lastMessagePlaceHolderImage)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .into(ismConversationItemBinding.ivLastMessageType)
+                } catch (ignore: IllegalArgumentException) {} catch (
+                        ignore: NullPointerException) {}
 
                 if (conversationsModel.isLastMessageWasReactionMessage) {
                     ismConversationItemBinding.ivLastMessageType.clearColorFilter()
                 } else {
                     ismConversationItemBinding.ivLastMessageType.setColorFilter(
-                        ContextCompat.getColor(mContext, R.color.ism_last_message_grey),
-                        PorterDuff.Mode.SRC_IN
+                            ContextCompat.getColor(mContext, R.color.ism_last_message_grey),
+                            PorterDuff.Mode.SRC_IN
                     )
                 }
 
@@ -151,7 +163,7 @@ class DefaultChatListItemBinder : ChatListItemBinder<ConversationsModel, IsmConv
                 ismConversationItemBinding.tvLastMessage.visibility = View.GONE
                 ismConversationItemBinding.ivLastMessageType.visibility = View.GONE
                 ismConversationItemBinding.tvTypingMessage.text =
-                    conversationsModel.remoteUserTypingMessage
+                        conversationsModel.remoteUserTypingMessage
                 ismConversationItemBinding.tvTypingMessage.visibility = View.VISIBLE
             } else {
                 ismConversationItemBinding.tvTypingMessage.visibility = View.GONE
@@ -168,5 +180,4 @@ class DefaultChatListItemBinder : ChatListItemBinder<ConversationsModel, IsmConv
     fun containsKeyword(sentence: String, keywords: List<String>): Boolean {
         return keywords.any { keyword -> sentence.contains(keyword, ignoreCase = true) }
     }
-
 }
