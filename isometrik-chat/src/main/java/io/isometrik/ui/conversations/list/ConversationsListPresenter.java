@@ -897,6 +897,16 @@ public class ConversationsListPresenter implements ConversationsListContract.Pre
             break;
 
           }
+          case AudioCall: {
+            lastMessagePlaceHolderImage = R.drawable.ism_ic_audio_call;
+            lastMessageText = "Voice Call";
+            break;
+          }
+          case VideoCall: {
+            lastMessagePlaceHolderImage = R.drawable.ism_ic_video_call;
+            lastMessageText = "Video Call";
+            break;
+          }
           default:{
             lastMessageText  = "Data update";
           }

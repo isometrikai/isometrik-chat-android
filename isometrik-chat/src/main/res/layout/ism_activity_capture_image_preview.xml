@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/ism_black"
+    android:background="@android:color/black"
     >
 
   <androidx.appcompat.widget.AppCompatImageView
@@ -27,7 +27,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_alignParentBottom="true"
-      android:background="@color/ism_black"
+      android:background="@android:color/black"
       android:paddingStart="@dimen/ism_dp_16"
       android:paddingEnd="@dimen/ism_dp_16"
       android:paddingTop="@dimen/ism_dp_16"

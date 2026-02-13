@@ -105,6 +105,10 @@ import io.isometrik.ui.messages.chat.messageBinders.VideoReceivedBinder
 import io.isometrik.ui.messages.chat.messageBinders.VideoSentBinder
 import io.isometrik.ui.messages.chat.messageBinders.WhiteboardReceivedBinder
 import io.isometrik.ui.messages.chat.messageBinders.WhiteboardSentBinder
+import io.isometrik.ui.messages.chat.messageBinders.AudioCallReceivedBinder
+import io.isometrik.ui.messages.chat.messageBinders.AudioCallSentBinder
+import io.isometrik.ui.messages.chat.messageBinders.VideoCallReceivedBinder
+import io.isometrik.ui.messages.chat.messageBinders.VideoCallSentBinder
 import io.isometrik.ui.messages.chat.utils.attachmentutils.PrepareAttachmentHelper
 import io.isometrik.ui.messages.chat.utils.enums.RemoteMessageTypes
 import io.isometrik.ui.messages.chat.utils.messageutils.ContactUtil
@@ -305,6 +309,8 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             MessageTypeUi.CANCEL_BUY_DIRECT_SENT to OfferSentBinder(),
             MessageTypeUi.PAYMENT_ESCROWED_SENT to OfferSentBinder(),
             MessageTypeUi.DEAL_COMPLETE_SENT to OfferSentBinder(),
+            MessageTypeUi.AUDIO_CALL_SENT to AudioCallSentBinder(),
+            MessageTypeUi.VIDEO_CALL_SENT to VideoCallSentBinder(),
 
             MessageTypeUi.TEXT_MESSAGE_RECEIVED to TextReceivedBinder(),
             MessageTypeUi.REPLAY_MESSAGE_RECEIVED to TextReceivedBinder(),
@@ -330,7 +336,9 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             MessageTypeUi.ACCEPT_BUY_DIRECT_RECEIVED to OfferReceivedBinder(),
             MessageTypeUi.CANCEL_BUY_DIRECT_RECEIVED to OfferReceivedBinder(),
             MessageTypeUi.PAYMENT_ESCROWED_RECEIVED to OfferReceivedBinder(),
-            MessageTypeUi.DEAL_COMPLETE_RECEIVED to OfferReceivedBinder()
+            MessageTypeUi.DEAL_COMPLETE_RECEIVED to OfferReceivedBinder(),
+            MessageTypeUi.AUDIO_CALL_RECEIVED to AudioCallReceivedBinder(),
+            MessageTypeUi.VIDEO_CALL_RECEIVED to VideoCallReceivedBinder()
         )
 
         messagesLayoutManager = LinearLayoutManager(this)
