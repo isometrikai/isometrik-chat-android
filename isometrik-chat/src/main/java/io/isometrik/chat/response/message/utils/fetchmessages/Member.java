@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * The helper class to parse the details of the add/remove member.
  */
-public class AddRemoveMember {
+public class Member {
   @SerializedName("memberId")
   @Expose
   private String memberId;
@@ -19,6 +19,12 @@ public class AddRemoveMember {
   @SerializedName("memberProfileImageUrl")
   @Expose
   private String memberProfileImageUrl;
+  @SerializedName("isAdmin")
+  @Expose
+  private Boolean isAdmin;
+  @SerializedName("isPublishing")
+  @Expose
+  private Boolean isPublishing;
 
   /**
    * Gets member id.
@@ -54,5 +60,23 @@ public class AddRemoveMember {
    */
   public String getMemberProfileImageUrl() {
     return memberProfileImageUrl;
+  }
+
+  /**
+   * Gets is admin.
+   *
+   * @return the is admin
+   */
+  public Boolean getIsAdmin() {
+    return isAdmin;
+  }
+
+  /**
+   * Gets is publishing.
+   *
+   * @return the is publishing
+   */
+  public Boolean getIsPublishing() {
+    return isPublishing;
   }
 }

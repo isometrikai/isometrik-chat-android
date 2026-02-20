@@ -1,6 +1,7 @@
 package io.isometrik.ui.messages.chat.messageBinders
 
 import android.content.Context
+import android.util.Log
 import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
@@ -166,12 +167,16 @@ class VideoCallSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageVideo
 
             binding.tvMessageTime.text = message.messageTime
 
+            Log.e("VideoCallSentBinder", "bindData: "+message.initiatorId)
+
+
             // Handle call click
             binding.rlCall.setOnClickListener {
                 // You can add callback here to handle call back action
                 // messageActionCallback.onCallBackClicked(message)
             }
         } catch (ignore: Exception) {
+            Log.e("VideoCallSentBinder", "Exception: "+ignore)
         }
     }
 

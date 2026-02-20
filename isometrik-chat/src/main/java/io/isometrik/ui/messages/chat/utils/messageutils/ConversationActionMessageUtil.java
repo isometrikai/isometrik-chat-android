@@ -1,6 +1,6 @@
 package io.isometrik.ui.messages.chat.utils.messageutils;
 
-import io.isometrik.chat.response.message.utils.fetchmessages.AddRemoveMember;
+import io.isometrik.chat.response.message.utils.fetchmessages.Member;
 import io.isometrik.chat.response.message.utils.fetchmessages.Config;
 import io.isometrik.chat.response.message.utils.fetchmessages.Details;
 import io.isometrik.chat.response.message.utils.fetchmessages.Message;
@@ -106,7 +106,7 @@ public class ConversationActionMessageUtil {
 
       case "membersAdd": {
         StringBuilder membersAdded = new StringBuilder();
-        ArrayList<AddRemoveMember> members = message.getAddRemoveMembers();
+        ArrayList<Member> members = message.getMembers();
 
         for (int j = 0; j < members.size(); j++) {
           membersAdded.append(", ").append(members.get(j).getMemberName());
@@ -119,7 +119,7 @@ public class ConversationActionMessageUtil {
       }
       case "membersRemove": {
         StringBuilder membersRemoved = new StringBuilder();
-        ArrayList<AddRemoveMember> members = message.getAddRemoveMembers();
+        ArrayList<Member> members = message.getMembers();
 
         for (int j = 0; j < members.size(); j++) {
           membersRemoved.append(", ").append(members.get(j).getMemberName());
