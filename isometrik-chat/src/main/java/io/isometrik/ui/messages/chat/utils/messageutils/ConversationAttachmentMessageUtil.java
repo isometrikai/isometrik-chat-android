@@ -48,6 +48,13 @@ public class ConversationAttachmentMessageUtil {
                 messageSenderId = message.getInitiatorId();
             }else if(message.getInitiatorMetaData().getUserId() != null){
                 messageSenderId = message.getInitiatorMetaData().getUserId();
+            }else if(message.getMembers() != null && !message.getMembers().isEmpty()){
+                    for (Member member : message.getMembers()) {
+                        if (member.getIsPublishing() != null && member.getIsPublishing()) {
+                            messageSenderId = member.getMemberId();
+                            break;
+                        }
+                }
             }
 
             boolean  selfMessage = IsometrikChatSdk.getInstance()
