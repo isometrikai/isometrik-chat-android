@@ -4,6 +4,7 @@ import android.util.Log;
 
 import io.isometrik.chat.enums.CustomMessageTypes;
 import io.isometrik.chat.enums.CustomTypeInfo;
+import io.isometrik.chat.response.message.utils.fetchmessages.Member;
 import io.isometrik.chat.response.message.utils.fetchmessages.Message;
 import io.isometrik.chat.response.message.utils.schemas.Attachment;
 import io.isometrik.chat.enums.MessageTypeUi;
@@ -47,6 +48,13 @@ public class ConversationAttachmentMessageUtil {
                 messageSenderId = message.getInitiatorId();
             }else if(message.getInitiatorMetaData().getUserId() != null){
                 messageSenderId = message.getInitiatorMetaData().getUserId();
+            }else if(message.getMembers() != null && !message.getMembers().isEmpty()){
+                    for (Member member : message.getMembers()) {
+                        if (member.getIsPublishing() != null && member.getIsPublishing()) {
+                            messageSenderId = member.getMemberId();
+                            break;
+                        }
+                }
             }
 
             boolean  selfMessage = IsometrikChatSdk.getInstance()
@@ -574,7 +582,19 @@ public class ConversationAttachmentMessageUtil {
                         messagesModel.setDynamicCustomType(message.getCustomType());
 
                         // Populate call-related fields
-                        messagesModel.setInitiatorId(message.getInitiatorId());
+                        String initiatorId = message.getInitiatorId();
+                        if (initiatorId == null || initiatorId.isEmpty()) {
+                            // Set from Member with isPublishing=true if initiatorId is null or empty
+                            if (message.getMembers() != null && !message.getMembers().isEmpty()) {
+                                for (Member member : message.getMembers()) {
+                                    if (member.getIsPublishing() != null && member.getIsPublishing()) {
+                                        initiatorId = member.getMemberId();
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        messagesModel.setInitiatorId(initiatorId);
                         messagesModel.setInitiatorName(message.getInitiatorName());
                         messagesModel.setInitiatorImageUrl(message.getInitiatorProfileImageUrl());
                         messagesModel.setAction(message.getAction());
@@ -633,7 +653,19 @@ public class ConversationAttachmentMessageUtil {
                     messagesModel.setDynamicCustomType(message.getCustomType());
 
                     // Populate call-related fields
-                    messagesModel.setInitiatorId(message.getInitiatorId());
+                    String initiatorId = message.getInitiatorId();
+                    if (initiatorId == null || initiatorId.isEmpty()) {
+                        // Set from Member with isPublishing=true if initiatorId is null or empty
+                        if (message.getMembers() != null && !message.getMembers().isEmpty()) {
+                            for (Member member : message.getMembers()) {
+                                if (member.getIsPublishing() != null && member.getIsPublishing()) {
+                                    initiatorId = member.getMemberId();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    messagesModel.setInitiatorId(initiatorId);
                     messagesModel.setInitiatorName(message.getInitiatorName());
                     messagesModel.setInitiatorImageUrl(message.getInitiatorProfileImageUrl());
                     messagesModel.setAction(message.getAction());

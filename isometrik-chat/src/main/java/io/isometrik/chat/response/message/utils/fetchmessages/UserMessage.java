@@ -93,7 +93,7 @@ public class UserMessage {
   private Config config;
   @SerializedName("members")
   @Expose
-  private ArrayList<AddRemoveMember> addRemoveMembers;
+  private ArrayList<Member> members;
   @SerializedName("updatedAt")
   @Expose
   private Long updatedAt;
@@ -395,8 +395,8 @@ public class UserMessage {
    *
    * @return the add remove members
    */
-  public ArrayList<AddRemoveMember> getAddRemoveMembers() {
-    return addRemoveMembers;
+  public ArrayList<Member> getAddRemoveMembers() {
+    return members;
   }
 
   /**

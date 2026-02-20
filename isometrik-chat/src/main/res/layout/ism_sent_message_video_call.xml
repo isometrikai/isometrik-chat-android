@@ -166,14 +166,14 @@
             android:layout_below="@+id/dividerReply"
             android:layout_marginEnd="@dimen/ism_dp_8"
             app:srcCompat="@drawable/ism_ic_video_call"
-            android:tint="@color/ism_white"
+            android:tint="@color/ism_black"
             />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvCallTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/ism_white"
+            android:textColor="@color/ism_black"
             android:text="Video Call"
             android:textSize="@dimen/ism_sp_16"
             android:textStyle="bold"
