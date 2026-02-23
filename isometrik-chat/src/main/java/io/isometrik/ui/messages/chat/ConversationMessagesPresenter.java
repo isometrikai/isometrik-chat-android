@@ -897,7 +897,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                             boolean isAudioVideoCall = false;
                             if(message.getCustomType() != null){
                                 if((message.getCustomType().equals(CustomMessageTypes.AudioCall.value) || message.getCustomType().equals(CustomMessageTypes.VideoCall.value))
-                                        && message.getAction().equals("meetingCreated")){
+                                        && message.getAction().equals("meetingEndedDueToNoUserPublishing")){
                                     isAudioVideoCall = true;
                                 }
                             }
