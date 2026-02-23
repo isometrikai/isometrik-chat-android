@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Typeface
 import android.text.SpannableString
 import android.text.style.StyleSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -145,7 +144,7 @@ class VideoCallReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMess
             }
 
             // Set call icon and title based on call status
-            val userId = IsometrikChatSdk.instance.userSession.userId
+            val userId = IsometrikChatSdk.instance.userSession?.userId ?: ""
             val isInitiator = message.initiatorId == userId
             val missedByMembers = message.missedByMembers
             val hasMissedMembers = missedByMembers != null && missedByMembers.length() > 0

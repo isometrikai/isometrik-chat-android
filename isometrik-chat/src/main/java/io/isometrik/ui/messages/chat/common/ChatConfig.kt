@@ -40,6 +40,13 @@ object ChatConfig {
     var hideNotStartedConversationInChatList: Boolean = false
     var hideViewSocialProfileOption: Boolean = true
 
+    /**
+     * When true, conversation messages and latest data are refreshed when the user returns
+     * from background (e.g. app was in background and user comes back to this screen).
+     * Default is false.
+     */
+    var refreshOnResumeFromBackground: Boolean = false
+
     var DEFAULT_PLACEHOLDER_IMAGE_URL: String = Constants.DEFAULT_PLACEHOLDER_IMAGE_URL
     var dontShowToastList : List<String> = arrayListOf()
 

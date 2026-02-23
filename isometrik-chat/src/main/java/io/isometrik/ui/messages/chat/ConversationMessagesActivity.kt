@@ -145,6 +145,7 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.util.Arrays
 import java.util.concurrent.CopyOnWriteArrayList
+import androidx.core.view.isGone
 
 /**
  * The activity to send/receive messages in realtime of type- image/video/file/contact/location/whiteboard/sticker/gif/audio/text,
@@ -207,7 +208,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
 
     private var messagingDisabled = false
     private var joiningAsObserver = false
-    private var opponentUserBlocked = false
+    private var opponentUserBlockedMe = false
     private var firstResume = true
 
     private var alertDialog: AlertDialog? = null
@@ -383,7 +384,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
 
         if (messagingDisabled) {
             onMessagingStatusChanged(true)
-            opponentUserBlocked = !lastMessageText!!.startsWith("You")
+            opponentUserBlockedMe = !lastMessageText!!.startsWith("You")
         }
         updateConversationDetailsInHeader(true, isPrivateOneToOne, null, false, 0, null, 0,conversationUserImageUrl.orEmpty())
 
@@ -1173,7 +1174,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         }
 
         ismActivityMessagesBinding!!.ivRefreshOnlineStatus.setOnClickListener { v: View? ->
-            if (ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility == View.GONE && clickActionsNotBlocked()) {
+            if (ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.isGone && clickActionsNotBlocked()) {
                 conversationMessagesPresenter.requestConversationDetails()
             }
         }
@@ -1188,15 +1189,14 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         }
 
         ismActivityMessagesBinding!!.ivMore.setOnClickListener { v: View? ->
-            if (opponentUserBlocked) { // condition used for opponentUser Blocked
+            if (opponentUserBlockedMe) { // condition used for opponentUser Blocked
                 Toast.makeText(
                     this,
                     R.string.ism_blocked_action,
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                if ((ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility
-                            == View.GONE) && clickActionsNotBlocked()
+                if ((ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.isGone) && clickActionsNotBlocked()
                 ) {
                     val popup = PopupMenu(this, v)
                     val inflater = popup.menuInflater
@@ -1289,7 +1289,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
     }
 
     override fun blockedStatus(blockByOpponentUser: Boolean) {
-        opponentUserBlocked = blockByOpponentUser
+        opponentUserBlockedMe = blockByOpponentUser
     }
 
     private fun showProgressDialog(message: String) {
@@ -3485,6 +3485,9 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             conversationMessagesPresenter!!.setActiveInConversation(true)
             if (!joiningAsObserver) {
                 conversationMessagesPresenter!!.markMessagesAsRead()
+                if (ChatConfig.refreshOnResumeFromBackground) {
+                    fetchMessages(false, null, false)
+                }
             }
         }
     }
