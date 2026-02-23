@@ -1167,9 +1167,12 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
 
                     if (blockUserEvent.getOpponentId().equals(userId)) {
                         conversationMessagesView.onMessagingStatusChanged(true);
+                        conversationMessagesView.blockedStatus(false);
                     }
                 } else if (blockUserEvent.getInitiatorId().equals(userId)) {
                     conversationMessagesView.onMessagingStatusChanged(true);
+                    conversationMessagesView.blockedStatus(true);
+
                 }
             }
         }
@@ -2125,10 +2128,31 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                                         conversationMessagesView.updateVisibilityOfObserversIcon();
                                     }
                                 }
-                                //if (var1.getConversationDetails().getMessagingDisabled()) {
-                                //  conversationMessagesView.onMessagingStatusChanged(
-                                //      var1.getConversationDetails().getMessagingDisabled());
-                                //}
+                                if (Boolean.TRUE.equals(conversationDetailsUtil.getMessagingDisabled())) {
+                                    conversationMessagesView.onMessagingStatusChanged(true);
+                                    boolean blockByOpponentUser = false;
+                                    try {
+                                        JSONObject metaData = conversationDetailsUtil.getMetaData();
+                                        if (metaData != null && metaData.has("customMetaData")) {
+                                            JSONObject customMetaData = metaData.optJSONObject("customMetaData");
+                                            if (customMetaData != null && customMetaData.has("blockedMessage")) {
+                                                JSONObject blockedMessage = customMetaData.optJSONObject("blockedMessage");
+                                                if (blockedMessage != null && blockedMessage.has("initiatorId")) {
+                                                    String initiatorId = blockedMessage.optString("initiatorId", null);
+                                                    String opponentUserId = conversationDetailsUtil.getOpponentDetails() != null
+                                                            ? conversationDetailsUtil.getOpponentDetails().getUserId() : null;
+                                                    blockByOpponentUser = initiatorId != null && !initiatorId.isEmpty()
+                                                            && opponentUserId != null && initiatorId.equals(opponentUserId);
+                                                }
+                                            }
+                                        }
+                                    } catch (Exception e) {
+                                        LogManger.INSTANCE.log("ChatSDK:", "Error parsing block metadata: " + e.getMessage());
+                                    }
+                                    conversationMessagesView.blockedStatus(blockByOpponentUser);
+                                } else {
+                                    conversationMessagesView.blockedStatus(false);
+                                }
                             } else {
                                 conversationMessagesView.onFailedToJoinAsObserverOrFetchMessagesOrConversationDetails(
                                         var2.getErrorMessage());
@@ -2187,9 +2211,9 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                                 .build(), (var1, var2) -> {
                             if (var1 != null) {
 
-                                if (!var1.isMessagingEnabled()) {
-                                    conversationMessagesView.onMessagingStatusChanged(true);
-                                }
+//                                if (var1.isMessagingEnabled()) {
+                                    conversationMessagesView.onMessagingStatusChanged(!var1.isMessagingEnabled());
+//                                }
                             } else {
                                 conversationMessagesView.onError(var2.getErrorMessage());
                             }

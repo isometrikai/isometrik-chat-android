@@ -1,7 +1,6 @@
 package io.isometrik.ui.messages.chat.messageBinders
 
 import android.content.Context
-import android.util.Log
 import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
@@ -155,20 +154,22 @@ class VideoCallSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageVideo
                     binding.tvCallDuration.text = callDurationText.ifEmpty { "" }
                 }
             } else {
-                // User is not initiator (shouldn't happen for sent, but handle it)
+                // User is not initiator (e.g. call message sent by us but initiated by other)
                 if (hasMissedMembers) {
                     binding.tvCallTitle.text = "Missed video call"
-                    binding.tvCallDuration.text = "No answer"
+                    binding.tvCallDuration.text = "Tap to call back"
                 } else {
-                    binding.tvCallTitle.text = "Video Call"
-                    binding.tvCallDuration.text = callDurationText.ifEmpty { "" }
+                    if (callDurationText.isNotEmpty()) {
+                        binding.tvCallTitle.text = "Video Call"
+                        binding.tvCallDuration.text = callDurationText
+                    } else {
+                        binding.tvCallTitle.text = "Missed video call"
+                        binding.tvCallDuration.text = "Tap to call back"
+                    }
                 }
             }
 
             binding.tvMessageTime.text = message.messageTime
-
-            Log.e("VideoCallSentBinder", "bindData: "+message.initiatorId)
-
 
             // Handle call click
             binding.rlCall.setOnClickListener {
@@ -176,7 +177,6 @@ class VideoCallSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageVideo
                 // messageActionCallback.onCallBackClicked(message)
             }
         } catch (ignore: Exception) {
-            Log.e("VideoCallSentBinder", "Exception: "+ignore)
         }
     }
 

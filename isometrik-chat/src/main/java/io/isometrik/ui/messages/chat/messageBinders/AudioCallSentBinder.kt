@@ -153,13 +153,18 @@ class AudioCallSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageAudio
                     binding.tvCallDuration.text = callDurationText.ifEmpty { "" }
                 }
             } else {
-                // User is not initiator (shouldn't happen for sent, but handle it)
+                // User is not initiator (e.g. call message sent by us but initiated by other)
                 if (hasMissedMembers) {
                     binding.tvCallTitle.text = "Missed voice call"
-                    binding.tvCallDuration.text = "No answer"
+                    binding.tvCallDuration.text = "Tap to call back"
                 } else {
-                    binding.tvCallTitle.text = "Voice Call"
-                    binding.tvCallDuration.text = callDurationText.ifEmpty { "" }
+                    if (callDurationText.isNotEmpty()) {
+                        binding.tvCallTitle.text = "Voice Call"
+                        binding.tvCallDuration.text = callDurationText
+                    } else {
+                        binding.tvCallTitle.text = "Missed voice call"
+                        binding.tvCallDuration.text = "Tap to call back"
+                    }
                 }
             }
 
