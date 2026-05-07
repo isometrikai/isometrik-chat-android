@@ -299,7 +299,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                         messageModel =
                                 new MessagesModel(null, messageTypeUi, customMessageType, true, System.currentTimeMillis(),
                                         parentMessageId != null,
-                                        TagUserUtil.parseMentionedUsers(messageBody, mentionedUsers, taggedUserCallback),
+                                        TagUserUtil.parseMentionedUsers(messageBody == null ? "" : messageBody, mentionedUsers, taggedUserCallback),
                                         localMediaAttachmentHelper.getSizeInMb(), false, false,
                                         false, true, localMediaAttachmentHelper.getThumbnailUrl(),
                                         localMediaAttachmentHelper.getMediaUrl(),
@@ -374,7 +374,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                     messageModel =
                             new MessagesModel(null, messageTypeUi, customMessageType, true, System.currentTimeMillis(),
                                     parentMessageId != null,
-                                    TagUserUtil.parseMentionedUsers(messageBody, mentionedUsers, taggedUserCallback),
+                                    TagUserUtil.parseMentionedUsers(messageBody == null ? "" : messageBody, mentionedUsers, taggedUserCallback),
                                     IsometrikChatSdk.getInstance().getUserSession().getUserName(),
                                     IsometrikChatSdk.getInstance().getUserSession().getUserProfilePic(),
                                     new ArrayList<>(), false, localMessageId, originalReplyMessageUtil,
