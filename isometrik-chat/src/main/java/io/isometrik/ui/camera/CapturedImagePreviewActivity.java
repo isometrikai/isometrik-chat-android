@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 
+import io.isometrik.chat.enums.CustomMessageTypes;
 import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmActivityCaptureImagePreviewBinding;
 /**
@@ -42,6 +43,9 @@ public class CapturedImagePreviewActivity extends AppCompatActivity {
       String caption =     ismActivityCaptureImagePreviewBinding.etCaption.getText() != null
           ?     ismActivityCaptureImagePreviewBinding.etCaption.getText().toString().trim()
           : "";
+      if (caption.isEmpty()) {
+        caption = CustomMessageTypes.Image.value;
+      }
       Intent resultIntent = new Intent();
       resultIntent.putExtra("caption", caption);
       setResult(Activity.RESULT_OK, resultIntent);
