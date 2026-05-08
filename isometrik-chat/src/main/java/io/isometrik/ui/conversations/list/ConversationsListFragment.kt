@@ -523,7 +523,7 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
     }
 
     override fun onConversationSettingsUpdated(
-        conversationId: String, typingEvents: Boolean,
+        conversationId: String, typingEvents: Boolean?,
         readEvents: Boolean?
     ) {
         val position =

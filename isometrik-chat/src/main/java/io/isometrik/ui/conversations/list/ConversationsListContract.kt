@@ -235,7 +235,7 @@ interface ConversationsListContract {
          * @param readEvents the read events
          */
         fun onConversationSettingsUpdated(
-            conversationId: String, typingEvents: Boolean,
+            conversationId: String, typingEvents: Boolean?,
             readEvents: Boolean?
         )
 
