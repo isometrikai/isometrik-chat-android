@@ -86,6 +86,8 @@ import io.isometrik.chat.response.message.utils.schemas.Attachment;
 import io.isometrik.chat.response.message.utils.schemas.EventForMessage;
 import io.isometrik.chat.response.message.utils.schemas.MentionedUser;
 import io.isometrik.chat.enums.MessageTypeUi;
+import io.isometrik.chat.utils.BlockStateCache;
+import io.isometrik.chat.utils.BlockStatusUtil;
 import io.isometrik.chat.utils.LogManger;
 import io.isometrik.chat.utils.upload.CustomUploadHandler;
 import io.isometrik.chat.utils.upload.UploadedMediaResponse;
@@ -177,7 +179,7 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
     private long lastSeenAt;
     private boolean isOnline;
     private String conversationImageUrl, conversationTitle;
-    private boolean scrollToMessageNeeded, activeInConversation, joiningAsObserver;
+    private boolean scrollToMessageNeeded, activeInConversation, joiningAsObserver, opponentUserBlockedMe;
     private String messageIdToScrollTo;
 
     @Override
@@ -201,7 +203,11 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                 lastSeenAt = extras.getLong("lastSeenAt", 0);
             }
             userId = extras.getString("userId");
-
+            opponentUserBlockedMe = extras.getBoolean("opponentUserBlockedMe", false);
+            BlockStatusUtil.log("InitializeConversation",
+                "conversationId=" + conversationId
+                    + " opponentUserBlockedMe(fromIntent)=" + opponentUserBlockedMe
+                    + " opponentUserId=" + userId);
             checkIfMessagingEnabled();
         } else {
             conversationTitle = extras.getString("conversationTitle");
@@ -279,7 +285,6 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
 
         MessagesModel messageModel = null;
 
-
         if (uploadMediaRequired) {
             Map<String, Map<String, String>> mediaDetailsMap = new HashMap<>();
             for (int i = 0; i < mediaPaths.size(); i++) {
@@ -355,6 +360,9 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                     messageModel.setMediaId(mediaId);
                     conversationMessagesView.addSentMessageInUILocally(messageModel, true);
                 }
+            }
+            if (opponentUserBlockedMe) {
+                return;
             }
             requestPresignedUrls(conversationId, messageType, parentMessageId, customMessageType.value, messageBody,
                     encrypted, showInConversation, sendPushNotification, updateUnreadCount, messageMetadata,
@@ -463,6 +471,10 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
             if (messageModel != null) {
 
                 conversationMessagesView.addSentMessageInUILocally(messageModel, false);
+            }
+
+            if (opponentUserBlockedMe) {
+                return;
             }
 
             SendMessageQuery.Builder sendMessageQuery = new SendMessageQuery.Builder().setUserToken(userToken)
@@ -840,6 +852,9 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
 
     @Override
     public void sendTypingMessage() {
+        if (opponentUserBlockedMe) {
+            return;
+        }
         if (typingEventsEnabled) {
             SendTypingMessageQuery.Builder sendTypingMessageQuery =
                     new SendTypingMessageQuery.Builder().setUserToken(userToken)
@@ -903,6 +918,9 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                             }
 
                             if (message.getConversationStatusMessage() != null && !isAudioVideoCall) {
+                                if (shouldHideBlockStatusMessage(message)) {
+                                    continue;
+                                }
                                 String conversationActionMessage =
                                         ConversationActionMessageUtil.parseConversationActionMessage(message);
 
@@ -1162,17 +1180,25 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
         public void userBlocked(@NotNull Isometrik isometrik, @NotNull BlockUserEvent blockUserEvent) {
 
             if (isPrivateOneToOne) {
-                if (blockUserEvent.getInitiatorId()
-                        .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
-
+                String currentUserId = IsometrikChatSdk.getInstance().getUserSession().getUserId();
+                BlockStatusUtil.log("MQTT userBlocked",
+                    "initiatorId=" + blockUserEvent.getInitiatorId()
+                        + " opponentId=" + blockUserEvent.getOpponentId()
+                        + " currentUserId=" + currentUserId
+                        + " chatOpponentUserId=" + userId);
+                if (blockUserEvent.getInitiatorId().equals(currentUserId)) {
                     if (blockUserEvent.getOpponentId().equals(userId)) {
-                        conversationMessagesView.onMessagingStatusChanged(true);
+                        opponentUserBlockedMe = false;
+                        BlockStateCache.setBlockedByOpponentForConversation(conversationId, userId, false);
                         conversationMessagesView.blockedStatus(false);
+                        conversationMessagesView.onMessagingStatusChanged(true);
                     }
-                } else if (blockUserEvent.getInitiatorId().equals(userId)) {
-                    conversationMessagesView.onMessagingStatusChanged(true);
+                } else if (blockUserEvent.getOpponentId().equals(currentUserId)
+                        && blockUserEvent.getInitiatorId().equals(userId)) {
+                    opponentUserBlockedMe = true;
+                    BlockStateCache.setBlockedByOpponentForConversation(conversationId, userId, true);
                     conversationMessagesView.blockedStatus(true);
-
+                    conversationMessagesView.onMessagingStatusChanged(true);
                 }
             }
         }
@@ -1185,9 +1211,11 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                         .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
 
                     if (unblockUserEvent.getOpponentId().equals(userId)) {
+                        conversationMessagesView.blockedStatus(false);
                         checkIfMessagingEnabled();
                     }
                 } else if (unblockUserEvent.getInitiatorId().equals(userId)) {
+                    conversationMessagesView.blockedStatus(false);
                     checkIfMessagingEnabled();
                 }
             }
@@ -1658,28 +1686,39 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
         @Override
         public void blockedUserInConversation(@NotNull Isometrik isometrik,
                                               @NotNull BlockUserInConversationEvent blockUserInConversationEvent) {
-            MessagesModel messagesModel =
-                    RealtimeMessageUtil.parseUserBlockEvent(blockUserInConversationEvent);
             String initiatorName = blockUserInConversationEvent.getInitiatorName();
             String opponentName = blockUserInConversationEvent.getOpponentName();
+            String currentUserName = IsometrikChatSdk.getInstance().getUserSession().getUserName();
+            boolean blockedByOpponent = opponentName.equals(currentUserName);
 
-            if (opponentName.equals(IsometrikChatSdk.getInstance().getUserSession().getUserName())) { // opponentUser blocked
+            if (blockedByOpponent) {
                 conversationMessagesView.blockedStatus(true);
-            } else if (initiatorName.equals(IsometrikChatSdk.getInstance().getUserSession().getUserName())) { // selfUser Blocked
+            } else if (initiatorName.equals(currentUserName)) {
                 conversationMessagesView.blockedStatus(false);
             }
+
             if (blockUserInConversationEvent.getConversationId().equals(conversationId)) {
-                conversationMessagesView.addMessageInUI(messagesModel);
-                conversationMessagesView.onMessagingStatusChanged(
-                        blockUserInConversationEvent.isMessagingDisabled());
+                if (blockedByOpponent) {
+                    conversationMessagesView.onMessagingStatusChanged(true);
+                } else {
+                    conversationMessagesView.onMessagingStatusChanged(
+                            blockUserInConversationEvent.isMessagingDisabled());
+                }
+                if (!blockedByOpponent) {
+                    MessagesModel messagesModel =
+                            RealtimeMessageUtil.parseUserBlockEvent(blockUserInConversationEvent);
+                    conversationMessagesView.addMessageInUI(messagesModel);
+                }
                 if (!blockUserInConversationEvent.getInitiatorId()
                         .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
                     updateLastReadInConversation();
                 }
             } else {
                 if (!blockUserInConversationEvent.getInitiatorId()
-                        .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
-
+                        .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())
+                        && !blockedByOpponent) {
+                    MessagesModel messagesModel =
+                            RealtimeMessageUtil.parseUserBlockEvent(blockUserInConversationEvent);
                     conversationMessagesView.showMessageNotification(
                             blockUserInConversationEvent.getConversationId(),
                             blockUserInConversationEvent.getInitiatorName(),
@@ -1694,29 +1733,31 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
         @Override
         public void unblockedUserInConversation(@NotNull Isometrik isometrik,
                                                 @NotNull UnblockUserInConversationEvent unblockUserInConversationEvent) {
-            MessagesModel messagesModel =
-                    RealtimeMessageUtil.parseUserUnblockEvent(unblockUserInConversationEvent);
             String initiatorName = unblockUserInConversationEvent.getInitiatorName();
             String opponentName = unblockUserInConversationEvent.getOpponentName();
+            String currentUserName = IsometrikChatSdk.getInstance().getUserSession().getUserName();
+            boolean unblockedByOpponent = opponentName.equals(currentUserName);
 
-            if (opponentName.equals(IsometrikChatSdk.getInstance().getUserSession().getUserName())) { // opponentUser unBlocked
-                conversationMessagesView.blockedStatus(false);
-            } else if (initiatorName.equals(IsometrikChatSdk.getInstance().getUserSession().getUserName())) { // selfUser unBlocked
-                conversationMessagesView.blockedStatus(false);
-            }
+            conversationMessagesView.blockedStatus(false);
 
             if (unblockUserInConversationEvent.getConversationId().equals(conversationId)) {
-                conversationMessagesView.addMessageInUI(messagesModel);
                 conversationMessagesView.onMessagingStatusChanged(
                         unblockUserInConversationEvent.isMessagingDisabled());
+                if (!unblockedByOpponent) {
+                    MessagesModel messagesModel =
+                            RealtimeMessageUtil.parseUserUnblockEvent(unblockUserInConversationEvent);
+                    conversationMessagesView.addMessageInUI(messagesModel);
+                }
                 if (!unblockUserInConversationEvent.getInitiatorId()
                         .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
                     updateLastReadInConversation();
                 }
             } else {
                 if (!unblockUserInConversationEvent.getInitiatorId()
-                        .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())) {
-
+                        .equals(IsometrikChatSdk.getInstance().getUserSession().getUserId())
+                        && !unblockedByOpponent) {
+                    MessagesModel messagesModel =
+                            RealtimeMessageUtil.parseUserUnblockEvent(unblockUserInConversationEvent);
                     conversationMessagesView.showMessageNotification(
                             unblockUserInConversationEvent.getConversationId(),
                             unblockUserInConversationEvent.getInitiatorName(),
@@ -2129,28 +2170,25 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                                     }
                                 }
                                 if (Boolean.TRUE.equals(conversationDetailsUtil.getMessagingDisabled())) {
-                                    conversationMessagesView.onMessagingStatusChanged(true);
-                                    boolean blockByOpponentUser = false;
-                                    try {
-                                        JSONObject metaData = conversationDetailsUtil.getMetaData();
-                                        if (metaData != null && metaData.has("customMetaData")) {
-                                            JSONObject customMetaData = metaData.optJSONObject("customMetaData");
-                                            if (customMetaData != null && customMetaData.has("blockedMessage")) {
-                                                JSONObject blockedMessage = customMetaData.optJSONObject("blockedMessage");
-                                                if (blockedMessage != null && blockedMessage.has("initiatorId")) {
-                                                    String initiatorId = blockedMessage.optString("initiatorId", null);
-                                                    String opponentUserId = conversationDetailsUtil.getOpponentDetails() != null
-                                                            ? conversationDetailsUtil.getOpponentDetails().getUserId() : null;
-                                                    blockByOpponentUser = initiatorId != null && !initiatorId.isEmpty()
-                                                            && opponentUserId != null && initiatorId.equals(opponentUserId);
-                                                }
-                                            }
-                                        }
-                                    } catch (Exception e) {
-                                        LogManger.INSTANCE.log("ChatSDK:", "Error parsing block metadata: " + e.getMessage());
+                                    String opponentUserId = conversationDetailsUtil.getOpponentDetails() != null
+                                            ? conversationDetailsUtil.getOpponentDetails().getUserId() : null;
+                                    String currentUserId = IsometrikChatSdk.getInstance().getUserSession().getUserId();
+                                    Boolean blockByOpponentUser = BlockStatusUtil.resolveBlockedByOpponent(
+                                            conversationDetailsUtil.getMetaData(), null, conversationId,
+                                            opponentUserId, currentUserId, true, "ConversationDetails");
+                                    if (blockByOpponentUser != null) {
+                                        BlockStatusUtil.log("ConversationDetails",
+                                            "applying blockedStatus=" + blockByOpponentUser
+                                                + " (was opponentUserBlockedMe=" + opponentUserBlockedMe + ")");
+                                        opponentUserBlockedMe = blockByOpponentUser;
+                                        conversationMessagesView.blockedStatus(blockByOpponentUser);
+                                    } else {
+                                        BlockStatusUtil.log("ConversationDetails",
+                                            "metadata inconclusive, keeping opponentUserBlockedMe=" + opponentUserBlockedMe);
                                     }
-                                    conversationMessagesView.blockedStatus(blockByOpponentUser);
+                                    conversationMessagesView.onMessagingStatusChanged(true);
                                 } else {
+                                    opponentUserBlockedMe = false;
                                     conversationMessagesView.blockedStatus(false);
                                 }
                             } else {
@@ -2210,10 +2248,14 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                                 .setUserToken(userToken)
                                 .build(), (var1, var2) -> {
                             if (var1 != null) {
-
-//                                if (var1.isMessagingEnabled()) {
-                                    conversationMessagesView.onMessagingStatusChanged(!var1.isMessagingEnabled());
-//                                }
+                                BlockStatusUtil.log("checkIfMessagingEnabled",
+                                    "messagingEnabled=" + var1.isMessagingEnabled()
+                                        + " opponentUserBlockedMe=" + opponentUserBlockedMe);
+                                if (!var1.isMessagingEnabled()) {
+                                    conversationMessagesView.onMessagingStatusChanged(true);
+                                } else {
+                                    conversationMessagesView.onMessagingStatusChanged(false);
+                                }
                             } else {
                                 conversationMessagesView.onError(var2.getErrorMessage());
                             }
@@ -2223,6 +2265,15 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
     @Override
     public boolean isPrivateOneToOne() {
         return isPrivateOneToOne;
+    }
+
+    private boolean shouldHideBlockStatusMessage(Message message) {
+        String action = message.getAction();
+        if (!"userBlockConversation".equals(action) && !"userUnblockConversation".equals(action)) {
+            return false;
+        }
+        String currentUserName = IsometrikChatSdk.getInstance().getUserSession().getUserName();
+        return message.getOpponentName() != null && message.getOpponentName().equals(currentUserName);
     }
 
     private void updateLastReadInConversation() {
@@ -2337,12 +2388,20 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
     }
 
     @Override
+    public void setOpponentUserBlockedMe(boolean opponentUserBlockedMe) {
+        this.opponentUserBlockedMe = opponentUserBlockedMe;
+    }
+
+    @Override
     public void blockUser(String userId, boolean isBlocked, String personalUserId) {
         isometrik.getRemoteUseCases()
                 .getUserUseCases()
                 .blockUser(
                         new BlockUserQuery.Builder().setUserToken(userToken).setOpponentId(userId).build(), (var1, var2) -> {
                             if (var1 != null) {
+                                opponentUserBlockedMe = false;
+                                BlockStateCache.setBlockedByOpponentForConversation(conversationId, userId, false);
+                                conversationMessagesView.blockedStatus(false);
                                 conversationMessagesView.onUserBlocked();
                             } else {
                                 conversationMessagesView.onError(var2.getErrorMessage());
@@ -2358,6 +2417,9 @@ public class ConversationMessagesPresenter implements ConversationMessagesContra
                         .setOpponentId(userId)
                         .build(), (var1, var2) -> {
                     if (var1 != null) {
+                        opponentUserBlockedMe = false;
+                        BlockStateCache.clearConversation(conversationId, userId);
+                        conversationMessagesView.blockedStatus(false);
                         conversationMessagesView.onUserUnBlocked();
                     } else {
                         conversationMessagesView.onError(var2.getErrorMessage());

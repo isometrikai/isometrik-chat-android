@@ -41,6 +41,12 @@ object ChatConfig {
     var hideViewSocialProfileOption: Boolean = true
 
     /**
+     * When true, hides the Block option in chat menu while the opponent has blocked the current user.
+     * Set to false to allow block-back from the blocked user's side.
+     */
+    var hideBlockOptionWhenBlockedByOpponent: Boolean = true
+
+    /**
      * When true, conversation messages and latest data are refreshed when the user returns
      * from background (e.g. app was in background and user comes back to this screen).
      * Default is false.

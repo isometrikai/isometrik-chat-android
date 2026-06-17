@@ -32,7 +32,7 @@ class DefaultChatListItemBinder :
     ) {
 
         try {
-            if (conversationsModel.isMessagingDisabled) {
+            if (conversationsModel.hasBlockedOpponent()) {
                 val spannableString = SpannableString(conversationsModel.conversationTitle)
                 spannableString.setSpan(StyleSpan(Typeface.ITALIC), 0, spannableString.length, 0)
                 ismConversationItemBinding.tvConversationTitle.text = spannableString
@@ -43,7 +43,7 @@ class DefaultChatListItemBinder :
             val lastMessageText = conversationsModel.lastMessageText
             if (lastMessageText != null && !containsKeyword(lastMessageText, hideMessagekeywords)) {
                 ismConversationItemBinding.tvLastMessage.text = lastMessageText
-            } else if (lastMessageText == null) {
+            } else {
                 ismConversationItemBinding.tvLastMessage.text = ""
             }
             if (conversationsModel.isCanJoin) {
@@ -82,29 +82,27 @@ class DefaultChatListItemBinder :
                 )
             }
             if (conversationsModel.isPrivateOneToOneConversation) {
-                if (conversationsModel.isMessagingDisabled) {
+                if (conversationsModel.hasBlockedOpponent()) {
                     ismConversationItemBinding.ivOnlineStatus.setImageDrawable(
                             ContextCompat.getDrawable(
                                     mContext,
                                     R.drawable.ism_ic_messaging_disabled
                             )
                     )
+                } else if (conversationsModel.isOnline) {
+                    ismConversationItemBinding.ivOnlineStatus.setImageDrawable(
+                            ContextCompat.getDrawable(
+                                    mContext,
+                                    R.drawable.ism_user_online_status_circle
+                            )
+                    )
                 } else {
-                    if (conversationsModel.isOnline) {
-                        ismConversationItemBinding.ivOnlineStatus.setImageDrawable(
-                                ContextCompat.getDrawable(
-                                        mContext,
-                                        R.drawable.ism_user_online_status_circle
-                                )
-                        )
-                    } else {
-                        ismConversationItemBinding.ivOnlineStatus.setImageDrawable(
-                                ContextCompat.getDrawable(
-                                        mContext,
-                                        R.drawable.ism_user_offline_status_circle
-                                )
-                        )
-                    }
+                    ismConversationItemBinding.ivOnlineStatus.setImageDrawable(
+                            ContextCompat.getDrawable(
+                                    mContext,
+                                    R.drawable.ism_user_offline_status_circle
+                            )
+                    )
                 }
                 ismConversationItemBinding.ivOnlineStatus.visibility = View.VISIBLE
             } else {

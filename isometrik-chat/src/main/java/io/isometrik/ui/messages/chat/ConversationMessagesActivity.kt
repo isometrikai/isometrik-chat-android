@@ -57,6 +57,7 @@ import io.isometrik.chat.enums.MessageTypeUi
 import io.isometrik.chat.enums.PresignedUrlMediaTypes
 import io.isometrik.chat.response.conversation.utils.ConversationDetailsUtil
 import io.isometrik.chat.utils.AlertProgress
+import io.isometrik.chat.utils.BlockStatusUtil
 import io.isometrik.chat.utils.Constants
 import io.isometrik.chat.utils.FileUriUtils.getRealPath
 import io.isometrik.chat.utils.GalleryIntentsUtil
@@ -236,7 +237,14 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         alertProgress = AlertProgress()
         conversationMessagesPresenter = ConversationMessagesPresenter(this, this)
 
-        messagingDisabled = intent.extras!!.containsKey("messagingDisabled")
+        messagingDisabled = intent.extras!!.getBoolean("messagingDisabled", false)
+        opponentUserBlockedMe = intent.extras!!.getBoolean("opponentUserBlockedMe", false)
+        BlockStatusUtil.log(
+            "ConversationMessagesActivity",
+            "onCreate conversationId=" + intent.extras!!.getString("conversationId")
+                + " messagingDisabled=" + messagingDisabled
+                + " opponentUserBlockedMe=" + opponentUserBlockedMe
+        )
         if (messagingDisabled) {
             lastMessageText = intent.extras!!.getString("lastMessageText")
         }
@@ -260,8 +268,11 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 ismActivityMessagesBinding.rlBottomLayout.visibility =
                     if (visiable) View.VISIBLE else View.GONE
 
-                ismActivityMessagesBinding.rlRecordAudio.visibility =
-                if (!ChatConfig.hideRecordAudioOption && visiable) View.VISIBLE else View.GONE
+                if (!visiable) {
+                    ismActivityMessagesBinding.rlRecordAudio.visibility = View.GONE
+                } else {
+                    updateComposerActionVisibility()
+                }
             }
         }
 
@@ -382,9 +393,9 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             joiningAsObserver
         )
 
+        conversationMessagesPresenter.setOpponentUserBlockedMe(opponentUserBlockedMe)
         if (messagingDisabled) {
-            onMessagingStatusChanged(true)
-            opponentUserBlockedMe = !lastMessageText!!.startsWith("You")
+            applyMessagingRestrictionUi()
         }
         updateConversationDetailsInHeader(true, isPrivateOneToOne, null, false, 0, null, 0,conversationUserImageUrl.orEmpty())
 
@@ -473,6 +484,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                     if (result.data!!.getBooleanExtra("conversationLeftOrDeleted", false)) {
                         onBackPressed()
                     } else if (result.data!!.getBooleanExtra("messagingBlocked", false)) {
+                        opponentUserBlockedMe = false
                         onMessagingStatusChanged(true)
                     } else if (result.data!!.getBooleanExtra("searchMessageRequested", false)) {
                         if (ismActivityMessagesBinding!!.rlSearch.visibility == View.GONE) {
@@ -1189,74 +1201,59 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         }
 
         ismActivityMessagesBinding!!.ivMore.setOnClickListener { v: View? ->
-            if (opponentUserBlockedMe) { // condition used for opponentUser Blocked
-                Toast.makeText(
-                    this,
-                    R.string.ism_blocked_action,
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                if ((ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.isGone) && clickActionsNotBlocked()
-                ) {
-                    val popup = PopupMenu(this, v)
-                    val inflater = popup.menuInflater
-                    if (messagingDisabled) {
-                        inflater.inflate(R.menu.ism_unblock_menu, popup.menu)
-                    } else {
-                        inflater.inflate(R.menu.ism_block_menu, popup.menu)
+            if ((ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.isGone) && clickActionsNotBlocked()
+            ) {
+                val popup = PopupMenu(this, v)
+                val inflater = popup.menuInflater
+                if (messagingDisabled && !opponentUserBlockedMe) {
+                    inflater.inflate(R.menu.ism_unblock_menu, popup.menu)
+                } else {
+                    inflater.inflate(R.menu.ism_block_menu, popup.menu)
+                    if (shouldHideBlockMenuOption()) {
+                        popup.menu.findItem(R.id.blockOrUnBlockUser)?.isVisible = false
                     }
-                    popup.setOnMenuItemClickListener { item: MenuItem ->
-                        if (item.itemId == R.id.blockOrUnBlockUser) {
-                            if (messagingDisabled) {
-                                showProgressDialog(
-                                    getString(
-                                        R.string.ism_unblocking_user,
-                                        conversationUserFullName
-                                    )
+                }
+                popup.setOnMenuItemClickListener { item: MenuItem ->
+                    if (item.itemId == R.id.blockOrUnBlockUser) {
+                        if (messagingDisabled && !opponentUserBlockedMe) {
+                            showProgressDialog(
+                                getString(
+                                    R.string.ism_unblocking_user,
+                                    conversationUserFullName
                                 )
-                                conversationMessagesPresenter.unBlockUser(
-                                    isometrikUserId,
-                                    false,
-                                    userPersonalUserId
-                                )
-                            } else {
-                                showProgressDialog(
-                                    getString(
-                                        R.string.ism_blocking_user,
-                                        conversationUserFullName
-                                    )
-                                )
-                                conversationMessagesPresenter.blockUser(
-                                    isometrikUserId,
-                                    true,
-                                    userPersonalUserId
+                            )
+                            conversationMessagesPresenter.unBlockUser(
+                                isometrikUserId,
+                                false,
+                                userPersonalUserId
+                            )
+                        } else {
+                            showBlockUserConfirmationDialog()
+                        }
+                        return@setOnMenuItemClickListener true
+                    }
+                    if (item.itemId == R.id.clearChat) {
+                        // implement clear chat feature
+                        AlertDialog.Builder(this)
+                            .setTitle(getString(R.string.ism_clear_conversation))
+                            .setMessage(getString(R.string.ism_clear_conversation_alert))
+                            .setCancelable(true)
+                            .setPositiveButton(getString(R.string.ism_continue)) { dialog: DialogInterface, id: Int ->
+                                dialog.cancel()
+                                showProgressDialog(getString(R.string.ism_clearing_conversation))
+                                conversationMessagesPresenter.clearConversation(
+                                    conversationId
                                 )
                             }
-                            return@setOnMenuItemClickListener true
-                        }
-                        if (item.itemId == R.id.clearChat) {
-                            // implement clear chat feature
-                            AlertDialog.Builder(this)
-                                .setTitle(getString(R.string.ism_clear_conversation))
-                                .setMessage(getString(R.string.ism_clear_conversation_alert))
-                                .setCancelable(true)
-                                .setPositiveButton(getString(R.string.ism_continue)) { dialog: DialogInterface, id: Int ->
-                                    dialog.cancel()
-                                    showProgressDialog(getString(R.string.ism_clearing_conversation))
-                                    conversationMessagesPresenter.clearConversation(
-                                        conversationId
-                                    )
-                                }
-                                .setNegativeButton(
-                                    getString(R.string.ism_cancel)
-                                ) { dialog: DialogInterface, id: Int -> dialog.cancel() }
-                                .create()
-                                .show()
-                        }
-                        false
+                            .setNegativeButton(
+                                getString(R.string.ism_cancel)
+                            ) { dialog: DialogInterface, id: Int -> dialog.cancel() }
+                            .create()
+                            .show()
                     }
-                    popup.show()
+                    false
                 }
+                popup.show()
             }
         }
 
@@ -1289,7 +1286,112 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
     }
 
     override fun blockedStatus(blockByOpponentUser: Boolean) {
-        opponentUserBlockedMe = blockByOpponentUser
+        runOnUiThread {
+            BlockStatusUtil.log(
+                "ConversationMessagesActivity",
+                "blockedStatus blockByOpponentUser=" + blockByOpponentUser
+                    + " (was opponentUserBlockedMe=" + opponentUserBlockedMe + ")"
+            )
+            opponentUserBlockedMe = blockByOpponentUser
+            conversationMessagesPresenter.setOpponentUserBlockedMe(blockByOpponentUser)
+            applyMessagingRestrictionUi()
+        }
+    }
+
+    private fun shouldShowBlockerUi(): Boolean {
+        val show = messagingDisabled && !opponentUserBlockedMe
+        BlockStatusUtil.log(
+            "ConversationMessagesActivity",
+            "shouldShowBlockerUi=" + show
+                + " messagingDisabled=" + messagingDisabled
+                + " opponentUserBlockedMe=" + opponentUserBlockedMe
+        )
+        return show
+    }
+
+    private fun shouldHideBlockMenuOption(): Boolean {
+        return ChatConfig.hideBlockOptionWhenBlockedByOpponent
+            && messagingDisabled && opponentUserBlockedMe
+    }
+
+    private fun updateComposerActionVisibility() {
+        val binding = ismActivityMessagesBinding ?: return
+        if (shouldShowBlockerUi()) {
+            binding.rlRecordAudio.visibility = View.GONE
+            return
+        }
+        val hasText = binding.etSendMessage.text?.isNotEmpty() == true
+        binding.rlRecordAudio.visibility =
+            if (ChatConfig.hideRecordAudioOption || hasText) View.GONE else View.VISIBLE
+        binding.ivCaptureImage.visibility =
+            if (ChatConfig.hideCaptureCameraOption || hasText) View.GONE else View.VISIBLE
+    }
+
+    private fun applyMessagingRestrictionUi() {
+        val showBlockerUi = shouldShowBlockerUi()
+        ismActivityMessagesBinding!!.rlBottomLayout.visibility =
+            if (showBlockerUi) View.INVISIBLE else View.VISIBLE
+        updateComposerActionVisibility()
+        ismActivityMessagesBinding!!.rlDeleteConversation.visibility =
+            if (showBlockerUi) View.VISIBLE else View.GONE
+        if (!ChatConfig.hideAudioCallOption) {
+            ismActivityMessagesBinding!!.ivAudioCall.visibility =
+                if (showBlockerUi) View.GONE else View.VISIBLE
+        }
+        if (!ChatConfig.hideVideoCallOption) {
+            ismActivityMessagesBinding!!.ivVideoCall.visibility =
+                if (showBlockerUi) View.GONE else View.VISIBLE
+        }
+        if (showBlockerUi) {
+            if (!conversationMessagesAdapter!!.isMessagingDisabled) {
+                conversationMessagesAdapter!!.isMessagingDisabled = true
+                conversationMessagesAdapter!!.notifyDataSetChanged()
+            }
+            ismActivityMessagesBinding!!.ivOnlineStatus.setImageDrawable(
+                ContextCompat.getDrawable(this, R.drawable.ism_ic_blocked)
+            )
+            ismActivityMessagesBinding!!.tvParticipantsCountOrOnlineStatus.text =
+                getString(R.string.ism_unavailable)
+            val userName = conversationUserFullName.orEmpty()
+            val spannableString = SpannableString(userName)
+            spannableString.setSpan(StyleSpan(Typeface.ITALIC), 0, spannableString.length, 0)
+            ismActivityMessagesBinding!!.tvConversationOrUserName.text = spannableString
+        } else if (messagingDisabled && opponentUserBlockedMe) {
+            if (conversationMessagesAdapter!!.isMessagingDisabled) {
+                conversationMessagesAdapter!!.isMessagingDisabled = false
+                conversationMessagesAdapter!!.notifyDataSetChanged()
+            }
+        } else if (!messagingDisabled) {
+            if (conversationMessagesAdapter!!.isMessagingDisabled) {
+                conversationMessagesAdapter!!.isMessagingDisabled = false
+                conversationMessagesAdapter!!.notifyDataSetChanged()
+            }
+            ismActivityMessagesBinding!!.tvConversationOrUserName.text = conversationUserFullName
+        }
+    }
+
+    private fun showBlockUserConfirmationDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.ism_dialog_block_user, null)
+        dialogView.findViewById<TextView>(R.id.tvBlockDialogTitle).text =
+            getString(R.string.ism_block_user_dialog_title, conversationUserFullName)
+        val blockDialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
+        dialogView.findViewById<TextView>(R.id.tvCancel).setOnClickListener {
+            blockDialog.dismiss()
+        }
+        dialogView.findViewById<TextView>(R.id.tvBlock).setOnClickListener {
+            blockDialog.dismiss()
+            showProgressDialog(
+                getString(R.string.ism_blocking_user, conversationUserFullName)
+            )
+            conversationMessagesPresenter.blockUser(
+                isometrikUserId,
+                true,
+                userPersonalUserId
+            )
+        }
+        blockDialog.show()
     }
 
     private fun showProgressDialog(message: String) {
@@ -1319,18 +1421,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         }
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            if (s.length > 0) {
-                ismActivityMessagesBinding!!.rlRecordAudio.visibility = View.GONE
-                ismActivityMessagesBinding!!.ivCaptureImage.visibility = View.GONE
-//                ismActivityMessagesBinding.ivAddAttachment2.visibility = View.GONE
-            } else {
-                ismActivityMessagesBinding.ivCaptureImage.visibility =
-                    if (ChatConfig.hideCaptureCameraOption) View.GONE else View.VISIBLE
-                ismActivityMessagesBinding!!.rlRecordAudio.visibility =
-                if (ChatConfig.hideRecordAudioOption) View.GONE else View.VISIBLE
-//                ismActivityMessagesBinding.ivAddAttachment2.visibility = View.VISIBLE
-
-            }
+            updateComposerActionVisibility()
             if (!joiningAsObserver) conversationMessagesPresenter!!.sendTypingMessage()
         }
 
@@ -3077,7 +3168,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                     }
                 }
             }
-            if (messagingDisabled) {
+            if (shouldShowBlockerUi()) {
                 ismActivityMessagesBinding!!.ivOnlineStatus.setImageDrawable(
                     ContextCompat.getDrawable(
                         this, R.drawable.ism_ic_blocked
@@ -3201,36 +3292,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
     override fun onMessagingStatusChanged(disabled: Boolean) {
         runOnUiThread {
             messagingDisabled = disabled
-            ismActivityMessagesBinding!!.rlBottomLayout.visibility =
-                if (disabled) View.INVISIBLE else View.VISIBLE
-            ismActivityMessagesBinding!!.rlRecordAudio.visibility =
-                if (disabled) View.GONE else View.VISIBLE
-            ismActivityMessagesBinding!!.rlDeleteConversation.visibility =
-                if (disabled) View.VISIBLE else View.GONE
-            if (disabled) {
-                if (!conversationMessagesAdapter!!.isMessagingDisabled) {
-                    conversationMessagesAdapter!!.isMessagingDisabled = true
-                    conversationMessagesAdapter!!.notifyDataSetChanged()
-                }
-                ismActivityMessagesBinding!!.ivOnlineStatus.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        this,
-                        R.drawable.ism_ic_blocked
-                    )
-                )
-                ismActivityMessagesBinding!!.tvParticipantsCountOrOnlineStatus.text =
-                    getString(R.string.ism_unavailable)
-                //                ismActivityMessagesBinding.ivRefreshOnlineStatus.setVisibility(View.GONE);
-            } else {
-                if (conversationMessagesAdapter!!.isMessagingDisabled) {
-                    conversationMessagesAdapter!!.isMessagingDisabled = false
-                    conversationMessagesAdapter!!.notifyDataSetChanged()
-                }
-                if (conversationMessagesPresenter!!.isPrivateOneToOne) {
-//                    ismActivityMessagesBinding.ivRefreshOnlineStatus.setVisibility(View.VISIBLE);
-                    conversationMessagesPresenter!!.requestConversationDetails()
-                }
-            }
+            applyMessagingRestrictionUi()
         }
     }
 
@@ -3401,6 +3463,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             userPersonalUserId!!
         )
         hideProgressDialog()
+        opponentUserBlockedMe = false
         onMessagingStatusChanged(true)
     }
 
@@ -3410,6 +3473,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             userPersonalUserId!!
         )
         hideProgressDialog()
+        opponentUserBlockedMe = false
         onMessagingStatusChanged(false)
     }
 

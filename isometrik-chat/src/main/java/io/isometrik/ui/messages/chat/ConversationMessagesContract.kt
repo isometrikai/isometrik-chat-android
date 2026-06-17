@@ -377,6 +377,8 @@ interface ConversationMessagesContract {
          * @param conversationId the conversation id
          */
         fun clearConversation(conversationId: String?)
+
+        fun setOpponentUserBlockedMe(opponentUserBlockedMe: Boolean)
     }
 
     /**
