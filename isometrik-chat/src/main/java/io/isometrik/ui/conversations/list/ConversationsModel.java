@@ -8,8 +8,10 @@ import io.isometrik.chat.enums.ConversationType;
 import io.isometrik.chat.events.conversation.CreateConversationEvent;
 import io.isometrik.chat.response.conversation.utils.Conversation;
 import io.isometrik.chat.response.conversation.utils.ConversationMember;
-import io.isometrik.ui.IsometrikChatSdk;
+import io.isometrik.chat.utils.BlockStatusUtil;
+import io.isometrik.chat.utils.BlockStateCache;
 import io.isometrik.chat.R;
+import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.ui.messages.reaction.util.ReactionPlaceHolderIconHelper;
 import io.isometrik.chat.utils.TimeUtil;
 
@@ -41,6 +43,7 @@ public class ConversationsModel {
     private final boolean canJoin;
     private boolean messagingDisabled;
     private JSONObject metaData;
+    private boolean blockedByOpponent;
     private boolean lastMessageReadByAll, lastMessageDeliveredToAll;
     private String lastMessageCustomType;
 
@@ -161,6 +164,20 @@ public class ConversationsModel {
         }
         metaData = conversation.getMetaData();
         JSONObject lastMessageDetails = conversation.getLastMessageDetails();
+        Boolean resolvedBlockState = BlockStatusUtil.resolveBlockedByOpponent(metaData,
+            lastMessageDetails, conversationId, opponentId,
+            IsometrikChatSdk.getInstance().getUserSession().getUserId(), messagingDisabled,
+            "ConversationsModel");
+        if (resolvedBlockState != null) {
+            blockedByOpponent = resolvedBlockState;
+        }
+        BlockStatusUtil.log("ConversationsModel",
+            "conversationId=" + conversationId
+                + " messagingDisabled=" + messagingDisabled
+                + " blockedByOpponent=" + blockedByOpponent
+                + " opponentId=" + opponentId
+                + " lastMessageAction=" + (lastMessageDetails != null
+                    ? lastMessageDetails.optString("action", "none") : "null"));
         try {
             if (lastMessageDetails.has("customType")) {
                 lastMessageCustomType = lastMessageDetails.getString("customType");
@@ -282,15 +299,20 @@ public class ConversationsModel {
                         lastMessageSendersProfileImageUrl = lastMessage.getString("initiatorProfileImageUrl");
 
                         if (opponentName.equals(currentUserName)) {
+                            blockedByOpponent = true;
                             lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(
                                     R.string.ism_blocked_user_text, initiatorName, "You");
                         } else if (initiatorName.equals(currentUserName)) {
+                            blockedByOpponent = false;
                             lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(
                                     R.string.ism_blocked_user_text, "You", opponentName);
                         } else {
                             lastMessageText = IsometrikChatSdk.getInstance().getContext().getString(
                                     R.string.ism_blocked_user, initiatorName, opponentName);
                         }
+                        BlockStatusUtil.log("ConversationsModel",
+                            "userBlockConversation lastMessage blockedByOpponent=" + blockedByOpponent
+                                + " initiatorName=" + initiatorName + " opponentName=" + opponentName);
                         break;
                     }
 
@@ -1093,6 +1115,56 @@ public class ConversationsModel {
      */
     public void setMessagingDisabled(boolean messagingDisabled) {
         this.messagingDisabled = messagingDisabled;
+    }
+
+    /**
+     * Returns true when the opponent has blocked the current user in this conversation.
+     */
+    public boolean isBlockedByOpponent() {
+        if (blockedByOpponent) {
+            return true;
+        }
+        Boolean cached = BlockStateCache.getBlockedByOpponent(opponentId);
+        if (cached == null && conversationId != null) {
+            cached = BlockStateCache.getBlockedByOpponentForConversation(conversationId);
+        }
+        if (cached != null) {
+            return cached;
+        }
+        Boolean parsed = BlockStatusUtil.parseBlockedByOpponent(metaData, opponentId,
+            IsometrikChatSdk.getInstance().getUserSession().getUserId(),
+            "ConversationsModel#isBlockedByOpponent");
+        return parsed != null && parsed;
+    }
+
+    /**
+     * Returns true when the current user blocked the opponent (show block indicator in list).
+     */
+    public boolean hasBlockedOpponent() {
+        if (!messagingDisabled) {
+            return false;
+        }
+        if (blockedByOpponent) {
+            return false;
+        }
+        Boolean direction = BlockStateCache.getBlockedByOpponent(opponentId);
+        if (direction == null && conversationId != null) {
+            direction = BlockStateCache.getBlockedByOpponentForConversation(conversationId);
+        }
+        if (direction != null) {
+            return !direction;
+        }
+        Boolean parsed = BlockStatusUtil.parseBlockedByOpponent(metaData, opponentId,
+            IsometrikChatSdk.getInstance().getUserSession().getUserId(),
+            "ConversationsModel#hasBlockedOpponent");
+        if (parsed != null) {
+            return !parsed;
+        }
+        return false;
+    }
+
+    public void setBlockedByOpponent(boolean blockedByOpponent) {
+        this.blockedByOpponent = blockedByOpponent;
     }
 
     /**

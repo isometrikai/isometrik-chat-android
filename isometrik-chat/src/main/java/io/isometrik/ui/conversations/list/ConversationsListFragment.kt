@@ -20,6 +20,7 @@ import io.isometrik.chat.R
 import io.isometrik.chat.databinding.IsmFragmentConversationsBinding
 import io.isometrik.chat.enums.ConversationType
 import io.isometrik.chat.utils.AlertProgress
+import io.isometrik.chat.utils.BlockStatusUtil
 import io.isometrik.chat.utils.RecyclerItemClickListener
 import io.isometrik.ui.IsometrikChatSdk.Companion.instance
 import io.isometrik.ui.conversations.newconversation.type.SelectConversationTypeBottomSheet
@@ -410,6 +411,42 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
         }
     }
 
+    override fun onMessagingStatusChangedByOpponentId(opponentUserId: String, disabled: Boolean) {
+        if (activity != null) {
+            requireActivity().runOnUiThread {
+                val position = conversations.indexOfFirst {
+                    it.isPrivateOneToOneConversation && opponentUserId == it.opponentId
+                }
+                if (position != -1) {
+                    val conversationsModel = conversations[position]
+                    conversationsModel.isMessagingDisabled = disabled
+                    if (!disabled) {
+                        conversationsModel.setBlockedByOpponent(false)
+                    }
+                    conversations[position] = conversationsModel
+                    conversationsAdapter!!.notifyItemChanged(position)
+                }
+            }
+        }
+    }
+
+    override fun onOpponentBlockedMe(opponentUserId: String) {
+        if (activity != null) {
+            requireActivity().runOnUiThread {
+                val position = conversations.indexOfFirst {
+                    it.isPrivateOneToOneConversation && opponentUserId == it.opponentId
+                }
+                if (position != -1) {
+                    val conversationsModel = conversations[position]
+                    conversationsModel.isMessagingDisabled = true
+                    conversationsModel.setBlockedByOpponent(true)
+                    conversations[position] = conversationsModel
+                    conversationsAdapter!!.notifyItemChanged(position)
+                }
+            }
+        }
+    }
+
     override fun onConversationCleared(
         conversationId: String, lastMessageText: String,
         lastMessageTime: String
@@ -660,6 +697,15 @@ class ConversationsListFragment : Fragment(), ConversationsListContract.View {
                 intent.putExtra("messagingDisabled", true)
                 intent.putExtra("lastMessageText", conversationsModel.lastMessageText)
             }
+            intent.putExtra("opponentUserBlockedMe", conversationsModel.isBlockedByOpponent)
+            BlockStatusUtil.log(
+                "OpenMessagesScreen",
+                "conversationId=" + conversationsModel.conversationId
+                    + " messagingDisabled=" + conversationsModel.isMessagingDisabled
+                    + " opponentUserBlockedMe=" + conversationsModel.isBlockedByOpponent
+                    + " opponentId=" + conversationsModel.opponentId
+                    + " metaData=" + conversationsModel.metaData
+            )
         } else {
             intent.putExtra("conversationTitle", conversationsModel.conversationTitle)
             intent.putExtra("participantsCount", conversationsModel.conversationMembersCount)

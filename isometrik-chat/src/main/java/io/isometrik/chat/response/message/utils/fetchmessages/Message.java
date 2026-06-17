@@ -168,6 +168,12 @@ public class Message {
   @SerializedName("opponentProfileImageUrl")
   @Expose
   private String opponentProfileImageUrl;
+  @SerializedName("callDurations")
+  @Expose
+  private Object callDurations;
+  @SerializedName("missedByMembers")
+  @Expose
+  private Object missedByMembers;
 
   /**
    * Gets notification.
@@ -643,5 +649,23 @@ public class Message {
    */
   public Boolean getMessageUpdated() {
     return messageUpdated;
+  }
+
+  /**
+   * Gets call durations (top-level in API response for call end messages).
+   *
+   * @return the call durations as Object (List/array from JSON)
+   */
+  public Object getCallDurations() {
+    return callDurations;
+  }
+
+  /**
+   * Gets missed by members (top-level in API response for call end messages).
+   *
+   * @return the missed by members as Object (List/array from JSON)
+   */
+  public Object getMissedByMembers() {
+    return missedByMembers;
   }
 }

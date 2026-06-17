@@ -313,6 +313,21 @@ interface ConversationsListContract {
         fun onMessagingStatusChanged(conversationId: String, disabled: Boolean)
 
         /**
+         * On messaging status changed for a 1-1 conversation matched by opponent user id.
+         *
+         * @param opponentUserId the opponent user id
+         * @param disabled the disabled
+         */
+        fun onMessagingStatusChangedByOpponentId(opponentUserId: String, disabled: Boolean)
+
+        /**
+         * Opponent blocked the current user in a 1-1 conversation.
+         *
+         * @param opponentUserId the opponent user id
+         */
+        fun onOpponentBlockedMe(opponentUserId: String)
+
+        /**
          * On conversation cleared.
          *
          * @param conversationId the conversation id

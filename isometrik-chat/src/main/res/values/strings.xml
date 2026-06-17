@@ -584,6 +584,8 @@
     <string name="ism_fetching_blocked_users">Fetching blocked users</string>
     <string name="ism_fetching_non_blocked_users">Fetching non-blocked users</string>
     <string name="ism_block_user_alert_message">Once blocked you will not be able to send message to or create conversations with user.</string>
+    <string name="ism_block_user_dialog_title">Block %1$s?</string>
+    <string name="ism_block_user_dialog_message">This person won\'t be able to message or call you. They won\'t know you blocked them.</string>
     <string name="ism_unblock_user_alert_message">Once unblocked you can send message to or create conversations with user.</string>
 
     <!--  Notifications-->

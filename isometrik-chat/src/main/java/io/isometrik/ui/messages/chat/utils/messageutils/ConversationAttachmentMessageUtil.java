@@ -17,6 +17,9 @@ import io.isometrik.ui.messages.tag.util.ParseMentionedUsersFromFetchMessagesRes
 import io.isometrik.chat.utils.TagUserUtil;
 import io.isometrik.chat.utils.FileUtils;
 
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -599,16 +602,11 @@ public class ConversationAttachmentMessageUtil {
                         messagesModel.setInitiatorImageUrl(message.getInitiatorProfileImageUrl());
                         messagesModel.setAction(message.getAction());
 
-                        // Parse call-related fields from metadata
+                        // Parse call-related fields: API may send callDurations/missedByMembers at message root or inside metaData
+                        setCallDurationsAndMissedByMembers(message, messagesModel);
                         JSONObject metadata = message.getMetaData();
                         if (metadata != null) {
                             try {
-                                if (metadata.has("missedByMembers")) {
-                                    messagesModel.setMissedByMembers(metadata.getJSONArray("missedByMembers"));
-                                }
-                                if (metadata.has("callDurations")) {
-                                    messagesModel.setCallDurations(metadata.getJSONArray("callDurations"));
-                                }
                                 if (metadata.has("audioOnly")) {
                                     messagesModel.setAudioOnly(metadata.getBoolean("audioOnly"));
                                 }
@@ -670,16 +668,11 @@ public class ConversationAttachmentMessageUtil {
                     messagesModel.setInitiatorImageUrl(message.getInitiatorProfileImageUrl());
                     messagesModel.setAction(message.getAction());
 
-                    // Parse call-related fields from metadata
+                    // Parse call-related fields: API may send callDurations/missedByMembers at message root or inside metaData
+                    setCallDurationsAndMissedByMembers(message, messagesModel);
                     JSONObject metadata = message.getMetaData();
                     if (metadata != null) {
                         try {
-                            if (metadata.has("missedByMembers")) {
-                                messagesModel.setMissedByMembers(metadata.getJSONArray("missedByMembers"));
-                            }
-                            if (metadata.has("callDurations")) {
-                                messagesModel.setCallDurations(metadata.getJSONArray("callDurations"));
-                            }
                             if (metadata.has("audioOnly")) {
                                 messagesModel.setAudioOnly(metadata.getBoolean("audioOnly"));
                             }
@@ -737,5 +730,35 @@ public class ConversationAttachmentMessageUtil {
             }
         }
         return messagesModel;
+    }
+
+    /**
+     * Sets callDurations and missedByMembers on the model from message root or metaData.
+     * Fetch messages API returns these at message root; realtime may send them in metaData.
+     */
+    private static void setCallDurationsAndMissedByMembers(Message message, MessagesModel messagesModel) {
+        try {
+            // Prefer top-level (fetch messages API)
+            Object callDurationsObj = message.getCallDurations();
+            if (callDurationsObj != null) {
+                messagesModel.setCallDurations(new JSONArray(new Gson().toJson(callDurationsObj)));
+            } else {
+                JSONObject metadata = message.getMetaData();
+                if (metadata != null && metadata.has("callDurations")) {
+                    messagesModel.setCallDurations(metadata.getJSONArray("callDurations"));
+                }
+            }
+            Object missedByMembersObj = message.getMissedByMembers();
+            if (missedByMembersObj != null) {
+                messagesModel.setMissedByMembers(new JSONArray(new Gson().toJson(missedByMembersObj)));
+            } else {
+                JSONObject metadata = message.getMetaData();
+                if (metadata != null && metadata.has("missedByMembers")) {
+                    messagesModel.setMissedByMembers(metadata.getJSONArray("missedByMembers"));
+                }
+            }
+        } catch (JSONException e) {
+            LogManger.INSTANCE.log("ChatSDK:", "Error parsing callDurations/missedByMembers: " + e.getMessage());
+        }
     }
 }
