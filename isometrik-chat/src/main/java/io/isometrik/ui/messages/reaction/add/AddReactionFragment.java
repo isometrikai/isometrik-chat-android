@@ -62,6 +62,7 @@ public class AddReactionFragment extends BottomSheetDialogFragment
         new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
     reactions = new ArrayList<>();
     reactions.addAll(ReactionRepository.getReactions());
+    selectedReactionPosition = 0;
     AddReactionAdapter addReactionAdapter = new AddReactionAdapter(activity, reactions);
     ismBottomsheetReactionBinding.rvReactions.setAdapter(addReactionAdapter);
 
@@ -158,6 +159,16 @@ public class AddReactionFragment extends BottomSheetDialogFragment
     }
   }
 
+  @Override
+  public void onReactionRemovedSuccessfully(String messageId, ReactionModel reactionModel) {
+    hideProgressDialog();
+    messageActionCallback.updateMessageReaction(messageId, reactionModel, false);
+    try {
+      dismiss();
+    } catch (Exception ignore) {
+    }
+  }
+
   private void showProgressDialog(String message) {
     if (activity != null) {
       alertDialog = alertProgress.getProgressDialog(activity, message);
@@ -182,5 +193,6 @@ public class AddReactionFragment extends BottomSheetDialogFragment
     this.messageId = messageId;
     this.conversationId = conversationId;
     this.messageActionCallback = messageActionCallback;
+    this.selectedReactionPosition = 0;
   }
 }
