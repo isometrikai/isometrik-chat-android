@@ -38,6 +38,14 @@ public interface AddReactionContract {
     void onReactionAddedSuccessfully(String messageId, ReactionModel reactionModel);
 
     /**
+     * On reaction removed successfully.
+     *
+     * @param messageId the message id
+     * @param reactionModel the reaction model
+     */
+    void onReactionRemovedSuccessfully(String messageId, ReactionModel reactionModel);
+
+    /**
      * On error.
      *
      * @param errorMessage the error message to be shown in the toast for details of the failed
