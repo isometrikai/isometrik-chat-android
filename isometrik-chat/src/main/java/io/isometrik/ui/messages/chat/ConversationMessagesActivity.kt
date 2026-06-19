@@ -857,12 +857,13 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                 if (ismActivityMessagesBinding!!.vSelectMultipleMessagesHeader.root.visibility == View.GONE && clickActionsNotBlocked()) {
                     KeyboardUtil.hideKeyboard(this)
 
+                    val isOneToOneConversation = conversationMessagesPresenter.isPrivateOneToOne
                     val intent =
                         conversationMessagesPresenter.getConversationDetailsIntent(
                             this,
-                            isPrivateOneToOne
+                            isOneToOneConversation
                         )
-                    if (isPrivateOneToOne) {
+                    if (isOneToOneConversation) {
                         if (!messagingDisabled) userDetailsActivityLauncher!!.launch(intent)
                     } else {
                         if (!joiningAsObserver) conversationDetailsActivityLauncher!!.launch(intent)
