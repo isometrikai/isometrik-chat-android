@@ -55,6 +55,7 @@ import io.isometrik.chat.utils.Utilities;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 /**
  * The activity to fetch details of a group conversation with option to add/remove members,
@@ -322,12 +323,12 @@ public class ConversationDetailsActivity extends AppCompatActivity
 
         runOnUiThread(() -> {
 
-            if (!conversationDetails.getConversationTitle().equals(conversationTitle)) {
+            if (!Objects.equals(conversationDetails.getConversationTitle(), conversationTitle)) {
                 conversationTitle = conversationDetails.getConversationTitle();
                 ismActivityConversationDetailsBinding.tvConversationTitle.setText(conversationTitle);
             }
 
-            if (!conversationDetails.getConversationImageUrl().equals(conversationImageUrl)) {
+            if (!Objects.equals(conversationDetails.getConversationImageUrl(), conversationImageUrl)) {
                 conversationImageUrl = conversationDetails.getConversationImageUrl();
 
                 loadConversationImage();
