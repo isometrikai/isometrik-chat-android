@@ -147,8 +147,8 @@
     <string name="ism_conversation_settings">CONVERSATION SETTINGS</string>
     <string name="ism_add_participants_canceled">Adding participants to conversation canceled</string>
 
-    <string name="ism_delete_conversation">Delete conversation</string>
-    <string name="ism_clear_conversation">Clear messages in conversation</string>
+    <string name="ism_delete_conversation">Delete chat</string>
+    <string name="ism_clear_conversation">Clear chat</string>
     <string name="ism_leave_conversation">Leave conversation</string>
     <string name="ism_join_conversation">Join conversation</string>
     <string name="ism_empty_gallery_title">The Gallery Is Empty</string>
@@ -628,7 +628,7 @@
 
     <string name="image_picker_provider_authority_suffix">.io.isometrik.samples.chat.provider</string>
     <string name="chats">Chats</string>
-    <string name="ism_view_social_profile">View Social Profile</string>
+    <string name="ism_view_social_profile">View Profile</string>
     <string name="ism_take_photo">Take Photo</string>
     <string name="ism_remove_photo">Remove photo</string>
     <string name="ism_change_conversation_image">Change conversation image</string>

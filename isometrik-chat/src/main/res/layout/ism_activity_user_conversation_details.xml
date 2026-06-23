@@ -176,6 +176,7 @@
       <RelativeLayout
           android:id="@+id/rlSendMessage"
           android:layout_width="match_parent"
+          android:visibility="gone"
           android:layout_below="@+id/rlViewSocialProfile"
           android:layout_height="@dimen/ism_dp_48"
           android:layout_marginStart="@dimen/ism_dp_8"
@@ -203,6 +204,7 @@
           android:id="@+id/rlSearchInConversation"
           android:layout_below="@+id/rlSendMessage"
           android:layout_width="match_parent"
+          android:visibility="gone"
           android:layout_height="@dimen/ism_dp_48"
           android:layout_marginStart="@dimen/ism_dp_8"
           >
@@ -494,6 +496,7 @@
           android:id="@+id/rlNotifications"
           android:layout_below="@+id/rlDeleteConversation"
           android:layout_width="match_parent"
+          android:visibility="gone"
           android:layout_height="@dimen/ism_dp_48"
           android:layout_marginStart="@dimen/ism_dp_8"
           >
@@ -519,6 +522,7 @@
           android:id="@+id/rlTypingMessage"
           android:layout_below="@+id/rlNotifications"
           android:layout_width="match_parent"
+          android:visibility="gone"
           android:layout_height="@dimen/ism_dp_48"
           android:layout_marginStart="@dimen/ism_dp_8"
           >
@@ -546,6 +550,7 @@
           android:id="@+id/rlDeliveryReadEvents"
           android:layout_below="@+id/rlTypingMessage"
           android:layout_width="match_parent"
+          android:visibility="gone"
           android:layout_height="@dimen/ism_dp_48"
           android:layout_marginStart="@dimen/ism_dp_8"
           >
