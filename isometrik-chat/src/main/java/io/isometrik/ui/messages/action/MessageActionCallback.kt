@@ -48,6 +48,13 @@ interface MessageActionCallback {
     fun deleteMessageForEveryone(messageId: String?, multipleMessagesSelected: Boolean)
 
     /**
+     * Confirm delete for a sent message: Delete for Everyone or Delete for Me.
+     *
+     * @param messageId the message id
+     */
+    fun confirmDeleteSentMessage(messageId: String)
+
+    /**
      * Select multiple messages requested.
      */
     fun selectMultipleMessagesRequested()

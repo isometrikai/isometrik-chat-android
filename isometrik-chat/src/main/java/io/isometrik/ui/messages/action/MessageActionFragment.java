@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmBottomsheetMessageActionsBinding;
@@ -79,14 +80,18 @@ public class MessageActionFragment extends BottomSheetDialogFragment {
       } else {
         ismBottomsheetMessageActionsBinding.rlInfo.setVisibility(View.GONE);
       }
-
-      ismBottomsheetMessageActionsBinding.rlDeleteForAll.setVisibility(View.VISIBLE);
-      ismBottomsheetMessageActionsBinding.rlDeleteForMe.setVisibility(View.VISIBLE);
     } else {
       ismBottomsheetMessageActionsBinding.rlInfo.setVisibility(View.GONE);
-      ismBottomsheetMessageActionsBinding.rlDeleteForAll.setVisibility(View.GONE);
-      ismBottomsheetMessageActionsBinding.rlDeleteForMe.setVisibility(View.GONE);
     }
+
+    ismBottomsheetMessageActionsBinding.tvDeleteForMeHeading.setText(R.string.ism_delete);
+    ismBottomsheetMessageActionsBinding.tvDeleteForMeHeading.setTextColor(
+        ContextCompat.getColor(requireContext(), R.color.ism_leave_red));
+    ismBottomsheetMessageActionsBinding.ivDeleteForMe.setColorFilter(
+        ContextCompat.getColor(requireContext(), R.color.ism_leave_red));
+    ismBottomsheetMessageActionsBinding.tvDeleteForMeDescription.setVisibility(View.GONE);
+    ismBottomsheetMessageActionsBinding.rlDeleteForMe.setVisibility(View.VISIBLE);
+    ismBottomsheetMessageActionsBinding.rlDeleteForAll.setVisibility(View.GONE);
 
     ismBottomsheetMessageActionsBinding.rlReaction.setOnClickListener(v -> {
 
@@ -101,8 +106,11 @@ public class MessageActionFragment extends BottomSheetDialogFragment {
     });
 
     ismBottomsheetMessageActionsBinding.rlDeleteForMe.setOnClickListener(v -> {
-
-      messageActionCallback.deleteMessageForSelf(messagesModel.getMessageId(), false);
+      if (messagesModel.isSentMessage()) {
+        messageActionCallback.confirmDeleteSentMessage(messagesModel.getMessageId());
+      } else {
+        messageActionCallback.deleteMessageForSelf(messagesModel.getMessageId(), false);
+      }
       close();
     });
 

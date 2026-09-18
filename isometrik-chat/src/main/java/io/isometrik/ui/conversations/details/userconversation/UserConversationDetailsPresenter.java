@@ -5,6 +5,7 @@ import io.isometrik.chat.builder.conversation.FetchConversationDetailsQuery;
 import io.isometrik.chat.builder.conversation.cleanup.ClearConversationQuery;
 import io.isometrik.chat.builder.conversation.cleanup.DeleteConversationLocallyQuery;
 import io.isometrik.chat.builder.conversation.config.UpdateConversationSettingsQuery;
+import io.isometrik.chat.builder.message.FetchMessagesCountQuery;
 import io.isometrik.chat.builder.message.FetchMessagesQuery;
 import io.isometrik.chat.builder.user.block.BlockUserQuery;
 import io.isometrik.chat.callbacks.UserEventCallback;
@@ -151,6 +152,24 @@ public class UserConversationDetailsPresenter implements UserConversationDetails
             } else {
               userConversationDetailsView.onFailedToFetchGalleryItems(var2.getErrorMessage());
             }
+          }
+        });
+  }
+
+  @Override
+  public void fetchGalleryItemsCount(String conversationId, List<String> galleryItemsEnabled) {
+    isometrik.getRemoteUseCases()
+        .getMessageUseCases()
+        .fetchMessagesCount(new FetchMessagesCountQuery.Builder().setConversationId(conversationId)
+            .setUserToken(userToken)
+            .setCustomTypes(galleryItemsEnabled)
+            .build(), (var1, var2) -> {
+          if (var1 != null) {
+            userConversationDetailsView.onGalleryItemsCountFetched(var1.getMessagesCount());
+          } else if (var2.getHttpResponseCode() == 404 && var2.getRemoteErrorCode() == 1) {
+            userConversationDetailsView.onGalleryItemsCountFetched(0);
+          } else {
+            userConversationDetailsView.onFailedToFetchGalleryItems(var2.getErrorMessage());
           }
         });
   }

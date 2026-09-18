@@ -8,15 +8,19 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.isometrik.chat.R;
 import io.isometrik.chat.databinding.IsmActivityGalleryMediaItemsBinding;
+import io.isometrik.chat.enums.CustomMessageTypes;
 import io.isometrik.ui.messages.preview.PreviewMessageUtil;
 import io.isometrik.chat.utils.AlertProgress;
 import io.isometrik.chat.utils.RecyclerItemClickListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -31,12 +35,12 @@ public class GalleryMediaItemsActivity extends AppCompatActivity
 
   private AlertProgress alertProgress;
   private AlertDialog alertDialog;
-  private ArrayList<GalleryMediaTypeHeaderModel> galleryMediaTypes;
 
   private GalleryItemsAdapter galleryItemsAdapter;
   private ArrayList<GalleryModel> galleryItems;
   private GridLayoutManager galleryItemsLayoutManager;
-  private String customMediaMessageType;
+  private List<String> currentCustomTypes;
+  private int selectedTab = 0;
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,55 +60,15 @@ public class GalleryMediaItemsActivity extends AppCompatActivity
     ismActivityGalleryMediaItemsBinding.rvAttachments.addOnScrollListener(
         attachmentsOnScrollListener);
 
-    galleryMediaTypes = new ArrayList<>();
-    ismActivityGalleryMediaItemsBinding.rvMediaTypeHeader.setLayoutManager(
-        new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-
-    GalleryMediaItemsSettingsUtil galleryMediaItemsSettingsUtil =
-        (GalleryMediaItemsSettingsUtil) getIntent().getSerializableExtra(
-            "galleryMediaItemsSettingsUtil");
-    galleryMediaTypes = new ArrayList<>();
-    galleryMediaTypes.addAll(galleryMediaItemsSettingsUtil.getGalleryMediaTypesHeader());
-    GalleryMediaTypeHeaderAdapter galleryMediaTypesAdapter =
-        new GalleryMediaTypeHeaderAdapter(this, galleryMediaTypes);
-    ismActivityGalleryMediaItemsBinding.rvMediaTypeHeader.setAdapter(
-        galleryMediaTypesAdapter);
-
-    ismActivityGalleryMediaItemsBinding.rvMediaTypeHeader.addOnItemTouchListener(
-        new RecyclerItemClickListener(this,
-            ismActivityGalleryMediaItemsBinding.rvMediaTypeHeader,
-            new RecyclerItemClickListener.OnItemClickListener() {
-              @Override
-              public void onItemClick(View view, int position) {
-                if (position >= 0) {
-                  if (ismActivityGalleryMediaItemsBinding.rlEmptyGallery.getVisibility()
-                      == View.VISIBLE) {
-                    ismActivityGalleryMediaItemsBinding.rlEmptyGallery.setVisibility(View.GONE);
-                  } else {
-                    galleryItems.clear();
-                    galleryItemsAdapter.notifyDataSetChanged();
-                  }
-
-                  updateShimmerVisibility(true);
-                  customMediaMessageType =
-                      galleryMediaTypes.get(position).getCustomMediaMessageType();
-                  fetchGalleryMediaItems(customMediaMessageType, false, null, false);
-                }
-              }
-
-              @Override
-              public void onItemLongClick(View view, int position) {
-              }
-            }));
-
     galleryMediaItemsPresenter = new GalleryMediaItemsPresenter(this);
 
     Bundle extras = getIntent().getExtras();
     galleryMediaItemsPresenter.initialize(extras.getString("conversationId"));
-    customMediaMessageType = galleryMediaItemsSettingsUtil.getGalleryMediaTypesHeader()
-        .get(0)
-        .getCustomMediaMessageType();
-    fetchGalleryMediaItems(customMediaMessageType, false, null, false);
+    selectGalleryTab(0);
+
+    ismActivityGalleryMediaItemsBinding.tvTabMedia.setOnClickListener(v -> selectGalleryTab(0));
+    ismActivityGalleryMediaItemsBinding.tvTabLinks.setOnClickListener(v -> selectGalleryTab(1));
+    ismActivityGalleryMediaItemsBinding.tvTabDocs.setOnClickListener(v -> selectGalleryTab(2));
 
     ismActivityGalleryMediaItemsBinding.rvAttachments.addOnItemTouchListener(
         new RecyclerItemClickListener(this, ismActivityGalleryMediaItemsBinding.rvAttachments,
@@ -133,10 +97,10 @@ public class GalleryMediaItemsActivity extends AppCompatActivity
       @Override
       public void onTextChanged(CharSequence s, int start, int before, int count) {
         if (s.length() > 0) {
-          fetchGalleryMediaItems(customMediaMessageType, true, s.toString(), false);
+          fetchGalleryMediaItems(true, s.toString(), false);
         } else {
 
-          fetchGalleryMediaItems(customMediaMessageType, false, null, false);
+          fetchGalleryMediaItems(false, null, false);
         }
       }
 
@@ -148,7 +112,7 @@ public class GalleryMediaItemsActivity extends AppCompatActivity
 
     ismActivityGalleryMediaItemsBinding.ibBack.setOnClickListener(v -> onBackPressed());
     ismActivityGalleryMediaItemsBinding.refresh.setOnRefreshListener(
-        () -> fetchGalleryMediaItems(customMediaMessageType, false, null, true));
+        () -> fetchGalleryMediaItems(false, null, true));
   }
 
   @Override
@@ -182,7 +146,7 @@ public class GalleryMediaItemsActivity extends AppCompatActivity
           galleryMediaItemsPresenter.fetchGalleryMediaItemsOnScroll(
               galleryItemsLayoutManager.findFirstVisibleItemPosition(),
               galleryItemsLayoutManager.getChildCount(), galleryItemsLayoutManager.getItemCount(),
-              customMediaMessageType);
+              currentCustomTypes);
         }
       };
 
@@ -201,8 +165,7 @@ public class GalleryMediaItemsActivity extends AppCompatActivity
           ismActivityGalleryMediaItemsBinding.rvAttachments.setVisibility(View.VISIBLE);
         } else {
           ismActivityGalleryMediaItemsBinding.rlEmptyGallery.setVisibility(View.VISIBLE);
-          ismActivityGalleryMediaItemsBinding.tvEmptyDescription.setText(
-              getString(R.string.ism_no_media));
+          ismActivityGalleryMediaItemsBinding.tvEmptyDescription.setText(emptyDescriptionForTab());
           ismActivityGalleryMediaItemsBinding.rvAttachments.setVisibility(View.GONE);
         }
       }
@@ -216,11 +179,60 @@ public class GalleryMediaItemsActivity extends AppCompatActivity
     });
   }
 
-  private void fetchGalleryMediaItems(String customMediaMessageType, boolean isSearchRequest,
+  private void selectGalleryTab(int tab) {
+    selectedTab = tab;
+    currentCustomTypes = typesForTab(tab);
+    ismActivityGalleryMediaItemsBinding.tvTabMedia.setBackgroundResource(
+        tab == 0 ? R.drawable.ism_gallery_tab_selected : R.drawable.ism_gallery_tab_unselected);
+    ismActivityGalleryMediaItemsBinding.tvTabLinks.setBackgroundResource(
+        tab == 1 ? R.drawable.ism_gallery_tab_selected : R.drawable.ism_gallery_tab_unselected);
+    ismActivityGalleryMediaItemsBinding.tvTabDocs.setBackgroundResource(
+        tab == 2 ? R.drawable.ism_gallery_tab_selected : R.drawable.ism_gallery_tab_unselected);
+    ismActivityGalleryMediaItemsBinding.tvTabMedia.setTextColor(
+        ContextCompat.getColor(this, tab == 0 ? R.color.ism_text_black : R.color.ism_message_time_grey));
+    ismActivityGalleryMediaItemsBinding.tvTabLinks.setTextColor(
+        ContextCompat.getColor(this, tab == 1 ? R.color.ism_text_black : R.color.ism_message_time_grey));
+    ismActivityGalleryMediaItemsBinding.tvTabDocs.setTextColor(
+        ContextCompat.getColor(this, tab == 2 ? R.color.ism_text_black : R.color.ism_message_time_grey));
+
+    if (ismActivityGalleryMediaItemsBinding.rlEmptyGallery.getVisibility() == View.VISIBLE) {
+      ismActivityGalleryMediaItemsBinding.rlEmptyGallery.setVisibility(View.GONE);
+    } else {
+      galleryItems.clear();
+      galleryItemsAdapter.notifyDataSetChanged();
+    }
+    updateShimmerVisibility(true);
+    fetchGalleryMediaItems(false, null, false);
+  }
+
+  private List<String> typesForTab(int tab) {
+    if (tab == 1) {
+      return Collections.singletonList(CustomMessageTypes.Text.value);
+    }
+    if (tab == 2) {
+      return Collections.singletonList(CustomMessageTypes.File.value);
+    }
+    return Arrays.asList(CustomMessageTypes.Image.value, CustomMessageTypes.Video.value,
+        CustomMessageTypes.Gif.value, CustomMessageTypes.Audio.value,
+        CustomMessageTypes.Sticker.value, CustomMessageTypes.Whiteboard.value,
+        CustomMessageTypes.Location.value, CustomMessageTypes.Contact.value);
+  }
+
+  private String emptyDescriptionForTab() {
+    if (selectedTab == 1) {
+      return getString(R.string.ism_no_weblinks);
+    }
+    if (selectedTab == 2) {
+      return getString(R.string.ism_no_files);
+    }
+    return getString(R.string.ism_no_media);
+  }
+
+  private void fetchGalleryMediaItems(boolean isSearchRequest,
       String searchTag, boolean showProgressDialog) {
     if (showProgressDialog) showProgressDialog(getString(R.string.ism_fetching_attachments));
 
-    galleryMediaItemsPresenter.fetchGalleryMediaItems(customMediaMessageType, 0, false,
+    galleryMediaItemsPresenter.fetchGalleryMediaItems(currentCustomTypes, 0, false,
         isSearchRequest, searchTag);
   }
 

@@ -1267,6 +1267,17 @@ public class MessagesModel implements Serializable {
     public SpannableString getTextMessage() {
         return textMessage;
     }
+
+    /**
+     * True when the photo/video body is a real caption, not the custom-type placeholder.
+     */
+    public boolean hasVisibleCaption() {
+        if (textMessage == null) {
+            return false;
+        }
+        String caption = textMessage.toString().trim();
+        return !caption.isEmpty() && !caption.startsWith("AttachmentMessage:");
+    }
     //For the senderInfo
 
     private String senderName;

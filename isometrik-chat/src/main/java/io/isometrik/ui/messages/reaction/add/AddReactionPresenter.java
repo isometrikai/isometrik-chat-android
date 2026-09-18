@@ -17,7 +17,7 @@ public class AddReactionPresenter implements AddReactionContract.Presenter {
   /**
    * Instantiates a new Add reaction presenter.
    */
-  AddReactionPresenter() {
+  public AddReactionPresenter() {
   }
 
   private AddReactionContract.View addReactionView;

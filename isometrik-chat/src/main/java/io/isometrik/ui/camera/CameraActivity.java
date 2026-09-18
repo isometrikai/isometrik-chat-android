@@ -115,6 +115,7 @@ public class CameraActivity extends AppCompatActivity {
         builder.setTargetRotation(this.getWindowManager().getDefaultDisplay().getRotation())
             .build();
     preview.setSurfaceProvider(ismActivityCameraBinding.previewView.getSurfaceProvider());
+    cameraProvider.unbindAll();
     cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture);
   }
 

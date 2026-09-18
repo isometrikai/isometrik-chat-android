@@ -7,6 +7,7 @@ import android.net.Uri
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.style.StyleSpan
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -105,17 +106,11 @@ class TextReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessageTe
                 ismReceivedMessageTextBinding.vParentMessage.tvMessageTime.text =
                     message.originalMessageTime
                 ismReceivedMessageTextBinding.dividerReply.visibility =
-                    View.VISIBLE
-
-                if (message.originalMessageTime == null || message.originalMessageTime.isEmpty()) {
-                    ismReceivedMessageTextBinding.vParentMessage.tvMessageTime.visibility =
-                        View.GONE
-                    ismReceivedMessageTextBinding.vParentMessage.tvComma.visibility =
-                        View.GONE
-                } else {
-                    ismReceivedMessageTextBinding.vParentMessage.tvMessageTime.visibility =
-                        View.VISIBLE
-                }
+                    View.GONE
+                ismReceivedMessageTextBinding.vParentMessage.tvMessageTime.visibility =
+                    View.GONE
+                ismReceivedMessageTextBinding.vParentMessage.tvComma.visibility =
+                    View.GONE
                 ismReceivedMessageTextBinding.vParentMessage.ivMessageImage.visibility =
                     View.GONE
 
@@ -219,6 +214,8 @@ class TextReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessageTe
             ismReceivedMessageTextBinding.tvTextMessage.text = spannableText
             ismReceivedMessageTextBinding.tvTextMessage.movementMethod =
                 LinkMovementMethod.getInstance()
+            ismReceivedMessageTextBinding.tvTextMessage.gravity =
+                if (message.isQuotedMessage) Gravity.START or Gravity.CENTER_VERTICAL else Gravity.CENTER
             
             // Handle link preview
             handleLinkPreview(mContext, textMessage, ismReceivedMessageTextBinding, multipleMessagesSelectModeOn)

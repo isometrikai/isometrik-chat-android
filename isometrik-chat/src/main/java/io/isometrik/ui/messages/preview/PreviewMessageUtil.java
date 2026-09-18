@@ -82,6 +82,15 @@ public class PreviewMessageUtil {
 
                 break;
             }
+            case "AttachmentMessage:Text": {
+                if (galleryModel.getMediaUrl() != null) {
+                    try {
+                        activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(galleryModel.getMediaUrl())));
+                    } catch (Exception ignore) {
+                    }
+                }
+                break;
+            }
         }
     }
 

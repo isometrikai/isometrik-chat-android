@@ -178,7 +178,7 @@ class PhotoReceivedBinder : MessageItemBinder<MessagesModel, IsmReceivedMessageP
             ismReceivedMessagePhotoBinding.tvPhotoSize.text = message.mediaSizeInMB
 
             // Display caption if available
-            if (message.textMessage != null && message.textMessage.toString().isNotBlank()) {
+            if (message.hasVisibleCaption()) {
                 val captionText = message.textMessage.toString()
                 val spannableText = SpannableString(captionText)
                 LinkPreviewUtil.makeLinksClickable(spannableText)
