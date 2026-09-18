@@ -1,6 +1,7 @@
 package io.isometrik.ui.conversations.gallery;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The interface gallery media items contract containing presenter and view interfaces implemented
@@ -29,7 +30,7 @@ public interface GalleryMediaItemsContract {
      * @param isSearchRequest the is search request
      * @param searchTag the search tag
      */
-    void fetchGalleryMediaItems(String customType, int skip, boolean onScroll, boolean isSearchRequest,
+    void fetchGalleryMediaItems(List<String> customTypes, int skip, boolean onScroll, boolean isSearchRequest,
         String searchTag);
 
     /**
@@ -38,10 +39,10 @@ public interface GalleryMediaItemsContract {
      * @param firstVisibleItemPosition the first visible item position
      * @param visibleItemCount the visible item count
      * @param totalItemCount the total item count
-     * @param customType the media type
+     * @param customTypes the media types
      */
     void fetchGalleryMediaItemsOnScroll(int firstVisibleItemPosition, int visibleItemCount,
-        int totalItemCount, String customType);
+        int totalItemCount, List<String> customTypes);
   }
 
   /**

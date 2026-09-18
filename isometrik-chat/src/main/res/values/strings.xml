@@ -123,6 +123,11 @@
     <string name="ism_no_files">Files shared in this conversation will appear here.</string>
     <string name="ism_weblinks">Weblinks</string>
     <string name="ism_media">Media</string>
+    <string name="ism_links">Links</string>
+    <string name="ism_docs">Docs</string>
+    <string name="ism_media_links_docs">Media, Links and Docs</string>
+    <string name="ism_contact_info_title">Contact Info</string>
+    <string name="ism_block_user_label">Block User</string>
     <string name="ism_locations">Locations</string>
     <string name="ism_contacts">Contacts</string>
     <string name="ism_whiteboards">Whiteboards</string>
@@ -147,8 +152,8 @@
     <string name="ism_conversation_settings">CONVERSATION SETTINGS</string>
     <string name="ism_add_participants_canceled">Adding participants to conversation canceled</string>
 
-    <string name="ism_delete_conversation">Delete chat</string>
-    <string name="ism_clear_conversation">Clear chat</string>
+    <string name="ism_delete_conversation">Delete Chat</string>
+    <string name="ism_clear_conversation">Clear Chat</string>
     <string name="ism_leave_conversation">Leave conversation</string>
     <string name="ism_join_conversation">Join conversation</string>
     <string name="ism_empty_gallery_title">The Gallery Is Empty</string>
@@ -465,10 +470,12 @@
     <string name="ism_copy_heading">Copy</string>
     <string name="ism_info_heading">Info</string>
     <string name="ism_quote_heading">Quote</string>
+    <string name="ism_reply">Reply</string>
     <string name="ism_forward_heading">Forward</string>
     <string name="ism_reaction_heading">React</string>
     <string name="ism_delete_for_me_heading">Delete for me</string>
     <string name="ism_delete_for_all_heading">Delete for all</string>
+    <string name="ism_delete">Delete</string>
     <string name="ism_select_messages_heading">Select messages</string>
     <string name="ism_download_description">Download media in message</string>
     <string name="ism_edit_description">Edit text message</string>

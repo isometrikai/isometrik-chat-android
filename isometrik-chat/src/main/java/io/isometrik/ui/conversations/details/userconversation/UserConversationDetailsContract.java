@@ -61,6 +61,14 @@ public interface UserConversationDetailsContract {
     void fetchGalleryItems(String conversationId, List<String> galleryItemsEnabled);
 
     /**
+     * Fetch total count of media, links and docs in the conversation.
+     *
+     * @param conversationId the conversation id
+     * @param galleryItemsEnabled the gallery items enabled
+     */
+    void fetchGalleryItemsCount(String conversationId, List<String> galleryItemsEnabled);
+
+    /**
      * Gets gallery media items settings util.
      *
      * @return the gallery media items settings util
@@ -131,6 +139,13 @@ public interface UserConversationDetailsContract {
      */
     void onGalleryItemsFetchedSuccessfully(ArrayList<GalleryModel> galleryItems,
         boolean hasMoreItems);
+
+    /**
+     * On gallery items count fetched.
+     *
+     * @param count the count
+     */
+    void onGalleryItemsCountFetched(int count);
 
     /**
      * On conversation setting updated successfully.

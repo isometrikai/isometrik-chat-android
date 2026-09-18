@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -151,7 +152,11 @@ class TextSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageTextBindin
                 ismSentMessageTextBinding.vParentMessage.tvMessageTime.text =
                     message.originalMessageTime
                 ismSentMessageTextBinding.dividerReply.visibility =
-                    View.VISIBLE
+                    View.GONE
+                ismSentMessageTextBinding.vParentMessage.tvMessageTime.visibility =
+                    View.GONE
+                ismSentMessageTextBinding.vParentMessage.tvComma.visibility =
+                    View.GONE
 
                 if (message.originalMessageAttachmentUrl == null) {
                     ismSentMessageTextBinding.vParentMessage.ivMessageImage.visibility =
@@ -170,6 +175,8 @@ class TextSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageTextBindin
                     } catch (ignore: NullPointerException) {
                     }
                     ismSentMessageTextBinding.vParentMessage.ivMessageImage.visibility =
+                        View.VISIBLE
+                    ismSentMessageTextBinding.vParentMessage.tvMessage.visibility =
                         View.VISIBLE
                 }
                 ismSentMessageTextBinding.vParentMessage.root.setOnClickListener {
@@ -213,6 +220,8 @@ class TextSentBinder : MessageItemBinder<MessagesModel, IsmSentMessageTextBindin
             ismSentMessageTextBinding.tvTextMessage.setMovementMethod(
                 LinkMovementMethod.getInstance()
             )
+            ismSentMessageTextBinding.tvTextMessage.gravity =
+                if (message.isQuotedMessage) Gravity.START or Gravity.CENTER_VERTICAL else Gravity.CENTER
             ismSentMessageTextBinding.tvMessageTime.text =
                 message.messageTime
 

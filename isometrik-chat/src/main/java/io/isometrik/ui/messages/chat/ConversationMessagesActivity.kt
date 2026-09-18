@@ -8,6 +8,8 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.media.MediaPlayer
@@ -76,6 +78,7 @@ import io.isometrik.ui.conversations.details.observers.ObserversActivity
 import io.isometrik.ui.libwave.WaveformSeekBar
 import io.isometrik.ui.messages.action.MessageActionCallback
 import io.isometrik.ui.messages.action.MessageActionFragment
+import io.isometrik.ui.messages.action.MessageActionOverlayFragment
 import io.isometrik.ui.messages.action.edit.EditMessageFragment
 import io.isometrik.ui.messages.action.replies.SendMessageReplyFragment
 import io.isometrik.ui.messages.chat.ConversationMessagesAdapter.OnScrollToMessageListener
@@ -181,6 +184,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
     private var whiteboardFragment: WhiteboardFragment? = null
     private var sendMessageReplyFragment: SendMessageReplyFragment? = null
     private var messageActionFragment: MessageActionFragment? = null
+    private var messageActionOverlayFragment: MessageActionOverlayFragment? = null
     private var memberDetailsFragment: MemberDetailsFragment? = null
     private var editMessageFragment: EditMessageFragment? = null
 
@@ -442,6 +446,7 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
         whiteboardFragment = WhiteboardFragment()
         sendMessageReplyFragment = SendMessageReplyFragment()
         messageActionFragment = MessageActionFragment()
+        messageActionOverlayFragment = MessageActionOverlayFragment()
         memberDetailsFragment = MemberDetailsFragment()
         editMessageFragment = EditMessageFragment()
 
@@ -987,17 +992,24 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                                         val messagesModel = messages[position]
                                         if (!messagesModel.isSentMessage || messagesModel.isMessageSentSuccessfully) {
                                             if (!joiningAsObserver && clickActionsNotBlocked()) {
-//                                                dismissAllDialogs()
-//                                                openReactionDialog(view)
-                                                if (!isFinishing && !messageActionFragment!!.isAdded) {
+                                                if (!isFinishing && messageActionOverlayFragment?.isAdded != true) {
                                                     dismissAllDialogs()
-                                                    messageActionFragment!!.updateParameters(
-                                                        messages[position],
-                                                        this@ConversationMessagesActivity, position
+                                                    val loc = IntArray(2)
+                                                    view.getLocationOnScreen(loc)
+                                                    messageActionOverlayFragment!!.updateParameters(
+                                                        messagesModel,
+                                                        this@ConversationMessagesActivity,
+                                                        conversationId,
+                                                        position,
+                                                        loc[0],
+                                                        loc[1],
+                                                        view.width,
+                                                        view.height,
+                                                        snapshotMessageView(view)
                                                     )
-                                                    messageActionFragment!!.show(
+                                                    messageActionOverlayFragment!!.show(
                                                         supportFragmentManager,
-                                                        MessageActionFragment.TAG
+                                                        MessageActionOverlayFragment.TAG
                                                     )
                                                 }
                                             }
@@ -2622,6 +2634,10 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
                         .isShowing && !messageActionFragment!!.isRemoving
                 ) {
                     messageActionFragment!!.dismiss()
+                } else if (messageActionOverlayFragment?.dialog != null && messageActionOverlayFragment!!.dialog!!
+                        .isShowing && messageActionOverlayFragment?.isRemoving != true
+                ) {
+                    messageActionOverlayFragment!!.dismiss()
                 } else if (memberDetailsFragment!!.dialog != null && memberDetailsFragment!!.dialog!!
                         .isShowing && !memberDetailsFragment!!.isRemoving
                 ) {
@@ -2689,6 +2705,27 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
             }.setNegativeButton(
                 getString(R.string.ism_cancel)
             ) { dialog: DialogInterface, id: Int -> dialog.cancel() }.create().show()
+    }
+
+    override fun confirmDeleteSentMessage(messageId: String) {
+        AlertDialog.Builder(this)
+            .setItems(
+                arrayOf(
+                    getString(R.string.ism_delete_for_all_heading),
+                    getString(R.string.ism_delete_for_me_heading)
+                )
+            ) { _: DialogInterface?, which: Int ->
+                if (which == 0) {
+                    deleteMessageForEveryone(messageId, false)
+                } else {
+                    deleteMessageForSelf(messageId, false)
+                }
+            }
+            .setNegativeButton(getString(R.string.ism_cancel)) { dialog: DialogInterface, _: Int ->
+                dialog.cancel()
+            }
+            .create()
+            .show()
     }
 
     override fun selectMultipleMessagesRequested() {
@@ -3630,6 +3667,19 @@ class ConversationMessagesActivity : AppCompatActivity(), ConversationMessagesCo
     fun openReactionDialog(messageView: View){
         reactionDialog = FullScreenReactionDialog(messageView)
         reactionDialog?.show(supportFragmentManager, FullScreenReactionDialog.TAG)
+    }
+
+    private fun snapshotMessageView(view: View): Bitmap? {
+        if (view.width <= 0 || view.height <= 0) {
+            return null
+        }
+        return try {
+            Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888).also { bitmap ->
+                view.draw(Canvas(bitmap))
+            }
+        } catch (_: Exception) {
+            null
+        }
     }
 
     private fun startDetailsApiPolling() {

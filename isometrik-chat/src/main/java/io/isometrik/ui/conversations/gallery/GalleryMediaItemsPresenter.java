@@ -6,7 +6,7 @@ import io.isometrik.chat.response.message.utils.fetchmessages.Message;
 import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.chat.utils.Constants;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
 
 /**
  * The presenter to fetch list of media items in gallery with paging, search and pull to refresh
@@ -39,7 +39,7 @@ public class GalleryMediaItemsPresenter implements GalleryMediaItemsContract.Pre
   }
 
   @Override
-  public void fetchGalleryMediaItems(String customType, int skip, boolean onScroll,
+  public void fetchGalleryMediaItems(List<String> customTypes, int skip, boolean onScroll,
       boolean isSearchRequest, String searchTag) {
     isLoading = true;
 
@@ -56,7 +56,7 @@ public class GalleryMediaItemsPresenter implements GalleryMediaItemsContract.Pre
             .setUserToken(userToken)
             .setLimit(Constants.GALLERY_ITEMS_MEDIA_PAGE_SIZE)
             .setSkip(skip)
-            .setCustomTypes(Collections.singletonList(customType))
+            .setCustomTypes(customTypes)
             .setSort(Constants.SORT_ORDER_DSC);
 
     if (isSearchRequest && searchTag != null) {
@@ -75,8 +75,15 @@ public class GalleryMediaItemsPresenter implements GalleryMediaItemsContract.Pre
             int size = messages.size();
 
             for (int i = 0; i < size; i++) {
-
-              galleryModels.add(new GalleryModel(messages.get(i)));
+              Message message = messages.get(i);
+              if ("AttachmentMessage:Text".equals(message.getCustomType())) {
+                String url = io.isometrik.chat.utils.LinkPreviewUtil.INSTANCE.extractFirstUrl(
+                    message.getBody());
+                if (url == null) {
+                  continue;
+                }
+              }
+              galleryModels.add(new GalleryModel(message));
             }
             if (size < Constants.GALLERY_ITEMS_MEDIA_PAGE_SIZE) {
 
@@ -101,7 +108,7 @@ public class GalleryMediaItemsPresenter implements GalleryMediaItemsContract.Pre
 
   @Override
   public void fetchGalleryMediaItemsOnScroll(int firstVisibleItemPosition, int visibleItemCount,
-      int totalItemCount, String customType) {
+      int totalItemCount, List<String> customTypes) {
 
     if (!isLoading && !isLastPage) {
 
@@ -110,7 +117,7 @@ public class GalleryMediaItemsPresenter implements GalleryMediaItemsContract.Pre
           && (totalItemCount) >= Constants.GALLERY_ITEMS_MEDIA_PAGE_SIZE) {
 
         offset++;
-        fetchGalleryMediaItems(customType, offset * Constants.GALLERY_ITEMS_MEDIA_PAGE_SIZE, true,
+        fetchGalleryMediaItems(customTypes, offset * Constants.GALLERY_ITEMS_MEDIA_PAGE_SIZE, true,
             isSearchRequest, searchTag);
       }
     }

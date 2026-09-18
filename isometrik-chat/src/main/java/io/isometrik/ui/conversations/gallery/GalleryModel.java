@@ -150,6 +150,13 @@ public class GalleryModel {
           contactIdentifier = "";
         } break;
       }
+      case "AttachmentMessage:Text": {
+        mediaTypeText = IsometrikChatSdk.getInstance().getContext().getString(R.string.ism_links);
+        mediaTypeIcon = R.drawable.ism_ic_weblinks;
+        mediaDescription = message.getBody();
+        mediaUrl = io.isometrik.chat.utils.LinkPreviewUtil.INSTANCE.extractFirstUrl(message.getBody());
+        break;
+      }
     }
 
   }

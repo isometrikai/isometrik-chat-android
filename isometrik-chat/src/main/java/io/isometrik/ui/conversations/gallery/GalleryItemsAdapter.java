@@ -91,7 +91,8 @@ public class GalleryItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             galleryModel.getMediaDescription());
       }
 
-      if (galleryModel.getMediaUrl() == null) {
+      if (galleryModel.getMediaUrl() == null
+          || "AttachmentMessage:Text".equals(galleryModel.getCustomType())) {
         holder.ismGalleryMediaItemBinding.ivMediaImage.setVisibility(View.GONE);
       } else {
         holder.ismGalleryMediaItemBinding.ivMediaImage.setVisibility(View.VISIBLE);

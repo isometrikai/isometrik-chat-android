@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/flOverlayRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#66000000">
+
+  <LinearLayout
+      android:id="@+id/llOverlayContent"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:clickable="true"
+      android:focusable="true"
+      android:orientation="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvOverlayReactions"
+        android:layout_width="@dimen/ism_dp_260"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ism_message_overlay_card"
+        android:elevation="@dimen/ism_dp_4"
+        android:nestedScrollingEnabled="false"
+        android:overScrollMode="never"
+        android:padding="@dimen/ism_dp_4" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivMessagePreview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ism_dp_8"
+        android:adjustViewBounds="true"
+        android:maxWidth="@dimen/ism_dp_260"
+        android:maxHeight="@dimen/ism_dp_200"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/llOverlayActions"
+        android:layout_width="@dimen/ism_dp_260"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ism_dp_8"
+        android:background="@drawable/ism_message_overlay_card"
+        android:elevation="@dimen/ism_dp_4"
+        android:orientation="vertical">
+
+      <include
+          android:id="@+id/rowReply"
+          layout="@layout/ism_message_action_overlay_row" />
+
+      <include
+          android:id="@+id/rowForward"
+          layout="@layout/ism_message_action_overlay_row" />
+
+      <include
+          android:id="@+id/rowCopy"
+          layout="@layout/ism_message_action_overlay_row" />
+
+      <include
+          android:id="@+id/rowEdit"
+          layout="@layout/ism_message_action_overlay_row" />
+
+      <include
+          android:id="@+id/rowInfo"
+          layout="@layout/ism_message_action_overlay_row" />
+
+      <include
+          android:id="@+id/rowDownload"
+          layout="@layout/ism_message_action_overlay_row" />
+
+      <include
+          android:id="@+id/rowSelect"
+          layout="@layout/ism_message_action_overlay_row" />
+
+      <include
+          android:id="@+id/rowDelete"
+          layout="@layout/ism_message_action_overlay_row" />
+    </LinearLayout>
+  </LinearLayout>
+</FrameLayout>

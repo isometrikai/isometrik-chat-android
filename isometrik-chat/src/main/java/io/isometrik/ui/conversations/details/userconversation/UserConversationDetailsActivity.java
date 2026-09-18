@@ -10,8 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 
@@ -21,20 +19,16 @@ import io.isometrik.chat.response.conversation.utils.ConversationDetailsUtil;
 import io.isometrik.chat.R;
 import io.isometrik.ui.IsometrikChatSdk;
 import io.isometrik.ui.conversations.details.participants.MembersWatchersModel;
-import io.isometrik.ui.conversations.gallery.ConversationDetailsGalleryAdapter;
 import io.isometrik.ui.conversations.gallery.GalleryMediaItemsActivity;
 import io.isometrik.ui.conversations.gallery.GalleryModel;
 import io.isometrik.ui.conversations.newconversation.group.NewGroupConversationActivity;
 import io.isometrik.chat.databinding.IsmActivityUserConversationDetailsBinding;
-import io.isometrik.ui.messages.chat.common.ChatConfig;
-import io.isometrik.ui.messages.preview.PreviewMessageUtil;
 import io.isometrik.ui.messages.preview.image.PreviewImagePopup;
 import io.isometrik.chat.utils.AlertProgress;
 
 import com.bumptech.glide.Glide;
 
 import io.isometrik.chat.utils.PlaceholderUtils;
-import io.isometrik.chat.utils.RecyclerItemClickListener;
 import io.isometrik.chat.utils.TimeUtil;
 
 import java.util.ArrayList;
@@ -58,8 +52,6 @@ public class UserConversationDetailsActivity extends AppCompatActivity
     private String conversationId, userName, userImageUrl, userId;
     private long lastSeen;
     private boolean isOnline;
-    private ConversationDetailsGalleryAdapter conversationDetailsGalleryAdapter;
-    private ArrayList<GalleryModel> galleryItems;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,7 +68,7 @@ public class UserConversationDetailsActivity extends AppCompatActivity
         userImageUrl = extras.getString("userImageUrl");
         isOnline = extras.getBoolean("isOnline", false);
         userId = extras.getString("userId");
-        if (userId != null && !userId.isEmpty() && !ChatConfig.INSTANCE.getHideViewSocialProfileOption()) {
+        if (userId != null && !userId.isEmpty()) {
             ismActivityUserConversationDetailsBinding.rlViewSocialProfile.setVisibility(View.VISIBLE);
         } else {
             ismActivityUserConversationDetailsBinding.rlViewSocialProfile.setVisibility(View.GONE);
@@ -90,9 +82,6 @@ public class UserConversationDetailsActivity extends AppCompatActivity
                     getString(R.string.ism_user_new_public_group_conversation, userName));
             ismActivityUserConversationDetailsBinding.tvNewOpenConversation.setText(
                     getString(R.string.ism_user_new_open_conversation, userName));
-
-            ismActivityUserConversationDetailsBinding.tvBlockUser.setText(
-                    getString(R.string.ism_block_user, userName));
         }
         if (isOnline) {
             ismActivityUserConversationDetailsBinding.ivOnlineStatus.setImageDrawable(
@@ -222,9 +211,19 @@ public class UserConversationDetailsActivity extends AppCompatActivity
             showProgressDialog(getString(R.string.ism_blocking_user, userName));
             userConversationDetailsPresenter.blockUser(userId);
         });
-        ismActivityUserConversationDetailsBinding.rlViewSocialProfile.setOnClickListener(
-                v -> IsometrikChatSdk.getInstance().getChatActionsClickListener().onViewSocialProfileClick(userId)
-        );
+        ismActivityUserConversationDetailsBinding.rlViewSocialProfile.setOnClickListener(v -> {
+            if (IsometrikChatSdk.getInstance().getChatActionsClickListener() != null) {
+                IsometrikChatSdk.getInstance().getChatActionsClickListener().onViewSocialProfileClick(userId);
+            }
+        });
+        ismActivityUserConversationDetailsBinding.rlMediaLinksDocs.setOnClickListener(v -> {
+            Intent intent =
+                    new Intent(UserConversationDetailsActivity.this, GalleryMediaItemsActivity.class);
+            intent.putExtra("galleryMediaItemsSettingsUtil",
+                    userConversationDetailsPresenter.getGalleryMediaItemsSettingsUtil());
+            intent.putExtra("conversationId", conversationId);
+            startActivity(intent);
+        });
     }
 
     @Override
@@ -283,10 +282,8 @@ public class UserConversationDetailsActivity extends AppCompatActivity
                             getString(R.string.ism_user_new_private_group_conversation, userName));
                     ismActivityUserConversationDetailsBinding.tvNewPublicConversation.setText(
                             getString(R.string.ism_user_new_public_group_conversation, userName));
-                    ismActivityUserConversationDetailsBinding.tvNewOpenConversation.setText(
-                            getString(R.string.ism_user_new_open_conversation, userName));
-                    ismActivityUserConversationDetailsBinding.tvBlockUser.setText(
-                            getString(R.string.ism_block_user, userName));
+            ismActivityUserConversationDetailsBinding.tvNewOpenConversation.setText(
+                    getString(R.string.ism_user_new_open_conversation, userName));
                 }
                 if (!userDetails.getMemberProfileImageUrl().equals(userImageUrl)) {
                     userImageUrl = userDetails.getMemberProfileImageUrl();
@@ -420,10 +417,17 @@ public class UserConversationDetailsActivity extends AppCompatActivity
             }
             updateShimmerVisibility(false, false);
         });
-        updateShimmerVisibility(true, true);
-        userConversationDetailsPresenter.fetchGalleryItems(conversationId,
+        java.util.List<String> galleryCountTypes = new java.util.ArrayList<>(
                 userConversationDetailsPresenter.getGalleryMediaItemsSettingsUtil()
                         .getGalleryItemsEnabled());
+        galleryCountTypes.add(io.isometrik.chat.enums.CustomMessageTypes.Text.value);
+        userConversationDetailsPresenter.fetchGalleryItemsCount(conversationId, galleryCountTypes);
+    }
+
+    @Override
+    public void onGalleryItemsCountFetched(int count) {
+        runOnUiThread(() -> ismActivityUserConversationDetailsBinding.tvMediaLinksDocsCount.setText(
+                String.valueOf(Math.max(count, 0))));
     }
 
     @Override
@@ -432,59 +436,8 @@ public class UserConversationDetailsActivity extends AppCompatActivity
 
         runOnUiThread(() -> {
             ismActivityUserConversationDetailsBinding.pbGallery.setVisibility(View.GONE);
-            if (galleryItems.size() == 0) {
-                ismActivityUserConversationDetailsBinding.rlEmptyGallery.setVisibility(View.VISIBLE);
-                ismActivityUserConversationDetailsBinding.rvConversationGallery.setVisibility(View.GONE);
-                ismActivityUserConversationDetailsBinding.tvShowMoreGallery.setVisibility(View.GONE);
-            } else {
-
-                this.galleryItems = new ArrayList<>();
-                this.galleryItems.addAll(galleryItems);
-                ismActivityUserConversationDetailsBinding.rvConversationGallery.setLayoutManager(
-                        new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-
-                conversationDetailsGalleryAdapter =
-                        new ConversationDetailsGalleryAdapter(this, this.galleryItems);
-                ismActivityUserConversationDetailsBinding.rvConversationGallery.setAdapter(
-                        conversationDetailsGalleryAdapter);
-
-                ismActivityUserConversationDetailsBinding.rlEmptyGallery.setVisibility(View.GONE);
-                ismActivityUserConversationDetailsBinding.rvConversationGallery.setVisibility(View.VISIBLE);
-
-                if (hasMoreItems) {
-                    ismActivityUserConversationDetailsBinding.tvShowMoreGallery.setVisibility(View.VISIBLE);
-
-                    ismActivityUserConversationDetailsBinding.tvShowMoreGallery.setOnClickListener(v -> {
-                        Intent intent =
-                                new Intent(UserConversationDetailsActivity.this, GalleryMediaItemsActivity.class);
-                        intent.putExtra("galleryMediaItemsSettingsUtil",
-                                userConversationDetailsPresenter.getGalleryMediaItemsSettingsUtil());
-                        intent.putExtra("conversationId", conversationId);
-                        startActivity(intent);
-                    });
-                } else {
-                    ismActivityUserConversationDetailsBinding.tvShowMoreGallery.setVisibility(View.GONE);
-                }
-                ismActivityUserConversationDetailsBinding.rvConversationGallery.addOnItemTouchListener(
-                        new RecyclerItemClickListener(this,
-                                ismActivityUserConversationDetailsBinding.rvConversationGallery,
-                                new RecyclerItemClickListener.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(View view, int position) {
-                                        if (position >= 0) {
-
-                                            GalleryModel galleryModel = galleryItems.get(position);
-
-                                            PreviewMessageUtil.previewMessage(UserConversationDetailsActivity.this,
-                                                    galleryModel);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onItemLongClick(View view, int position) {
-                                    }
-                                }));
-            }
+            ismActivityUserConversationDetailsBinding.tvMediaLinksDocsCount.setText(
+                    String.valueOf(galleryItems.size()));
             updateShimmerVisibility(false, true);
         });
     }
